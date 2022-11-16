@@ -27,8 +27,8 @@ public class CharacterStats
     {
         character = owner;
 
-        character.CharacterData.OnPlayerDataChanged -= UpdateStats;
-        character.CharacterData.OnPlayerDataChanged += UpdateStats;
+        character.CharacterData.OnChangeCharacterData -= UpdateStats;
+        character.CharacterData.OnChangeCharacterData += UpdateStats;
 
         UpdateStats(character.CharacterData);
     }
