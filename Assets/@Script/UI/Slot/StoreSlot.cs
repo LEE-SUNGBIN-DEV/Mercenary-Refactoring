@@ -6,18 +6,19 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using TMPro;
 
+[System.Serializable]
 public class StoreSlot : MonoBehaviour, IPointerClickHandler
 {
     #region Event
     public event UnityAction<StoreSlot, Character> RequestBuy;
     #endregion
 
-    [SerializeField] private Item item;
+    [SerializeField] private BaseItem item;
     [SerializeField] private Image storeSlotImage;
     [SerializeField] private TextMeshProUGUI storeSlotItemNameText;
     [SerializeField] private TextMeshProUGUI storeSlotItemPriceText;
 
-    public void SetStoreItem(Item item)
+    public void SetStoreItem(BaseItem item)
     {
         if (item != null)
         {
@@ -53,7 +54,7 @@ public class StoreSlot : MonoBehaviour, IPointerClickHandler
 
 
     #region Property
-    public Item Item
+    public BaseItem Item
     {
         get { return item; }
         set { item = value; }

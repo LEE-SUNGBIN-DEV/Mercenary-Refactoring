@@ -2,31 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EquipmentSlot : BaseSlot
+[System.Serializable]
+public abstract class EquipmentSlot : BaseSlot
 {
+    [Header("Equipment Slot")]
+    protected bool isEquip;
+
     public override void Initialize()
     {
         base.Initialize();
+        isEquip = false;
     }
 
-    public void EquipItem(BaseSlot targetSlot)
+    public void EquipItem<T>() where T : BaseItem
     {
-        EquipmentItem equipmentItem = targetSlot.Item as EquipmentItem;
-        if(equipmentItem != null)
-        {
-            if((int)equipmentItem.ItemType == (int)slotType)
-            {
-                equipmentItem.Equip();
-                ExchanageSlot(targetSlot);
-            }
-            else
-            {
-                Debug.Log("¿Â¬¯ ΩΩ∑‘¿Ã ¥Ÿ∏®¥œ¥Ÿ.");
-            }
-        }
-        else
-        {
-            Debug.Log("¿Â∫Ò æ∆¿Ã≈€¿Ã æ∆¥’¥œ¥Ÿ.");
-        }
+        EquipItem(item);
     }
+    public abstract void EquipItem<T>(T item) where T: BaseItem;
+    public abstract void ReleaseItem();
+
+    public bool IsEquip { get { return isEquip; } }
 }

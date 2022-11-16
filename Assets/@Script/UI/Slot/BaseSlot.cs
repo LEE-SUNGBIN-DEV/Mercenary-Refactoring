@@ -4,24 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-public enum SLOT_TYPE
-{
-    NONE = 0,
 
-    WEAPON = 10,
-    HELMET = 20,
-    ARMOR = 30,
-    BOOTS = 40,
-
-    EQUIPMENT = 100,
-    CONSUMPTION = 200,
-    OTHER = 300,
-    QUEST = 400,
-
-    ALL = 1000,
-    QUICK = 2000
-}
-
+[System.Serializable]
 public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public enum IMAGE
@@ -33,10 +17,10 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         ItemCountText
     }
 
-    protected SLOT_TYPE slotType;
-    protected Item item;
-    protected Image itemImage;
+    [Header("Base Slot")]
+    protected BaseItem item;
     protected int itemCount;
+    protected Image itemImage;
     protected TextMeshProUGUI itemCountText;
 
     public virtual void Initialize()
@@ -47,43 +31,18 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         itemImage = GetImage((int)IMAGE.ItemImage);
         itemCountText = GetText((int)TEXT.ItemCountText);
 
-        slotType = SLOT_TYPE.NONE;
         item = null;
         itemCount = 0;
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        Managers.SlotManager.OnBeginDrag(this);
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        Managers.SlotManager.OnDrag(eventData);
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        Managers.SlotManager.OnDrop(this);
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        Managers.SlotManager.OnEndDrag();
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
-    }
-    
-    public void AddItem(Item targetItem)
+    public void AddItemToSlot<T>(T targetItem, int amount = 1) where T : BaseItem
     {
         item = targetItem;
         itemImage.sprite = targetItem.ItemSprite;
-        if (targetItem.IsCountable)
+
+        if(item.IsCountable)
         {
-            ++itemCount;
+            itemCount += amount;
             if (itemCount > 0)
             {
                 itemCountText.text = $"{itemCount}";
@@ -92,53 +51,33 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         }
         else
         {
+            itemCount = 1;
             itemCountText.enabled = false;
         }
     }
-    public void RemoveItem(int amount = 1)
+    public void RemoveItemFromSlot(int amount = 1)
     {
         itemCount -= amount;
-        if(itemCount <= 0)
+        if (itemCount <= 0)
         {
             ClearSlot();
         }
     }
 
-    #region Slot Function
-    public void ExchanageSlot(BaseSlot slot)
-    {
-        BaseSlot temporarySlot = this;
-
-        SetSlot(slot);
-        slot.SetSlot(temporarySlot);
-    }
-    public void CombineSlot(BaseSlot slot)
-    {
-        if (slot.Item.IsCountable == false)
-        {
-            Debug.Log($"{this}: 합칠 수 없는 아이템입니다.");
-            return;
-        }
-
-        itemCount += slot.ItemCount;
-        if (itemCount > 0)
-        {
-            itemCountText.text = $"{itemCount}";
-            itemCountText.enabled = true;
-        }
-        slot.ClearSlot();
-    }
     public void SetSlot(BaseSlot slot)
     {
         item = slot.Item;
         itemImage.sprite = slot.Item.ItemSprite;
         itemCount = slot.ItemCount;
-        if (slot.Item.IsCountable == true)
+        if (item.IsCountable && itemCount > 0)
         {
-            itemCountText.text = $"{slot.ItemCount}";
+            itemCountText.text = $"{itemCount}";
             itemCountText.enabled = true;
         }
-        itemCountText.enabled = false;
+        else
+        {
+            itemCountText.enabled = false;
+        }
     }
     public void ClearSlot()
     {
@@ -148,13 +87,40 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         itemCountText.text = null;
         itemCountText.enabled = false;
     }
+
+    #region Mouse Event Function
+    public abstract void Drop();
+    public abstract void EndDrag();
+    public abstract void ClickSlot(PointerEventData eventData);
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        Managers.SlotManager.OnBeginDrag(this);
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        Managers.SlotManager.OnDrag(eventData);
+    }
+    public void OnDrop(PointerEventData eventData)
+    {
+        Managers.SlotManager.OnDrop(this);
+        Drop();
+    }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        EndDrag();
+        Managers.SlotManager.OnEndDrag();
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        ClickSlot(eventData);
+    }
     #endregion
 
     #region Property
-    public SLOT_TYPE SlotType { get { return slotType; } set { slotType = value; } }
-    public Item Item { get { return item; } set { item = value; } }
-    public Image ItemImage { get { return itemImage; } set { itemImage = value; } }
+    public BaseItem Item { get { return item; } set { item = value; } }
     public int ItemCount { get { return itemCount; } set { itemCount = value; } }
+    public Image ItemImage { get { return itemImage; } set { itemImage = value; } }
     public TextMeshProUGUI ItemCountText { get { return itemCountText; } set { itemCountText = value; } }
     #endregion
 }
