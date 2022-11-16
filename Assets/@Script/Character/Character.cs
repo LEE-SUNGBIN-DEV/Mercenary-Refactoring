@@ -10,7 +10,7 @@ public abstract class Character : MonoBehaviour
     private PlayerCamera playerCamera;
     private CharacterController characterController;
     private Animator characterAnimator;
-    private Inventory characterInventory;
+    private InventoryPanel characterInventory;
 
     private UserInput playerInput;
     [SerializeField] private CharacterData characterData;
@@ -26,7 +26,7 @@ public abstract class Character : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         characterAnimator = GetComponent<Animator>();
-        characterInventory = GetComponent<Inventory>();
+        characterInventory = GetComponent<InventoryPanel>();
 
         playerInput = new UserInput();
         characterData = Managers.DataManager.CurrentCharacterData;
@@ -43,9 +43,6 @@ public abstract class Character : MonoBehaviour
     {
         Managers.UIManager.InteractPlayer -= SetInteract;
         Managers.UIManager.InteractPlayer += SetInteract;
-
-        Potion.onConsumePotion -= UsePotion;
-        Potion.onConsumePotion += UsePotion;
 
         Rebirth();
     }
@@ -77,23 +74,6 @@ public abstract class Character : MonoBehaviour
     {
     }
 
-    public void UsePotion(POTION_ITEM potionType, float amount)
-    {
-        switch (potionType)
-        {
-            case POTION_ITEM.NORMAL_HP_POTION:
-                {
-                    characterStats.CurrentHitPoint += (characterStats.MaxHitPoint * amount * 0.01f);
-                    break;
-                }
-            case POTION_ITEM.NORMAL_SP_POTION:
-                {
-                    characterStats.CurrentStamina += (characterStats.MaxStamina * amount * 0.01f);
-                    break;
-                }
-        }
-    }
-
 
     #region Animation Event
     public void SwitchCharacterState(CHARACTER_STATE targetState)
@@ -111,6 +91,6 @@ public abstract class Character : MonoBehaviour
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }
     public Animator CharacterAnimator { get { return characterAnimator; } }
-    public Inventory CharacterInventory { get { return characterInventory; } }
+    public InventoryPanel CharacterInventory { get { return characterInventory; } }
     #endregion
 }

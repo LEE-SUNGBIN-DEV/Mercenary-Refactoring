@@ -29,10 +29,10 @@ public class QuestManager
         AddAllQuestToDictionary();
 
         #region Add Event
-        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadPlayerData -= LoadQuest;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadPlayerData += LoadQuest;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnSavePlayerData -= SaveQuest;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnSavePlayerData += SaveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadCharacterData -= LoadQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadCharacterData += LoadQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnSaveCharacterData -= SaveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnSaveCharacterData += SaveQuest;
 
         Managers.GameSceneManager.OnSceneEnter -= RequestNPCQuestList;
         Managers.GameSceneManager.OnSceneEnter += RequestNPCQuestList;
@@ -55,8 +55,8 @@ public class QuestManager
         QuestPopup.onClickCompleteButton -= RequestCompleteList;
         QuestPopup.onClickCompleteButton += RequestCompleteList;
 
-        Managers.DataManager.CurrentCharacter.CharacterData.OnMainQuestProcedureChanged -= RefreshInactiveQuest;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnMainQuestProcedureChanged += RefreshInactiveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestProcedure -= RefreshInactiveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestProcedure += RefreshInactiveQuest;
         #endregion
     }
 

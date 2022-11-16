@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Store : MonoBehaviour
 {
-    [SerializeField] private List<Item> sellList;
+    [SerializeField] private List<BaseItem> sellList;
     [SerializeField] private StoreSlot[] storeSlots;
 
     private void Awake()

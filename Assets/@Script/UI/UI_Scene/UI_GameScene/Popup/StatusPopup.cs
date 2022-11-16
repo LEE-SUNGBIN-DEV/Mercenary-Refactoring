@@ -25,8 +25,8 @@ public class StatusPopup : UIPopup
     public override void Initialize(UnityAction<UIPopup> action = null)
     {
         base.Initialize(action);
-        Managers.DataManager.CurrentCharacter.CharacterData.OnPlayerDataChanged -= RefreshCharacterData;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnPlayerDataChanged += RefreshCharacterData;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeCharacterData -= RefreshCharacterData;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeCharacterData += RefreshCharacterData;
 
         CharacterStats.OnCharacterStatsChanged -= RefreshCharacterStats;
         CharacterStats.OnCharacterStatsChanged += RefreshCharacterStats;

@@ -7,10 +7,10 @@ using UnityEngine.Events;
 public class CharacterData
 {
     #region Event
-    public event UnityAction<CharacterData> OnPlayerDataChanged;
-    public event UnityAction<CharacterData> OnMainQuestProcedureChanged;
-    public event UnityAction<CharacterData> OnSavePlayerData;
-    public event UnityAction<CharacterData> OnLoadPlayerData;
+    public event UnityAction<CharacterData> OnChangeCharacterData;
+    public event UnityAction<CharacterData> OnChangeMainQuestProcedure;
+    public event UnityAction<CharacterData> OnSaveCharacterData;
+    public event UnityAction<CharacterData> OnLoadCharacterData;
     #endregion
 
     [SerializeField] private string characterClass;
@@ -29,17 +29,17 @@ public class CharacterData
     [SerializeField] private int luck;
 
     // Inventory
+    [SerializeField] private InventorySlot[] inventorySlots;
     [SerializeField] private int money;
-    [SerializeField] private string[] inventoryItemNames;
-    [SerializeField] private int[] inventoryItemCounts;
 
-    // Quick Slot
-    [SerializeField] private string[] quickSlotItemNames;
-    [SerializeField] private int[] quickSlotItemCounts;
+    // Quick Slots
+    [SerializeField] private QuickSlot[] quickSlots;
 
-    // Equipment Slot
-    [SerializeField] private string[] equipmentSlotItemNames;
-    [SerializeField] private int[] equipmentSlotItemCounts;
+    // Equipment Slots
+    [SerializeField] private WeaponSlot weaponSlot;
+    [SerializeField] private HelmetSlot helmetSlot;
+    [SerializeField] private ArmorSlot armorSlot;
+    [SerializeField] private BootsSlot bootsSlot;
 
     // Main Quest
     [SerializeField] private uint mainQuestProcedure;
@@ -79,32 +79,8 @@ public class CharacterData
         dexterity = Constants.CHARACTER_DATA_DEFALUT_DEXTERITY;
         luck = Constants.CHARACTER_DATA_DEFALUT_LUCK;
 
-        InventoryItemNames = new string[Constants.MAX_INVENTORY_SLOT_NUMBER];
-        InventoryItemCounts = new int[Constants.MAX_INVENTORY_SLOT_NUMBER];
-
-        QuickSlotItemNames = new string[Constants.MAX_QUICK_SLOT_NUMBER];
-        QuickSlotItemCounts = new int[Constants.MAX_QUICK_SLOT_NUMBER];
-
-        EquipmentSlotItemNames = new string[Constants.MAX_EQUIPMENT_SLOT_NUMBER];
-        EquipmentSlotItemCounts = new int[Constants.MAX_EQUIPMENT_SLOT_NUMBER];
-
-        for (int i = 0; i < Constants.MAX_INVENTORY_SLOT_NUMBER; ++i)
-        {
-            InventoryItemNames[i] = null;
-            InventoryItemCounts[i] = 0;
-        }
-
-        for (int i = 0; i < Constants.MAX_QUICK_SLOT_NUMBER; ++i)
-        {
-            QuickSlotItemNames[i] = null;
-            QuickSlotItemCounts[i] = 0;
-        }
-
-        for (int i = 0; i < Constants.MAX_EQUIPMENT_SLOT_NUMBER; ++i)
-        {
-            EquipmentSlotItemNames[i] = null;
-            EquipmentSlotItemCounts[i] = 0;
-        }
+        InventorySlots = new InventorySlot[Constants.MAX_INVENTORY_SLOT_NUMBER];
+        quickSlots = new QuickSlot[Constants.MAX_QUICK_SLOT_NUMBER];
 
         mainQuestProcedure = 0;
     }
@@ -122,12 +98,6 @@ public class CharacterData
         Luck = luck;
         MainQuestProcedure = mainQuestProcedure;
         Money = money;
-        InventoryItemNames = inventoryItemNames;
-        InventoryItemCounts = inventoryItemCounts;
-        QuickSlotItemNames = quickSlotItemNames;
-        QuickSlotItemCounts = quickSlotItemCounts;
-        EquipmentSlotItemNames = equipmentSlotItemNames;
-        EquipmentSlotItemCounts = equipmentSlotItemCounts;
         QuestSaveList = questSaveList;
     }
 
@@ -158,45 +128,14 @@ public class CharacterData
     }
 
     // Save & Load
-    public void SaveCharacterData(CharacterData characterData)
+    public void SaveCharacterData()
     {
-        characterData.characterClass = characterClass;
-        characterData.level = level;
-        characterData.currentExperience = currentExperience;
-        characterData.maxExperience = maxExperience;
-        characterData.statPoint = statPoint;
-        characterData.strength = strength;
-        characterData.vitality = vitality;
-        characterData.dexterity = dexterity;
-        characterData.luck = luck;
-        characterData.mainQuestProcedure = mainQuestProcedure;
-        characterData.money = money;
-        characterData.inventoryItemNames = new string[Constants.MAX_INVENTORY_SLOT_NUMBER];
-        characterData.inventoryItemCounts = new int[Constants.MAX_INVENTORY_SLOT_NUMBER];
-        characterData.quickSlotItemNames = new string[Constants.MAX_QUICK_SLOT_NUMBER];
-        characterData.quickSlotItemCounts = new int[Constants.MAX_QUICK_SLOT_NUMBER];
-        characterData.equipmentSlotItemNames = new string[Constants.MAX_EQUIPMENT_SLOT_NUMBER];
-        characterData.equipmentSlotItemCounts = new int[Constants.MAX_EQUIPMENT_SLOT_NUMBER];
-        characterData.questSaveList = new List<QuestSaveData>();
-
-        OnSavePlayerData(characterData);
+        OnSaveCharacterData(this);
     }
 
-    public void LoadCharacterData(CharacterData characterData)
+    public void LoadCharacterData()
     {
-        CharacterClass = characterData.characterClass;
-        Level = characterData.level;
-        CurrentExperience = characterData.currentExperience;
-        MaxExperience = characterData.maxExperience;
-        StatPoint = characterData.statPoint;
-        Strength = characterData.strength;
-        Vitality = characterData.vitality;
-        Dexterity = characterData.dexterity;
-        Luck = characterData.luck;
-        MainQuestProcedure = characterData.mainQuestProcedure;
-        Money = characterData.money;
-
-        OnLoadPlayerData(characterData);
+        OnLoadCharacterData(this);
     }
 
     #region Property
@@ -206,7 +145,7 @@ public class CharacterData
         set
         {
             characterClass = value;
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
     
@@ -220,7 +159,7 @@ public class CharacterData
             {
                 level = 1;
             }
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
 
@@ -240,7 +179,7 @@ public class CharacterData
                 LevelUp();
             }
 
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
 
@@ -254,7 +193,7 @@ public class CharacterData
             {
                 maxExperience = 1;
             }
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
 
@@ -268,7 +207,7 @@ public class CharacterData
             {
                 statPoint = 0;
             }
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
     public int Strength
@@ -281,7 +220,7 @@ public class CharacterData
             {
                 strength = 0;
             }
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
 
@@ -295,7 +234,7 @@ public class CharacterData
             {
                 vitality = 0;
             }
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
 
@@ -310,7 +249,7 @@ public class CharacterData
             {
                 dexterity = 0;
             }
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
     public int Luck
@@ -323,7 +262,7 @@ public class CharacterData
             {
                 luck = 0;
             }
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
     public uint MainQuestProcedure
@@ -332,7 +271,7 @@ public class CharacterData
         set
         {
             mainQuestProcedure = value;
-            OnMainQuestProcedureChanged?.Invoke(this);
+            OnChangeMainQuestProcedure?.Invoke(this);
         }
     }
     public int Money
@@ -345,42 +284,16 @@ public class CharacterData
             {
                 money = 0;
             }
-            OnPlayerDataChanged?.Invoke(this);
+            OnChangeCharacterData?.Invoke(this);
         }
     }
 
-    public string[] InventoryItemNames
-    {
-        get { return inventoryItemNames; }
-        set { inventoryItemNames = value; }
-    }
-    public int[] InventoryItemCounts
-    {
-        get { return inventoryItemCounts; }
-        set { inventoryItemCounts = value; }
-    }
-
-    public string[] QuickSlotItemNames
-    {
-        get { return quickSlotItemNames; }
-        set { quickSlotItemNames = value; }
-    }
-    public int[] QuickSlotItemCounts
-    {
-        get { return quickSlotItemCounts; }
-        set { quickSlotItemCounts = value; }
-    }
-
-    public string[] EquipmentSlotItemNames
-    {
-        get { return equipmentSlotItemNames; }
-        set { equipmentSlotItemNames = value; }
-    }
-    public int[] EquipmentSlotItemCounts
-    {
-        get { return equipmentSlotItemCounts; }
-        set { equipmentSlotItemCounts = value; }
-    }
+    public InventorySlot[] InventorySlots { get { return inventorySlots; } set { inventorySlots = value; } }
+    public QuickSlot[] QuickSlots { get { return quickSlots; } set { quickSlots = value; } }
+    public WeaponSlot WeaponSlot { get { return weaponSlot; } set { weaponSlot = value; } }
+    public HelmetSlot HelmetSlot { get { return helmetSlot; } set { HelmetSlot = value; } }
+    public ArmorSlot ArmorSlot { get { return armorSlot; } set { armorSlot = value; } }
+    public BootsSlot BootsSlot { get { return bootsSlot; } set { bootsSlot = value; } }
     public List<QuestSaveData> QuestSaveList
     {
         get { return questSaveList; }
