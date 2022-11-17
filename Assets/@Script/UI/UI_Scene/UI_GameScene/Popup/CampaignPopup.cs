@@ -9,12 +9,12 @@ public class CampaignPopup : UIPopup
 
     private void Awake()
     {
-        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestProcedure += (CharacterData playerData) =>
+        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestPrograss += (CharacterData playerData) =>
         {
-            bool canEnable = playerData.MainQuestProcedure >= 1000 ? true : false;
+            bool canEnable = playerData.MainQuestPrograss >= 1000 ? true : false;
             SetForestButton(canEnable);
 
-            canEnable = playerData.MainQuestProcedure >= 2000 ? true : false;
+            canEnable = playerData.MainQuestPrograss >= 2000 ? true : false;
             SetTempleButton(canEnable);
         };
     }

@@ -15,55 +15,27 @@ public class EquipmentSlotPanel : UIPanel
         helmetSlot = GetComponentInChildren<HelmetSlot>();
         armorSlot = GetComponentInChildren<ArmorSlot>();
         bootsSlot = GetComponentInChildren<BootsSlot>();
-
-        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadCharacterData -= LoadPlayerEquipmentSlots;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadCharacterData += LoadPlayerEquipmentSlots;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnSaveCharacterData -= SavePlayerEquipmentSlots;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnSaveCharacterData += SavePlayerEquipmentSlots;
     }
 
-    public void LoadEquipmentSlot<T>(T loadSlot, T thisSlot) where T: EquipmentSlot
+    private void OnEnable()
     {
-        if (loadSlot.Item != null)
+        LoadFromCharacterData(Managers.DataManager.CurrentCharacterData.WeaponSlotItem, weaponSlot);
+        LoadFromCharacterData(Managers.DataManager.CurrentCharacterData.HelmetSlotItem, helmetSlot);
+        LoadFromCharacterData(Managers.DataManager.CurrentCharacterData.ArmorSlotItem, armorSlot);
+        LoadFromCharacterData(Managers.DataManager.CurrentCharacterData.BootsSlotItem, bootsSlot);
+    }
+
+    public void LoadFromCharacterData<T, U>(T loadItem, U targetSlot) where T: EquipmentItem where U: EquipmentSlot
+    {
+        if (loadItem != null)
         {
-            thisSlot.SetSlot(loadSlot);
-            thisSlot.EquipItem<EquipmentItem>();
+            targetSlot.AddItemToSlot(loadItem);
         }
         else
         {
-            thisSlot.ClearSlot();
+            targetSlot.ClearSlot();
         }
     }
-    public void SaveEquipmentSlot<T>(T saveSlot, T thisSlot) where T: EquipmentSlot
-    {
-        if (thisSlot.Item != null)
-        {
-            saveSlot = thisSlot;
-        }
-        else
-        {
-            saveSlot = null;
-        }
-    }
-
-    #region Save & Load
-    public void LoadPlayerEquipmentSlots(CharacterData characterData)
-    {
-        LoadEquipmentSlot(characterData.WeaponSlot, weaponSlot);
-        LoadEquipmentSlot(characterData.HelmetSlot, helmetSlot);
-        LoadEquipmentSlot(characterData.ArmorSlot, armorSlot);
-        LoadEquipmentSlot(characterData.BootsSlot, bootsSlot);
-    }
-
-    public void SavePlayerEquipmentSlots(CharacterData characterData)
-    {
-        SaveEquipmentSlot(characterData.WeaponSlot, weaponSlot);
-        SaveEquipmentSlot(characterData.HelmetSlot, helmetSlot);
-        SaveEquipmentSlot(characterData.ArmorSlot, armorSlot);
-        SaveEquipmentSlot(characterData.BootsSlot, bootsSlot);
-    }
-
-    #endregion
 
     #region Property
     public WeaponSlot WeaponSlot { get { return weaponSlot; } set { weaponSlot = value; } }

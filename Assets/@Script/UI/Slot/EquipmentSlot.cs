@@ -5,21 +5,73 @@ using UnityEngine;
 [System.Serializable]
 public abstract class EquipmentSlot : BaseSlot
 {
-    [Header("Equipment Slot")]
-    protected bool isEquip;
-
     public override void Initialize()
     {
         base.Initialize();
-        isEquip = false;
     }
 
-    public void EquipItem<T>() where T : BaseItem
+    #region Equip & Release Function
+    public void EquipItem<T>(T item) where T: EquipmentItem
     {
-        EquipItem(item);
+        T equipItem = item as T;
+        if (equipItem != null)
+        {
+            AddItemToSlot(equipItem);
+            equipItem.Equip(Managers.DataManager.CurrentCharacter);
+        }
+        else
+        {
+            Debug.Log("¿Â¬¯ ΩΩ∑‘¿Ã ¥Ÿ∏®¥œ¥Ÿ.");
+        }
     }
-    public abstract void EquipItem<T>(T item) where T: BaseItem;
-    public abstract void ReleaseItem();
+    public void EquipItem<T>() where T : EquipmentItem
+    {
+        EquipItem(item as T);
+    }
 
-    public bool IsEquip { get { return isEquip; } }
+    public void ReleaseItem<T>(T item) where T: EquipmentItem
+    {
+        T equipItem = item as T;
+        if (equipItem != null)
+        {
+            AddItemToSlot(equipItem);
+            equipItem.Equip(Managers.DataManager.CurrentCharacter);
+        }
+        else
+        {
+            Debug.Log("¿Â¬¯ ΩΩ∑‘¿Ã ¥Ÿ∏®¥œ¥Ÿ.");
+        }
+    }
+    public void ReleaseItem<T>() where T: EquipmentItem
+    {
+        ReleaseItem(item as T);
+    }
+    #endregion
+
+    #region Mouse Event Function
+    public void DropEquipmentSlot<T>() where T : EquipmentItem
+    {
+        T equipmentItem = Managers.SlotManager.DragSlot.Item as T;
+        if (equipmentItem != null)
+        {
+            ReleaseItem<T>();
+            EquipItem(Managers.SlotManager.DragSlot.Item as T);
+        }
+    }
+    public void EndDragEquipmentSlot<T>() where T : EquipmentItem
+    {
+        T equipmentItem = Managers.SlotManager.DragSlot.Item as T;
+        if (equipmentItem != null)
+        {
+            ReleaseItem<T>();
+            EquipItem(Managers.SlotManager.TargetSlot.Item as T);
+        }
+        else if (Managers.SlotManager.TargetSlot is IAllItemAcceptableSlot
+            && Managers.SlotManager.TargetSlot.Item == null)
+        {
+            ReleaseItem<T>();
+            ClearSlot();
+        }
+    }
+    #endregion
 }

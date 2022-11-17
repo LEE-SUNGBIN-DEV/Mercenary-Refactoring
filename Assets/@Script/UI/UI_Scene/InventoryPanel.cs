@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class InventoryPanel : MonoBehaviour
+public class InventoryPanel : UIPanel
 {
     [SerializeField] private InventorySlot[] inventorySlots;
     [SerializeField] private TextMeshProUGUI moneyText;
@@ -16,11 +16,6 @@ public class InventoryPanel : MonoBehaviour
         {
             MoneyText.text = playerData.Money.ToString();
         };
-
-        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadCharacterData -= LoadPlayerInventory;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadCharacterData += LoadPlayerInventory;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnSaveCharacterData -= SavePlayerInventory;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnSaveCharacterData += SavePlayerInventory;
     }
 
     public void AddItemToInventory<T>(T item, int itemCount = 1) where T : BaseItem
@@ -87,9 +82,9 @@ public class InventoryPanel : MonoBehaviour
     {
         for (int i = 0; i < inventorySlots.Length; ++i)
         {
-            if (characterData.InventorySlots[i].Item != null)
+            if (characterData.ItemDataList[i].Item != null)
             {
-                inventorySlots[i].AddItemToSlot(characterData.InventorySlots[i].Item, characterData.InventorySlots[i].ItemCount);
+                inventorySlots[i].AddItemToSlot(characterData.ItemDataList[i].Item, characterData.ItemDataList[i].ItemCount);
             }
 
             else
@@ -99,22 +94,6 @@ public class InventoryPanel : MonoBehaviour
         }
 
         MoneyText.text = characterData.Money.ToString();
-    }
-
-    public void SavePlayerInventory(CharacterData characterData)
-    {
-        for (int i = 0; i < inventorySlots.Length; ++i)
-        {
-            if (inventorySlots[i].Item != null)
-            {
-                characterData.InventorySlots[i] = InventorySlots[i];
-            }
-
-            else
-            {
-                characterData.InventorySlots[i] = null;
-            }
-        }
     }
     #endregion
 

@@ -17,7 +17,7 @@ public class GameManager
         Screen.SetResolution(Constants.RESOLUTION_DEFAULT_WIDTH, Constants.RESOLUTION_DEFAULT_HEIGHT, true);
 
         // Ä¿¼­
-        Managers.ResourceManager.LoadResourceAsync<Texture2D>("Sprite_Cursor", SetCursorTexture);
+        Managers.ResourceManager.LoadResourceAsync<Texture2D>("Sprite_Cursor_Basic", SetCursorTexture);
         SetCursorMode(CURSOR_MODE.UNLOCK);
     }
 

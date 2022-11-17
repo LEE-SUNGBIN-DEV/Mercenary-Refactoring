@@ -6,28 +6,18 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class BootsSlot : EquipmentSlot
 {
-    public override void ClickSlot(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public override void Drop()
     {
-        throw new System.NotImplementedException();
+        DropEquipmentSlot<BootsItem>();
     }
 
     public override void EndDrag()
     {
-        throw new System.NotImplementedException();
+        EndDragEquipmentSlot<BootsItem>();
     }
 
-    public override void EquipItem<T>(T item)
+    public override void SlotRightClick(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
-    }
-
-    public override void ReleaseItem()
-    {
-        throw new System.NotImplementedException();
+        ReleaseItem<BootsItem>();
     }
 }

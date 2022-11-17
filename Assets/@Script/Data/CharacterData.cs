@@ -8,7 +8,7 @@ public class CharacterData
 {
     #region Event
     public event UnityAction<CharacterData> OnChangeCharacterData;
-    public event UnityAction<CharacterData> OnChangeMainQuestProcedure;
+    public event UnityAction<CharacterData> OnChangeMainQuestPrograss;
     public event UnityAction<CharacterData> OnSaveCharacterData;
     public event UnityAction<CharacterData> OnLoadCharacterData;
     #endregion
@@ -29,22 +29,11 @@ public class CharacterData
     [SerializeField] private int luck;
 
     // Inventory
-    [SerializeField] private InventorySlot[] inventorySlots;
+    [SerializeField] private List<ItemSaveData> itemDataList = new List<ItemSaveData>();
     [SerializeField] private int money;
 
-    // Quick Slots
-    [SerializeField] private QuickSlot[] quickSlots;
-
-    // Equipment Slots
-    [SerializeField] private WeaponSlot weaponSlot;
-    [SerializeField] private HelmetSlot helmetSlot;
-    [SerializeField] private ArmorSlot armorSlot;
-    [SerializeField] private BootsSlot bootsSlot;
-
-    // Main Quest
-    [SerializeField] private uint mainQuestProcedure;
-
-    // Quest Save List
+    // Quest
+    [SerializeField] private uint mainQuestPrograss;
     [SerializeField] private List<QuestSaveData> questSaveList = new List<QuestSaveData>();
 
     public CharacterData(CHARACTER_CLASS selectedClass)
@@ -55,60 +44,30 @@ public class CharacterData
 
     public void Initialize()
     {
-        QuestManager.onCompleteQuest -= UpdateMainQuestProcedure;
-        QuestManager.onCompleteQuest += UpdateMainQuestProcedure;
-
-        Quest.onReward -= GetQuestReward;
-        Quest.onReward += GetQuestReward;
-
-        Enemy.onDie -= GetExperience;
-        Enemy.onDie += GetExperience;
-
         characterClass = null;
         characterLocation = Vector3.zero;
 
-        // Level
         level = Constants.CHARACTER_DATA_DEFALUT_LEVEL;
         currentExperience = Constants.CHARACTER_DATA_DEFALUT_EXPERIENCE;
-        maxExperience = Managers.DataManager.LevelDataDictionary[level];
+        maxExperience = Managers.DataManager.LevelTable[level];
 
-        // Stats
         statPoint = Constants.CHARACTER_DATA_DEFALUT_STATPOINT;
         strength = Constants.CHARACTER_DATA_DEFALUT_STRENGTH;
         vitality = Constants.CHARACTER_DATA_DEFALUT_VITALITY;
         dexterity = Constants.CHARACTER_DATA_DEFALUT_DEXTERITY;
         luck = Constants.CHARACTER_DATA_DEFALUT_LUCK;
 
-        InventorySlots = new InventorySlot[Constants.MAX_INVENTORY_SLOT_NUMBER];
-        quickSlots = new QuickSlot[Constants.MAX_QUICK_SLOT_NUMBER];
-
-        mainQuestProcedure = 0;
-    }
-
-    public void RefreshData()
-    {
-        CharacterClass = characterClass;
-        Level = level;
-        CurrentExperience = currentExperience;
-        MaxExperience = maxExperience;
-        StatPoint = statPoint;
-        Strength = strength;
-        Vitality = vitality;
-        Dexterity = dexterity;
-        Luck = luck;
-        MainQuestProcedure = mainQuestProcedure;
-        Money = money;
-        QuestSaveList = questSaveList;
+        money = Constants.CHARACTER_DATA_DEFAULT_MONEY;
+        mainQuestPrograss = 0;
     }
 
     public void LevelUp()
     {
-        currentExperience -= MaxExperience;
-        MaxExperience = Managers.DataManager.LevelDataDictionary[Level];
+        currentExperience -= maxExperience;
+        maxExperience = Managers.DataManager.LevelTable[Level];
         ++Level;
         StatPoint += 5;
     }
-
     public void GetExperience(Enemy monster)
     {
         CurrentExperience += monster.ExperienceAmount;
@@ -118,12 +77,45 @@ public class CharacterData
         Money += quest.RewardMoney;
         CurrentExperience += quest.RewardExperience;
     }
-
     public void UpdateMainQuestProcedure(Quest quest)
     {
         if (quest.questCategory == QUEST_CATEGORY.MAIN)
         {
-            MainQuestProcedure = quest.QuestID;
+            MainQuestPrograss = quest.QuestID;
+        }
+    }
+
+    public void ParseItem()
+    {
+        for(int i=0; i<itemDataList.Count; ++i)
+        {
+            switch (itemDataList[i].SlotType)
+            {
+                case SLOT_TYPE.Inventory:
+                    {
+                        break;
+                    }
+                case SLOT_TYPE.QuickSlot:
+                    {
+                        break;
+                    }
+                case SLOT_TYPE.WeaponSlot:
+                    {
+                        break;
+                    }
+                case SLOT_TYPE.HelmetSlot:
+                    {
+                        break;
+                    }
+                case SLOT_TYPE.ArmorSlot:
+                    {
+                        break;
+                    }
+                case SLOT_TYPE.BootsSlot:
+                    {
+                        break;
+                    }
+            }
         }
     }
 
@@ -189,7 +181,7 @@ public class CharacterData
         set
         {
             maxExperience = value;
-            if (maxExperience <= 0)
+            if (maxExperience < 1)
             {
                 maxExperience = 1;
             }
@@ -265,14 +257,11 @@ public class CharacterData
             OnChangeCharacterData?.Invoke(this);
         }
     }
-    public uint MainQuestProcedure
+
+    public List<ItemSaveData> ItemDataList
     {
-        get { return mainQuestProcedure; }
-        set
-        {
-            mainQuestProcedure = value;
-            OnChangeMainQuestProcedure?.Invoke(this);
-        }
+        get { return itemDataList; }
+        set { itemDataList = value; }
     }
     public int Money
     {
@@ -280,7 +269,7 @@ public class CharacterData
         set
         {
             money = value;
-            if(money < 0)
+            if (money < 0)
             {
                 money = 0;
             }
@@ -288,12 +277,15 @@ public class CharacterData
         }
     }
 
-    public InventorySlot[] InventorySlots { get { return inventorySlots; } set { inventorySlots = value; } }
-    public QuickSlot[] QuickSlots { get { return quickSlots; } set { quickSlots = value; } }
-    public WeaponSlot WeaponSlot { get { return weaponSlot; } set { weaponSlot = value; } }
-    public HelmetSlot HelmetSlot { get { return helmetSlot; } set { HelmetSlot = value; } }
-    public ArmorSlot ArmorSlot { get { return armorSlot; } set { armorSlot = value; } }
-    public BootsSlot BootsSlot { get { return bootsSlot; } set { bootsSlot = value; } }
+    public uint MainQuestPrograss
+    {
+        get { return mainQuestPrograss; }
+        set
+        {
+            mainQuestPrograss = value;
+            OnChangeMainQuestPrograss?.Invoke(this);
+        }
+    }
     public List<QuestSaveData> QuestSaveList
     {
         get { return questSaveList; }

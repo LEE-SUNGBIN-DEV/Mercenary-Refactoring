@@ -27,7 +27,6 @@ public class Managers : Singleton<Managers>
 
     private void Update()
     {
-        //UIManager.Update();
     }
 
     public override void Initialize()
@@ -37,33 +36,34 @@ public class Managers : Singleton<Managers>
             Debug.Log($"{this} Already Initialized.");
             return;
         }
-
-        // UI Canvas 로드
-        GameObject canvas = GameObject.Find("@UI Canvas");
-        if (canvas == null)
+        else
         {
-            canvas = ResourceManager.InstantiatePrefabSync("@UI Canvas", transform);
+            // UI Canvas 로드
+            GameObject canvas = GameObject.Find("@UI Canvas");
+            if (canvas == null)
+            {
+                canvas = ResourceManager.InstantiatePrefabSync("@UI Canvas", transform);
+            }
+            canvas.transform.SetParent(transform);
+
+            resourceManager.Initialize();
+            dataManager.Initialize();
+            gameManager.Initialize();
+            gameSceneManager.Initialize();
+            uiManager.Initialize(canvas);
+            audioManager.Initialize(transform);
+            slotManager.Initialize(canvas);
+
+            /*
+            npcManager.Initialize();
+            dialogueManager.Initialize();
+            questManager.Initialize();
+            objectPoolManager.Initialize(gameObject);
+            */
+
+            isInitialized = true;
+            Debug.Log($"{this} Initialization Complete!");
         }
-        canvas.transform.SetParent(transform);
-
-        uiManager.Initialize(canvas);
-        gameManager.Initialize();
-        gameSceneManager.Initialize();
-        resourceManager.Initialize();
-        dataManager.Initialize();
-        audioManager.Initialize(transform);
-        slotManager.Initialize();
-
-        /*
-        npcManager.Initialize();
-        dialogueManager.Initialize();
-        questManager.Initialize();
-        itemManager.Initialize();
-        objectPoolManager.Initialize(gameObject);
-        */
-
-        isInitialized = true;
-        Debug.Log($"{this} Initialization Complete!");
     }    
 
     #region Property

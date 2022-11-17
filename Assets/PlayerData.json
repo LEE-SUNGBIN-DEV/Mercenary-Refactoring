@@ -1,6 +1,46 @@
 {
   "CharacterDatas": [
     {
+      "CharacterClass": null,
+      "Level": 1,
+      "CurrentExperience": 0.0,
+      "MaxExperience": 1.0,
+      "StatPoint": 0,
+      "Strength": 0,
+      "Vitality": 0,
+      "Dexterity": 0,
+      "Luck": 0,
+      "MainQuestProcedure": 0,
+      "Money": 0,
+      "InventorySlots": null,
+      "QuickSlots": null,
+      "WeaponSlot": null,
+      "HelmetSlot": null,
+      "ArmorSlot": null,
+      "BootsSlot": null,
+      "QuestSaveList": null
+    },
+    {
+      "CharacterClass": null,
+      "Level": 1,
+      "CurrentExperience": 0.0,
+      "MaxExperience": 1.0,
+      "StatPoint": 0,
+      "Strength": 0,
+      "Vitality": 0,
+      "Dexterity": 0,
+      "Luck": 0,
+      "MainQuestProcedure": 0,
+      "Money": 0,
+      "InventorySlots": null,
+      "QuickSlots": null,
+      "WeaponSlot": null,
+      "HelmetSlot": null,
+      "ArmorSlot": null,
+      "BootsSlot": null,
+      "QuestSaveList": null
+    },
+    {
       "CharacterClass": "Lancer",
       "Level": 1,
       "CurrentExperience": 0.0,
@@ -12,7 +52,7 @@
       "Luck": 10,
       "MainQuestProcedure": 0,
       "Money": 0,
-      "InventoryItemNames": [
+      "InventorySlots": [
         null,
         null,
         null,
@@ -44,66 +84,18 @@
         null,
         null
       ],
-      "InventoryItemCounts": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "QuickSlotItemNames": [
+      "QuickSlots": [
         null,
         null,
         null,
         null
       ],
-      "QuickSlotItemCounts": [
-        0,
-        0,
-        0,
-        0
-      ],
-      "EquipmentSlotItemNames": [
-        null,
-        null,
-        null,
-        null
-      ],
-      "EquipmentSlotItemCounts": [
-        0,
-        0,
-        0,
-        0
-      ],
+      "WeaponSlot": null,
+      "HelmetSlot": null,
+      "ArmorSlot": null,
+      "BootsSlot": null,
       "QuestSaveList": []
-    },
-    null,
-    null
+    }
   ],
   "BgmVolume": 0.5,
   "SfxVolume": 0.5
