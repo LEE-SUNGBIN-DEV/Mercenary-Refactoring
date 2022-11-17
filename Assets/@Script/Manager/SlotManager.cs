@@ -9,14 +9,13 @@ public class SlotManager
     private BaseSlot targetSlot;
     private BaseSlot dragSlot;
 
-    public void Initialize()
+    public void Initialize(GameObject canvasObject)
     {
         selectSlot = null;
         targetSlot = null;
 
-        //GameObject slotObject = Managers.ResourceManager.InstantiatePrefabSync("Prefab_Drag_Slot");
-        //temporarySlot = slotObject.GetComponent<BaseSlot>();
-        //temporarySlot.gameObject.SetActive(false);
+        dragSlot = Functions.FindChild<BaseSlot>(canvasObject, "Prefab_Drag_Slot", true);
+        dragSlot.gameObject.SetActive(false);
     }
 
     public void OnBeginDrag<T>(T slot) where T : BaseSlot

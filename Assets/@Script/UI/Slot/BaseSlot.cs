@@ -18,11 +18,14 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     }
 
     [Header("Base Slot")]
-    protected BaseItem item;
-    protected int itemCount;
-    protected Image itemImage;
-    protected TextMeshProUGUI itemCountText;
-
+    [SerializeField] protected BaseItem item;
+    [SerializeField] protected int itemCount;
+    [SerializeField] protected Image itemImage;
+    [SerializeField] protected TextMeshProUGUI itemCountText;
+    private void Awake()
+    {
+        Initialize();
+    }
     public virtual void Initialize()
     {
         BindImage(typeof(IMAGE));
@@ -35,23 +38,19 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         itemCount = 0;
     }
 
-    public void AddItemToSlot<T>(T targetItem, int amount = 1) where T : BaseItem
+    public void AddItemToSlot<T>(T targetItem) where T : BaseItem
     {
         item = targetItem;
         itemImage.sprite = targetItem.ItemSprite;
+        itemCount = targetItem.ItemCount;
 
-        if(item.IsCountable)
+        if (item.IsCountable)
         {
-            itemCount += amount;
-            if (itemCount > 0)
-            {
-                itemCountText.text = $"{itemCount}";
-                itemCountText.enabled = true;
-            }
+            itemCountText.text = $"{itemCount}";
+            itemCountText.enabled = true;
         }
         else
         {
-            itemCount = 1;
             itemCountText.enabled = false;
         }
     }
@@ -66,17 +65,20 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
 
     public void SetSlot(BaseSlot slot)
     {
-        item = slot.Item;
-        itemImage.sprite = slot.Item.ItemSprite;
-        itemCount = slot.ItemCount;
-        if (item.IsCountable && itemCount > 0)
+        if(slot.Item != null)
         {
-            itemCountText.text = $"{itemCount}";
-            itemCountText.enabled = true;
-        }
-        else
-        {
-            itemCountText.enabled = false;
+            item = slot.Item;
+            itemImage.sprite = slot.Item.ItemSprite;
+            itemCount = slot.ItemCount;
+            if (item.IsCountable && itemCount > 0)
+            {
+                itemCountText.text = $"{itemCount}";
+                itemCountText.enabled = true;
+            }
+            else
+            {
+                itemCountText.enabled = false;
+            }
         }
     }
     public void ClearSlot()
@@ -91,7 +93,7 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     #region Mouse Event Function
     public abstract void Drop();
     public abstract void EndDrag();
-    public abstract void ClickSlot(PointerEventData eventData);
+    public abstract void SlotRightClick(PointerEventData eventData);
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -113,7 +115,10 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        ClickSlot(eventData);
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            SlotRightClick(eventData);
+        }
     }
     #endregion
 

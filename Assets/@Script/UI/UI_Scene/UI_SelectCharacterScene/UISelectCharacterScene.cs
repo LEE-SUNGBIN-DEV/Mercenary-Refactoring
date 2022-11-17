@@ -29,10 +29,9 @@ public class UISelectCharacterScene : UIBaseScene
         // Texts
     }
 
-    private CharacterData[] characterDatas;
+    private CharacterData[] characterDatas = null;
     private CharacterSlot[] characterSlots = new CharacterSlot[Constants.MAX_CHARACTER_SLOT_NUMBER];
     private CharacterSlot selectSlot;
-
     private CreateCharacterPanel createCharacterPanel;
 
     private void Awake()
@@ -52,46 +51,49 @@ public class UISelectCharacterScene : UIBaseScene
             Debug.Log($"{this}: Already Initialized.");
             return;
         }
-        isInitialized = true;
-
-        characterDatas = Managers.DataManager.PlayerData?.CharacterDatas;
-
-        BindButton(typeof(BUTTON));
-        BindText(typeof(TEXT));
-
-        selectSlot = null;
-
-        GetButton((int)BUTTON.StartGameButton).onClick.AddListener(() => { OnClickStartGameButton(selectSlot.slotIndex); });
-        GetButton((int)BUTTON.CharacterRemoveButton).onClick.AddListener(() => { OnClickRemoveCharacter(selectSlot.slotIndex); });
-        GetButton((int)BUTTON.QuitButton).onClick.AddListener(OnClickQuitGameButton);
-        GetButton((int)BUTTON.OptionButton).onClick.AddListener(OnClickOptionButton);
-
-        for (int i = 0; i < characterSlots.Length; ++i)
+        else
         {
-            characterSlots[i] = new CharacterSlot
-            {
-                slotIndex = i,
-                selectionCharacter = null,
-                characterPoint = Constants.SELECTION_CHARACTER_POINT[i],
-                slotButton = GetButton(i),
-                slotText = GetText(i)
-            };
-        }
+            isInitialized = true;
 
-        // Sub Panel Initialize
-        createCharacterPanel = GetComponentInChildren<CreateCharacterPanel>(true);
-        createCharacterPanel.Initialize(selectSlot);
-        createCharacterPanel.OnOpenPanel += () =>
-        {
+            BindButton(typeof(BUTTON));
+            BindText(typeof(TEXT));
+
+            GetButton((int)BUTTON.StartGameButton).onClick.AddListener(() => { OnClickStartGameButton(selectSlot.slotIndex); });
+            GetButton((int)BUTTON.CharacterRemoveButton).onClick.AddListener(() => { OnClickRemoveCharacter(selectSlot.slotIndex); });
+            GetButton((int)BUTTON.QuitButton).onClick.AddListener(OnClickQuitGameButton);
+            GetButton((int)BUTTON.OptionButton).onClick.AddListener(OnClickOptionButton);
+
+            characterDatas = Managers.DataManager.PlayerData.CharacterDatas;
+            selectSlot = null;
+
             for (int i = 0; i < characterSlots.Length; ++i)
             {
-                characterSlots[i].slotButton.interactable = false;
+                characterSlots[i] = new CharacterSlot
+                {
+                    slotIndex = i,
+                    selectionCharacter = null,
+                    characterPoint = Constants.SELECTION_CHARACTER_POINT[i],
+                    slotButton = GetButton(i),
+                    slotText = GetText(i)
+                };
             }
-        };
-        createCharacterPanel.OnClosePanel += () =>
-        {
-            Refresh();
-        };
+
+            // Sub Panel Initialize
+            createCharacterPanel = GetComponentInChildren<CreateCharacterPanel>(true);
+            createCharacterPanel.Initialize(selectSlot);
+            createCharacterPanel.OnOpenPanel += () =>
+            {
+                for (int i = 0; i < characterSlots.Length; ++i)
+                {
+                    characterSlots[i].slotButton.interactable = false;
+                }
+            };
+            createCharacterPanel.OnClosePanel += () =>
+            {
+                Refresh();
+            };
+        }
+        
     }
 
     public void Refresh()
@@ -107,7 +109,7 @@ public class UISelectCharacterScene : UIBaseScene
 
             int index = i;
             // Exist CharacterData
-            if (characterDatas[i] != null)
+            if (characterDatas[i]?.CharacterClass != null)
             {
                 if (characterSlots[i].selectionCharacter == null)
                 {

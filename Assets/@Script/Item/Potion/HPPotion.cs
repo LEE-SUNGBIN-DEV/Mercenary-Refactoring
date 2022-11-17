@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class HPPotion : PotionItem
+public class HPPotion : ConsumptionItem
 {
     [Header("HP Potion")]
     private float hpRecoveryAmount;

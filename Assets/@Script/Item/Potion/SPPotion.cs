@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SPPotion : PotionItem
+public class SPPotion : ConsumptionItem
 {
     [Header("SP Potion")]
     private float spRecoveryAmount;

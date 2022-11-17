@@ -33,6 +33,7 @@ public static partial class Constants
     public static readonly float CHARACTER_STAT_CRITICAL_DAMAGE_DEFAULT = 100f;
 
     // Character Data
+    public static readonly int CHARACTER_DATA_DEFAULT_MONEY = 500;
     public static readonly int CHARACTER_DATA_DEFALUT_LEVEL = 1;
     public static readonly int CHARACTER_DATA_MAX_LEVEL = 30;
     public static readonly float CHARACTER_DATA_DEFALUT_EXPERIENCE = 0f;

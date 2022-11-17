@@ -55,8 +55,8 @@ public class QuestManager
         QuestPopup.onClickCompleteButton -= RequestCompleteList;
         QuestPopup.onClickCompleteButton += RequestCompleteList;
 
-        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestProcedure -= RefreshInactiveQuest;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestProcedure += RefreshInactiveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestPrograss -= RefreshInactiveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestPrograss += RefreshInactiveQuest;
         #endregion
     }
 
@@ -178,7 +178,7 @@ public class QuestManager
         for (int i = 0; i < InactiveQuestList.Count; ++i)
         {
             if (chracterData.Level >= InactiveQuestList[i].LevelCondition
-                && chracterData.MainQuestProcedure >= InactiveQuestList[i].QuestCondition)
+                && chracterData.MainQuestPrograss >= InactiveQuestList[i].QuestCondition)
             {
                 InactiveQuestList[i].ActiveQuest();
                 --i;
