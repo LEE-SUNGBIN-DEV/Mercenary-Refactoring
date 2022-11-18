@@ -19,7 +19,7 @@ public static partial class Functions
     public static void CreateCharacterWithCamera(Vector3 position)
     {
         GameObject cameraObject = Managers.ResourceManager.InstantiatePrefabSync("Prefab_Player_Camera");
-        Character character = Managers.ResourceManager.InstantiatePrefabSync("Prefab_" + Managers.DataManager.CurrentCharacterData.CharacterClass).GetComponent<Character>();
+        Character character = Managers.ResourceManager.InstantiatePrefabSync("Prefab_" + Managers.DataManager.CurrentCharacterData.StatData.CharacterClass).GetComponent<Character>();
 
         SetCharacterPosition(character, position);
         cameraObject.transform.position = position;
@@ -34,20 +34,20 @@ public static partial class Functions
     public static void PlayerDamageProcess(Character character, Enemy enemy, float ratio)
     {
         // Basic Damage Process
-        float damage = (character.CharacterStats.AttackPower - enemy.DefensivePower * 0.5f) * 0.5f;
+        float damage = (character.CharacterStatus.AttackPower - enemy.DefensivePower * 0.5f) * 0.5f;
         if (damage < 0)
         {
             damage = 0;
         }
-        damage += ((character.CharacterStats.AttackPower / 8f - character.CharacterStats.AttackPower / 16f) + 1f);
+        damage += ((character.CharacterStatus.AttackPower / 8f - character.CharacterStatus.AttackPower / 16f) + 1f);
 
         // Critical Process
         bool isCritical;
         float randomNumber = Random.Range(0.0f, 100.0f);
-        if (randomNumber <= character.CharacterStats.CriticalChance)
+        if (randomNumber <= character.CharacterStatus.CriticalChance)
         {
             isCritical = true;
-            damage *= (1 + character.CharacterStats.CriticalDamage * 0.01f);
+            damage *= (1 + character.CharacterStatus.CriticalDamage * 0.01f);
             Managers.AudioManager.PlaySFX("Player Critical Attack");
         }
         else
@@ -73,7 +73,7 @@ public static partial class Functions
     public static void EnemyDamageProcess(Enemy enemy, Character character, float ratio)
     {
         // Damage Process
-        float damage = (enemy.AttackPower - character.CharacterStats.DefensivePower * 0.5f) * 0.5f;
+        float damage = (enemy.AttackPower - character.CharacterStatus.DefensivePower * 0.5f) * 0.5f;
         if (damage < 0)
         {
             damage = 0;
@@ -83,6 +83,6 @@ public static partial class Functions
         // Final Damage
         damage *= ratio;
 
-        character.CharacterStats.CurrentHitPoint -= damage;
+        character.CharacterStatus.CurrentHitPoint -= damage;
     }
 }

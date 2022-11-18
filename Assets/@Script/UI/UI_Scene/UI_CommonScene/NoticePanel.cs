@@ -16,13 +16,6 @@ public class NoticePanel : UIPanel
 
     public override void Initialize()
     {
-        if (isInitialized == true)
-        {
-            Debug.Log($"{this}: Already Initialized.");
-            return;
-        }
-        isInitialized = true;
-
         BindText(typeof(TEXT));
 
         Managers.UIManager.OnRequestNotice -= AcceptRequest;

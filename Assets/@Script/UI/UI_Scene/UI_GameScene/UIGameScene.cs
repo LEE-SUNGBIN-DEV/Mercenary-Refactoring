@@ -39,6 +39,14 @@ public class UIGameScene : UIBaseScene
         storePopup = GetComponentInChildren<StorePopup>(true);
         campaignPopup = GetComponentInChildren<CampaignPopup>(true);
 
+        diePopup.Initialize();
+        inventoryPopup.Initialize();
+        statusPopup.Initialize();
+        helpPopup.Initialize();
+        questPopup.Initialize();
+        storePopup.Initialize();
+        campaignPopup.Initialize();
+
         OpenPanel(userPanel);
     }
 

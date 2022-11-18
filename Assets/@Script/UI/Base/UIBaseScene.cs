@@ -61,10 +61,6 @@ public abstract class UIBaseScene : UIBase
             PlayPopupOpenSFX();
             currentPopUpLinkedList.AddFirst(popup);
             popup.gameObject.SetActive(true);
-            if (popup.IsInitialized == false)
-            {
-                popup.Initialize(FocusPopup);
-            }
         }
 
         RefreshPopupOrder();

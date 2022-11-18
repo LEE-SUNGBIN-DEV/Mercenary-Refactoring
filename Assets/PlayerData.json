@@ -1,100 +1,171 @@
 {
   "CharacterDatas": [
     {
-      "CharacterClass": null,
-      "Level": 1,
-      "CurrentExperience": 0.0,
-      "MaxExperience": 1.0,
-      "StatPoint": 0,
-      "Strength": 0,
-      "Vitality": 0,
-      "Dexterity": 0,
-      "Luck": 0,
-      "MainQuestProcedure": 0,
-      "Money": 0,
-      "InventorySlots": null,
-      "QuickSlots": null,
-      "WeaponSlot": null,
-      "HelmetSlot": null,
-      "ArmorSlot": null,
-      "BootsSlot": null,
-      "QuestSaveList": null
+      "StatData": {
+        "CharacterClass": "Lancer",
+        "Level": 1,
+        "CurrentExperience": 0.0,
+        "MaxExperience": 10.0,
+        "StatPoint": 0,
+        "Strength": 10,
+        "Vitality": 10,
+        "Dexterity": 10,
+        "Luck": 10
+      },
+      "LocationData": {
+        "LastViliage": 3
+      },
+      "ItemData": {
+        "Money": 500,
+        "InventoryItemList": [
+          {
+            "slotIndex": 0,
+            "itemType": 1,
+            "itemID": 1,
+            "itemCount": 1,
+            "grade": 0
+          }
+        ],
+        "QuickSlots": [],
+        "WeaponSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        },
+        "HelemetSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        },
+        "ArmorSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        },
+        "BootsSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        }
+      },
+      "QuestData": {
+        "MainQuestPrograss": 0,
+        "QuestSaveList": []
+      }
     },
     {
-      "CharacterClass": null,
-      "Level": 1,
-      "CurrentExperience": 0.0,
-      "MaxExperience": 1.0,
-      "StatPoint": 0,
-      "Strength": 0,
-      "Vitality": 0,
-      "Dexterity": 0,
-      "Luck": 0,
-      "MainQuestProcedure": 0,
-      "Money": 0,
-      "InventorySlots": null,
-      "QuickSlots": null,
-      "WeaponSlot": null,
-      "HelmetSlot": null,
-      "ArmorSlot": null,
-      "BootsSlot": null,
-      "QuestSaveList": null
+      "StatData": {
+        "CharacterClass": null,
+        "Level": 1,
+        "CurrentExperience": 0.0,
+        "MaxExperience": 1.0,
+        "StatPoint": 0,
+        "Strength": 0,
+        "Vitality": 0,
+        "Dexterity": 0,
+        "Luck": 0
+      },
+      "LocationData": {
+        "LastViliage": 3
+      },
+      "ItemData": {
+        "Money": 500,
+        "InventoryItemList": [],
+        "QuickSlots": [],
+        "WeaponSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        },
+        "HelemetSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        },
+        "ArmorSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        },
+        "BootsSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        }
+      },
+      "QuestData": {
+        "MainQuestPrograss": 0,
+        "QuestSaveList": []
+      }
     },
     {
-      "CharacterClass": "Lancer",
-      "Level": 1,
-      "CurrentExperience": 0.0,
-      "MaxExperience": 10.0,
-      "StatPoint": 0,
-      "Strength": 10,
-      "Vitality": 10,
-      "Dexterity": 10,
-      "Luck": 10,
-      "MainQuestProcedure": 0,
-      "Money": 0,
-      "InventorySlots": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ],
-      "QuickSlots": [
-        null,
-        null,
-        null,
-        null
-      ],
-      "WeaponSlot": null,
-      "HelmetSlot": null,
-      "ArmorSlot": null,
-      "BootsSlot": null,
-      "QuestSaveList": []
+      "StatData": {
+        "CharacterClass": null,
+        "Level": 1,
+        "CurrentExperience": 0.0,
+        "MaxExperience": 1.0,
+        "StatPoint": 0,
+        "Strength": 0,
+        "Vitality": 0,
+        "Dexterity": 0,
+        "Luck": 0
+      },
+      "LocationData": {
+        "LastViliage": 3
+      },
+      "ItemData": {
+        "Money": 500,
+        "InventoryItemList": [],
+        "QuickSlots": [],
+        "WeaponSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        },
+        "HelemetSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        },
+        "ArmorSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        },
+        "BootsSlotItem": {
+          "slotIndex": 0,
+          "itemType": 0,
+          "itemID": 0,
+          "itemCount": 0,
+          "grade": 0
+        }
+      },
+      "QuestData": {
+        "MainQuestPrograss": 0,
+        "QuestSaveList": []
+      }
     }
   ],
   "BgmVolume": 0.5,

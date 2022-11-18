@@ -11,6 +11,7 @@ public class LoadingScene : BaseScene
 
     private void Start()
     {
+        Managers.GameSceneManager.FadeEffect.SetAlpha(0f);
         StartCoroutine(LoadSceneProgress());
     }
 
@@ -26,13 +27,9 @@ public class LoadingScene : BaseScene
         AsyncOperation loadingProgress = SceneManager.LoadSceneAsync(nextSceneName);
         loadingProgress.allowSceneActivation = false;
 
-        Managers.GameSceneManager.FadeEffect.SetAlpha(0f);
-
         float timer = 0.0f;
         while (loadingProgress.isDone == false)
         {
-            yield return null;
-
             if (loadingProgress.progress < 0.9f)
             {
                 loadingBar.value = loadingProgress.progress;
@@ -49,10 +46,11 @@ public class LoadingScene : BaseScene
                     yield break;
                 }
             }
+
+            yield return null;
         }
     }
 
-    // Public Function
     public static void LoadScene(string sceneName)
     {
         nextSceneName = sceneName;

@@ -10,11 +10,11 @@ public abstract class Character : MonoBehaviour
     private PlayerCamera playerCamera;
     private CharacterController characterController;
     private Animator characterAnimator;
-    private InventoryPanel characterInventory;
+    private InventoryPopup characterInventory;
 
     private UserInput playerInput;
-    [SerializeField] private CharacterData characterData;
-    private CharacterStats characterStats;
+    private CharacterData characterData;
+    private CharacterStatus characterStatus;
     private CharacterState characterState;
 
 
@@ -26,15 +26,15 @@ public abstract class Character : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         characterAnimator = GetComponent<Animator>();
-        characterInventory = GetComponent<InventoryPanel>();
+        characterInventory = GetComponent<InventoryPopup>();
 
         playerInput = new UserInput();
         characterData = Managers.DataManager.CurrentCharacterData;
-        characterStats = new CharacterStats(this);
+        characterStatus = new CharacterStatus(this);
         characterState = new CharacterState(this);
 
-        CharacterStats.OnDie -= Die;
-        CharacterStats.OnDie += Die;
+        CharacterStatus.OnDie -= Die;
+        CharacterStatus.OnDie += Die;
 
         Managers.DataManager.CurrentCharacter = this;
     }
@@ -59,7 +59,7 @@ public abstract class Character : MonoBehaviour
 
     public abstract CHARACTER_STATE DetermineCharacterState();
     
-    public void Die(CharacterStats characterStats)
+    public void Die(CharacterStatus characterStats)
     {
     }
     public void Rebirth()
@@ -68,7 +68,7 @@ public abstract class Character : MonoBehaviour
     }
     public void AutoRecoverStamina()
     {
-        characterStats.CurrentStamina += (characterStats.MaxStamina * Constants.CHARACTER_STAMINA_AUTO_RECOVERY * 0.01f * Time.deltaTime);
+        characterStatus.CurrentStamina += (characterStatus.MaxStamina * Constants.CHARACTER_STAMINA_AUTO_RECOVERY * 0.01f * Time.deltaTime);
     }
     public void SetInteract(bool isInteract)
     {
@@ -85,12 +85,12 @@ public abstract class Character : MonoBehaviour
     #region Property
     public UserInput PlayerInput { get { return playerInput; } }
     public CharacterData CharacterData { get { return characterData; } }
-    public CharacterStats CharacterStats { get { return characterStats; } }
+    public CharacterStatus CharacterStatus { get { return characterStatus; } }
     public CharacterState CharacterState { get { return characterState; } }
     
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }
     public Animator CharacterAnimator { get { return characterAnimator; } }
-    public InventoryPanel CharacterInventory { get { return characterInventory; } }
+    public InventoryPopup CharacterInventory { get { return characterInventory; } }
     #endregion
 }

@@ -92,11 +92,11 @@ public class Quest
         onReward(this);
     }
 
-    public QuestSaveData SaveQuest()
+    public QuestData SaveQuest()
     {
         if (questState == QUEST_STATE.COMPLETE)
         {
-            QuestSaveData questData = new QuestSaveData
+            QuestData questData = new QuestData
             {
                 questState = questState,
                 questID = questID,
@@ -109,7 +109,7 @@ public class Quest
 
         else
         {
-            QuestSaveData questData = new QuestSaveData
+            QuestData questData = new QuestData
             {
                 questState = questState,
                 questID = questID,
@@ -120,7 +120,7 @@ public class Quest
             return questData;
         }
     }
-    public void LoadQuest(QuestSaveData questData)
+    public void LoadQuest(QuestData questData)
     {
         if (QuestID == questData.questID)
         {

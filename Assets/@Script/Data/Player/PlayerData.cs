@@ -17,10 +17,6 @@ public class PlayerData
         if(isFirst)
         {
             characterDatas = new CharacterData[Constants.MAX_CHARACTER_SLOT_NUMBER];
-            for (int i = 0; i < characterDatas.Length; ++i)
-            {
-                characterDatas[i] = null;
-            }
             bgmVolume = 0.5f;
             sfxVolume = 0.5f;
         }

@@ -11,13 +11,13 @@ public class ArmorItem : EquipmentItem
     public override void Equip(Character character)
     {
         base.Equip(character);
-        character.CharacterStats.DefensivePower += increasedAmount;
+        character.CharacterStatus.DefensivePower += increasedAmount;
     }
 
     public override void Release(Character character)
     {
         base.Release(character);
-        character.CharacterStats.DefensivePower -= increasedAmount;
+        character.CharacterStatus.DefensivePower -= increasedAmount;
     }
 
     public float IncreasedAmount { get { return increasedAmount; } set { increasedAmount = value; } }

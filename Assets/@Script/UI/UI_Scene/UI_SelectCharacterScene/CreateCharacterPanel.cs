@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CreateCharacterPanel : UIBase
+public class CreateCharacterPanel : UIPanel
 {
     public event UnityAction OnOpenPanel;
     public event UnityAction OnClosePanel;
@@ -21,13 +21,12 @@ public class CreateCharacterPanel : UIBase
     private Animator animator;
     private bool isOpen;
 
-    public void Initialize(CharacterSlot targetSlot)
+    public override void Initialize()
     {
         animator = GetComponent<Animator>();
 
         BindButton(typeof(BUTTON));
 
-        SetSlot(targetSlot);
         selectClass = CHARACTER_CLASS.Null;
 
         GetButton((int)BUTTON.LancerButton).onClick.AddListener(() => { OnClickCharacterButton(CHARACTER_CLASS.Lancer); });

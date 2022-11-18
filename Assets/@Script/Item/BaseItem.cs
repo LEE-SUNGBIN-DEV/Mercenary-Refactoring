@@ -10,10 +10,19 @@ public enum ITEM_RANK
     Myth
 }
 
+public enum ITEM_TYPE
+{
+    Normal,
+    Equipment,
+    Consumption,
+    Quest
+}
+
 [System.Serializable]
-public abstract class BaseItem
+public class BaseItem
 {
     [Header("Base Item")]
+    protected ITEM_TYPE itemType;
     protected ITEM_RANK itemRank;
     protected int itemID;
     protected string itemName;
@@ -24,6 +33,7 @@ public abstract class BaseItem
     protected Sprite itemSprite;
 
     #region Property
+    public ITEM_TYPE ItemType { get { return itemType; } set { itemType = value; } }
     public ITEM_RANK ItemRank { get { return itemRank; } set { itemRank = value; } }
     public int ItemID { get { return itemID; } set { itemID = value; } }
     public string ItemName { get { return itemName; } set { itemName = value; } }

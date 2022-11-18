@@ -29,10 +29,10 @@ public class QuestManager
         AddAllQuestToDictionary();
 
         #region Add Event
-        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadCharacterData -= LoadQuest;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnLoadCharacterData += LoadQuest;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnSaveCharacterData -= SaveQuest;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnSaveCharacterData += SaveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.QuestData.OnChangeQuestData -= LoadQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.QuestData.OnChangeQuestData += LoadQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.QuestData.OnChangeQuestData -= SaveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.QuestData.OnChangeQuestData += SaveQuest;
 
         Managers.GameSceneManager.OnSceneEnter -= RequestNPCQuestList;
         Managers.GameSceneManager.OnSceneEnter += RequestNPCQuestList;
@@ -55,8 +55,8 @@ public class QuestManager
         QuestPopup.onClickCompleteButton -= RequestCompleteList;
         QuestPopup.onClickCompleteButton += RequestCompleteList;
 
-        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestPrograss -= RefreshInactiveQuest;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeMainQuestPrograss += RefreshInactiveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.QuestData.OnChangeQuestData -= RefreshInactiveQuest;
+        Managers.DataManager.CurrentCharacter.CharacterData.QuestData.OnChangeQuestData += RefreshInactiveQuest;
         #endregion
     }
 
@@ -165,7 +165,6 @@ public class QuestManager
             }
         }
     }
-    // Overloading for Quest Task Event
     public void RequestNPCQuestList(QuestTask questTask)
     {
         RequestNPCQuestList();
@@ -173,12 +172,12 @@ public class QuestManager
     #endregion
 
     // 비활성화 목록을 검사하여 활성화 가능한 퀘스트가 있으면 활성화 리스트로 이동
-    public void RefreshInactiveQuest(CharacterData chracterData)
+    public void RefreshInactiveQuest(CharacterQuestData questData)
     {
         for (int i = 0; i < InactiveQuestList.Count; ++i)
         {
-            if (chracterData.Level >= InactiveQuestList[i].LevelCondition
-                && chracterData.MainQuestPrograss >= InactiveQuestList[i].QuestCondition)
+            if (Managers.DataManager.CurrentCharacter.CharacterData.StatData.Level >= InactiveQuestList[i].LevelCondition
+                && questData.MainQuestPrograss >= InactiveQuestList[i].QuestCondition)
             {
                 InactiveQuestList[i].ActiveQuest();
                 --i;
@@ -225,24 +224,24 @@ public class QuestManager
     }
 
     #region Save & Load
-    public void SaveQuest(CharacterData characterData)
+    public void SaveQuest(CharacterQuestData qeustData)
     {
         for (int i = 0; i < MainQuestDatabase.Length; ++i)
         {
-            characterData.QuestSaveList.Add(MainQuestDatabase[i].SaveQuest());
+            qeustData.QuestSaveList.Add(MainQuestDatabase[i].SaveQuest());
         }
 
         for (int i = 0; i < SubQuestDatabase.Length; ++i)
         {
-            characterData.QuestSaveList.Add(SubQuestDatabase[i].SaveQuest());
+            qeustData.QuestSaveList.Add(SubQuestDatabase[i].SaveQuest());
         }
     }
 
-    public void LoadQuest(CharacterData characterData)
+    public void LoadQuest(CharacterQuestData qeustData)
     {
-        for (int i = 0; i < characterData.QuestSaveList.Count; ++i)
+        for (int i = 0; i < qeustData.QuestSaveList.Count; ++i)
         {
-            QuestDictionary[characterData.QuestSaveList[i].questID].LoadQuest(characterData.QuestSaveList[i]);
+            QuestDictionary[qeustData.QuestSaveList[i].questID].LoadQuest(qeustData.QuestSaveList[i]);
         }
     }
     #endregion

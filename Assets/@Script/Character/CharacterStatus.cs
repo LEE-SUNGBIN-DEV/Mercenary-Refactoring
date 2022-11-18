@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class CharacterStats
+public class CharacterStatus
 {
-    public static event UnityAction<CharacterStats> OnCharacterStatsChanged;
-    public event UnityAction<CharacterStats> OnDie;
+    public event UnityAction<CharacterStatus> OnCharacterStatusChanged;
+    public event UnityAction<CharacterStatus> OnDie;
 
-    private Character character;
+    private Character owner;
     private float attackPower;
     private float defensivePower;
 
@@ -23,30 +23,29 @@ public class CharacterStats
     private float attackSpeed;
     private float moveSpeed;
 
-    public CharacterStats(Character owner)
+    public CharacterStatus(Character targetCharacter)
     {
-        character = owner;
+        owner = targetCharacter;
+        owner.CharacterData.StatData.OnChangeStatData -= UpdateStats;
+        owner.CharacterData.StatData.OnChangeStatData += UpdateStats;
 
-        character.CharacterData.OnChangeCharacterData -= UpdateStats;
-        character.CharacterData.OnChangeCharacterData += UpdateStats;
-
-        UpdateStats(character.CharacterData);
+        UpdateStats(owner.CharacterData.StatData);
     }
 
-    public void UpdateStats(CharacterData characterData)
+    public void UpdateStats(CharacterStatData statData)
     {
-        AttackPower = characterData.Strength * 2;
-        DefensivePower = characterData.Strength;
+        AttackPower = statData.Strength * 2;
+        DefensivePower = statData.Strength;
 
-        MaxHitPoint = characterData.Vitality * 10;
-        CurrentHitPoint = characterData.Vitality * 10;
-        MaxStamina = characterData.Vitality * 10;
-        CurrentStamina = characterData.Vitality * 10;
+        MaxHitPoint = statData.Vitality * 10;
+        CurrentHitPoint = statData.Vitality * 10;
+        MaxStamina = statData.Vitality * 10;
+        CurrentStamina = statData.Vitality * 10;
 
-        CriticalChance = characterData.Luck;
-        CriticalDamage = Constants.CHARACTER_STAT_CRITICAL_DAMAGE_DEFAULT + characterData.Luck;
-        AttackSpeed = Constants.CHARACTER_STAT_ATTACK_SPEED_DEFAULT + characterData.Dexterity * 0.01f;
-        MoveSpeed = Constants.CHARACTER_STAT_MOVE_SPEED_DEFAULT + characterData.Dexterity * 0.02f;
+        CriticalChance = statData.Luck;
+        CriticalDamage = Constants.CHARACTER_STAT_CRITICAL_DAMAGE_DEFAULT + statData.Luck;
+        AttackSpeed = Constants.CHARACTER_STAT_ATTACK_SPEED_DEFAULT + statData.Dexterity * 0.01f;
+        MoveSpeed = Constants.CHARACTER_STAT_MOVE_SPEED_DEFAULT + statData.Dexterity * 0.02f;
     }
 
     #region Property
@@ -60,7 +59,7 @@ public class CharacterStats
             {
                 attackPower = 0;
             }
-            OnCharacterStatsChanged?.Invoke(this);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     public float DefensivePower
@@ -73,7 +72,7 @@ public class CharacterStats
             {
                 defensivePower = 0;
             }
-            OnCharacterStatsChanged?.Invoke(this);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     public float MaxHitPoint
@@ -86,7 +85,7 @@ public class CharacterStats
             {
                 maxHitPoint = 1;
             }
-            OnCharacterStatsChanged?.Invoke(this);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     public float CurrentHitPoint
@@ -105,7 +104,7 @@ public class CharacterStats
                 currentHitPoint = 0;
                 OnDie(this);
             }
-            OnCharacterStatsChanged?.Invoke(this);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     public float MaxStamina
@@ -118,7 +117,7 @@ public class CharacterStats
             {
                 maxStamina = 1;
             }
-            OnCharacterStatsChanged?.Invoke(this);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     public float CurrentStamina
@@ -137,7 +136,7 @@ public class CharacterStats
                 currentStamina = 0;
             }
 
-            OnCharacterStatsChanged?.Invoke(this);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     public float AttackSpeed
@@ -157,8 +156,8 @@ public class CharacterStats
                 attackSpeed = Constants.CHARACTER_STAT_ATTACK_SPEED_MAX;
             }
 
-            character.CharacterAnimator.SetFloat("attackSpeed", attackSpeed);
-            OnCharacterStatsChanged?.Invoke(this);
+            owner.CharacterAnimator.SetFloat("attackSpeed", attackSpeed);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     public float MoveSpeed
@@ -178,7 +177,7 @@ public class CharacterStats
                 moveSpeed = Constants.CHARACTER_STAT_MOVE_SPEED_MAX;
             }
 
-            OnCharacterStatsChanged?.Invoke(this);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     public float CriticalChance
@@ -197,7 +196,7 @@ public class CharacterStats
                 criticalChance = Constants.CHARACTER_STAT_CRITICAL_CHANCE_MAX;
             }
 
-            OnCharacterStatsChanged?.Invoke(this);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     public float CriticalDamage
@@ -210,7 +209,7 @@ public class CharacterStats
             {
                 criticalDamage = Constants.CHARACTER_STAT_CRITICAL_DAMAGE_MIN;
             }
-            OnCharacterStatsChanged?.Invoke(this);
+            OnCharacterStatusChanged?.Invoke(this);
         }
     }
     #endregion

@@ -22,9 +22,11 @@ public class UICommonScene : UIBaseScene
         // Panel
         confirmPanel = gameObject.GetComponentInChildren<ConfirmPanel>(true);
         noticePanel = gameObject.GetComponentInChildren<NoticePanel>(true);
-
+        confirmPanel.Initialize();
+        noticePanel.Initialize();
         // Popup
         optionPopup = gameObject.GetComponentInChildren<OptionPopup>(true);
+        optionPopup.Initialize();
     }
 
     public void RequestNotice()

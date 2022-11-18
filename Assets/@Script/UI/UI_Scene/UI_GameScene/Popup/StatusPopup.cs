@@ -1,178 +1,118 @@
-using UnityEngine;
-using TMPro;
 using UnityEngine.Events;
 
 public class StatusPopup : UIPopup
 {
-    [SerializeField] private TextMeshProUGUI classText;
-    [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private TextMeshProUGUI hitPointText;
-    [SerializeField] private TextMeshProUGUI staminaText;
-    [SerializeField] private TextMeshProUGUI attackPowerText;
-    [SerializeField] private TextMeshProUGUI defensivePowerText;
-    [SerializeField] private TextMeshProUGUI attackSpeedText;
-    [SerializeField] private TextMeshProUGUI moveSpeedText;
-    [SerializeField] private TextMeshProUGUI criticalChanceText;
-    [SerializeField] private TextMeshProUGUI criticalDamageText;
-    
-    [SerializeField] private TextMeshProUGUI statPointText;
-    
-    [SerializeField] private TextMeshProUGUI strengthText;
-    [SerializeField] private TextMeshProUGUI vitalityText;
-    [SerializeField] private TextMeshProUGUI dexterityText;
-    [SerializeField] private TextMeshProUGUI luckText;
+    public enum TEXT
+    {
+        ClassText,
+        LevelText,
+        HPText,
+        SPText,
+        AttackPowerText,
+        DefensivePowerText,
+        AttackSpeedText,
+        MoveSpeedText,
+        CriticalChanceText,
+        CriticalDamageText,
+
+        StatPointText,
+        StrengthText,
+        VitalityText,
+        DexterityText,
+        LuckText
+    }
+
+    public enum BUTTON
+    {
+        StrengthButton,
+        VitalityButton,
+        DexterityButton,
+        LuckButton
+    }
 
     public override void Initialize(UnityAction<UIPopup> action = null)
     {
         base.Initialize(action);
-        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeCharacterData -= RefreshCharacterData;
-        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeCharacterData += RefreshCharacterData;
 
-        CharacterStats.OnCharacterStatsChanged -= RefreshCharacterStats;
-        CharacterStats.OnCharacterStatsChanged += RefreshCharacterStats;
+        BindText(typeof(TEXT));
+        BindButton(typeof(BUTTON));
+        GetButton((int)BUTTON.StrengthButton).onClick.AddListener(OnClickStrengthButton);
+        GetButton((int)BUTTON.VitalityButton).onClick.AddListener(OnClickVitalityButton);
+        GetButton((int)BUTTON.DexterityButton).onClick.AddListener(OnClickDexterityButton);
+        GetButton((int)BUTTON.LuckButton).onClick.AddListener(OnClickLuckButton);
+
+        Managers.DataManager.CurrentCharacter.CharacterData.StatData.OnChangeStatData -= RefreshStatData;
+        Managers.DataManager.CurrentCharacter.CharacterData.StatData.OnChangeStatData += RefreshStatData;
+        Managers.DataManager.CurrentCharacter.CharacterStatus.OnCharacterStatusChanged -= RefreshStatus;
+        Managers.DataManager.CurrentCharacter.CharacterStatus.OnCharacterStatusChanged += RefreshStatus;
     }
 
-    public void RefreshCharacterData(CharacterData characterData)
+    private void OnEnable()
     {
-        ClassText.text = characterData.CharacterClass;
-        LevelText.text = characterData.Level.ToString();
-
-        StatPointText.text = characterData.StatPoint.ToString();
-        StrengthText.text = characterData.Strength.ToString();
-        VitalityText.text = characterData.Vitality.ToString();
-        DexterityText.text = characterData.Dexterity.ToString();
-        LuckText.text = characterData.Luck.ToString();
+        RefreshStatData(Managers.DataManager.CurrentCharacter.CharacterData.StatData);
+        RefreshStatus(Managers.DataManager.CurrentCharacter.CharacterStatus);
     }
 
-    public void RefreshCharacterStats(CharacterStats characterStats)
+    public void RefreshStatData(CharacterStatData statData)
     {
-        AttackPowerText.text = characterStats.AttackPower.ToString();
-        DefensivePowerText.text = characterStats.DefensivePower.ToString();
+        GetText((int)TEXT.ClassText).text = statData.CharacterClass;
+        GetText((int)TEXT.LevelText).text = statData.Level.ToString();
 
-        HitPointText.text = characterStats.CurrentHitPoint.ToString("F1") + "/" + characterStats.MaxHitPoint.ToString();
-        StaminaText.text = characterStats.CurrentStamina.ToString("F1") + "/" + characterStats.MaxStamina.ToString();
+        GetText((int)TEXT.StatPointText).text = statData.StatPoint.ToString();
+        GetText((int)TEXT.StrengthText).text = statData.Strength.ToString();
+        GetText((int)TEXT.VitalityText).text = statData.Vitality.ToString();
+        GetText((int)TEXT.DexterityText).text = statData.Dexterity.ToString();
+        GetText((int)TEXT.LuckText).text = statData.Luck.ToString();
+    }
 
-        AttackSpeedText.text = characterStats.AttackSpeed.ToString();
-        MoveSpeedText.text = characterStats.MoveSpeed.ToString();
-        CriticalChanceText.text = characterStats.CriticalChance.ToString();
-        CriticalDamageText.text = characterStats.CriticalDamage.ToString();
+    public void RefreshStatus(CharacterStatus status)
+    {
+        GetText((int)TEXT.AttackPowerText).text = status.AttackPower.ToString();
+        GetText((int)TEXT.DefensivePowerText).text = status.DefensivePower.ToString();
+
+        GetText((int)TEXT.HPText).text = status.CurrentHitPoint.ToString("F1") + "/" + status.MaxHitPoint.ToString();
+        GetText((int)TEXT.SPText).text = status.CurrentStamina.ToString("F1") + "/" + status.MaxStamina.ToString();
+
+        GetText((int)TEXT.AttackSpeedText).text = status.AttackSpeed.ToString();
+        GetText((int)TEXT.MoveSpeedText).text = status.MoveSpeed.ToString();
+        GetText((int)TEXT.CriticalChanceText).text = status.CriticalChance.ToString();
+        GetText((int)TEXT.CriticalDamageText).text = status.CriticalDamage.ToString();
     }
 
     #region Button Event Function
-    public void IncreaseStrength()
+    public void OnClickStrengthButton()
     {
-        if (Managers.DataManager.CurrentCharacter.CharacterData.StatPoint > 0)
+        if (Managers.DataManager.CurrentCharacter.CharacterData.StatData.StatPoint > 0)
         {
-            --Managers.DataManager.CurrentCharacter.CharacterData.StatPoint;
-            ++Managers.DataManager.CurrentCharacter.CharacterData.Strength;
+            --Managers.DataManager.CurrentCharacter.CharacterData.StatData.StatPoint;
+            ++Managers.DataManager.CurrentCharacter.CharacterData.StatData.Strength;
         }
     }
-    public void IncreaseVitality()
+    public void OnClickVitalityButton()
     {
-        if (Managers.DataManager.CurrentCharacter.CharacterData.StatPoint > 0)
+        if (Managers.DataManager.CurrentCharacter.CharacterData.StatData.StatPoint > 0)
         {
-            --Managers.DataManager.CurrentCharacter.CharacterData.StatPoint;
-            ++Managers.DataManager.CurrentCharacter.CharacterData.Vitality;
-        }
-    }
-
-    public void IncreaseDexterity()
-    {
-        if (Managers.DataManager.CurrentCharacter.CharacterData.StatPoint > 0)
-        {
-            --Managers.DataManager.CurrentCharacter.CharacterData.StatPoint;
-            ++Managers.DataManager.CurrentCharacter.CharacterData.Dexterity;
+            --Managers.DataManager.CurrentCharacter.CharacterData.StatData.StatPoint;
+            ++Managers.DataManager.CurrentCharacter.CharacterData.StatData.Vitality;
         }
     }
 
-    public void IncreaseLuck()
+    public void OnClickDexterityButton()
     {
-        if (Managers.DataManager.CurrentCharacter.CharacterData.StatPoint > 0)
+        if (Managers.DataManager.CurrentCharacter.CharacterData.StatData.StatPoint > 0)
         {
-            --Managers.DataManager.CurrentCharacter.CharacterData.StatPoint;
-            ++Managers.DataManager.CurrentCharacter.CharacterData.Luck;
+            --Managers.DataManager.CurrentCharacter.CharacterData.StatData.StatPoint;
+            ++Managers.DataManager.CurrentCharacter.CharacterData.StatData.Dexterity;
         }
     }
-    #endregion
 
-
-    #region Property
-    public TextMeshProUGUI ClassText
+    public void OnClickLuckButton()
     {
-        get { return classText; }
-        private set { classText = value; }
-    }
-    public TextMeshProUGUI LevelText
-    {
-        get { return levelText; }
-        private set { levelText = value; }
-    }
-    public TextMeshProUGUI HitPointText
-    {
-        get { return hitPointText; }
-        private set { hitPointText = value; }
-    }
-    public TextMeshProUGUI StaminaText
-    {
-        get { return staminaText; }
-        private set { staminaText = value; }
-    }
-    public TextMeshProUGUI AttackPowerText
-    {
-        get { return attackPowerText; }
-        private set { attackPowerText = value; }
-    }
-    public TextMeshProUGUI DefensivePowerText
-    {
-        get { return defensivePowerText; }
-        private set { defensivePowerText = value; }
-    }
-    public TextMeshProUGUI AttackSpeedText
-    {
-        get { return attackSpeedText; }
-        private set { attackSpeedText = value; }
-    }
-    public TextMeshProUGUI MoveSpeedText
-    {
-        get { return moveSpeedText; }
-        private set { moveSpeedText = value; }
-    }
-    public TextMeshProUGUI CriticalChanceText
-    {
-        get { return criticalChanceText; }
-        private set { criticalChanceText = value; }
-    }
-    public TextMeshProUGUI CriticalDamageText
-    {
-        get { return criticalDamageText; }
-        private set { criticalDamageText = value; }
-    }
-
-    public TextMeshProUGUI StatPointText
-    {
-        get { return statPointText; }
-        private set { statPointText = value; }
-    }
-
-    public TextMeshProUGUI StrengthText
-    {
-        get { return strengthText; }
-        private set { strengthText = value; }
-    }
-    public TextMeshProUGUI VitalityText
-    {
-        get { return vitalityText; }
-        private set { vitalityText = value; }
-    }
-    public TextMeshProUGUI DexterityText
-    {
-        get { return dexterityText; }
-        private set { dexterityText = value; }
-    }
-    public TextMeshProUGUI LuckText
-    {
-        get { return luckText; }
-        private set { luckText = value; }
+        if (Managers.DataManager.CurrentCharacter.CharacterData.StatData.StatPoint > 0)
+        {
+            --Managers.DataManager.CurrentCharacter.CharacterData.StatData.StatPoint;
+            ++Managers.DataManager.CurrentCharacter.CharacterData.StatData.Luck;
+        }
     }
     #endregion
 }

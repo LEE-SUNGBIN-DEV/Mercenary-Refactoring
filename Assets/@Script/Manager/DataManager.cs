@@ -29,39 +29,67 @@ public class DataManager
         LoadPlayerData();
     }
 
-    public bool FileCheck()
+    public bool FileCheck(string filePath)
     {
-        FileInfo loadFile = new FileInfo(playerDataPath);
+        FileInfo loadFile = new FileInfo(filePath);
 
         return loadFile.Exists;
     }
 
     public void LoadLevelTable()
     {
-        string jsonLevelData = File.ReadAllText(levelDataPath);
-        LevelTable levelTable = JsonUtility.FromJson<LevelTable>(jsonLevelData);
-
-        for (int i = 0; i < levelTable.levels.Length; ++i)
+        if(FileCheck(levelDataPath))
         {
-            LevelTable.Add(levelTable.levels[i], levelTable.maxExperiences[i]);
+            string jsonLevelData = File.ReadAllText(levelDataPath);
+            LevelTable levelTable = JsonConvert.DeserializeObject<LevelTable>(jsonLevelData);
+
+            for (int i = 0; i < levelTable.levels.Length; ++i)
+            {
+                LevelTable.Add(levelTable.levels[i], levelTable.maxExperiences[i]);
+            }
         }
     }
     public void LoadItemTable()
     {
-        string jsonItemData = File.ReadAllText(itemDataPath);
-        ItemTable itemTable = JsonUtility.FromJson<ItemTable>(jsonItemData);
-
-        for (int i = 0; i < itemTable.items.Length; ++i)
+        if(FileCheck(itemDataPath))
         {
-            itemTable.items[i].ItemSprite = Managers.ResourceManager.LoadResourceSync<Sprite>("Sprite_Item_" + itemTable.items[i].ItemName);
-            itemTableDictionary.Add(itemTable.items[i].ItemID, itemTable.items[i]);
-        }
+            string jsonItemData = File.ReadAllText(itemDataPath);
+            ItemTable itemTable = JsonConvert.DeserializeObject<ItemTable>(jsonItemData);
+
+            for (int i = 0; i < itemTable.items.Length; ++i)
+            {
+                itemTable.items[i].ItemSprite = Managers.ResourceManager.LoadResourceSync<Sprite>("Sprite_Item_" + itemTable.items[i].ItemID);
+                switch(itemTable.items[i].ItemType)
+                {
+                    case ITEM_TYPE.Normal:
+                        {
+                            itemTableDictionary.Add(itemTable.items[i].ItemID, itemTable.items[i]);
+                            break;
+                        }
+                    case ITEM_TYPE.Equipment:
+                        {
+                            itemTableDictionary.Add(itemTable.items[i].ItemID, new EquipmentItem(itemTable.items[i]));
+                            break;
+                        }
+                    case ITEM_TYPE.Consumption:
+                        {
+                            itemTableDictionary.Add(itemTable.items[i].ItemID, new ConsumptionItem(itemTable.items[i]));
+                            break;
+                        }
+                    case ITEM_TYPE.Quest:
+                        {
+                            itemTableDictionary.Add(itemTable.items[i].ItemID, itemTable.items[i]);
+                            break;
+                        }
+                }
+                
+            }
+        }        
     }
 
-    // Save & Load Player Data
     public void LoadPlayerData()
     {
-        if (FileCheck())
+        if (FileCheck(playerDataPath))
         {
             string jsonPlayerData = File.ReadAllText(playerDataPath);
             playerData = JsonConvert.DeserializeObject<PlayerData>(jsonPlayerData);
