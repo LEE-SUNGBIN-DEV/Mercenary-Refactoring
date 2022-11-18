@@ -26,7 +26,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: eabac1329b73ada4aa5a0967a1da1d4e
-    m_Address: Sprite_Spear
+    m_Address: Sprite_Item_1
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 5c948f1014ea7b045b641639c8a8b59a
@@ -38,7 +38,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: d5ff8f6d892ada84da22d8a8832ca241
-    m_Address: Sprite_Helmet
+    m_Address: Sprite_Item_500
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4b5e96b2a16a0324085bcb771d9872d1
@@ -50,11 +50,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 2c8f7221383472b4584bb00e6e9fb685
-    m_Address: Sprite_Boots
+    m_Address: Sprite_Item_1500
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 74d0ba03306783b42927854d25b69345
-    m_Address: Sprite_Armor
+    m_Address: Sprite_Item_1000
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

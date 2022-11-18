@@ -21,7 +21,7 @@ public class GameSceneManager
 
     public void SceneEnter(Scene scene, LoadSceneMode loadMode)
     {
-        fadeEffect.FadeIn(1.5f);
+        fadeEffect.FadeIn(2f);
         OnSceneEnter?.Invoke();
     }
     public void SceneExit(Scene scene)
@@ -38,7 +38,7 @@ public class GameSceneManager
     // Load Scene Fade
     public void LoadScene(string sceneName)
     {
-        fadeEffect.FadeOut(1.5f, () => { SceneManager.LoadScene(sceneName); });
+        fadeEffect.FadeOut(2f, () => { SceneManager.LoadScene(sceneName); });
     }
     public void LoadScene(SCENE_LIST requestScene)
     {
@@ -48,7 +48,7 @@ public class GameSceneManager
     // Load Scene Async 
     public void LoadSceneAsync(string sceneName)
     {
-        fadeEffect.FadeOut(1.5f, () =>
+        fadeEffect.FadeOut(2f, () =>
         {
             LoadingScene.LoadScene(sceneName);
         });

@@ -16,7 +16,7 @@ public abstract class EquipmentSlot : BaseSlot
         T equipItem = item as T;
         if (equipItem != null)
         {
-            AddItemToSlot(equipItem);
+            SetItemToSlot(equipItem);
             equipItem.Equip(Managers.DataManager.CurrentCharacter);
         }
         else
@@ -34,7 +34,7 @@ public abstract class EquipmentSlot : BaseSlot
         T equipItem = item as T;
         if (equipItem != null)
         {
-            AddItemToSlot(equipItem);
+            SetItemToSlot(equipItem);
             equipItem.Equip(Managers.DataManager.CurrentCharacter);
         }
         else

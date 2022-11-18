@@ -6,6 +6,11 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class InventorySlot : BaseSlot, IAllItemAcceptableSlot
 {
+    public override void Initialize()
+    {
+        base.Initialize();
+    }
+
     public override void SlotRightClick(PointerEventData eventData)
     {
 

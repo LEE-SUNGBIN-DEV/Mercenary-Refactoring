@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class QuestSaveData
+public class QuestData
 {
     public QUEST_STATE questState;
     public uint questID;

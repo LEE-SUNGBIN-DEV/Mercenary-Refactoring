@@ -19,22 +19,10 @@ public class EquipmentSlotPanel : UIPanel
 
     private void OnEnable()
     {
-        LoadFromCharacterData(Managers.DataManager.CurrentCharacterData.WeaponSlotItem, weaponSlot);
-        LoadFromCharacterData(Managers.DataManager.CurrentCharacterData.HelmetSlotItem, helmetSlot);
-        LoadFromCharacterData(Managers.DataManager.CurrentCharacterData.ArmorSlotItem, armorSlot);
-        LoadFromCharacterData(Managers.DataManager.CurrentCharacterData.BootsSlotItem, bootsSlot);
     }
 
     public void LoadFromCharacterData<T, U>(T loadItem, U targetSlot) where T: EquipmentItem where U: EquipmentSlot
     {
-        if (loadItem != null)
-        {
-            targetSlot.AddItemToSlot(loadItem);
-        }
-        else
-        {
-            targetSlot.ClearSlot();
-        }
     }
 
     #region Property

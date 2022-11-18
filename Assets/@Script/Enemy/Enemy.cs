@@ -44,8 +44,8 @@ public abstract class Enemy : MonoBehaviour, IMonster
         Managers.GameSceneManager.OnSceneExit -= ReturnObject;
         Managers.GameSceneManager.OnSceneExit += ReturnObject;
 
-        Managers.DataManager.CurrentCharacter.CharacterStats.OnDie -= InitializeTarget;
-        Managers.DataManager.CurrentCharacter.CharacterStats.OnDie += InitializeTarget;
+        Managers.DataManager.CurrentCharacter.CharacterStatus.OnDie -= InitializeTarget;
+        Managers.DataManager.CurrentCharacter.CharacterStatus.OnDie += InitializeTarget;
 
         gameObject.tag = Constants.TAG_INVINCIBILITY;
         gameObject.layer = 8;
@@ -143,7 +143,7 @@ public abstract class Enemy : MonoBehaviour, IMonster
         CurrentHitPoint = MaxHitPoint;
         InitializeAllState();
     }
-    public void InitializeTarget(CharacterStats characterStats)
+    public void InitializeTarget(CharacterStatus characterStats)
     {
         Target = null;
     }

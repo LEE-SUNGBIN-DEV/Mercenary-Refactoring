@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Store : MonoBehaviour
+public class StorePanel : UIPanel
 {
     [SerializeField] private List<BaseItem> sellList;
     [SerializeField] private StoreSlot[] storeSlots;
 
-    private void Awake()
+    public override void Initialize()
     {
         storeSlots = GetComponentsInChildren<StoreSlot>();
 
-        for(int i=0; i<sellList.Count; ++i)
+        for (int i = 0; i < sellList.Count; ++i)
         {
             storeSlots[i].SetStoreItem(sellList[i]);
 
@@ -24,7 +24,7 @@ public class Store : MonoBehaviour
 
     public void BuyItem(StoreSlot targetSlot, Character requester)
     {
-        if (Managers.DataManager.CurrentCharacter.CharacterData.Money < targetSlot.Item.ItemPrice)
+        if (Managers.DataManager.CurrentCharacter.CharacterData.ItemData.Money < targetSlot.Item.ItemPrice)
         {
             Managers.UIManager.RequestNotice("소지금이 부족합니다.");
         }
@@ -36,7 +36,7 @@ public class Store : MonoBehaviour
 
         else
         {
-            Managers.DataManager.CurrentCharacter.CharacterData.Money -= targetSlot.Item.ItemPrice;
+            Managers.DataManager.CurrentCharacter.CharacterData.ItemData.Money -= targetSlot.Item.ItemPrice;
             requester.CharacterInventory.AddItemToInventory(targetSlot.Item);
         }
 

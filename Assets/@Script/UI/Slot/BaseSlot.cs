@@ -22,10 +22,7 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     [SerializeField] protected int itemCount;
     [SerializeField] protected Image itemImage;
     [SerializeField] protected TextMeshProUGUI itemCountText;
-    private void Awake()
-    {
-        Initialize();
-    }
+
     public virtual void Initialize()
     {
         BindImage(typeof(IMAGE));
@@ -38,12 +35,13 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         itemCount = 0;
     }
 
-    public void AddItemToSlot<T>(T targetItem) where T : BaseItem
+    public bool IsEmpty()
     {
-        item = targetItem;
-        itemImage.sprite = targetItem.ItemSprite;
-        itemCount = targetItem.ItemCount;
+        return item == null;
+    }
 
+    public void EnableOrDisableCountText()
+    {
         if (item.IsCountable)
         {
             itemCountText.text = $"{itemCount}";
@@ -52,6 +50,26 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         else
         {
             itemCountText.enabled = false;
+        }
+    }
+    public void SetItemToSlot<T>(T targetItem) where T : BaseItem
+    {
+        item = targetItem;
+        itemImage.sprite = targetItem.ItemSprite;
+        itemImage.color = Color.white;
+        itemCount = targetItem.ItemCount;
+        EnableOrDisableCountText();
+    }
+    public void AddItemToSlot<T>(T targetItem) where T : BaseItem
+    {
+        if(IsEmpty())
+        {
+            SetItemToSlot(targetItem);
+        }
+        else
+        {
+            itemCount += targetItem.ItemCount;
+            EnableOrDisableCountText();
         }
     }
     public void RemoveItemFromSlot(int amount = 1)
@@ -65,24 +83,17 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
 
     public void SetSlot(BaseSlot slot)
     {
-        if(slot.Item != null)
+        if(!slot.IsEmpty())
         {
             item = slot.Item;
             itemImage.sprite = slot.Item.ItemSprite;
             itemCount = slot.ItemCount;
-            if (item.IsCountable && itemCount > 0)
-            {
-                itemCountText.text = $"{itemCount}";
-                itemCountText.enabled = true;
-            }
-            else
-            {
-                itemCountText.enabled = false;
-            }
+            EnableOrDisableCountText();
         }
     }
     public void ClearSlot()
     {
+        itemImage.color = Color.clear;
         item = null;
         itemImage.sprite = null;
         itemCount = 0;

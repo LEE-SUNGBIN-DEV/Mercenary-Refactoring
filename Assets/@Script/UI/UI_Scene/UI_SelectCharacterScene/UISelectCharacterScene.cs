@@ -80,7 +80,8 @@ public class UISelectCharacterScene : UIBaseScene
 
             // Sub Panel Initialize
             createCharacterPanel = GetComponentInChildren<CreateCharacterPanel>(true);
-            createCharacterPanel.Initialize(selectSlot);
+            createCharacterPanel.Initialize();
+            createCharacterPanel.SetSlot(selectSlot);
             createCharacterPanel.OnOpenPanel += () =>
             {
                 for (int i = 0; i < characterSlots.Length; ++i)
@@ -109,13 +110,13 @@ public class UISelectCharacterScene : UIBaseScene
 
             int index = i;
             // Exist CharacterData
-            if (characterDatas[i]?.CharacterClass != null)
+            if (characterDatas[i]?.StatData?.CharacterClass != null)
             {
                 if (characterSlots[i].selectionCharacter == null)
                 {
-                    CreateCharacterObject(i, characterDatas[i].CharacterClass, characterSlots[i].characterPoint);
+                    CreateCharacterObject(i, characterDatas[i].StatData.CharacterClass, characterSlots[i].characterPoint);
                 }
-                characterSlots[i].slotText.text = characterDatas[i].CharacterClass + "\n" + "Lv. " + characterDatas[i].Level;
+                characterSlots[i].slotText.text = characterDatas[i].StatData.CharacterClass + "\n" + "Lv. " + characterDatas[i].StatData.Level;
                 characterSlots[i].slotButton.onClick.AddListener(() => { OnClickCharacterSlot(index); });
             }
             // Don't Exist CharacterData

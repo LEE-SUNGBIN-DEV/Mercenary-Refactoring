@@ -48,9 +48,9 @@ public class Managers : Singleton<Managers>
 
             resourceManager.Initialize();
             dataManager.Initialize();
+            uiManager.Initialize(canvas);
             gameManager.Initialize();
             gameSceneManager.Initialize();
-            uiManager.Initialize(canvas);
             audioManager.Initialize(transform);
             slotManager.Initialize(canvas);
 

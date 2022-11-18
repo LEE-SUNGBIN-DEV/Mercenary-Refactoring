@@ -6,40 +6,40 @@ using UnityEngine.UI;
 
 public class UserPanel : UIPanel
 {
-    [SerializeField] private Image hitPointBar;
-    [SerializeField] private Image staminaBar;
-    [SerializeField] private Image experienceBar;
+    public enum IMAGE
+    {
+        HPBar,
+        SPBar,
+        ExpBar
+    }
 
     public override void Initialize()
     {
-        Managers.DataManager.CurrentCharacter.CharacterData.OnChangeCharacterData += (CharacterData playerData) =>
-        {
-            float expRatio = playerData.CurrentExperience / playerData.MaxExperience;
-            SetUserExpBar(expRatio);
-        };
+        BindImage(typeof(IMAGE));
 
-        CharacterStats.OnCharacterStatsChanged += (CharacterStats characterStats) =>
-        {
-            float ratio = characterStats.CurrentHitPoint / characterStats.MaxHitPoint;
-            SetUserHPBar(ratio);
+        Managers.DataManager.CurrentCharacter.CharacterData.StatData.OnChangeStatData -= UpdateExpBar;
+        Managers.DataManager.CurrentCharacter.CharacterData.StatData.OnChangeStatData += UpdateExpBar;
 
-            ratio = characterStats.CurrentStamina / characterStats.MaxStamina;
-            SetUserStaminaBar(ratio);
-        };
+        Managers.DataManager.CurrentCharacter.CharacterStatus.OnCharacterStatusChanged -= UpdateHPBar;
+        Managers.DataManager.CurrentCharacter.CharacterStatus.OnCharacterStatusChanged += UpdateHPBar;
+
+        Managers.DataManager.CurrentCharacter.CharacterStatus.OnCharacterStatusChanged -= UpdateSPBar;
+        Managers.DataManager.CurrentCharacter.CharacterStatus.OnCharacterStatusChanged += UpdateSPBar;
     }
 
-    public void SetUserHPBar(float ratio)
+    public void UpdateExpBar(CharacterStatData statData)
     {
-        hitPointBar.fillAmount = ratio;
+        float ratio = statData.CurrentExperience / statData.MaxExperience;
+        GetImage((int)IMAGE.ExpBar).fillAmount = ratio;
     }
-
-    public void SetUserStaminaBar(float ratio)
+    public void UpdateHPBar(CharacterStatus status)
     {
-        staminaBar.fillAmount = ratio;
+        float ratio = status.CurrentHitPoint / status.MaxHitPoint;
+        GetImage((int)IMAGE.HPBar).fillAmount = ratio;
     }
-
-    public void SetUserExpBar(float ratio)
+    public void UpdateSPBar(CharacterStatus status)
     {
-        experienceBar.fillAmount = ratio;
+        float ratio = status.CurrentStamina / status.MaxStamina;
+        GetImage((int)IMAGE.SPBar).fillAmount = ratio;
     }
 }

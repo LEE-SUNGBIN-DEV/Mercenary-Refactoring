@@ -4,7 +4,24 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public abstract class ConsumptionItem : BaseItem
+public class ConsumptionItem : BaseItem
 {
-    public abstract void Consume(Character character);
+    public ConsumptionItem()
+    {
+
+    }
+    public ConsumptionItem(BaseItem baseItem)
+    {
+        itemType = baseItem.ItemType;
+        itemRank = baseItem.ItemRank;
+        itemID = baseItem.ItemID;
+        itemName = baseItem.ItemName;
+        itemDescription = baseItem.ItemDescription;
+        itemCount = baseItem.ItemCount;
+        itemPrice = baseItem.ItemPrice;
+        isCountable = baseItem.IsCountable;
+        itemSprite = baseItem.ItemSprite;
+    }
+
+    public virtual void Consume(Character character) {; }
 }
