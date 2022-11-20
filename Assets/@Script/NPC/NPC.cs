@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    // Private Variable
     [SerializeField] private uint npcID;
     [SerializeField] private string npcName;
 
-    //Private Function
-    public virtual void OnEnable()
+    public virtual void Initialize()
     {
         if (!Managers.NPCManager.NpcDictionary.ContainsKey(NpcID))
         {
@@ -26,15 +24,7 @@ public class NPC : MonoBehaviour
     }
 
     #region Property
-    public uint NpcID
-    {
-        get { return npcID; }
-        private set { npcID = value; }
-    }
-    public string NpcName
-    {
-        get { return npcName; }
-        set { npcName = value; }
-    }
+    public uint NpcID { get { return npcID; } }
+    public string NpcName { get { return npcName; } }
     #endregion
 }

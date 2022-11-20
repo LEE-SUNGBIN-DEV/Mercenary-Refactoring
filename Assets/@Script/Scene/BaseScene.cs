@@ -7,7 +7,6 @@ public class BaseScene : MonoBehaviour
     [SerializeField] protected string mapName;
     [SerializeField] protected SCENE_TYPE sceneType;
     [SerializeField] protected SCENE_LIST scene;
-    [SerializeField] protected Vector3 spawnPosition;
 
     protected virtual void Awake()
     {
@@ -27,18 +26,17 @@ public class BaseScene : MonoBehaviour
 
     public virtual void Initialize()
     {
-        Managers.GameSceneManager.CurrentScene = this;
+        Managers.SceneManagerCS.CurrentScene = this;
     }
 
     public virtual void ExitScene()
     {
-        Managers.GameSceneManager.CurrentScene = null;
+        Managers.SceneManagerCS.CurrentScene = null;
     }
 
     #region Property
     public string MapName { get { return mapName; } }
     public SCENE_TYPE SceneType { get { return sceneType; } }
     public SCENE_LIST Scene { get { return scene; } }
-    public Vector3 SpawnPosition { get {  return spawnPosition; } }
     #endregion
 }

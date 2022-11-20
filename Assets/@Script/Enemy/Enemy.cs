@@ -7,11 +7,13 @@ using UnityEngine.Events;
 public abstract class Enemy : MonoBehaviour, IMonster
 {
     #region Event
-    public static event UnityAction<Enemy> onCurrentHitPointChanged;
-    public static event UnityAction<Enemy> onDie;
+    public event UnityAction<Enemy> OnBirth;
+    public event UnityAction<Enemy> OnDie;
+    public event UnityAction<Enemy> OnChangeCurrentHP;
     #endregion
 
-    [SerializeField] private string monsterName;
+    // Monster Data
+    [SerializeField] private string enemyName;
     [SerializeField] private float attackPower;
     [SerializeField] private float defensivePower;
     [SerializeField] private float maxHitPoint;
@@ -19,43 +21,37 @@ public abstract class Enemy : MonoBehaviour, IMonster
     [SerializeField] private float moveSpeed;
     [SerializeField] private float moveStopDistance;
     [SerializeField] private float experienceAmount;
+    [SerializeField] private Vector3 rotationOffset;
 
     // Component
-    private Rigidbody monsterRigidbody;
-    private NavMeshAgent monsterNavMeshAgent;
-    private Animator monsterAnimator;
-    [SerializeField] private SkinnedMeshRenderer monsterMeshRenderer;
+    private Rigidbody enemyRigidbody;
+    private NavMeshAgent navMeshAgent;
+    private Animator animator;
+    [SerializeField] private SkinnedMeshRenderer meshRenderer;
 
-    [SerializeField] private Vector3 rotationOffset;
     private Transform target;
     private float distanceFromTarget;
     private Vector3 targetDirection;
     
-
     #region Virtual Function
     public virtual void Awake()
     {
-        MonsterRigidbody = GetComponent<Rigidbody>();
-        MonsterNavMeshAgent = GetComponent<NavMeshAgent>();
-        MonsterAnimator = GetComponent<Animator>();
+        enemyRigidbody = GetComponent<Rigidbody>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
     }
     public virtual void OnEnable()
     {
-        Managers.GameSceneManager.OnSceneExit -= ReturnObject;
-        Managers.GameSceneManager.OnSceneExit += ReturnObject;
-
-        Managers.DataManager.CurrentCharacter.CharacterStatus.OnDie -= InitializeTarget;
-        Managers.DataManager.CurrentCharacter.CharacterStatus.OnDie += InitializeTarget;
-
         gameObject.tag = Constants.TAG_INVINCIBILITY;
         gameObject.layer = 8;
 
+        OnBirth?.Invoke(this);
         Rebirth();
         Spawn();
     }
     public virtual void OnDisable()
     {
-        MonsterNavMeshAgent.enabled = false;
+        NavMeshAgent.enabled = false;
         if (Target != null)
         {
             Target = null;
@@ -64,7 +60,7 @@ public abstract class Enemy : MonoBehaviour, IMonster
     public virtual void Spawn()
     {
         IsSpawn = true;
-        MonsterAnimator.SetTrigger("doSpawn");
+        Animator.SetTrigger("doSpawn");
     }
     #endregion
 
@@ -80,7 +76,7 @@ public abstract class Enemy : MonoBehaviour, IMonster
     #region Common Function
     public void Move()
     {
-        DistanceFromTarget = (Target.position - transform.position).magnitude;
+        distanceFromTarget = (Target.position - transform.position).magnitude;
 
         if (DistanceFromTarget <= TraceRange)
             StopTrace();
@@ -90,41 +86,41 @@ public abstract class Enemy : MonoBehaviour, IMonster
             LookTarget(RotationOffset);
             StartTrace();
         }
-        MonsterAnimator.SetBool("isMove", IsMove);
+        Animator.SetBool("isMove", IsMove);
     }
     public void LookTarget()
     {
-        TargetDirection = (Target.position - transform.position).normalized;
+        targetDirection = (Target.position - transform.position).normalized;
         transform.rotation
-                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(TargetDirection), 5f * Time.deltaTime);
+                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 5f * Time.deltaTime);
     }
     public void LookTarget(Vector3 rotationOffset)
     {
-        TargetDirection = (Target.position - transform.position).normalized;
+        targetDirection = (Target.position - transform.position).normalized;
         transform.rotation
-                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(TargetDirection), 5f * Time.deltaTime);
+                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 5f * Time.deltaTime);
     }
     public void StartTrace()
     {
-        MonsterNavMeshAgent.isStopped = false;
-        MonsterNavMeshAgent.SetDestination(Target.position);
+        NavMeshAgent.isStopped = false;
+        NavMeshAgent.SetDestination(Target.position);
         IsMove = true;
     }
     public void StopTrace()
     {
-        MonsterNavMeshAgent.isStopped = true;
+        NavMeshAgent.isStopped = true;
         IsMove = false;
     }
     public void ReturnObject()
     {
-        if (Managers.ObjectPoolManager.ObjectPoolDictionary.ContainsKey(monsterName))
+        if (Managers.ObjectPoolManager.ObjectPoolDictionary.ContainsKey(enemyName))
         {
-            Managers.ObjectPoolManager.ReturnObject(monsterName, gameObject);
+            Managers.ObjectPoolManager.ReturnObject(enemyName, gameObject);
         }
     }
     public IEnumerator WaitForDisapear(float time)
     {
-        onDie(this);
+        OnDie(this);
         gameObject.tag = Constants.TAG_INVINCIBILITY;
 
         float disapearTime = 0f;
@@ -176,8 +172,8 @@ public abstract class Enemy : MonoBehaviour, IMonster
 
         gameObject.tag = Constants.TAG_ENEMY;
 
-        MonsterNavMeshAgent.enabled = true;
-        MonsterNavMeshAgent.speed = MoveSpeed;
+        NavMeshAgent.enabled = true;
+        NavMeshAgent.speed = MoveSpeed;
     }
 
     public void OutSkill()
@@ -209,54 +205,18 @@ public abstract class Enemy : MonoBehaviour, IMonster
     #endregion
 
     #region Property
-    public Rigidbody MonsterRigidbody
-    {
-        get { return monsterRigidbody; }
-        set { monsterRigidbody = value; }
-    }
-    public NavMeshAgent MonsterNavMeshAgent
-    {
-        get { return monsterNavMeshAgent; }
-        set { monsterNavMeshAgent = value; }
-    }
-    public Animator MonsterAnimator
-    {
-        get { return monsterAnimator; }
-        set { monsterAnimator = value; }
-    }
-    public SkinnedMeshRenderer MonsterMeshRenderer
-    {
-        get { return monsterMeshRenderer; }
-        set { monsterMeshRenderer = value; }
-    }
+    public Rigidbody MonsterRigidbody { get { return enemyRigidbody; } }
+    public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }
+    public Animator Animator { get { return animator; } }
+    public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }
     public Transform Target
     {
         get { return target; }
         set { target = value; }
     }
-    public float DistanceFromTarget
-    {
-        get { return distanceFromTarget; }
-        set { distanceFromTarget = value; }
-    }
-    public Vector3 TargetDirection
-    {
-        get { return targetDirection; }
-        set { targetDirection = value; }
-    }
-    public Vector3 RotationOffset
-    {
-        get { return rotationOffset; }
-        set { rotationOffset = value; }
-    }
-    public string MonsterName
-    {
-        get { return monsterName; }
-        private set
-        {
-            monsterName = value;
-        }
-    }
+    public float DistanceFromTarget { get { return distanceFromTarget; } }
+    public Vector3 RotationOffset { get { return rotationOffset; } }
+    public string EnemyName { get { return enemyName; } }
     public float AttackPower
     {
         get { return attackPower; }
@@ -315,11 +275,7 @@ public abstract class Enemy : MonoBehaviour, IMonster
                     Die();
                 }
             }
-
-            if (onCurrentHitPointChanged != null)
-            {
-                onCurrentHitPointChanged(this);
-            }
+            OnChangeCurrentHP?.Invoke(this);
         }
     }
 

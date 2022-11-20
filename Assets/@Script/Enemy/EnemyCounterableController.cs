@@ -15,7 +15,7 @@ public class EnemyCounterableController : MonoBehaviour
             {
                 Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_COMPETE_START, other.bounds.ClosestPoint(transform.position));
                 Owner.Stun();
-                Owner.MonsterMeshRenderer.material.color = Color.white;
+                Owner.MeshRenderer.material.color = Color.white;
                 gameObject.SetActive(false);
             }
         }

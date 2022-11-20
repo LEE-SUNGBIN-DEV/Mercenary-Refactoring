@@ -46,7 +46,7 @@ public class NormalEnemy : Enemy
             return;
 
         IsHit = true;
-        MonsterAnimator.SetTrigger("doHit");
+        Animator.SetTrigger("doHit");
     }
 
     public override void HeavyHit()
@@ -54,7 +54,7 @@ public class NormalEnemy : Enemy
         if (IsStun || IsDie)
             return;
         IsHit = true;
-        MonsterAnimator.SetTrigger("doHit");
+        Animator.SetTrigger("doHit");
     }
 
     public override void Stun()
@@ -62,7 +62,7 @@ public class NormalEnemy : Enemy
         if (IsDie)
             return;
         IsHit = true;
-        MonsterAnimator.SetTrigger("doHit");
+        Animator.SetTrigger("doHit");
     }
 
     public override void Die()
@@ -70,7 +70,7 @@ public class NormalEnemy : Enemy
         InitializeAllState();
 
         IsDie = true;
-        MonsterAnimator.SetTrigger("doDie");
+        Animator.SetTrigger("doDie");
 
         StartCoroutine(WaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
     }
@@ -83,7 +83,7 @@ public class NormalEnemy : Enemy
         IsHeavyHit = false;
         IsStun = false;
 
-        MonsterAnimator.SetBool("isMove", false);
+        Animator.SetBool("isMove", false);
     }
     #endregion
 }

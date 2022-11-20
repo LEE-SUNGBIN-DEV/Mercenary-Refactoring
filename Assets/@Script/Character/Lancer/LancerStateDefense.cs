@@ -31,27 +31,27 @@ public class LancerStateDefense : ICharacterState
 
             character.gameObject.tag = Constants.TAG_INVINCIBILITY;
             isDefense = true;
-            character.CharacterAnimator.SetBool("isDefense", true);
+            character.Animator.SetBool("isDefense", true);
         }
 
         if (character.PlayerInput.IsMouseRightUp && isDefense)
         {
-            character.CharacterAnimator.SetBool("isDefense", false);
+            character.Animator.SetBool("isDefense", false);
         }
 
         if (isDefense)
         {
             if (character.PlayerInput.IsMouseRightDown || character.PlayerInput.IsMouseRightUp)
             {
-                character.CharacterAnimator.SetBool("isCounterAttack", !character.PlayerInput.IsMouseRightUp);
+                character.Animator.SetBool("isCounterAttack", !character.PlayerInput.IsMouseRightUp);
             }
         }
     }
     public void Exit(Character character)
     {
         isDefense = false;
-        character.CharacterAnimator.SetBool("isDefense", false);
-        character.CharacterAnimator.SetBool("isCounterAttack", false);
+        character.Animator.SetBool("isDefense", false);
+        character.Animator.SetBool("isCounterAttack", false);
         lancer.Shield?.gameObject.SetActive(false);
         lancer = null;
     }

@@ -22,12 +22,10 @@ public enum QUEST_CATEGORY
 public class Quest
 {
     #region Event
-    public static event UnityAction<Quest> onInactiveQuest;
-    public static event UnityAction<Quest> onActiveQuest;
-    public static event UnityAction<Quest> onAcceptQuest;
-    public static event UnityAction<Quest> onCompleteQuest;
-    public static event UnityAction<Quest> onReward;
-    public static UnityAction<Quest> onTaskIndexChanged;
+    public event UnityAction<Quest> OnInactiveQuest;
+    public event UnityAction<Quest> OnActiveQuest;
+    public event UnityAction<Quest> OnAcceptQuest;
+    public event UnityAction<Quest> OnCompleteQuest;
     #endregion
 
     [Header("Quest Infomations")]
@@ -50,21 +48,33 @@ public class Quest
     [SerializeField] private int rewardMoney;
     [SerializeField] private string[] rewardItems;
 
+    public void Initialize()
+    {
+        for(int i=0; i<questTasks.Length; ++i)
+        {
+            questTasks[i].Initialize(this);
+
+            questTasks[i].OnStartTask -= Managers.QuestManager.AddDialogue;
+            questTasks[i].OnStartTask += Managers.QuestManager.AddDialogue;
+
+            questTasks[i].OnEndTask -= Managers.QuestManager.RemoveDialogue;
+            questTasks[i].OnEndTask += Managers.QuestManager.RemoveDialogue;
+
+            questTasks[i].OnEndTask -= Managers.QuestManager.RequestNPCQuestList;
+            questTasks[i].OnEndTask += Managers.QuestManager.RequestNPCQuestList;
+        }
+    }
     public void InactiveQuest()
     {
         questState = QUEST_STATE.INACTIVE;
-        onInactiveQuest(this);
+        OnInactiveQuest(this);
     }
     
     public void ActiveQuest()
     {
         questState = QUEST_STATE.ACTIVE;
-        for (int i = 0; i < QuestTasks.Length; ++i)
-        {
-            QuestTasks[i].OwnerQuest = this;
-        }
         questTasks[taskIndex].StartTask();
-        onActiveQuest(this);
+        OnActiveQuest(this);
     }
 
     public void AcceptQuest()
@@ -73,10 +83,10 @@ public class Quest
         questState = QUEST_STATE.ACCEPT;
         for (int i = 0; i < QuestTasks.Length; ++i)
         {
-            QuestTasks[i].OwnerQuest = this;
+            QuestTasks[i].Initialize(this);
         }
         questTasks[taskIndex].StartTask();
-        onAcceptQuest(this);
+        OnAcceptQuest(this);
     }
     
     public void CompleteQuest()
@@ -84,43 +94,40 @@ public class Quest
         Managers.AudioManager.PlaySFX("Quest Complete");
         questState = QUEST_STATE.COMPLETE;
         Reward();
-        onCompleteQuest(this);
+        OnCompleteQuest(this);
     }
 
     public void Reward()
     {
-        onReward(this);
+        Managers.DataManager.SelectCharacterData.GetQuestReward(this);
     }
 
-    public QuestData SaveQuest()
+    public QuestSaveData SaveQuest()
     {
         if (questState == QUEST_STATE.COMPLETE)
         {
-            QuestData questData = new QuestData
+            QuestSaveData questData = new QuestSaveData
             {
                 questState = questState,
                 questID = questID,
                 taskIndex = 0,
                 taskSuccessAmount = 0
             };
-
             return questData;
         }
-
         else
         {
-            QuestData questData = new QuestData
+            QuestSaveData questData = new QuestSaveData
             {
                 questState = questState,
                 questID = questID,
                 taskIndex = taskIndex,
                 taskSuccessAmount = questTasks[taskIndex].SuccessAmount
             };
-
             return questData;
         }
     }
-    public void LoadQuest(QuestData questData)
+    public void LoadQuest(QuestSaveData questData)
     {
         if (QuestID == questData.questID)
         {
@@ -128,7 +135,7 @@ public class Quest
 
             for (int i = 0; i < QuestTasks.Length; ++i)
             {
-                QuestTasks[i].OwnerQuest = this;
+                QuestTasks[i].Initialize(this);
             }
 
             switch (questState)
@@ -139,7 +146,7 @@ public class Quest
                         questTasks[questData.taskIndex].StartTask();
                         questTasks[questData.taskIndex].SuccessAmount = questData.taskSuccessAmount;
 
-                        onActiveQuest(this);
+                        OnActiveQuest(this);
                         break;
                     }
                 case QUEST_STATE.ACCEPT:
@@ -148,15 +155,15 @@ public class Quest
                         questTasks[questData.taskIndex].StartTask();
                         questTasks[questData.taskIndex].SuccessAmount = questData.taskSuccessAmount;
 
-                        onActiveQuest(this);
-                        onAcceptQuest(this);
+                        OnActiveQuest(this);
+                        OnAcceptQuest(this);
                         break;
                     }
                 case QUEST_STATE.COMPLETE:
                     {
-                        onActiveQuest(this);
-                        onAcceptQuest(this);
-                        onCompleteQuest(this);
+                        OnActiveQuest(this);
+                        OnAcceptQuest(this);
+                        OnCompleteQuest(this);
                         break;
                     }
             }
@@ -164,26 +171,10 @@ public class Quest
     }
 
     #region Property
-    public uint QuestID
-    {
-        get { return questID; }
-        private set { questID = value; }
-    }
-    public string QuestTitle
-    {
-        get { return questTitle; }
-        private set { questTitle = value; }
-    }
-    public int LevelCondition
-    {
-        get { return levelCondition; }
-        private set { levelCondition = value; }
-    }
-    public uint QuestCondition
-    {
-        get { return questCondition; }
-        private set { questCondition = value; }
-    }
+    public uint QuestID { get { return questID; } }
+    public string QuestTitle { get { return questTitle; } }
+    public int LevelCondition { get { return levelCondition; } }
+    public uint QuestCondition { get { return questCondition; } }
     public int TaskIndex
     {
         get { return taskIndex; }
@@ -191,7 +182,7 @@ public class Quest
         {
             taskIndex = value;
 
-            onTaskIndexChanged(this);
+            Managers.UIManager.NoticeQuestState(this);
 
             if (taskIndex == QuestTasks.Length && questState == QUEST_STATE.ACCEPT)
             {
@@ -209,26 +200,10 @@ public class Quest
             }
         }
     }
-    public QuestTask[] QuestTasks
-    {
-        get { return questTasks; }
-        private set { questTasks = value; }
-    }
-    public float RewardExperience
-    {
-        get { return rewardExperience; }
-        private set { rewardExperience = value; }
-    }
-    public int RewardMoney
-    {
-        get { return rewardMoney; }
-        private set { rewardMoney = value; }
-    }
-    public string[] RewardItems
-    {
-        get { return rewardItems; }
-        private set { rewardItems = value; }
-    }
+    public QuestTask[] QuestTasks { get { return questTasks; } }
+    public float RewardExperience { get { return rewardExperience; } }
+    public int RewardMoney { get { return rewardMoney; } }
+    public string[] RewardItems { get { return rewardItems; } }
     #endregion
 }
 

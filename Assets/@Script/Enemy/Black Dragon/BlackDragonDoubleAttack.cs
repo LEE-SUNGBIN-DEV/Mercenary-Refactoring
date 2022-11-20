@@ -19,7 +19,7 @@ public class BlackDragonDoubleAttack : EnemySkill
     {
         Owner.StopTrace();
         StartCoroutine(WaitForRotate());
-        Owner.MonsterAnimator.SetTrigger("doDoubleAttack");
+        Owner.Animator.SetTrigger("doDoubleAttack");
         StartCoroutine(SkillCooldown());
     }
 
@@ -48,12 +48,12 @@ public class BlackDragonDoubleAttack : EnemySkill
     }
     public void OnCounterableState()
     {
-        Owner.MonsterMeshRenderer.material.color = Color.red;
+        Owner.MeshRenderer.material.color = Color.red;
         counterableCollider.gameObject.SetActive(true);
     }
     public void OffCounterableState()
     {
-        Owner.MonsterMeshRenderer.material.color = Color.white;
+        Owner.MeshRenderer.material.color = Color.white;
         counterableCollider.gameObject.SetActive(false);
     }
     #endregion

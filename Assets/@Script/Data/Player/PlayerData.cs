@@ -7,6 +7,7 @@ public class PlayerData
 {
     [Header("Characters")]
     [SerializeField] private CharacterData[] characterDatas;
+    [SerializeField] private int currentCharacterIndex;
 
     [Header("Option")]
     [SerializeField] private float bgmVolume;
@@ -17,26 +18,17 @@ public class PlayerData
         if(isFirst)
         {
             characterDatas = new CharacterData[Constants.MAX_CHARACTER_SLOT_NUMBER];
+            currentCharacterIndex = 0;
+
             bgmVolume = 0.5f;
             sfxVolume = 0.5f;
         }
     }
 
     #region Property
-    public CharacterData[] CharacterDatas
-    {
-        get { return characterDatas; }
-        set { characterDatas = value; }
-    }
-    public float BgmVolume
-    {
-        get { return bgmVolume; }
-        set { bgmVolume = value; }
-    }
-    public float SfxVolume
-    {
-        get { return sfxVolume; }
-        set { sfxVolume = value; }
-    }
+    public CharacterData[] CharacterDatas { get { return characterDatas; } set { characterDatas = value; } }
+    public int SelectCharacterIndex { get { return currentCharacterIndex; } set { currentCharacterIndex = value; } }
+    public float BgmVolume { get { return bgmVolume; } set { bgmVolume = value; } }
+    public float SfxVolume { get { return sfxVolume; } set { sfxVolume = value; } }
     #endregion
 }

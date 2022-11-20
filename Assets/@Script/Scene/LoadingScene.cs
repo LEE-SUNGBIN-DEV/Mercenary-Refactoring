@@ -9,9 +9,14 @@ public class LoadingScene : BaseScene
     static private string nextSceneName;    // 전환 요청이 들어온 씬
     [SerializeField] private Slider loadingBar;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        Managers.UIManager.CommonSceneUI.SetAlpha(0f);
+    }
+
     private void Start()
     {
-        Managers.GameSceneManager.FadeEffect.SetAlpha(0f);
         StartCoroutine(LoadSceneProgress());
     }
 

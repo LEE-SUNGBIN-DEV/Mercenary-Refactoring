@@ -27,11 +27,11 @@ public class EquipmentItem : BaseItem
         grade = 0;
     }
 
-    public virtual void Equip(Character character)
+    public virtual void Equip(CharacterStatus status)
     {
         Managers.AudioManager.PlaySFX("Audio_Equipment_Mount");
     }
-    public virtual void Release(Character character)
+    public virtual void Release(CharacterStatus status)
     {
         Managers.AudioManager.PlaySFX("Audio_Equipment_Dismount");
     }

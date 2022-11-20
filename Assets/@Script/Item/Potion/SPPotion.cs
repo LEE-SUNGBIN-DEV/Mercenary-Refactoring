@@ -11,7 +11,7 @@ public class SPPotion : ConsumptionItem
     public override void Consume(Character character)
     {
         Managers.AudioManager.PlaySFX("Potion Consume");
-        character.CharacterStatus.CurrentStamina += spRecoveryAmount;
+        character.Status.CurrentStamina += spRecoveryAmount;
     }
 
     public float SPRecoveryAmount { get { return spRecoveryAmount; } }

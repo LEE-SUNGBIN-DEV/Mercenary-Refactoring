@@ -10,16 +10,16 @@ public class DialogueTask : QuestTask
 
     public override void StartTask()
     {
-        onTaskStart(this);
-        FunctionNPC.onTalkEnd -= Action;
-        FunctionNPC.onTalkEnd += Action;
+        base.StartTask();
+        FunctionalNPC.OnEndTalk -= Action;
+        FunctionalNPC.OnEndTalk += Action;
     }
 
     public override void EndTask()
     {
-        FunctionNPC.onTalkEnd -= Action;
+        FunctionalNPC.OnEndTalk -= Action;
         ++OwnerQuest.TaskIndex;
-        onTaskEnd(this);
+        base.EndTask();
     }
 
     public void Action(uint dialogueID)

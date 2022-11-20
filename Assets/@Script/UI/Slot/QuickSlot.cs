@@ -6,13 +6,24 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class QuickSlot : BaseSlot
 {
-
     public override void Initialize()
     {
         base.Initialize();
     }
 
-    #region Register & Release Function
+    public override void SetItemToSlot<T>(T targetItem)
+    {
+        base.SetItemToSlot(targetItem);
+        if (item.ItemCount > 0)
+        {
+            itemImage.color = Color.white;
+        }
+        else
+        {
+            itemImage.color = Color.gray;
+        }
+    }
+
     public void RegisterItem<T>(T consumptionItem) where T : ConsumptionItem
     {
         // 빈 슬롯일 경우에 최초 등록
@@ -32,8 +43,8 @@ public class QuickSlot : BaseSlot
     public void ReleaseQuickSlot()
     {
         ClearSlot();
+
     }
-    #endregion
 
     public void ConsumeItem()
     {
@@ -42,22 +53,22 @@ public class QuickSlot : BaseSlot
     #region Mouse Event Function
     public void DropQuickSlot<T>() where T : ConsumptionItem
     {
-        T potionItem = Managers.SlotManager.DragSlot.Item as T;
+        T potionItem = Managers.UIManager.SlotController.DragSlot.Item as T;
         if (potionItem != null)
         {
             ReleaseQuickSlot();
-            RegisterQuickSlot(Managers.SlotManager.DragSlot.Item as T);
+            RegisterQuickSlot(Managers.UIManager.SlotController.DragSlot.Item as T);
         }
     }
     public void EndDragQuickSlot<T>() where T : ConsumptionItem
     {
-        T potionItem = Managers.SlotManager.DragSlot.Item as T;
+        T potionItem = Managers.UIManager.SlotController.DragSlot.Item as T;
         if (potionItem != null)
         {
             ReleaseQuickSlot();
-            RegisterQuickSlot(Managers.SlotManager.TargetSlot.Item as T);
+            RegisterQuickSlot(Managers.UIManager.SlotController.TargetSlot.Item as T);
         }
-        else if (Managers.SlotManager.TargetSlot == null)
+        else if (Managers.UIManager.SlotController.TargetSlot == null)
         {
             ReleaseQuickSlot();
         }

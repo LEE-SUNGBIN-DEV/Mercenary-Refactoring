@@ -29,8 +29,8 @@ MonoBehaviour:
     m_Address: Prefab_EventSystem
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 92e9cc4305ce2ff4a8ebeda724e53417
-    m_Address: '@UI Canvas'
+  - m_GUID: 8ec115abe8b38b244a44ba7bc2bcfd02
+    m_Address: '@UI Root'
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 87d28997275f30943a4bf1cdc156bb73
@@ -87,6 +87,22 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 9670c85635be3c44d810bfe1139ffc15
     m_Address: Prefab_Armor_Slot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2e2a1f7174799dc48b893ed5f38c8b5c
+    m_Address: Prefab_UI_Title_Scene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2d292693424edca44b3d17bb171fd25f
+    m_Address: Prefab_UI_Select_Character_Scene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3c952761f73d9904192b7ecc06467dc4
+    m_Address: Prefab_UI_Game_Scene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 63f6477ce7af2674b9a57f3856107b96
+    m_Address: Prefab_UI_Common_Scene
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

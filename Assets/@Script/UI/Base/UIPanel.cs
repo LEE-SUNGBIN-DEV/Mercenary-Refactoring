@@ -4,5 +4,4 @@ using UnityEngine;
 
 public abstract class UIPanel : UIBase
 {
-    public abstract void Initialize();
 }

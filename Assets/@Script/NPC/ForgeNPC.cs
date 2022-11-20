@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForgeNPC : FunctionNPC
+public class ForgeNPC : FunctionalNPC
 {
     public override void OpenNPCUI()
     {

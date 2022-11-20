@@ -11,18 +11,16 @@ public class DataManager
     private Dictionary<int, BaseItem> itemTableDictionary = new Dictionary<int, BaseItem>();
 
     private string playerDataPath;
-    private string levelDataPath;
-    private string itemDataPath;
+    private string levelTablePath;
+    private string itemTablePath;
 
-    [SerializeField] private PlayerData playerData = null;
-    private CharacterData currentCharacterData = null;
-    private Character currentCharacter = null;
+    [SerializeField] private PlayerData playerData;
 
     public void Initialize()
     {
         playerDataPath = Application.dataPath + "/PlayerData.json";
-        levelDataPath = Application.dataPath + "/LevelTable.json";
-        itemDataPath = Application.dataPath + "/ItemTable.json";
+        levelTablePath = Application.dataPath + "/LevelTable.json";
+        itemTablePath = Application.dataPath + "/ItemTable.json";
 
         LoadLevelTable();
         LoadItemTable();
@@ -38,22 +36,22 @@ public class DataManager
 
     public void LoadLevelTable()
     {
-        if(FileCheck(levelDataPath))
+        if(FileCheck(levelTablePath))
         {
-            string jsonLevelData = File.ReadAllText(levelDataPath);
+            string jsonLevelData = File.ReadAllText(levelTablePath);
             LevelTable levelTable = JsonConvert.DeserializeObject<LevelTable>(jsonLevelData);
 
             for (int i = 0; i < levelTable.levels.Length; ++i)
             {
-                LevelTable.Add(levelTable.levels[i], levelTable.maxExperiences[i]);
+                levelTableDictionary.Add(levelTable.levels[i], levelTable.maxExperiences[i]);
             }
         }
     }
     public void LoadItemTable()
     {
-        if(FileCheck(itemDataPath))
+        if(FileCheck(itemTablePath))
         {
-            string jsonItemData = File.ReadAllText(itemDataPath);
+            string jsonItemData = File.ReadAllText(itemTablePath);
             ItemTable itemTable = JsonConvert.DeserializeObject<ItemTable>(jsonItemData);
 
             for (int i = 0; i < itemTable.items.Length; ++i)
@@ -100,18 +98,25 @@ public class DataManager
             SavePlayerData();
         }
     }
-
     public void SavePlayerData()
     {
         string jsonPlayerData = JsonConvert.SerializeObject(playerData, Formatting.Indented);
         File.WriteAllText(playerDataPath, jsonPlayerData);
     }
 
+    public void SetCurrentCharacter(int index)
+    {
+        playerData.SelectCharacterIndex = index;
+        SavePlayerData();
+    }
+
     #region Property
     public Dictionary<int, float> LevelTable { get { return levelTableDictionary; } }
     public Dictionary<int, BaseItem> ItemTable { get { return itemTableDictionary; } }
     public PlayerData PlayerData { get { return playerData; } }
-    public Character CurrentCharacter { get { return currentCharacter; } set { currentCharacter = value; } }
-    public CharacterData CurrentCharacterData { get { return currentCharacterData; } set { currentCharacterData = value; } }
+    public CharacterData SelectCharacterData
+    {
+        get { return playerData.CharacterDatas[playerData.SelectCharacterIndex]; }
+    }
     #endregion
 }
