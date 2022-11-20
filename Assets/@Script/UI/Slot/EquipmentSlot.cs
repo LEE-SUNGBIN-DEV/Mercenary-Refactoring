@@ -5,9 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public abstract class EquipmentSlot : BaseSlot
 {
-    public override void Initialize()
+    private Character character;
+
+    public void Initialize(Character targetCharacter)
     {
         base.Initialize();
+        character = targetCharacter;
     }
 
     #region Equip & Release Function
@@ -17,7 +20,7 @@ public abstract class EquipmentSlot : BaseSlot
         if (equipItem != null)
         {
             SetItemToSlot(equipItem);
-            equipItem.Equip(Managers.DataManager.CurrentCharacter);
+            equipItem.Equip(character.Status);
         }
         else
         {
@@ -35,7 +38,7 @@ public abstract class EquipmentSlot : BaseSlot
         if (equipItem != null)
         {
             SetItemToSlot(equipItem);
-            equipItem.Equip(Managers.DataManager.CurrentCharacter);
+            equipItem.Equip(character.Status);
         }
         else
         {
@@ -51,23 +54,23 @@ public abstract class EquipmentSlot : BaseSlot
     #region Mouse Event Function
     public void DropEquipmentSlot<T>() where T : EquipmentItem
     {
-        T equipmentItem = Managers.SlotManager.DragSlot.Item as T;
+        T equipmentItem = Managers.UIManager.SlotController.DragSlot.Item as T;
         if (equipmentItem != null)
         {
             ReleaseItem<T>();
-            EquipItem(Managers.SlotManager.DragSlot.Item as T);
+            EquipItem(Managers.UIManager.SlotController.DragSlot.Item as T);
         }
     }
     public void EndDragEquipmentSlot<T>() where T : EquipmentItem
     {
-        T equipmentItem = Managers.SlotManager.DragSlot.Item as T;
+        T equipmentItem = Managers.UIManager.SlotController.DragSlot.Item as T;
         if (equipmentItem != null)
         {
             ReleaseItem<T>();
-            EquipItem(Managers.SlotManager.TargetSlot.Item as T);
+            EquipItem(Managers.UIManager.SlotController.TargetSlot.Item as T);
         }
-        else if (Managers.SlotManager.TargetSlot is IAllItemAcceptableSlot
-            && Managers.SlotManager.TargetSlot.Item == null)
+        else if (Managers.UIManager.SlotController.TargetSlot is IAllItemAcceptableSlot
+            && Managers.UIManager.SlotController.TargetSlot.Item == null)
         {
             ReleaseItem<T>();
             ClearSlot();

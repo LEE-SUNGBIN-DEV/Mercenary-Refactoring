@@ -16,7 +16,7 @@ public class EnemyMeleeSkill : EnemySkill
     {
         Owner.StopTrace();
         StartCoroutine(WaitForRotate());
-        Owner.MonsterAnimator.SetTrigger("doAttack");
+        Owner.Animator.SetTrigger("doAttack");
         StartCoroutine(SkillCooldown());
     }
 

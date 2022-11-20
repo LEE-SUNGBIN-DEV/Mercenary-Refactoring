@@ -7,10 +7,10 @@ public static partial class Functions
 {
     public static Color SetColor(Color color, float alpha = 1f)
     {
-        Color targetColor = color;
-        targetColor.a = alpha;
+        Color resultColor = color;
+        resultColor.a = alpha;
 
-        return targetColor;
+        return resultColor;
     }
     #region Async Operation
     public static IEnumerator WaitAsyncOperation(System.Func<bool> isLoaded, UnityAction callback = null)

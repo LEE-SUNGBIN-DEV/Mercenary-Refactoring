@@ -18,4 +18,6 @@ public static partial class Constants
             new Vector3(29.552f, 0.9f, 8),
             new Vector3(24.552f, 0.9f, 8)
         };
+
+    public static readonly int NULL_INT = -1;
 }

@@ -15,159 +15,82 @@
       "LocationData": {
         "LastViliage": 3
       },
-      "ItemData": {
+      "InventoryData": {
         "Money": 500,
-        "InventoryItemList": [
+        "InventoryItems": [
           {
-            "slotIndex": 0,
             "itemType": 1,
             "itemID": 1,
             "itemCount": 1,
             "grade": 0
-          }
+          },
+          {
+            "itemType": 1,
+            "itemID": 500,
+            "itemCount": 1,
+            "grade": 0
+          },
+          {
+            "itemType": 1,
+            "itemID": 1000,
+            "itemCount": 1,
+            "grade": 0
+          },
+          {
+            "itemType": 1,
+            "itemID": 1500,
+            "itemCount": 1,
+            "grade": 0
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
         ],
-        "QuickSlots": [],
-        "WeaponSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        },
-        "HelemetSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        },
-        "ArmorSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        },
-        "BootsSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        }
+        "QuickSlotItemIDs": [
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      },
+      "EquipmentSlotData": {
+        "WeaponSlotItem": null,
+        "HelmetSlotItem": null,
+        "ArmorSlotItem": null,
+        "BootsSlotItem": null
       },
       "QuestData": {
         "MainQuestPrograss": 0,
         "QuestSaveList": []
       }
     },
-    {
-      "StatData": {
-        "CharacterClass": null,
-        "Level": 1,
-        "CurrentExperience": 0.0,
-        "MaxExperience": 1.0,
-        "StatPoint": 0,
-        "Strength": 0,
-        "Vitality": 0,
-        "Dexterity": 0,
-        "Luck": 0
-      },
-      "LocationData": {
-        "LastViliage": 3
-      },
-      "ItemData": {
-        "Money": 500,
-        "InventoryItemList": [],
-        "QuickSlots": [],
-        "WeaponSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        },
-        "HelemetSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        },
-        "ArmorSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        },
-        "BootsSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        }
-      },
-      "QuestData": {
-        "MainQuestPrograss": 0,
-        "QuestSaveList": []
-      }
-    },
-    {
-      "StatData": {
-        "CharacterClass": null,
-        "Level": 1,
-        "CurrentExperience": 0.0,
-        "MaxExperience": 1.0,
-        "StatPoint": 0,
-        "Strength": 0,
-        "Vitality": 0,
-        "Dexterity": 0,
-        "Luck": 0
-      },
-      "LocationData": {
-        "LastViliage": 3
-      },
-      "ItemData": {
-        "Money": 500,
-        "InventoryItemList": [],
-        "QuickSlots": [],
-        "WeaponSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        },
-        "HelemetSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        },
-        "ArmorSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        },
-        "BootsSlotItem": {
-          "slotIndex": 0,
-          "itemType": 0,
-          "itemID": 0,
-          "itemCount": 0,
-          "grade": 0
-        }
-      },
-      "QuestData": {
-        "MainQuestPrograss": 0,
-        "QuestSaveList": []
-      }
-    }
+    null,
+    null
   ],
+  "SelectCharacterIndex": 0,
   "BgmVolume": 0.5,
   "SfxVolume": 0.5
 }

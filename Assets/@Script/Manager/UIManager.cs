@@ -3,50 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum UI
-{
-    UI_TitleScene,
-    UI_SelectCharacterScene,
-    UI_GameScene,
-    UI_CommonScene
-}
-
 public class UIManager
 {
-    #region Event
     public event UnityAction<bool> InteractPlayer;
     public event UnityAction<string> OnRequestNotice;
-    #endregion
 
-    private Canvas canvas;
-    private Dictionary<UI, UIBaseScene> uiDictionary = new Dictionary<UI, UIBaseScene>();
+    private UICommonScene commonSceneUI;
+    private SlotController slotController;
 
-    private UITitleScene uiTitleScene;
-    private UISelectCharacterScene uiSelectCharacterScene;
-    private UIGameScene uiGameScene;
-    private UICommonScene uiCommonScene;
-
-    public UIManager()
+    public void Initialize(Transform rootTransform)
     {
-        Quest.onTaskIndexChanged -= NoticeQuestState;
-        Quest.onTaskIndexChanged += NoticeQuestState;
-    }
-    
-    public void Initialize(GameObject canvasObject)
-    {
-        canvas = canvasObject.GetComponent<Canvas>();
+        commonSceneUI = Managers.ResourceManager.InstantiatePrefabSync("Prefab_UI_Common_Scene").GetComponent<UICommonScene>();
+        commonSceneUI.transform.SetParent(rootTransform);
+        commonSceneUI.Initialize();
+        if (commonSceneUI.gameObject.activeSelf == false)
+        {
+            commonSceneUI.gameObject.SetActive(true);
+        }
 
-        uiTitleScene = canvas.GetComponentInChildren<UITitleScene>(true);
-        uiSelectCharacterScene = canvas.GetComponentInChildren<UISelectCharacterScene>(true);
-        uiGameScene = canvas.GetComponentInChildren<UIGameScene>(true);
-        uiCommonScene = canvas.GetComponentInChildren<UICommonScene>(true);
-
-        uiDictionary.Add(UI.UI_TitleScene, uiTitleScene);
-        uiDictionary.Add(UI.UI_SelectCharacterScene, uiSelectCharacterScene);
-        uiDictionary.Add(UI.UI_GameScene, uiGameScene);
-        uiDictionary.Add(UI.UI_CommonScene, uiCommonScene);
-
-        OpenUI(UI.UI_CommonScene);
+        slotController = new SlotController();
+        slotController.Initialize(rootTransform.gameObject);
     }
 
     public void RequestNotice(string content)
@@ -56,7 +32,7 @@ public class UIManager
 
     public void RequestConfirm(string content, UnityAction action)
     {
-        uiCommonScene.RequestConfirm(content, action);
+        commonSceneUI.RequestConfirm(content, action);
     }
 
     public void NoticeQuestState(Quest quest)
@@ -72,37 +48,20 @@ public class UIManager
         }
     }
 
-    public void OpenUI(UI uiType)
-    {
-        uiDictionary.TryGetValue(uiType, out UIBaseScene targetUI);
-        if(targetUI != null)
-        {
-            targetUI.gameObject.SetActive(true);
-        }
-        else
-        {
-            Debug.Log($"{uiType}가 존재하지 않습니다.");
-        }
-    }
-    public void CloseUI(UI uiType)
-    {
-        uiDictionary.TryGetValue(uiType, out UIBaseScene targetUI);
-        if (targetUI != null)
-        {
-            targetUI.gameObject.SetActive(false);
-        }
-        else
-        {
-            Debug.Log($"{uiType}가 존재하지 않습니다.");
-        }
-    }
-
     #region Property
-    public Canvas Canvas { get { return canvas; } }
-    public Dictionary<UI, UIBaseScene> UIDictionary { get { return uiDictionary; } }
-    public UITitleScene UITitleScene { get { return uiTitleScene; } }
-    public UISelectCharacterScene UISelectCharacterScene { get { return uiSelectCharacterScene; } }
-    public UIGameScene UIGameScene { get { return uiGameScene; } }
-    public UICommonScene UICommonScene { get { return uiCommonScene; } }
+    public GameObject RootObject
+    {
+        get
+        {
+            GameObject rootObject = GameObject.Find("@UI Root");
+            if (rootObject == null)
+            {
+                rootObject = new GameObject { name = "@UI Root" };
+            }
+            return rootObject;
+        }
+    }
+    public UICommonScene CommonSceneUI { get { return commonSceneUI; } }
+    public SlotController SlotController { get { return slotController; } }
     #endregion
 }

@@ -20,7 +20,7 @@ public class FloatingDamageText : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.SetParent(Managers.UIManager.Canvas.transform);
+        transform.SetParent(Managers.UIManager.CommonSceneUI.transform);
         textColor.a = 1f;
     }
 

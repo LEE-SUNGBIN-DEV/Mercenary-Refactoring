@@ -12,7 +12,7 @@ public class QuestListPanel : UIBase
     {
         public bool isActive;
         public uint questID;
-        public FunctionNPC functionNPC;
+        public FunctionalNPC functionNPC;
         public Button button;
         public TextMeshProUGUI buttonText;
         
@@ -26,7 +26,7 @@ public class QuestListPanel : UIBase
     
     [SerializeField] private List<NPCQuestButton> buttonInformations;
 
-    public void ActiveQuestButton(FunctionNPC functionNPC)
+    public void ActiveQuestButton(FunctionalNPC functionNPC)
     {
         int length = buttonInformations.Count > functionNPC.QuestList.Count ? functionNPC.QuestList.Count : buttonInformations.Count;
 

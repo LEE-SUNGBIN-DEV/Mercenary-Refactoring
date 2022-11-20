@@ -21,7 +21,7 @@ public class BlackDragonFireBall : EnemySkill
     {
         Owner.StopTrace();
         StartCoroutine(WaitForRotate());
-        Owner.MonsterAnimator.SetTrigger("doFireBall");
+        Owner.Animator.SetTrigger("doFireBall");
         StartCoroutine(SkillCooldown());
     }
 

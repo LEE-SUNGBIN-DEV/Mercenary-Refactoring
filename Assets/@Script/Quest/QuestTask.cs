@@ -6,10 +6,8 @@ using UnityEngine.Events;
 [System.Serializable]
 public abstract class QuestTask
 {
-    #region Action
-    public static UnityAction<QuestTask> onTaskStart;
-    public static UnityAction<QuestTask> onTaskEnd;
-    #endregion
+    public event UnityAction<QuestTask> OnStartTask;
+    public event UnityAction<QuestTask> OnEndTask;
 
     [SerializeField] private Quest ownerQuest;
     [TextArea]
@@ -18,25 +16,24 @@ public abstract class QuestTask
     [SerializeField] private int requireAmount;
     [SerializeField] private int successAmount;
 
-    public abstract void StartTask();
-    public abstract void EndTask();
+    public virtual void Initialize(Quest quest)
+    {
+        ownerQuest = quest;
+    }
+
+    public virtual void StartTask()
+    {
+        OnStartTask?.Invoke(this);
+    }
+    public virtual void EndTask()
+    {
+        OnEndTask?.Invoke(this);
+    }
 
     #region Property
-    public Quest OwnerQuest
-    {
-        get { return ownerQuest; }
-        set { ownerQuest = value; }
-    }
-    public string TaskDescription
-    {
-        get { return taskDescription; }
-        private set { taskDescription = value; }
-    }
-    public int RequireAmount
-    {
-        get { return requireAmount; }
-        private set { requireAmount = value; }
-    }
+    public Quest OwnerQuest { get { return ownerQuest; } }
+    public string TaskDescription { get { return taskDescription; } }
+    public int RequireAmount { get { return requireAmount; } }
 
     public int SuccessAmount
     {

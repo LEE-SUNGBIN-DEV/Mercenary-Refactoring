@@ -11,7 +11,7 @@ public class HPPotion : ConsumptionItem
     public override void Consume(Character character)
     {
         Managers.AudioManager.PlaySFX("Potion Consume");
-        character.CharacterStatus.CurrentHitPoint += hpRecoveryAmount;
+        character.Status.CurrentHitPoint += hpRecoveryAmount;
     }
 
     public float HPRecoveryAmount {  get { return hpRecoveryAmount; } }

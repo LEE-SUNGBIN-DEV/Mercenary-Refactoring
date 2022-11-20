@@ -17,7 +17,7 @@ public class BlackDragonLandBreath : EnemySkill
     {
         Owner.StopTrace();
         StartCoroutine(WaitForRotate());
-        Owner.MonsterAnimator.SetTrigger("doLandBreath");
+        Owner.Animator.SetTrigger("doLandBreath");
         StartCoroutine(SkillCooldown());
     }
 

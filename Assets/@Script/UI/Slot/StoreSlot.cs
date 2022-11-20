@@ -9,70 +9,37 @@ using TMPro;
 [System.Serializable]
 public class StoreSlot : MonoBehaviour, IPointerClickHandler
 {
-    #region Event
-    public event UnityAction<StoreSlot, Character> RequestBuy;
-    #endregion
-
     [SerializeField] private BaseItem item;
     [SerializeField] private Image storeSlotImage;
     [SerializeField] private TextMeshProUGUI storeSlotItemNameText;
     [SerializeField] private TextMeshProUGUI storeSlotItemPriceText;
 
-    public void SetStoreItem(BaseItem item)
+    public void Initialize(BaseItem sellItem)
     {
-        if (item != null)
+        if (sellItem != null)
         {
-            Item = item;
-            StoreSlotImage.sprite = Item.ItemSprite;
-            StoreSlotItemNameText.text = Item.ItemName;
-            StoreSlotItemPriceText.text = Item.ItemPrice.ToString() + "G";
-
-            SetImageAlpha(1f);
+            item = sellItem;
+            storeSlotImage.sprite = Item.ItemSprite;
+            storeSlotItemNameText.text = Item.ItemName;
+            storeSlotItemPriceText.text = Item.ItemPrice.ToString() + "G";
+            storeSlotImage.color = Functions.SetColor(StoreSlotImage.color, 1f);
         }
     }
-
-    public void SetImageAlpha(float value)
+    public void BuyItem()
     {
-        if (storeSlotImage.sprite != null)
-        {
-            storeSlotImage.sprite = Item.ItemSprite;
-            Color alpha = storeSlotImage.color;
-            alpha.a = value;
-            storeSlotImage.color = alpha;
-        }
+        Managers.DataManager.SelectCharacterData.InventoryData.BuyItem(this);
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        if (Item != null
-            && eventData.button == PointerEventData.InputButton.Right
-            && Managers.DataManager.CurrentCharacter != null)
+        if (eventData.button == PointerEventData.InputButton.Right && Item != null)
         {
-            RequestBuy(this, Managers.DataManager.CurrentCharacter);
+            BuyItem();
         }
     }
 
-
     #region Property
-    public BaseItem Item
-    {
-        get { return item; }
-        set { item = value; }
-    }
-    public Image StoreSlotImage
-    {
-        get { return storeSlotImage; }
-        set { storeSlotImage = value; }
-    }
-    public TextMeshProUGUI StoreSlotItemNameText
-    {
-        get { return storeSlotItemNameText; }
-        set { storeSlotItemNameText = value; }
-    }
-    public TextMeshProUGUI StoreSlotItemPriceText
-    {
-        get { return storeSlotItemPriceText; }
-        set { storeSlotItemPriceText = value; }
-    }
+    public BaseItem Item { get { return item; } }
+    public Image StoreSlotImage { get { return storeSlotImage; } }
     #endregion
 }

@@ -97,18 +97,18 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
         IsMove = false;
         IsAttack = false;
 
-        MonsterAnimator.SetBool("isMove", false);
+        Animator.SetBool("isMove", false);
 
         // Stun State
         IsStun = true;
-        MonsterAnimator.SetTrigger("doStun");
+        Animator.SetTrigger("doStun");
     }
     public override void Die()
     {
         InitializeAllState();
 
         IsDie = true;
-        MonsterAnimator.SetTrigger("doDie");
+        Animator.SetTrigger("doDie");
 
         StartCoroutine(WaitForDisapear(10f));
     }
@@ -123,8 +123,8 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
         IsCompete = false;
         IsDie = false;
 
-        MonsterAnimator.SetBool("isMove", false);
-        MonsterAnimator.SetBool("isDown", false);
+        Animator.SetBool("isMove", false);
+        Animator.SetBool("isDown", false);
     }
     #endregion
 
@@ -138,11 +138,11 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
         IsAttack = false;
         IsStun = false;
 
-        MonsterAnimator.SetBool("isMove", false);
+        Animator.SetBool("isMove", false);
 
         // Down State
         IsStagger = true;
-        MonsterAnimator.SetBool("isDown", true);
+        Animator.SetBool("isDown", true);
 
         StartCoroutine(StaggerTime());
     }
@@ -151,7 +151,7 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
         yield return new WaitForSeconds(Constants.TIME_STAGGER);
 
         IsStagger = false;
-        MonsterAnimator.SetBool("isDown", false);
+        Animator.SetBool("isDown", false);
     }
     public void Compete()
     {
@@ -166,11 +166,11 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
         IsStun = false;
         IsStagger = false;
 
-        MonsterAnimator.SetBool("isMove", false);
+        Animator.SetBool("isMove", false);
 
         // Compete State
         IsCompete = true;
-        MonsterAnimator.SetTrigger("doCompete");
+        Animator.SetTrigger("doCompete");
 
         StartCoroutine(CompeteTime());
     }
@@ -178,7 +178,7 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     private IEnumerator CompeteTime()
     {
         yield return new WaitForSeconds(Constants.TIME_COMPETE);
-        MonsterAnimator.SetTrigger("doCompeteAttack");
+        Animator.SetTrigger("doCompeteAttack");
 
         yield return new WaitForSeconds(Constants.TIME_COMPETE_ATTACK);
         CurrentHitPoint -= (MaxHitPoint * 0.1f);
@@ -189,15 +189,15 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     #region Animation Event Function
     public void SpawnMoveFront()
     {
-        MonsterNavMeshAgent.speed = 7.0f;
-        MonsterNavMeshAgent.isStopped = false;
-        MonsterNavMeshAgent.SetDestination(Target.position);
+        NavMeshAgent.speed = 7.0f;
+        NavMeshAgent.isStopped = false;
+        NavMeshAgent.SetDestination(Target.position);
     }
 
     public void SpawnMoveStop()
     {
-        MonsterNavMeshAgent.speed = MoveSpeed;
-        MonsterNavMeshAgent.isStopped = true;
+        NavMeshAgent.speed = MoveSpeed;
+        NavMeshAgent.isStopped = true;
     }
     public void OutCompete()
     {

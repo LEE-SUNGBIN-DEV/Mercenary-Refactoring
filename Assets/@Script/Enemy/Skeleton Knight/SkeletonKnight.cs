@@ -70,7 +70,7 @@ public class SkeletonKnight : Enemy, ICompetable
             return;
 
         IsHeavyHit = true;
-        MonsterAnimator.SetTrigger("doHeavyHit");
+        Animator.SetTrigger("doHeavyHit");
     }
 
     public override void Stun()
@@ -83,11 +83,11 @@ public class SkeletonKnight : Enemy, ICompetable
         IsAttack = false;
         IsHeavyHit = false;
 
-        MonsterAnimator.SetBool("isMove", false);
+        Animator.SetBool("isMove", false);
 
         // Stun State
         IsStun = true;
-        MonsterAnimator.SetBool("isStun", true);
+        Animator.SetBool("isStun", true);
 
         StartCoroutine(StunTime());
     }
@@ -97,7 +97,7 @@ public class SkeletonKnight : Enemy, ICompetable
 
         // Die State
         IsDie = true;
-        MonsterAnimator.SetTrigger("doDie");
+        Animator.SetTrigger("doDie");
 
         StartCoroutine(WaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
     }
@@ -111,8 +111,8 @@ public class SkeletonKnight : Enemy, ICompetable
         IsStun = false;
         IsCompete = false;
 
-        MonsterAnimator.SetBool("isMove", false);
-        MonsterAnimator.SetBool("isStun", false);
+        Animator.SetBool("isMove", false);
+        Animator.SetBool("isStun", false);
     }
     #endregion
 
@@ -121,7 +121,7 @@ public class SkeletonKnight : Enemy, ICompetable
         yield return new WaitForSeconds(time);
 
         IsStun = false;
-        MonsterAnimator.SetBool("isStun", false);
+        Animator.SetBool("isStun", false);
     }
 
     public void Compete()
@@ -136,14 +136,14 @@ public class SkeletonKnight : Enemy, ICompetable
 
         // Compete State
         IsCompete = true;
-        MonsterAnimator.SetTrigger("doCompete");
+        Animator.SetTrigger("doCompete");
 
         StartCoroutine(CompeteTime());
     }
     public IEnumerator CompeteTime()
     {
         yield return new WaitForSeconds(Constants.TIME_COMPETE);
-        MonsterAnimator.SetTrigger("doCompeteAttack");
+        Animator.SetTrigger("doCompeteAttack");
 
         yield return new WaitForSeconds(Constants.TIME_COMPETE_ATTACK);
         CurrentHitPoint -= (MaxHitPoint * 0.1f);
@@ -160,11 +160,11 @@ public class SkeletonKnight : Enemy, ICompetable
         IsAttack = false;
         IsHeavyHit = false;
 
-        MonsterAnimator.SetBool("isMove", false);
+        Animator.SetBool("isMove", false);
 
         // Stun State
         IsStun = true;
-        MonsterAnimator.SetBool("isStun", true);
+        Animator.SetBool("isStun", true);
 
         StartCoroutine(StunTime(Constants.TIME_STAGGER));
     }

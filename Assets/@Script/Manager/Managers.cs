@@ -10,20 +10,14 @@ public class Managers : Singleton<Managers>
     [SerializeField] private DataManager dataManager = new DataManager();
 
     private GameManager gameManager = new GameManager();
-    private GameSceneManager gameSceneManager = new GameSceneManager();
+    private SceneManagerCS sceneManagerCS = new SceneManagerCS();
     private ResourceManager resourceManager = new ResourceManager();
     private UIManager uiManager = new UIManager();
     private AudioManager audioManager = new AudioManager();
+    private EventManager eventManager = new EventManager();
     private NPCManager npcManager = new NPCManager();
-    private DialogueManager dialogueManager = new DialogueManager();
     private QuestManager questManager = new QuestManager();
-    private SlotManager slotManager = new SlotManager();
     private ObjectPoolManager objectPoolManager = new ObjectPoolManager();
-
-    private void Awake()
-    {
-        Initialize();
-    }
 
     private void Update()
     {
@@ -38,21 +32,13 @@ public class Managers : Singleton<Managers>
         }
         else
         {
-            // UI Canvas ·Îµå
-            GameObject canvas = GameObject.Find("@UI Canvas");
-            if (canvas == null)
-            {
-                canvas = ResourceManager.InstantiatePrefabSync("@UI Canvas", transform);
-            }
-            canvas.transform.SetParent(transform);
-
             resourceManager.Initialize();
             dataManager.Initialize();
-            uiManager.Initialize(canvas);
+            uiManager.Initialize(transform);
             gameManager.Initialize();
-            gameSceneManager.Initialize();
+            sceneManagerCS.Initialize();
             audioManager.Initialize(transform);
-            slotManager.Initialize(canvas);
+            eventManager.Initialize();
 
             /*
             npcManager.Initialize();
@@ -68,15 +54,14 @@ public class Managers : Singleton<Managers>
 
     #region Property
     public static GameManager GameManager { get { return Instance?.gameManager; } }
-    public static GameSceneManager GameSceneManager { get { return Instance?.gameSceneManager; } }
+    public static SceneManagerCS SceneManagerCS { get { return Instance?.sceneManagerCS; } }
     public static ResourceManager ResourceManager { get { return Instance?.resourceManager; } }
     public static UIManager UIManager { get { return Instance?.uiManager; } }
     public static AudioManager AudioManager { get { return Instance?.audioManager; } }
+    public static EventManager EventManager { get { return Instance?.eventManager; } }
     public static DataManager DataManager { get { return Instance?.dataManager; } }
     public static NPCManager NPCManager { get { return Instance?.npcManager; } }
-    public static DialogueManager DialogueManager { get { return Instance?.dialogueManager; } }
     public static QuestManager QuestManager { get { return Instance?.questManager; } }
-    public static SlotManager SlotManager { get { return Instance?.slotManager; } }
     public static ObjectPoolManager ObjectPoolManager { get { return Instance?.objectPoolManager; } }
     #endregion
 }

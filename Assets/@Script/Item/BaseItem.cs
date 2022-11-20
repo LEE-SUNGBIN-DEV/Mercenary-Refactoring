@@ -22,15 +22,15 @@ public enum ITEM_TYPE
 public class BaseItem
 {
     [Header("Base Item")]
-    protected ITEM_TYPE itemType;
-    protected ITEM_RANK itemRank;
-    protected int itemID;
-    protected string itemName;
-    protected string itemDescription;
-    protected int itemCount;
-    protected int itemPrice;
-    protected bool isCountable;
-    protected Sprite itemSprite;
+    [SerializeField] protected ITEM_TYPE itemType;
+    [SerializeField] protected ITEM_RANK itemRank;
+    [SerializeField] protected int itemID;
+    [SerializeField] protected string itemName;
+    [SerializeField] protected string itemDescription;
+    [SerializeField] protected int itemCount;
+    [SerializeField] protected int itemPrice;
+    [SerializeField] protected bool isCountable;
+    [SerializeField] protected Sprite itemSprite;
 
     #region Property
     public ITEM_TYPE ItemType { get { return itemType; } set { itemType = value; } }

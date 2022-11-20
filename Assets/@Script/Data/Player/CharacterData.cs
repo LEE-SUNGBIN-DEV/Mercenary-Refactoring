@@ -6,29 +6,32 @@ using UnityEngine.Events;
 [System.Serializable]
 public class CharacterData
 {
-    [SerializeField] private CharacterStatData statData;
-    [SerializeField] private CharacterLocationData locationData;
-    [SerializeField] private CharacterItemData itemData;
-    [SerializeField] private CharacterQuestData questData;
+    [SerializeField] private StatData statData;
+    [SerializeField] private LocationData locationData;
+    [SerializeField] private InventoryData inventoryData;
+    [SerializeField] private EquipmentSlotData equipmentSlotData;
+    [SerializeField] private QuestData questData;
     
     public CharacterData(CHARACTER_CLASS selectedClass)
     {
-        statData = new CharacterStatData(selectedClass);
-        locationData = new CharacterLocationData();
-        itemData = new CharacterItemData();
-        questData = new CharacterQuestData();
+        statData = new StatData(selectedClass);
+        locationData = new LocationData();
+        inventoryData = new InventoryData();
+        equipmentSlotData = new EquipmentSlotData();
+        questData = new QuestData();
     }
 
     public void GetQuestReward(Quest quest)
     {
-        itemData.Money += quest.RewardMoney;
+        inventoryData.Money += quest.RewardMoney;
         statData.CurrentExperience += quest.RewardExperience;
     }
 
     #region Property
-    public CharacterStatData StatData { get { return statData; } set { statData = value; } }
-    public CharacterLocationData LocationData { get { return locationData; } set { locationData = value; } }
-    public CharacterItemData ItemData { get { return itemData; } set { itemData = value; } }
-    public CharacterQuestData QuestData { get { return questData; } set { questData = value; } }
+    public StatData StatData { get { return statData; } set { statData = value; } }
+    public LocationData LocationData { get { return locationData; } set { locationData = value; } }
+    public InventoryData InventoryData { get { return inventoryData; } set { inventoryData = value; } }
+    public EquipmentSlotData EquipmentSlotData { get { return equipmentSlotData; } set { equipmentSlotData = value; } }
+    public QuestData QuestData { get { return questData; } set { questData = value; } }
     #endregion
 }

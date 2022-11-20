@@ -4,22 +4,26 @@ using UnityEngine;
 
 public class TitleScene : BaseScene
 {
-    protected override void Awake()
-    {
-        base.Awake();
-        sceneType = SCENE_TYPE.TITLE;
-        scene = SCENE_LIST.Title;
-    }
+    private UITitleScene titleSceneUI;
     public override void Initialize()
     {
         base.Initialize();
-        Managers.UIManager.OpenUI(UI.UI_TitleScene);
+        sceneType = SCENE_TYPE.TITLE;
+        scene = SCENE_LIST.Title;
+
+        titleSceneUI = Managers.ResourceManager.InstantiatePrefabSync("Prefab_UI_Title_Scene").GetComponent<UITitleScene>();
+        titleSceneUI.transform.SetParent(Managers.UIManager.RootObject.transform);
+        titleSceneUI.transform.SetAsFirstSibling();
+        titleSceneUI.Initialize();
+        if (titleSceneUI.gameObject.activeSelf == false)
+        {
+            titleSceneUI.gameObject.SetActive(true);
+        }
     }
 
     public override void ExitScene()
     {
         base.ExitScene();
-        Managers.UIManager.CloseUI(UI.UI_TitleScene);
     }
 
     public void PlayButtonClickSound()

@@ -7,11 +7,6 @@ public abstract class UIBaseScene : UIBase
     protected bool isInitialized;
     protected LinkedList<UIPopup> currentPopUpLinkedList = new LinkedList<UIPopup>();
 
-    private void Awake()
-    {
-        Initialize();
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -26,8 +21,6 @@ public abstract class UIBaseScene : UIBase
             }
         }
     }
-
-    public abstract void Initialize();
 
     #region Popup Function
     public void FocusPopup(UIPopup popUp)

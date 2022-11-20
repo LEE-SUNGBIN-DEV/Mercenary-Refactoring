@@ -16,7 +16,7 @@ public class SkeletonKnightHorizontalSlash : EnemySkill
     {
         Owner.StopTrace();
         StartCoroutine(WaitForRotate());
-        Owner.MonsterAnimator.SetTrigger("doAttack2");
+        Owner.Animator.SetTrigger("doAttack2");
         StartCoroutine(SkillCooldown());
     }
 

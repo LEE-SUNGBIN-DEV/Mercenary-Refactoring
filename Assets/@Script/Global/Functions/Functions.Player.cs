@@ -16,13 +16,15 @@ public static partial class Functions
         character.gameObject.SetTransform(targetTransform);
         character.CharacterController.enabled = true;
     }
-    public static void CreateCharacterWithCamera(Vector3 position)
+    public static Character CreateCharacterWithCamera(Vector3 position)
     {
         GameObject cameraObject = Managers.ResourceManager.InstantiatePrefabSync("Prefab_Player_Camera");
-        Character character = Managers.ResourceManager.InstantiatePrefabSync("Prefab_" + Managers.DataManager.CurrentCharacterData.StatData.CharacterClass).GetComponent<Character>();
+        Character character = Managers.ResourceManager.InstantiatePrefabSync("Prefab_" + Managers.DataManager.SelectCharacterData.StatData.CharacterClass).GetComponent<Character>();
 
         SetCharacterPosition(character, position);
         cameraObject.transform.position = position;
+
+        return character;
     }
     public static void TeleportCharacterWithCamera(Character character, Vector3 position, PlayerCamera camera)
     {
@@ -30,50 +32,11 @@ public static partial class Functions
         camera.transform.position = position;
     }
 
-    // !!플레이어의 대미지를 계산하는 함수
-    public static void PlayerDamageProcess(Character character, Enemy enemy, float ratio)
-    {
-        // Basic Damage Process
-        float damage = (character.CharacterStatus.AttackPower - enemy.DefensivePower * 0.5f) * 0.5f;
-        if (damage < 0)
-        {
-            damage = 0;
-        }
-        damage += ((character.CharacterStatus.AttackPower / 8f - character.CharacterStatus.AttackPower / 16f) + 1f);
-
-        // Critical Process
-        bool isCritical;
-        float randomNumber = Random.Range(0.0f, 100.0f);
-        if (randomNumber <= character.CharacterStatus.CriticalChance)
-        {
-            isCritical = true;
-            damage *= (1 + character.CharacterStatus.CriticalDamage * 0.01f);
-            Managers.AudioManager.PlaySFX("Player Critical Attack");
-        }
-        else
-        {
-            isCritical = false;
-            Managers.AudioManager.PlaySFX("Player Attack");
-        }
-
-        // Damage Ratio Process
-        damage *= ratio;
-
-        // Final Damage Process
-        float damageRange = Random.Range(0.9f, 1.1f);
-        damage *= damageRange;
-
-        enemy.CurrentHitPoint -= damage;
-
-        FloatingDamageText floatingDamageText = Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_PREFAB_FLOATING_DAMAGE_TEXT).GetComponent<FloatingDamageText>();
-        floatingDamageText.SetDamageText(isCritical, damage, enemy.transform.position);
-    }
-
     // !! 적의 대미지를 계산하는 함수
     public static void EnemyDamageProcess(Enemy enemy, Character character, float ratio)
     {
         // Damage Process
-        float damage = (enemy.AttackPower - character.CharacterStatus.DefensivePower * 0.5f) * 0.5f;
+        float damage = (enemy.AttackPower - character.Status.DefensivePower * 0.5f) * 0.5f;
         if (damage < 0)
         {
             damage = 0;
@@ -83,6 +46,6 @@ public static partial class Functions
         // Final Damage
         damage *= ratio;
 
-        character.CharacterStatus.CurrentHitPoint -= damage;
+        character.Status.CurrentHitPoint -= damage;
     }
 }

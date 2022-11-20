@@ -16,7 +16,7 @@ public class SkeletonKnightVerticalSlash : EnemySkill
     {
         Owner.StopTrace();
         StartCoroutine(WaitForRotate());
-        Owner.MonsterAnimator.SetTrigger("doAttack1");
+        Owner.Animator.SetTrigger("doAttack1");
         StartCoroutine(SkillCooldown());
     }
 

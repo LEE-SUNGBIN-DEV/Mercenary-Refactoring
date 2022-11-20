@@ -17,7 +17,7 @@ public class BlackDragonLightning : EnemySkill
     {
         Owner.StopTrace();
         StartCoroutine(WaitForRotate());
-        Owner.MonsterAnimator.SetTrigger("doLightning");
+        Owner.Animator.SetTrigger("doLightning");
         StartCoroutine(SkillCooldown());
     }
 
