@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public abstract class Enemy : MonoBehaviour, IMonster
+public abstract class Enemy : MonoBehaviour, IEnemy
 {
     #region Event
     public event UnityAction<Enemy> OnBirth;

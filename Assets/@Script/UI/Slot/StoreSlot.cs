@@ -16,12 +16,12 @@ public class StoreSlot : MonoBehaviour, IPointerClickHandler
 
     public void Initialize(BaseItem sellItem)
     {
-        if (sellItem != null)
+        if (sellItem is IShopableItem shopableItem)
         {
             item = sellItem;
             storeSlotImage.sprite = Item.ItemSprite;
             storeSlotItemNameText.text = Item.ItemName;
-            storeSlotItemPriceText.text = Item.ItemPrice.ToString() + "G";
+            storeSlotItemPriceText.text = shopableItem.ItemPrice.ToString() + "G";
             storeSlotImage.color = Functions.SetColor(StoreSlotImage.color, 1f);
         }
     }

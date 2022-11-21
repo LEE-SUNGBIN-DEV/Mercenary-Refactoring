@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "ItemType": 4,
+      "ItemRank": 0,
+      "ItemID": 1500,
+      "ItemName": "장화",
+      "ItemDescription": "이동속도 +3%",
+      "ItemSprite": null,
+      "Grade": 0,
+      "IncreasedAmount": 3
+    }
+  ]
+}

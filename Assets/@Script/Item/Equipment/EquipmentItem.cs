@@ -4,34 +4,26 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class EquipmentItem : BaseItem
+public abstract class EquipmentItem : BaseItem
 {
     [Header("Equipment Item")]
     protected int grade;
-    
-    public EquipmentItem()
-    {
 
-    }
-    public EquipmentItem(BaseItem baseItem)
+    public override void Initialize<T>(T item)
     {
-        itemType = baseItem.ItemType;
-        itemRank = baseItem.ItemRank;
-        itemID = baseItem.ItemID;
-        itemName = baseItem.ItemName;
-        itemDescription = baseItem.ItemDescription;
-        itemCount = baseItem.ItemCount;
-        itemPrice = baseItem.ItemPrice;
-        isCountable = baseItem.IsCountable;
-        itemSprite = baseItem.ItemSprite;
-        grade = 0;
+        base.Initialize(item);
+        if (item is EquipmentItem targetItem)
+        {
+            grade = targetItem.grade;
+        }
     }
 
-    public virtual void Equip(CharacterStatus status)
+    public virtual void Equip(Character character)
     {
         Managers.AudioManager.PlaySFX("Audio_Equipment_Mount");
     }
-    public virtual void Release(CharacterStatus status)
+
+    public virtual void Disarm(Character character)
     {
         Managers.AudioManager.PlaySFX("Audio_Equipment_Dismount");
     }

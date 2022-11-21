@@ -53,9 +53,9 @@ public class QuickSlotPanel : UIPanel
 
             if (inventoryData.QuickSlotItemIDs[i] != Constants.NULL_INT)
             {
-                ConsumptionItem targetItem = Managers.DataManager.ItemTable[inventoryData.QuickSlotItemIDs[i]] as ConsumptionItem;
+                CountItem targetItem = Managers.DataManager.ItemTable[inventoryData.QuickSlotItemIDs[i]] as CountItem;
                 targetItem.ItemCount = itemCount;
-                quickSlots[i].SetItemToSlot(targetItem);
+                quickSlots[i].SetSlotByItem(targetItem);
             }
         }
     }
@@ -64,7 +64,7 @@ public class QuickSlotPanel : UIPanel
     {
         if (quickSlots[slotIndex].Item != null)
         {
-            quickSlots[slotIndex].ConsumeItem();
+            quickSlots[slotIndex].UseItem();
         }
     }
 

@@ -6,87 +6,71 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class QuickSlot : BaseSlot
 {
+    [SerializeField] private IUsableItem item;
+
     public override void Initialize()
     {
         base.Initialize();
     }
 
-    public override void SetItemToSlot<T>(T targetItem)
+    public override void LoadSlot(ItemData itemSaveData)
     {
-        base.SetItemToSlot(targetItem);
-        if (item.ItemCount > 0)
+        if (itemSaveData != null)
         {
-            itemImage.color = Color.white;
-        }
-        else
-        {
-            itemImage.color = Color.gray;
+            BaseItem loadItem = Managers.DataManager.ItemTable[itemSaveData.itemID];
+            if(loadItem is IUsableItem usableItem)
+            {
+                item = usableItem;
+                SetSlotByItem(loadItem);
+            }
         }
     }
 
-    public void RegisterItem<T>(T consumptionItem) where T : ConsumptionItem
+    public override void SetSlotByItem<T>(T targetItem)
     {
-        // 빈 슬롯일 경우에 최초 등록
-        if (item == null)
+        base.SetSlotByItem(targetItem);
+        if(targetItem is CountItem countItem)
         {
-            SetItemToSlot(consumptionItem);
+            if (countItem.ItemCount > 0)
+            {
+                itemImage.color = Color.white;
+            }
+            else
+            {
+                itemImage.color = Color.gray;
+            }
         }
-        // 이후 숫자만 증가
-        else
-        {
-            item.ItemCount += consumptionItem.ItemCount;
-        }
-    }
-    public void RegisterQuickSlot<T>(T consumptionItem) where T : ConsumptionItem
-    {
-    }
-    public void ReleaseQuickSlot()
-    {
-        ClearSlot();
-
     }
 
-    public void ConsumeItem()
+    public void UseItem()
     {
     }
 
     #region Mouse Event Function
-    public void DropQuickSlot<T>() where T : ConsumptionItem
+    public void DropQuickSlot<T>() where T : CountItem
     {
-        T potionItem = Managers.UIManager.SlotController.DragSlot.Item as T;
-        if (potionItem != null)
-        {
-            ReleaseQuickSlot();
-            RegisterQuickSlot(Managers.UIManager.SlotController.DragSlot.Item as T);
-        }
+        
     }
-    public void EndDragQuickSlot<T>() where T : ConsumptionItem
+    public void EndDragQuickSlot<T>() where T : CountItem
     {
-        T potionItem = Managers.UIManager.SlotController.DragSlot.Item as T;
-        if (potionItem != null)
-        {
-            ReleaseQuickSlot();
-            RegisterQuickSlot(Managers.UIManager.SlotController.TargetSlot.Item as T);
-        }
-        else if (Managers.UIManager.SlotController.TargetSlot == null)
-        {
-            ReleaseQuickSlot();
-        }
+        
     }
 
     public override void Drop()
     {
-        DropQuickSlot<ConsumptionItem>();
+        DropQuickSlot<CountItem>();
     }
 
     public override void EndDrag()
     {
-        EndDragQuickSlot<ConsumptionItem>();
+        EndDragQuickSlot<CountItem>();
     }
 
     public override void SlotRightClick(PointerEventData eventData)
     {
-        ConsumeItem();
+        UseItem();
     }
     #endregion
+
+    public IUsableItem Item { get { return item; } }
 }
