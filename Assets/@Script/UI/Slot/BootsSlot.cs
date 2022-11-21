@@ -6,6 +6,19 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class BootsSlot : EquipmentSlot
 {
+    [SerializeField] private BootsItem item;
+
+    public override void UnEquipItem()
+    {
+    }
+    public override void LoadSlot(ItemData itemSaveData)
+    {
+        if (itemSaveData != null)
+        {
+            BootsItem item = Managers.DataManager.ItemTable[itemSaveData.itemID] as BootsItem;
+            SetSlotByItem(item);
+        }
+    }
     public override void Drop()
     {
         DropEquipmentSlot<BootsItem>();
@@ -18,6 +31,6 @@ public class BootsSlot : EquipmentSlot
 
     public override void SlotRightClick(PointerEventData eventData)
     {
-        ReleaseItem<BootsItem>();
+        UnEquipItem();
     }
 }

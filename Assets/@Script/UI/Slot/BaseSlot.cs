@@ -18,32 +18,24 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     }
 
     [Header("Base Slot")]
-    [SerializeField] protected BaseItem item;
-    [SerializeField] protected int itemCount;
     [SerializeField] protected Image itemImage;
     [SerializeField] protected TextMeshProUGUI itemCountText;
-    protected int slotIndex;
+    [SerializeField] protected int itemCount;
+    [SerializeField] protected int slotIndex;
 
     public virtual void Initialize()
     {
         BindImage(typeof(IMAGE));
         BindText(typeof(TEXT));
 
+        itemCount = 0;
         itemImage = GetImage((int)IMAGE.ItemImage);
         itemCountText = GetText((int)TEXT.ItemCountText);
-
-        item = null;
-        itemCount = 0;
     }
 
-    public bool IsEmpty()
+    public void EnableCountText(bool isEnable)
     {
-        return item == null;
-    }
-
-    public void EnableOrDisableCountText()
-    {
-        if (item.IsCountable)
+        if(isEnable)
         {
             itemCountText.text = $"{itemCount}";
             itemCountText.enabled = true;
@@ -54,66 +46,27 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         }
     }
 
-    public virtual void SetItemToSlot<T>(T targetItem) where T : BaseItem
+    public virtual void SetSlotByItem<T>(T requestItem) where T : BaseItem
     {
-        item = targetItem;
-        itemImage.sprite = targetItem.ItemSprite;
-        itemImage.color = Color.white;
-        itemCount = targetItem.ItemCount;
-        EnableOrDisableCountText();
-    }
-    public void SetSlot(BaseSlot slot)
-    {
-        if(!slot.IsEmpty())
+        if(requestItem != null)
         {
-            item = slot.Item;
-            itemImage.sprite = slot.Item.ItemSprite;
-            itemCount = slot.ItemCount;
-            EnableOrDisableCountText();
+            itemImage.sprite = requestItem.ItemSprite;
+            itemImage.color = Functions.SetColor(Color.white, 1f);
+            EnableCountText(requestItem is CountItem);
         }
     }
-    public void LoadSlot(ItemSaveData itemSaveData)
+    public virtual void LoadSlot(ItemData itemSaveData)
     {
-        if(itemSaveData != null)
+        if (itemSaveData != null)
         {
-            switch (itemSaveData.itemType)
-            {
-                case ITEM_TYPE.Normal:
-                    {
-                        BaseItem item = Managers.DataManager.ItemTable[itemSaveData.itemID];
-                        SetItemToSlot(item);
-
-                        break;
-                    }
-                case ITEM_TYPE.Equipment:
-                    {
-                        EquipmentItem item = Managers.DataManager.ItemTable[itemSaveData.itemID] as EquipmentItem;
-                        item.Grade = itemSaveData.grade;
-                        SetItemToSlot(item);
-
-                        break;
-                    }
-                case ITEM_TYPE.Consumption:
-                    {
-                        ConsumptionItem item = Managers.DataManager.ItemTable[itemSaveData.itemID] as ConsumptionItem;
-                        SetItemToSlot(item);
-
-                        break;
-                    }
-                case ITEM_TYPE.Quest:
-                    {
-                        BaseItem item = Managers.DataManager.ItemTable[itemSaveData.itemID];
-                        SetItemToSlot(item);
-
-                        break;
-                    }
-            }
+            BaseItem item = Managers.DataManager.ItemTable[itemSaveData.itemID];
+            SetSlotByItem(item);
         }
     }
     public void ClearSlot()
     {
-        item = null;
         itemImage.sprite = null;
+        itemImage.color = Functions.SetColor(Color.white, 0f);
         itemCount = 0;
         itemCountText.text = null;
         itemCountText.enabled = false;
@@ -126,21 +79,21 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Managers.UIManager.SlotController.OnBeginDrag(this);
+        Managers.SlotManager.OnBeginDrag(this);
     }
     public void OnDrag(PointerEventData eventData)
     {
-        Managers.UIManager.SlotController.OnDrag(eventData);
+        Managers.SlotManager.OnDrag(eventData);
     }
     public void OnDrop(PointerEventData eventData)
     {
-        Managers.UIManager.SlotController.OnDrop(this);
+        Managers.SlotManager.OnDrop(this);
         Drop();
     }
     public void OnEndDrag(PointerEventData eventData)
     {
         EndDrag();
-        Managers.UIManager.SlotController.OnEndDrag();
+        Managers.SlotManager.OnEndDrag();
     }
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -153,10 +106,9 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     #endregion
 
     #region Property
-    public BaseItem Item { get { return item; } set { item = value; } }
-    public int ItemCount { get { return itemCount; } set { itemCount = value; } }
     public Image ItemImage { get { return itemImage; } set { itemImage = value; } }
     public TextMeshProUGUI ItemCountText { get { return itemCountText; } set { itemCountText = value; } }
+    public int ItemCount { get { return itemCount; } set { itemCount = value; } }
     public int SlotIndex { get { return slotIndex; } set { slotIndex = value; } }
     #endregion
 }

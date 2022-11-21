@@ -11,12 +11,12 @@ public class InventoryPopup : UIPopup
         MoneyText
     }
 
-    private Character character;
+    private InventoryData inventoryData;
     [SerializeField] private InventorySlot[] inventorySlots;
 
     public void Initialize(Character targetCharacter)
     {
-        character = targetCharacter;
+        inventoryData = targetCharacter.CharacterData.InventoryData;
         BindText(typeof(TEXT));
 
         inventorySlots = GetComponentsInChildren<InventorySlot>(true);
@@ -25,9 +25,9 @@ public class InventoryPopup : UIPopup
             inventorySlots[i].Initialize(i);
         }
 
-        character.CharacterData.InventoryData.OnChangeInventoryData -= LoadInventory;
-        character.CharacterData.InventoryData.OnChangeInventoryData += LoadInventory;
-        LoadInventory(character.CharacterData.InventoryData);
+        inventoryData.OnChangeInventoryData -= LoadInventory;
+        inventoryData.OnChangeInventoryData += LoadInventory;
+        LoadInventory(inventoryData);
     }
 
     public void LoadInventory(InventoryData inventoryData)
@@ -41,14 +41,19 @@ public class InventoryPopup : UIPopup
         }
     }
 
-    public void AddItemToInventory<T>(T item) where T : BaseItem
+    public void AddItem<T>(T item) where T : BaseItem
     {
-        character.CharacterData.InventoryData.AddItemToInventory(item);
+        inventoryData.AddItem(item);
     }
 
     public void RemoveItem(int slotIndex, int itemCount = 1)
     {
-        character.CharacterData.InventoryData.RemoveItemFromInventory(slotIndex, itemCount);
+        inventoryData.RemoveItem(slotIndex, itemCount);
+    }
+
+    public void DestroyItem(int slotIndex)
+    {
+        inventoryData.DestroyItem(slotIndex);
     }
 
     public void ClearInventory()

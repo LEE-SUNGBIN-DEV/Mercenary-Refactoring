@@ -13,13 +13,20 @@ public enum ITEM_RANK
 public enum ITEM_TYPE
 {
     Normal,
-    Equipment,
-    Consumption,
+
+    Weapon,
+    Helmet,
+    Armor,
+    Boots,
+
+    HPPotion,
+    SPPotion,
+
     Quest
 }
 
 [System.Serializable]
-public class BaseItem
+public abstract class BaseItem
 {
     [Header("Base Item")]
     [SerializeField] protected ITEM_TYPE itemType;
@@ -27,10 +34,17 @@ public class BaseItem
     [SerializeField] protected int itemID;
     [SerializeField] protected string itemName;
     [SerializeField] protected string itemDescription;
-    [SerializeField] protected int itemCount;
-    [SerializeField] protected int itemPrice;
-    [SerializeField] protected bool isCountable;
     [SerializeField] protected Sprite itemSprite;
+
+    public virtual void Initialize<T>(T item) where T:BaseItem
+    {
+        itemType = item.itemType;
+        itemRank = item.itemRank;
+        itemID = item.itemID;
+        itemName = item.itemName;
+        itemDescription = item.itemDescription;
+        itemSprite = item.itemSprite;
+    }
 
     #region Property
     public ITEM_TYPE ItemType { get { return itemType; } set { itemType = value; } }
@@ -38,9 +52,6 @@ public class BaseItem
     public int ItemID { get { return itemID; } set { itemID = value; } }
     public string ItemName { get { return itemName; } set { itemName = value; } }
     public string ItemDescription { get { return itemDescription; } set { itemDescription = value; } }
-    public int ItemCount { get { return itemCount; } set { itemCount = value; } }
-    public int ItemPrice { get { return itemPrice; } set { itemPrice = value; } }
-    public bool IsCountable { get { return isCountable; } set { isCountable = value; } }
     public Sprite ItemSprite { get { return itemSprite; } set { itemSprite = value; } }
     #endregion
 }

@@ -8,16 +8,25 @@ public class HelmetItem : EquipmentItem
     [Header("Helmet Item")]
     private float increasedAmount;
 
-    public override void Equip(CharacterStatus status)
+    public override void Initialize<T>(T item)
     {
-        base.Equip(status);
-        status.DefensivePower += increasedAmount;
+        base.Initialize(item);
+        if (item is HelmetItem targetItem)
+        {
+            increasedAmount = targetItem.increasedAmount;
+        }
     }
 
-    public override void Release(CharacterStatus status)
+    public override void Equip(Character character)
     {
-        base.Release(status);
-        status.DefensivePower -= increasedAmount;
+        base.Equip(character);
+        character.Status.DefensivePower += increasedAmount;
+    }
+
+    public override void Disarm(Character character)
+    {
+        base.Disarm(character);
+        character.Status.DefensivePower -= increasedAmount;
     }
 
     public float IncreasedAmount { get { return increasedAmount; } set { increasedAmount = value; } }

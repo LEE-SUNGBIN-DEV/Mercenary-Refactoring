@@ -77,10 +77,6 @@ MonoBehaviour:
     m_Address: Prefab_Helmet_Slot
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: fad7b7f472f78fb4aab7668212600d7e
-    m_Address: Prefab_Drag_Slot
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 1fc3f1342d3eddc42a4fe74dacaee2d7
     m_Address: Prefab_Boots_Slot
     m_ReadOnly: 0
@@ -103,6 +99,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 63f6477ce7af2674b9a57f3856107b96
     m_Address: Prefab_UI_Common_Scene
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d300eccd0b6f7a84c86875dc2684fd4a
+    m_Address: Prefab_Drag_Image
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0
