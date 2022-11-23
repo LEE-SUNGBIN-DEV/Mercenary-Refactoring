@@ -4,8 +4,8 @@
       "ItemType": 2,
       "ItemRank": 0,
       "ItemID": 500,
-      "ItemName": "투구",
-      "ItemDescription": "방어력 +3",
+      "ItemName": "Helmet",
+      "ItemDescription": "Defense +3",
       "ItemSprite": null,
       "Grade": 0,
       "IncreasedAmount": 3

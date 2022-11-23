@@ -13,21 +13,26 @@ public class UserPanel : UIPanel
         ExpBar
     }
 
-    public void Initialize(Character character)
+    private QuickSlotPanel quickSlotPanel;
+
+    public void Initialize(CharacterData characterData)
     {
         BindImage(typeof(IMAGE));
 
-        character.Status.OnCharacterStatusChanged -= UpdateHPBar;
-        character.Status.OnCharacterStatusChanged += UpdateHPBar;
-        character.Status.OnCharacterStatusChanged -= UpdateSPBar;
-        character.Status.OnCharacterStatusChanged += UpdateSPBar;
+        quickSlotPanel = GetComponentInChildren<QuickSlotPanel>(true);
+        quickSlotPanel.Initialize(characterData.InventoryData);
 
-        character.CharacterData.StatData.OnChangeStatData -= UpdateExpBar;
-        character.CharacterData.StatData.OnChangeStatData += UpdateExpBar;
+        characterData.StatusData.OnCharacterStatusChanged -= UpdateHPBar;
+        characterData.StatusData.OnCharacterStatusChanged += UpdateHPBar;
+        characterData.StatusData.OnCharacterStatusChanged -= UpdateSPBar;
+        characterData.StatusData.OnCharacterStatusChanged += UpdateSPBar;
 
-        UpdateHPBar(character.Status);
-        UpdateSPBar(character.Status);
-        UpdateExpBar(character.CharacterData.StatData);
+        characterData.StatData.OnChangeStatData -= UpdateExpBar;
+        characterData.StatData.OnChangeStatData += UpdateExpBar;
+
+        UpdateHPBar(characterData.StatusData);
+        UpdateSPBar(characterData.StatusData);
+        UpdateExpBar(characterData.StatData);
     }
 
     public void UpdateExpBar(StatData statData)
@@ -35,12 +40,12 @@ public class UserPanel : UIPanel
         float ratio = statData.CurrentExperience / statData.MaxExperience;
         GetImage((int)IMAGE.ExpBar).fillAmount = ratio;
     }
-    public void UpdateHPBar(CharacterStatus status)
+    public void UpdateHPBar(StatusData status)
     {
         float ratio = status.CurrentHitPoint / status.MaxHitPoint;
         GetImage((int)IMAGE.HPBar).fillAmount = ratio;
     }
-    public void UpdateSPBar(CharacterStatus status)
+    public void UpdateSPBar(StatusData status)
     {
         float ratio = status.CurrentStamina / status.MaxStamina;
         GetImage((int)IMAGE.SPBar).fillAmount = ratio;

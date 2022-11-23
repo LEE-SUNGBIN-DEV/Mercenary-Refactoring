@@ -46,24 +46,7 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         }
     }
 
-    public virtual void SetSlotByItem<T>(T requestItem) where T : BaseItem
-    {
-        if(requestItem != null)
-        {
-            itemImage.sprite = requestItem.ItemSprite;
-            itemImage.color = Functions.SetColor(Color.white, 1f);
-            EnableCountText(requestItem is CountItem);
-        }
-    }
-    public virtual void LoadSlot(ItemData itemSaveData)
-    {
-        if (itemSaveData != null)
-        {
-            BaseItem item = Managers.DataManager.ItemTable[itemSaveData.itemID];
-            SetSlotByItem(item);
-        }
-    }
-    public void ClearSlot()
+    public virtual void ClearSlot()
     {
         itemImage.sprite = null;
         itemImage.color = Functions.SetColor(Color.white, 0f);
@@ -73,8 +56,6 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     }
 
     #region Mouse Event Function
-    public abstract void Drop();
-    public abstract void EndDrag();
     public abstract void SlotRightClick(PointerEventData eventData);
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -88,11 +69,9 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     public void OnDrop(PointerEventData eventData)
     {
         Managers.SlotManager.OnDrop(this);
-        Drop();
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        EndDrag();
         Managers.SlotManager.OnEndDrag();
     }
     public void OnPointerClick(PointerEventData eventData)

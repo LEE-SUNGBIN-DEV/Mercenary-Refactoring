@@ -37,10 +37,10 @@ public class Lancer : Character
         if (PlayerInput.IsMouseRightDown)
             nextState = State.CompareStateWeight(nextState, CHARACTER_STATE.LANCER_DEFENSE);
 
-        if (PlayerInput.IsSpaceKeyDown && Status.CurrentStamina >= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL)
+        if (PlayerInput.IsSpaceKeyDown && StatusData.CurrentStamina >= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL)
             nextState = State.CompareStateWeight(nextState, CHARACTER_STATE.ROLL);
 
-        if (PlayerInput.IsRKeyDown && Status.CurrentStamina >= Constants.CHARACTER_STAMINA_CONSUMPTION_COUNTER)
+        if (PlayerInput.IsRKeyDown && StatusData.CurrentStamina >= Constants.CHARACTER_STAMINA_CONSUMPTION_COUNTER)
             nextState = State.CompareStateWeight(nextState, CHARACTER_STATE.SKILL);
 
         return nextState;

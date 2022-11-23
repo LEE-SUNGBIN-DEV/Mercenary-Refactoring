@@ -25,10 +25,8 @@ public class PlayerData
         }
     }
 
-    #region Property
     public CharacterData[] CharacterDatas { get { return characterDatas; } set { characterDatas = value; } }
     public int SelectCharacterIndex { get { return currentCharacterIndex; } set { currentCharacterIndex = value; } }
     public float BgmVolume { get { return bgmVolume; } set { bgmVolume = value; } }
     public float SfxVolume { get { return sfxVolume; } set { sfxVolume = value; } }
-    #endregion
 }

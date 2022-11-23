@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "ItemType": 6,
+      "ItemRank": 0,
+      "ItemID": 11000,
+      "ItemName": "Yellow Potion",
+      "ItemDescription": "SP +20%",
+      "ItemSprite": null,
+      "Grade": 0,
+      "IncreasedAmount": 20
+    }
+  ]
+}

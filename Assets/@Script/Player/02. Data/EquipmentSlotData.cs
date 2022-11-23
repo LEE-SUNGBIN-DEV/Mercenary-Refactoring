@@ -16,20 +16,29 @@ public class EquipmentSlotData
 
     public EquipmentSlotData()
     {
-        weaponSlotItem = null;
-        helmetSlotItem = null;
-        armorSlotItem = null;
-        bootsSlotItem = null;
+        WeaponSlotItem = null;
+        HelmetSlotItem = null;
+        ArmorSlotItem = null;
+        BootsSlotItem = null;
     }
 
     #region Equipment Slot Function
-    public void EquipWeapon(WeaponItem weaponItem)
+    public void EquipWeapon(WeaponItem welaponItem)
     {
-        WeaponSlotItem = new ItemData(weaponItem);
+        if (welaponItem != null)
+        {
+            weaponSlotItem = new ItemData(welaponItem)
+            {
+                grade = weaponSlotItem.grade
+            };
+        }
     }
-    public void ReleaseWeapon()
+    public void UnEquipItem()
     {
-        WeaponSlotItem = null;
+        if (WeaponSlotItem != null)
+        {
+            WeaponSlotItem = null;
+        }
     }
     public void EquipHelmet(HelmetItem helmetItem)
     {

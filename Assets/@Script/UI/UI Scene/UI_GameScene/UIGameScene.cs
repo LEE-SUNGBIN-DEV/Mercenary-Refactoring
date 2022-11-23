@@ -17,7 +17,7 @@ public class UIGameScene : UIBaseScene
     private StorePopup storePopup;
     private CampaignPopup campaignPopup;
 
-    public void Initialize(Character character)
+    public void Initialize(CharacterData characterData)
     {
         if (isInitialized == true)
         {
@@ -30,8 +30,8 @@ public class UIGameScene : UIBaseScene
         dialoguePanel = GetComponentInChildren<DialoguePanel>(true);
         monsterPanel = GetComponentInChildren<MonsterPanel>(true);
         mapPanel = GetComponentInChildren<MapPanel>(true);
-        userPanel.Initialize(character);
-        dialoguePanel.Initialize(character);
+        userPanel.Initialize(characterData);
+        dialoguePanel.Initialize(characterData);
 
         diePopup = GetComponentInChildren<DiePopup>(true);
         inventoryPopup = GetComponentInChildren<InventoryPopup>(true);
@@ -42,8 +42,8 @@ public class UIGameScene : UIBaseScene
         campaignPopup = GetComponentInChildren<CampaignPopup>(true);
 
         diePopup.Initialize();
-        inventoryPopup.Initialize(character);
-        statusPopup.Initialize(character);
+        inventoryPopup.Initialize(characterData.InventoryData);
+        statusPopup.Initialize(characterData);
         helpPopup.Initialize();
         //questPopup.Initialize();
         storePopup.Initialize();

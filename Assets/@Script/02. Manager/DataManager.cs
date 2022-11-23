@@ -35,6 +35,10 @@ public class DataManager
 
         hpPotionTablePath = Application.dataPath + "/HP_Potion_Table.json";
         spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
+        spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
+        spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
+        spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
+        spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
 
         LoadLevelTable();
         LoadItemTable();
@@ -70,7 +74,7 @@ public class DataManager
 
             for (int i = 0; i < itemTable.items.Length; ++i)
             {
-                itemTable.items[i].ItemSprite = Managers.ResourceManager.LoadResourceSync<Sprite>("Sprite_Item_" + itemTable.items[i].ItemID);
+                itemTable.items[i].ItemSprite = Managers.ResourceManager.LoadResourceSync<Sprite>("Sprite_Item_" + itemTable.items[i].ItemName + "_" + itemTable.items[i].ItemID);
                 T item = new();
                 item.Initialize(itemTable.items[i]);
                 itemTableDictionary.Add(itemTable.items[i].ItemID, item);

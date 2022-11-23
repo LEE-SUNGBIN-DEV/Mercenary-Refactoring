@@ -27,9 +27,9 @@ public class InventoryData
     }
 
     #region Inventory Function
-    public bool AddItem<T>(T item, int count = 1) where T: BaseItem
+    public bool AddOrCombineItem<T>(T item, int count = 1) where T: BaseItem
     {
-        if (item is IUsableItem countableItem)
+        if (item is CountItem countableItem)
         {
             for(int i=0; i<inventoryItems.Length; ++i)
             {
@@ -49,56 +49,63 @@ public class InventoryData
             OnChangeInventoryData?.Invoke(this);
             return true;
         }
-
         return false;
     }
-    public void AddItemBySlot<T>(T slot) where T: BaseSlot
+    public void AddItemToSlotIndex<T>(T item, int slotIndex) where T: BaseItem
     {
-        AddItemByIndex(Managers.DataManager.ItemTable[inventoryItems[slot.SlotIndex].itemID], slot.SlotIndex);
-    }
-    public void AddItemByIndex<T>(T item, int slotIndex) where T : BaseItem
-    {
-        if(item is CountItem countItem)
+        if(item != null)
         {
-            if (inventoryItems[slotIndex].itemID == item.ItemID)
+            inventoryItems[slotIndex] = new ItemData(item);
+            OnChangeInventoryData?.Invoke(this);
+        }
+    }
+    public void SwapOrCombineItem(InventorySlot startSlot, InventorySlot endSlot)
+    {
+        // Try Combine
+        if (startSlot.Item is CountItem countItem && endSlot.Item is CountItem)
+        {
+            if (inventoryItems[startSlot.SlotIndex].itemID == inventoryItems[endSlot.SlotIndex].itemID)
             {
-                inventoryItems[slotIndex].itemCount += countItem.ItemCount;
+                inventoryItems[endSlot.SlotIndex].itemCount += inventoryItems[endSlot.SlotIndex].itemCount;
+                inventoryItems[startSlot.SlotIndex] = null;
                 OnChangeInventoryData?.Invoke(this);
                 return;
             }
         }
-        else
-        {
-            inventoryItems[slotIndex] = new ItemData(item);
-            OnChangeInventoryData?.Invoke(this);
-            return;
-        }
-    }
-    public void ExchangeItem(BaseSlot selectSlot, BaseSlot targetSlot)
-    {
-        AddItemBySlot(targetSlot);
-        AddItemBySlot(selectSlot);
-    }
-    public void CombineItem(BaseSlot selectSlot, BaseSlot targetSlot)
-    {
-        AddItemBySlot(targetSlot);
-        DestroyItem(selectSlot.SlotIndex);
-    }
-    public void RemoveItem(int slotIndex, int count = 1)
-    {
-        inventoryItems[slotIndex].itemCount -= count;
-        if (inventoryItems[slotIndex].itemCount <= 0)
-        {
-            inventoryItems[slotIndex] = null;
-        }
+        // Swap
+        ItemData temporaryData = inventoryItems[endSlot.SlotIndex];
+        inventoryItems[endSlot.SlotIndex] = inventoryItems[startSlot.SlotIndex];
+        inventoryItems[startSlot.SlotIndex] = temporaryData;
         OnChangeInventoryData?.Invoke(this);
-        return;
     }
-    public void DestroyItem(int slotIndex)
+    public void DestroyItemByIndex(int slotIndex)
     {
         inventoryItems[slotIndex] = null;
         OnChangeInventoryData?.Invoke(this);
-        return;
+    }
+    public void RemoveItemByIndex(int slotIndex, int amount = 1)
+    {
+        inventoryItems[slotIndex].itemCount -= amount;
+        if (inventoryItems[slotIndex].itemCount <= 0)
+        {
+            DestroyItemByIndex(slotIndex);
+        }
+        OnChangeInventoryData?.Invoke(this);
+    }
+    public void UseItemByItemID(int itemID, int amount = 1)
+    {
+        if (Managers.DataManager.ItemTable[itemID] is IUsableItem usableItem)
+        {
+            usableItem.UseItem(Managers.DataManager.SelectCharacterData.StatusData);
+            RemoveItemByIndex(FindItemSlotIndexByID(itemID), amount);
+        }
+    }
+    public void UseQuickSlotItem(int slotIndex, int amount = 1)
+    {
+        if (quickSlotItemIDs[slotIndex] != Constants.NULL_INT)
+        {
+            UseItemByItemID(quickSlotItemIDs[slotIndex], amount);
+        }
     }
     public void BuyItem(StoreSlot storeSlot)
     {
@@ -106,7 +113,7 @@ public class InventoryData
         {
             if (CheckMoney(shopableItem.ItemPrice))
             {
-                if (AddItem(storeSlot.Item))
+                if (AddOrCombineItem(storeSlot.Item))
                 {
                     money -= shopableItem.ItemPrice;
                 }
@@ -125,6 +132,17 @@ public class InventoryData
             return true;
         }
     }
+    public int FindItemSlotIndexByID(int itemID)
+    {
+        for (int i = 0; i < inventoryItems.Length; ++i)
+        {
+            if (inventoryItems[i] != null && inventoryItems[i].itemID == itemID)
+            {
+                return i;
+            }
+        }
+        return Constants.NULL_INT;
+    }
     public int FindEmptySlotIndex()
     {
         for (int i = 0; i < inventoryItems.Length; ++i)
@@ -140,14 +158,21 @@ public class InventoryData
     #endregion
 
     #region QuickSlot Function
-    public void RegisterQuicklot(int itemID, int slotIndex)
+    public void RegisterQuickSlot(int quickSlotIndex, int itemID)
     {
-        quickSlotItemIDs[slotIndex] = itemID;
+        quickSlotItemIDs[quickSlotIndex] = itemID;
         OnChangeInventoryData?.Invoke(this);
     }
-    public void ReleaseQuickSlot(int slotIndex)
+    public void ReleaseQuickSlot(int quickSlotIndex)
     {
-        quickSlotItemIDs[slotIndex] = Constants.NULL_INT;
+        quickSlotItemIDs[quickSlotIndex] = Constants.NULL_INT;
+        OnChangeInventoryData?.Invoke(this);
+    }
+    public void SwapQuickSlot(int startSlotIndex, int endSlotIndex)
+    {
+        int temporaryID = quickSlotItemIDs[startSlotIndex];
+        quickSlotItemIDs[startSlotIndex] = quickSlotItemIDs[endSlotIndex];
+        quickSlotItemIDs[endSlotIndex] = temporaryID;
         OnChangeInventoryData?.Invoke(this);
     }
     #endregion

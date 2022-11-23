@@ -13,7 +13,6 @@ public abstract class Character : MonoBehaviour
 
     protected PlayerInput playerInput;
     protected CharacterData characterData;
-    protected CharacterStatus status;
     protected CharacterState state;
 
     protected virtual void Awake()
@@ -27,11 +26,18 @@ public abstract class Character : MonoBehaviour
 
         playerInput = new PlayerInput();
         characterData = Managers.DataManager.SelectCharacterData;
-        status = new CharacterStatus(this);
+        characterData.StatusData = new StatusData(StatData);
         state = new CharacterState(this);
 
-        Status.OnDie -= Die;
-        Status.OnDie += Die;
+        StatusData.OnCharacterStatusChanged -= SetAttackSpeed;
+        StatusData.OnCharacterStatusChanged += SetAttackSpeed;
+
+        StatusData.OnDie -= Die;
+        StatusData.OnDie += Die;
+
+        SetAttackSpeed(StatusData);
+
+        Managers.DataManager.SavePlayerData();
     }
 
     protected virtual void OnEnable()
@@ -52,20 +58,20 @@ public abstract class Character : MonoBehaviour
     public void PlayerDamageProcess(Enemy enemy, float ratio)
     {
         // Basic Damage Process
-        float damage = (status.AttackPower - enemy.DefensivePower * 0.5f) * 0.5f;
+        float damage = (characterData.StatusData.AttackPower - enemy.DefensivePower * 0.5f) * 0.5f;
         if (damage < 0)
         {
             damage = 0;
         }
-        damage += ((status.AttackPower / 8f - status.AttackPower / 16f) + 1f);
+        damage += ((characterData.StatusData.AttackPower / 8f - characterData.StatusData.AttackPower / 16f) + 1f);
 
         // Critical Process
         bool isCritical;
         float randomNumber = Random.Range(0.0f, 100.0f);
-        if (randomNumber <= status.CriticalChance)
+        if (randomNumber <= characterData.StatusData.CriticalChance)
         {
             isCritical = true;
-            damage *= (1 + status.CriticalDamage * 0.01f);
+            damage *= (1 + characterData.StatusData.CriticalDamage * 0.01f);
             Managers.AudioManager.PlaySFX("Player Critical Attack");
         }
         else
@@ -91,7 +97,7 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public void Die(CharacterStatus characterStats)
+    public void Die(StatusData characterStats)
     {
     }
     public void Rebirth()
@@ -100,12 +106,15 @@ public abstract class Character : MonoBehaviour
     }
     public void AutoRecoverStamina()
     {
-        status.CurrentStamina += (status.MaxStamina * Constants.CHARACTER_STAMINA_AUTO_RECOVERY * 0.01f * Time.deltaTime);
+        characterData.StatusData.CurrentStamina += (characterData.StatusData.MaxStamina * Constants.CHARACTER_STAMINA_AUTO_RECOVERY * 0.01f * Time.deltaTime);
     }
     public void SetInteract(bool isInteract)
     {
     }
-
+    public void SetAttackSpeed(StatusData statusData)
+    {
+        animator.SetFloat("attackSpeed", statusData.AttackSpeed);
+    }
 
     #region Animation Event
     public void SwitchCharacterState(CHARACTER_STATE targetState)
@@ -117,9 +126,14 @@ public abstract class Character : MonoBehaviour
     #region Property
     public PlayerInput PlayerInput { get { return playerInput; } }
     public CharacterData CharacterData { get { return characterData; } }
-    public CharacterStatus Status { get { return status; } }
+    public StatData StatData { get { return characterData?.StatData; } }
+    public StatusData StatusData { get { return characterData?.StatusData; } }
+    public InventoryData InventoryData { get { return characterData?.InventoryData; } }
+    public EquipmentSlotData EquipmentSlotData { get { return characterData?.EquipmentSlotData; } }
+    public QuestData QuestData { get { return characterData?.QuestData; } }
+
     public CharacterState State { get { return state; } }
-    
+
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }
     public Animator Animator { get { return animator; } }

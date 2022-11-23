@@ -1,6 +1,18 @@
 {
   "CharacterDatas": [
     {
+      "StatusData": {
+        "AttackPower": 20.0,
+        "DefensivePower": 10.0,
+        "MaxHitPoint": 100.0,
+        "CurrentHitPoint": 100.0,
+        "MaxStamina": 100.0,
+        "CurrentStamina": 100.0,
+        "AttackSpeed": 1.1,
+        "MoveSpeed": 3.2,
+        "CriticalChance": 10.0,
+        "CriticalDamage": 110.0
+      },
       "StatData": {
         "CharacterClass": "Lancer",
         "Level": 1,
@@ -42,10 +54,30 @@
             "itemCount": 1,
             "grade": 0
           },
-          null,
-          null,
-          null,
-          null,
+          {
+            "itemType": 5,
+            "itemID": 10000,
+            "itemCount": 50,
+            "grade": 0
+          },
+          {
+            "itemType": 5,
+            "itemID": 10000,
+            "itemCount": 50,
+            "grade": 0
+          },
+          {
+            "itemType": 6,
+            "itemID": 11000,
+            "itemCount": 50,
+            "grade": 0
+          },
+          {
+            "itemType": 6,
+            "itemID": 11000,
+            "itemCount": 50,
+            "grade": 0
+          },
           null,
           null,
           null,

@@ -14,90 +14,40 @@ public class InventorySlot : BaseSlot
         slotIndex = i;
     }
 
-    public override void LoadSlot(ItemData itemData)
+    public void LoadSlot(ItemData itemData)
     {
+        ClearSlot();
         if (itemData != null)
         {
-            BaseItem item = Managers.DataManager.ItemTable[itemData.itemID];
-            SetSlotByItem(item);
+            item = Managers.DataManager.ItemTable[itemData.itemID];
+            itemCount = itemData.itemCount;
+
+            if (item != null)
+            {
+                itemImage.sprite = item.ItemSprite;
+                itemImage.color = Functions.SetColor(Color.white, 1f);
+                if (item is CountItem)
+                {
+                    itemCount = itemData.itemCount;
+                    EnableCountText(true);
+                }
+                else
+                {
+                    EnableCountText(false);
+                }
+            }
         }
+    }
+
+    public override void ClearSlot()
+    {
+        base.ClearSlot();
+        item = null;
     }
 
     public override void SlotRightClick(PointerEventData eventData)
     {
     }
 
-    public override void Drop()
-    {
-        // Target Slot is Inventory
-
-        if (Managers.SlotManager.SelectSlot is InventorySlot) // Inventory -> Inventory
-        {
-            // Swap or Combine
-        }
-        else if(Managers.SlotManager.SelectSlot is WeaponSlot) // WeaponSlot -> Inventory
-        {
-            // Swap or UnEquip
-        }
-        else if (Managers.SlotManager.SelectSlot is HelmetSlot) // HelmetSlot -> Inventory
-        {
-            // Swap or UnEquip
-        }
-        else if (Managers.SlotManager.SelectSlot is ArmorSlot) // ArmorSlot -> Inventory
-        {
-            // Swap or UnEquip
-        }
-        else if (Managers.SlotManager.SelectSlot is BootsSlot) // BootsSlot -> inventory
-        {
-            // Swap or UnEquip
-        }
-        else if (Managers.SlotManager.SelectSlot is QuickSlot) // QuickSlot -> Inventory
-        {
-            // Release
-        }
-    }
-
-
-    public void EndDragEquipmentSlot<T, U>() where T: EquipmentSlot where U: EquipmentItem
-    {
-        if(Managers.SlotManager.TargetSlot is T)
-        {
-            if (item is not U)
-            {
-                return;
-            }
-            else
-            {
-                //Equip
-            }
-        }
-    }
-    public void EndDragQuickSlot<T, U>() where T: QuickSlot where U: IUsableItem
-    {
-        if (Managers.SlotManager.TargetSlot is T)
-        {
-            if (item is not U)
-            {
-                return;
-            }
-            else
-            {
-                //Register
-            }
-        }
-    }
-    public override void EndDrag()
-    {
-        // Select Slot is Inventory
-
-        if (Managers.SlotManager.TargetSlot is InventorySlot)
-        {
-            // Swap or Combine
-        }
-        EndDragEquipmentSlot<WeaponSlot, WeaponItem>();
-        EndDragEquipmentSlot<HelmetSlot, HelmetItem>();
-        EndDragEquipmentSlot<ArmorSlot, ArmorItem>();
-        EndDragEquipmentSlot<BootsSlot, BootsItem>();
-        EndDragQuickSlot<QuickSlot, IUsableItem>();
-    }
+    public BaseItem Item { get { return item; } }
 }
