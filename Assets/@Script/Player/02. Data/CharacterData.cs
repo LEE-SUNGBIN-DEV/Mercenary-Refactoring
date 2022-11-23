@@ -6,6 +6,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public class CharacterData
 {
+    private StatusData statusData;
     [SerializeField] private StatData statData;
     [SerializeField] private LocationData locationData;
     [SerializeField] private InventoryData inventoryData;
@@ -28,6 +29,7 @@ public class CharacterData
     }
 
     #region Property
+    public StatusData StatusData { get { return statusData; } set { statusData = value; } }
     public StatData StatData { get { return statData; } set { statData = value; } }
     public LocationData LocationData { get { return locationData; } set { locationData = value; } }
     public InventoryData InventoryData { get { return inventoryData; } set { inventoryData = value; } }

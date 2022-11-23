@@ -17,16 +17,16 @@ public class HelmetItem : EquipmentItem
         }
     }
 
-    public override void Equip(Character character)
+    public override void Equip(StatusData _status)
     {
-        base.Equip(character);
-        character.Status.DefensivePower += increasedAmount;
+        base.Equip(_status);
+        _status.DefensivePower += increasedAmount;
     }
 
-    public override void Disarm(Character character)
+    public override void UnEquip(StatusData _status)
     {
-        base.Disarm(character);
-        character.Status.DefensivePower -= increasedAmount;
+        base.UnEquip(_status);
+        _status.DefensivePower -= increasedAmount;
     }
 
     public float IncreasedAmount { get { return increasedAmount; } set { increasedAmount = value; } }

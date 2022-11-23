@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "ItemType": 5,
+      "ItemRank": 0,
+      "ItemID": 10000,
+      "ItemName": "Red Potion",
+      "ItemDescription": "HP + 20%",
+      "ItemSprite": null,
+      "Grade": 0,
+      "IncreasedAmount": 20
+    }
+  ]
+}

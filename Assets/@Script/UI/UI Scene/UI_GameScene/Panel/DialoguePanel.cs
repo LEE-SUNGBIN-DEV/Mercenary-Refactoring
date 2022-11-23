@@ -15,7 +15,7 @@ public class DialoguePanel : UIPanel
     [SerializeField] private TextMeshProUGUI npcFunctionButtonText;
     [SerializeField] private QuestListPanel npcQuestListPanel;
 
-    public void Initialize(Character character)
+    public void Initialize(CharacterData characterData)
     {
         FunctionalNPC.OnStartTalk -= SetDialogueText;
         FunctionalNPC.OnStartTalk += SetDialogueText;

@@ -39,15 +39,16 @@ public class StatusPopup : UIPopup
         BootsSlot
     }
 
-    private Character character;
+    private CharacterData characterData;
     [SerializeField] private WeaponSlot weaponSlot;
     [SerializeField] private HelmetSlot helmetSlot;
     [SerializeField] private ArmorSlot armorSlot;
     [SerializeField] private BootsSlot bootsSlot;
 
-    public void Initialize(Character targetCharacter)
+    public void Initialize(CharacterData _characterData)
     {
-        character = targetCharacter;
+        characterData = _characterData;
+
         BindText(typeof(TEXT));
         BindButton(typeof(BUTTON));
         GetButton((int)BUTTON.StrengthButton).onClick.AddListener(OnClickStrengthButton);
@@ -55,23 +56,26 @@ public class StatusPopup : UIPopup
         GetButton((int)BUTTON.DexterityButton).onClick.AddListener(OnClickDexterityButton);
         GetButton((int)BUTTON.LuckButton).onClick.AddListener(OnClickLuckButton);
 
-        weaponSlot = GetComponentInChildren<WeaponSlot>();
-        helmetSlot = GetComponentInChildren<HelmetSlot>();
-        armorSlot = GetComponentInChildren<ArmorSlot>();
-        bootsSlot = GetComponentInChildren<BootsSlot>();
+        weaponSlot = GetComponentInChildren<WeaponSlot>(true);
+        helmetSlot = GetComponentInChildren<HelmetSlot>(true);
+        armorSlot = GetComponentInChildren<ArmorSlot>(true);
+        bootsSlot = GetComponentInChildren<BootsSlot>(true);
 
-        weaponSlot.Initialize(character);
-        helmetSlot.Initialize(character);
-        armorSlot.Initialize(character);
-        bootsSlot.Initialize(character);
+        weaponSlot.Initialize(characterData.StatusData);
+        helmetSlot.Initialize(characterData.StatusData);
+        armorSlot.Initialize(characterData.StatusData);
+        bootsSlot.Initialize(characterData.StatusData);
 
-        character.CharacterData.StatData.OnChangeStatData -= RefreshStatData;
-        character.CharacterData.StatData.OnChangeStatData += RefreshStatData;
-        character.Status.OnCharacterStatusChanged -= RefreshStatus;
-        character.Status.OnCharacterStatusChanged += RefreshStatus;
+        characterData.StatData.OnChangeStatData -= RefreshStatData;
+        characterData.StatData.OnChangeStatData += RefreshStatData;
+        characterData.StatusData.OnCharacterStatusChanged -= RefreshStatus;
+        characterData.StatusData.OnCharacterStatusChanged += RefreshStatus;
+        characterData.EquipmentSlotData.OnChangeEquipmentSlotData -= LoadEquipmentSlot;
+        characterData.EquipmentSlotData.OnChangeEquipmentSlotData += LoadEquipmentSlot;
 
-        RefreshStatData(character.CharacterData.StatData);
-        RefreshStatus(character.Status);
+        RefreshStatData(characterData.StatData);
+        RefreshStatus(characterData.StatusData);
+        LoadEquipmentSlot(characterData.EquipmentSlotData);
     }
 
     public void RefreshStatData(StatData statData)
@@ -86,7 +90,7 @@ public class StatusPopup : UIPopup
         GetText((int)TEXT.LuckText).text = statData.Luck.ToString();
     }
 
-    public void RefreshStatus(CharacterStatus status)
+    public void RefreshStatus(StatusData status)
     {
         GetText((int)TEXT.AttackPowerText).text = status.AttackPower.ToString();
         GetText((int)TEXT.DefensivePowerText).text = status.DefensivePower.ToString();
@@ -100,43 +104,47 @@ public class StatusPopup : UIPopup
         GetText((int)TEXT.CriticalDamageText).text = status.CriticalDamage.ToString();
     }
 
-    public void LoadFromCharacterData<T, U>(T loadItem, U targetSlot) where T : EquipmentItem where U : EquipmentSlot
+    public void LoadEquipmentSlot(EquipmentSlotData equipmentSlotData)
     {
+        weaponSlot.LoadSlot(equipmentSlotData.WeaponSlotItem);
+        helmetSlot.LoadSlot(equipmentSlotData.HelmetSlotItem);
+        armorSlot.LoadSlot(equipmentSlotData.ArmorSlotItem);
+        bootsSlot.LoadSlot(equipmentSlotData.BootsSlotItem);
     }
 
     #region Button Event Function
     public void OnClickStrengthButton()
     {
-        if (character.CharacterData.StatData.StatPoint > 0)
+        if (characterData.StatData.StatPoint > 0)
         {
-            --character.CharacterData.StatData.StatPoint;
-            ++character.CharacterData.StatData.Strength;
+            --characterData.StatData.StatPoint;
+            ++characterData.StatData.Strength;
         }
     }
     public void OnClickVitalityButton()
     {
-        if (character.CharacterData.StatData.StatPoint > 0)
+        if (characterData.StatData.StatPoint > 0)
         {
-            --character.CharacterData.StatData.StatPoint;
-            ++character.CharacterData.StatData.Vitality;
+            --characterData.StatData.StatPoint;
+            ++characterData.StatData.Vitality;
         }
     }
 
     public void OnClickDexterityButton()
     {
-        if (character.CharacterData.StatData.StatPoint > 0)
+        if (characterData.StatData.StatPoint > 0)
         {
-            --character.CharacterData.StatData.StatPoint;
-            ++character.CharacterData.StatData.Dexterity;
+            --characterData.StatData.StatPoint;
+            ++characterData.StatData.Dexterity;
         }
     }
 
     public void OnClickLuckButton()
     {
-        if (character.CharacterData.StatData.StatPoint > 0)
+        if (characterData.StatData.StatPoint > 0)
         {
-            --character.CharacterData.StatData.StatPoint;
-            ++character.CharacterData.StatData.Luck;
+            --characterData.StatData.StatPoint;
+            ++characterData.StatData.Luck;
         }
     }
     #endregion

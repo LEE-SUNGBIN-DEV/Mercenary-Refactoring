@@ -139,7 +139,7 @@ public abstract class Enemy : MonoBehaviour, IEnemy
         CurrentHitPoint = MaxHitPoint;
         InitializeAllState();
     }
-    public void InitializeTarget(CharacterStatus characterStats)
+    public void InitializeTarget(StatusData characterStats)
     {
         Target = null;
     }

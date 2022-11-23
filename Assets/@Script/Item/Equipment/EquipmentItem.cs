@@ -18,12 +18,12 @@ public abstract class EquipmentItem : BaseItem
         }
     }
 
-    public virtual void Equip(Character character)
+    public virtual void Equip(StatusData _status)
     {
         Managers.AudioManager.PlaySFX("Audio_Equipment_Mount");
     }
 
-    public virtual void Disarm(Character character)
+    public virtual void UnEquip(StatusData _status)
     {
         Managers.AudioManager.PlaySFX("Audio_Equipment_Dismount");
     }

@@ -8,67 +8,64 @@ public class QuickSlot : BaseSlot
 {
     [SerializeField] private IUsableItem item;
 
-    public override void Initialize()
+    public void Initialize(int i)
     {
         base.Initialize();
+        slotIndex = i;
     }
 
-    public override void LoadSlot(ItemData itemSaveData)
+    public void LoadSlot(InventoryData inventoryData)
     {
-        if (itemSaveData != null)
+        ClearSlot();
+        if (inventoryData.QuickSlotItemIDs[slotIndex] != Constants.NULL_INT)
         {
-            BaseItem loadItem = Managers.DataManager.ItemTable[itemSaveData.itemID];
-            if(loadItem is IUsableItem usableItem)
+            BaseItem quickSlotItem = Managers.DataManager.ItemTable[inventoryData.QuickSlotItemIDs[slotIndex]];
+            item = quickSlotItem as IUsableItem;
+            if (item != null)
             {
-                item = usableItem;
-                SetSlotByItem(loadItem);
+                itemImage.sprite = quickSlotItem.ItemSprite;
+                itemImage.color = Functions.SetColor(Color.white, 1f);
+
+                if (quickSlotItem is CountItem)
+                {
+                    itemCount = 0;
+                    for (int i = 0; i < inventoryData.InventoryItems.Length; ++i)
+                    {
+                        if (inventoryData.InventoryItems[i] != null && inventoryData.QuickSlotItemIDs[slotIndex] == inventoryData.InventoryItems[i].itemID)
+                        {
+                            itemCount += inventoryData.InventoryItems[i].itemCount;
+                        }
+                    }
+                    if (itemCount > 0)
+                        itemImage.color = Color.white;
+                    else
+                        itemImage.color = Color.gray;
+
+                    EnableCountText(true);
+                }
+                else
+                {
+                    itemImage.color = Color.white;
+                    EnableCountText(false);
+                }
             }
         }
     }
 
-    public override void SetSlotByItem<T>(T targetItem)
+    public void UseItem(InventoryData inventoryData)
     {
-        base.SetSlotByItem(targetItem);
-        if(targetItem is CountItem countItem)
-        {
-            if (countItem.ItemCount > 0)
-            {
-                itemImage.color = Color.white;
-            }
-            else
-            {
-                itemImage.color = Color.gray;
-            }
-        }
+        inventoryData.UseQuickSlotItem(slotIndex);
     }
 
-    public void UseItem()
+    public void ReleaseQuickSlot()
     {
+        Managers.DataManager.SelectCharacterData.InventoryData.ReleaseQuickSlot(slotIndex);
     }
 
     #region Mouse Event Function
-    public void DropQuickSlot<T>() where T : CountItem
-    {
-        
-    }
-    public void EndDragQuickSlot<T>() where T : CountItem
-    {
-        
-    }
-
-    public override void Drop()
-    {
-        DropQuickSlot<CountItem>();
-    }
-
-    public override void EndDrag()
-    {
-        EndDragQuickSlot<CountItem>();
-    }
-
     public override void SlotRightClick(PointerEventData eventData)
     {
-        UseItem();
+        ReleaseQuickSlot();
     }
     #endregion
 

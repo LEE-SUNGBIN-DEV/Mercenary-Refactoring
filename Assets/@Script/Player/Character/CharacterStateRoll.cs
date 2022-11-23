@@ -17,7 +17,7 @@ public class CharacterStateRoll : ICharacterState
 
     public void Enter(Character character)
     {
-        character.Status.CurrentStamina -= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL;
+        character.StatusData.CurrentStamina -= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL;
 
         // 키보드 입력 방향으로 회피
         moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));

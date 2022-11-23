@@ -1,25 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [System.Serializable]
-public abstract class EquipmentSlot : BaseSlot
+public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem
 {
-    private Character character;
+    protected StatusData status;
+    protected T item;
 
-    public void Initialize(Character targetCharacter)
+    public virtual void Initialize(StatusData _status)
     {
         base.Initialize();
-        character = targetCharacter;
+        status = _status;
     }
 
-    public void EquipItem<T>(T item) where T: EquipmentItem
+    public void LoadSlot(ItemData itemData)
     {
-        T equipItem = item as T;
-        if (equipItem != null)
+        ClearSlot();
+        if (itemData != null)
         {
-            SetSlotByItem(equipItem);
-            equipItem.Equip(character);
+            item = Managers.DataManager.ItemTable[itemData.itemID] as T;
+            if (item != null)
+            {
+                itemImage.sprite = item.ItemSprite;
+                itemImage.color = Functions.SetColor(Color.white, 1f);
+                EnableCountText(false);
+            }
+            EquipItem(item);
+        }
+    }
+    public override void ClearSlot()
+    {
+        base.ClearSlot();
+        item = null;
+    }
+    public void EquipItem(T item)
+    {
+        if(item is T equipItem)
+        {
+            equipItem.Equip(status);
         }
         else
         {
@@ -27,14 +47,21 @@ public abstract class EquipmentSlot : BaseSlot
         }
     }
 
-    public abstract void UnEquipItem();
+    public void UnEquipItem(T item)
+    {
+        if (item is T equipItem)
+        {
+            equipItem.UnEquip(status);
+            ClearSlot();
+        }
+    }
 
     #region Mouse Event Function
-    public void DropEquipmentSlot<T>() where T : EquipmentItem
+    public override void SlotRightClick(PointerEventData eventData)
     {
-    }
-    public void EndDragEquipmentSlot<T>() where T : EquipmentItem
-    {
+        UnEquipItem(item);
     }
     #endregion
+
+    public T Item { get { return item; } }
 }

@@ -20,7 +20,7 @@ public class BaseGameScene : BaseScene
         gameSceneUI = Managers.ResourceManager.InstantiatePrefabSync("Prefab_UI_Game_Scene").GetComponent<UIGameScene>();
         gameSceneUI.transform.SetParent(Managers.UIManager.RootObject.transform);
         gameSceneUI.transform.SetAsFirstSibling();
-        gameSceneUI.Initialize(character);
+        gameSceneUI.Initialize(character.CharacterData);
 
         if (gameSceneUI.gameObject.activeSelf == false)
         {

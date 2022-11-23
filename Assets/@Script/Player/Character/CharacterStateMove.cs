@@ -43,17 +43,17 @@ public class CharacterStateMove : ICharacterState
         if (isMove)
         {
             // Run
-            if (character.PlayerInput.IsLeftShiftKeyDown && character.Status.CurrentStamina >= Constants.CHARACTER_STAMINA_CONSUMPTION_RUN)
+            if (character.PlayerInput.IsLeftShiftKeyDown && character.StatusData.CurrentStamina >= Constants.CHARACTER_STAMINA_CONSUMPTION_RUN)
             {
-                character.Status.CurrentStamina -= Constants.CHARACTER_STAMINA_CONSUMPTION_RUN * Time.deltaTime;
-                character.CharacterController.Move(moveDirection * (character.Status.MoveSpeed * 2) * Time.deltaTime);
+                character.StatusData.CurrentStamina -= Constants.CHARACTER_STAMINA_CONSUMPTION_RUN * Time.deltaTime;
+                character.CharacterController.Move(moveDirection * (character.StatusData.MoveSpeed * 2) * Time.deltaTime);
                 moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 2, 10f * Time.deltaTime);
             }
 
             // Walk
             else
             {
-                character.CharacterController.Move(moveDirection * character.Status.MoveSpeed * Time.deltaTime);
+                character.CharacterController.Move(moveDirection * character.StatusData.MoveSpeed * Time.deltaTime);
                 moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 1, 10f * Time.deltaTime);
             }
 

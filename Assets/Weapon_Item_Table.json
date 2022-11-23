@@ -4,8 +4,8 @@
       "ItemType": 1,
       "ItemRank": 0,
       "ItemID": 1,
-      "ItemName": "창",
-      "ItemDescription": "공격력 +5",
+      "ItemName": "Spear",
+      "ItemDescription": "Attack +5",
       "ItemSprite": null,
       "Grade":  0,
       "IncreasedAmount": 5

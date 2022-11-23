@@ -4,37 +4,41 @@ using UnityEngine;
 
 public class QuickSlotPanel : UIPanel
 {
+    private InventoryData inventoryData;
     [SerializeField] private QuickSlot[] quickSlots;
 
-    public void Initialize(Character character)
+    public void Initialize(InventoryData inventoryData)
     {
-        quickSlots = GetComponentsInChildren<QuickSlot>();
-        character.CharacterData.InventoryData.OnChangeInventoryData -= LoadQuickSlot;
-        character.CharacterData.InventoryData.OnChangeInventoryData += LoadQuickSlot;
+        this.inventoryData = inventoryData;
+        quickSlots = GetComponentsInChildren<QuickSlot>(true);
+        for(int i=0; i<quickSlots.Length; ++i)
+        {
+            quickSlots[i].Initialize(i);
+        }
 
-        LoadQuickSlot(character.CharacterData.InventoryData);
+        inventoryData.OnChangeInventoryData -= LoadQuickSlot;
+        inventoryData.OnChangeInventoryData += LoadQuickSlot;
+
+        LoadQuickSlot(inventoryData);
     }
 
     private void Update()
     {
-        if (Managers.SceneManagerCS.CurrentScene.SceneType == SCENE_TYPE.DUNGEON)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                UseQuickSlotItem(0);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                UseQuickSlotItem(1);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                UseQuickSlotItem(2);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                UseQuickSlotItem(3);
-            }
+            UseQuickSlotItem(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            UseQuickSlotItem(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            UseQuickSlotItem(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            UseQuickSlotItem(3);
         }
     }
 
@@ -42,30 +46,13 @@ public class QuickSlotPanel : UIPanel
     {
         for (int i = 0; i < inventoryData.QuickSlotItemIDs.Length; ++i)
         {
-            int itemCount = 0;
-            for (int j = 0; i < inventoryData.InventoryItems.Length; ++j)
-            {
-                if (inventoryData.QuickSlotItemIDs[i] == inventoryData.InventoryItems[j].itemID)
-                {
-                    itemCount += inventoryData.InventoryItems[i].itemCount;
-                }
-            }
-
-            if (inventoryData.QuickSlotItemIDs[i] != Constants.NULL_INT)
-            {
-                CountItem targetItem = Managers.DataManager.ItemTable[inventoryData.QuickSlotItemIDs[i]] as CountItem;
-                targetItem.ItemCount = itemCount;
-                quickSlots[i].SetSlotByItem(targetItem);
-            }
+            quickSlots[i].LoadSlot(inventoryData);
         }
     }
 
     public void UseQuickSlotItem(int slotIndex)
     {
-        if (quickSlots[slotIndex].Item != null)
-        {
-            quickSlots[slotIndex].UseItem();
-        }
+        quickSlots[slotIndex].UseItem(inventoryData);
     }
 
     public QuickSlot[] QuickSlots { get { return quickSlots; } set { quickSlots = value; } }

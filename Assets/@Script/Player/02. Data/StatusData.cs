@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [System.Serializable]
-public class CharacterStatus
+public class StatusData
 {
-    public event UnityAction<CharacterStatus> OnCharacterStatusChanged;
-    public event UnityAction<CharacterStatus> OnDie;
+    public event UnityAction<StatusData> OnCharacterStatusChanged;
+    public event UnityAction<StatusData> OnDie;
 
-    private Character owner;
     private float attackPower;
     private float defensivePower;
 
@@ -23,13 +22,12 @@ public class CharacterStatus
     private float attackSpeed;
     private float moveSpeed;
 
-    public CharacterStatus(Character targetCharacter)
+    public StatusData(StatData statData)
     {
-        owner = targetCharacter;
-        owner.CharacterData.StatData.OnChangeStatData -= UpdateStats;
-        owner.CharacterData.StatData.OnChangeStatData += UpdateStats;
+        statData.OnChangeStatData -= UpdateStats;
+        statData.OnChangeStatData += UpdateStats;
 
-        UpdateStats(owner.CharacterData.StatData);
+        UpdateStats(statData);
     }
 
     public void UpdateStats(StatData statData)
@@ -156,7 +154,6 @@ public class CharacterStatus
                 attackSpeed = Constants.CHARACTER_STAT_ATTACK_SPEED_MAX;
             }
 
-            owner.Animator.SetFloat("attackSpeed", attackSpeed);
             OnCharacterStatusChanged?.Invoke(this);
         }
     }

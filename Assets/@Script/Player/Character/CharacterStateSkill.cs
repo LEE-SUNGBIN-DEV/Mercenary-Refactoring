@@ -17,7 +17,7 @@ public class CharacterStateSkill : ICharacterState
 
     public void Enter(Character character)
     {
-            character.Status.CurrentStamina -= Constants.CHARACTER_STAMINA_CONSUMPTION_COUNTER;
+            character.StatusData.CurrentStamina -= Constants.CHARACTER_STAMINA_CONSUMPTION_COUNTER;
 
             // 키보드 입력 방향으로 공격
             moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));

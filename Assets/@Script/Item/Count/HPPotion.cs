@@ -19,10 +19,11 @@ public class HPPotion : CountItem, IUsableItem, IShopableItem
         }
     }
 
-    public void UseItem(Character character)
+    public void UseItem(StatusData statusData)
     {
-        Managers.AudioManager.PlaySFX("Potion Consume");
-        character.Status.CurrentHitPoint += recoveryAmount;
+        Debug.Log("Use Item");
+        //Managers.AudioManager.PlaySFX("Potion Consume");
+        statusData.CurrentHitPoint += recoveryAmount;
     }
 
     public void BuyItem(Character character)

@@ -4,8 +4,8 @@
       "ItemType": 3,
       "ItemRank": 0,
       "ItemID": 1000,
-      "ItemName": "갑옷",
-      "ItemDescription": "방어력 +5",
+      "ItemName": "Armor",
+      "ItemDescription": "Defense +5",
       "ItemSprite": null,
       "Grade": 0,
       "IncreasedAmount": 5

@@ -36,7 +36,7 @@ public static partial class Functions
     public static void EnemyDamageProcess(Enemy enemy, Character character, float ratio)
     {
         // Damage Process
-        float damage = (enemy.AttackPower - character.Status.DefensivePower * 0.5f) * 0.5f;
+        float damage = (enemy.AttackPower - character.StatusData.DefensivePower * 0.5f) * 0.5f;
         if (damage < 0)
         {
             damage = 0;
@@ -46,6 +46,6 @@ public static partial class Functions
         // Final Damage
         damage *= ratio;
 
-        character.Status.CurrentHitPoint -= damage;
+        character.StatusData.CurrentHitPoint -= damage;
     }
 }

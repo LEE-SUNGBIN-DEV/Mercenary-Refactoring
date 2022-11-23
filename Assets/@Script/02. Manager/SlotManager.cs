@@ -6,14 +6,14 @@ using UnityEngine.EventSystems;
 
 public class SlotManager
 {
-    private BaseSlot selectSlot;
-    private BaseSlot targetSlot;
+    private BaseSlot startSlot;
+    private BaseSlot endSlot;
     private Image dragImage;
 
     public void Initialize(GameObject rootObject)
     {
-        selectSlot = null;
-        targetSlot = null;
+        startSlot = null;
+        endSlot = null;
 
         dragImage = Functions.FindChild<Image>(rootObject, "DragImage", true);
         dragImage.raycastTarget = false;
@@ -33,12 +33,15 @@ public class SlotManager
         dragImage.gameObject.SetActive(false);
     }
 
-    public void OnBeginDrag<T>(T slot) where T : BaseSlot
+    public void OnBeginDrag<T>(T slot) where T: BaseSlot
     {
-        selectSlot = slot;
-        targetSlot = null;
+        startSlot = slot;
+        endSlot = null;
 
-        EnableDragImage(selectSlot.ItemImage.sprite);
+        if(startSlot.ItemImage.sprite != null)
+        {
+            EnableDragImage(startSlot.ItemImage.sprite);
+        }
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -46,18 +49,75 @@ public class SlotManager
     }
     public void OnDrop<T>(T slot) where T : BaseSlot
     {
-        targetSlot = slot;
-
+        endSlot = slot;
     }
     public void OnEndDrag()
     {
-        DisableDragImage();
-        selectSlot = null;
-        targetSlot = null;
-    }
+        if (startSlot == endSlot)
+            return;
 
+        if (endSlot == null)
+        {
+            DestoryItem();
+        }
+
+        if (startSlot is InventorySlot startInventorySlot)
+            InteractInventory(startInventorySlot);
+
+        else if (startSlot is QuickSlot startQuickSlot)
+            InteractQuickSlot(startQuickSlot);
+
+        else if (startSlot is EquipmentSlot<EquipmentItem>)
+            InteractEquipmentSlot();
+
+        startSlot = null;
+        endSlot = null;
+        DisableDragImage();
+    }
+    public void DestoryItem() { }
+    public void InteractInventory(InventorySlot startInventorySlot)
+    {
+        if (endSlot is InventorySlot endInventorySlot)
+        {
+            Managers.DataManager.SelectCharacterData.InventoryData.SwapOrCombineItem(startInventorySlot, endInventorySlot);
+        }
+        else if (endSlot is QuickSlot endQuickSlot)
+        {
+            Managers.DataManager.SelectCharacterData.InventoryData.RegisterQuickSlot(endQuickSlot.SlotIndex, startInventorySlot.Item.ItemID);
+        }
+        else if (endSlot is WeaponSlot endWeaponSlot)
+        {
+            if (startInventorySlot.Item is WeaponItem weaponItem)
+            {
+                Managers.DataManager.SelectCharacterData.EquipmentSlotData.EquipWeapon(weaponItem);
+                if(endWeaponSlot.Item != null)
+                {
+                    Managers.DataManager.SelectCharacterData.InventoryData.AddItemToSlotIndex(endWeaponSlot.Item, startInventorySlot.SlotIndex);
+                    Managers.DataManager.SelectCharacterData.EquipmentSlotData.UnEquipItem();
+                }
+                else
+                {
+                    Managers.DataManager.SelectCharacterData.InventoryData.RemoveItemByIndex(startInventorySlot.SlotIndex);
+                }
+            }
+        }
+    }
+    public void InteractQuickSlot(QuickSlot startInventorySlot)
+    {
+        if (endSlot is QuickSlot)
+        {
+            Managers.DataManager.SelectCharacterData.InventoryData.SwapQuickSlot(startSlot.SlotIndex, endSlot.SlotIndex);
+        }
+        else
+        {
+            Managers.DataManager.SelectCharacterData.InventoryData.ReleaseQuickSlot(startInventorySlot.SlotIndex);
+        }
+    }
+    public void InteractEquipmentSlot()
+    {
+    }
     #region Property
-    public BaseSlot SelectSlot { get { return selectSlot; } }
-    public BaseSlot TargetSlot { get { return targetSlot; } }
+    public BaseSlot StartSlot { get { return startSlot; } }
+    public BaseSlot EndSlot { get { return endSlot; } }
     #endregion
 }
