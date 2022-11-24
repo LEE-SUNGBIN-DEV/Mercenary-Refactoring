@@ -118,7 +118,7 @@ public class UISelectCharacterScene : UIBaseScene
                 {
                     Destroy(characterSlots[i].selectionCharacter.gameObject);
                 }
-                characterSlots[i].slotText.text = "캐릭터 생성";
+                characterSlots[i].slotText.text = "Create";
                 characterSlots[i].slotButton.onClick.AddListener(() => { OnClickCreateCharacter(index); });
             }
 

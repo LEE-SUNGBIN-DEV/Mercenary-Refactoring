@@ -57,9 +57,7 @@ public class SlotManager
             return;
 
         if (endSlot == null)
-        {
             DestoryItem();
-        }
 
         if (startSlot is InventorySlot startInventorySlot)
             InteractInventory(startInventorySlot);
@@ -67,7 +65,7 @@ public class SlotManager
         else if (startSlot is QuickSlot startQuickSlot)
             InteractQuickSlot(startQuickSlot);
 
-        else if (startSlot is EquipmentSlot<EquipmentItem>)
+        else if (startSlot is EquipmentSlot<WeaponItem>)
             InteractEquipmentSlot();
 
         startSlot = null;
@@ -79,39 +77,23 @@ public class SlotManager
     {
         if (endSlot is InventorySlot endInventorySlot)
         {
-            Managers.DataManager.SelectCharacterData.InventoryData.SwapOrCombineItem(startInventorySlot, endInventorySlot);
+            InventoryData.SwapOrCombineSlotItem(startInventorySlot, endInventorySlot);
         }
         else if (endSlot is QuickSlot endQuickSlot)
         {
-            Managers.DataManager.SelectCharacterData.InventoryData.RegisterQuickSlot(endQuickSlot.SlotIndex, startInventorySlot.Item.ItemID);
+            InventoryData.RegisterQuickSlot(endQuickSlot.SlotIndex, startInventorySlot.Item.ItemID);
         }
-        else if (endSlot is WeaponSlot endWeaponSlot)
+        else if (endSlot is WeaponSlot && startInventorySlot.Item is WeaponItem weaponItem)
         {
-            if (startInventorySlot.Item is WeaponItem weaponItem)
-            {
-                Managers.DataManager.SelectCharacterData.EquipmentSlotData.EquipWeapon(weaponItem);
-                if(endWeaponSlot.Item != null)
-                {
-                    Managers.DataManager.SelectCharacterData.InventoryData.AddItemToSlotIndex(endWeaponSlot.Item, startInventorySlot.SlotIndex);
-                    Managers.DataManager.SelectCharacterData.EquipmentSlotData.UnEquipItem();
-                }
-                else
-                {
-                    Managers.DataManager.SelectCharacterData.InventoryData.RemoveItemByIndex(startInventorySlot.SlotIndex);
-                }
-            }
+            InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipWeapon(weaponItem), startInventorySlot.SlotIndex);
         }
     }
     public void InteractQuickSlot(QuickSlot startInventorySlot)
     {
         if (endSlot is QuickSlot)
-        {
-            Managers.DataManager.SelectCharacterData.InventoryData.SwapQuickSlot(startSlot.SlotIndex, endSlot.SlotIndex);
-        }
+            InventoryData.SwapQuickSlot(startSlot.SlotIndex, endSlot.SlotIndex);
         else
-        {
-            Managers.DataManager.SelectCharacterData.InventoryData.ReleaseQuickSlot(startInventorySlot.SlotIndex);
-        }
+            InventoryData.ReleaseQuickSlot(startInventorySlot.SlotIndex);
     }
     public void InteractEquipmentSlot()
     {
@@ -119,5 +101,8 @@ public class SlotManager
     #region Property
     public BaseSlot StartSlot { get { return startSlot; } }
     public BaseSlot EndSlot { get { return endSlot; } }
+    public InventoryData InventoryData { get { return Managers.DataManager?.SelectCharacterData?.InventoryData; } }
+    public EquipmentSlotData EquipmentSlotData { get { return Managers.DataManager?.SelectCharacterData?.EquipmentSlotData; } }
+
     #endregion
 }

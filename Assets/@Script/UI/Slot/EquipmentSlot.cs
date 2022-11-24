@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 [System.Serializable]
-public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem
+public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem, new()
 {
     protected StatusData status;
     protected T item;
@@ -17,16 +18,17 @@ public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem
 
     public void LoadSlot(ItemData itemData)
     {
-        ClearSlot();
+        UnEquipItem(item);
         if (itemData != null)
         {
-            item = Managers.DataManager.ItemTable[itemData.itemID] as T;
-            if (item != null)
-            {
-                itemImage.sprite = item.ItemSprite;
-                itemImage.color = Functions.SetColor(Color.white, 1f);
-                EnableCountText(false);
-            }
+            item = new T();
+            item.Initialize(itemData);
+            itemGrade = item.Grade;
+            itemImage.sprite = item.ItemSprite;
+            itemImage.color = Functions.SetColor(Color.white, 1f);
+            EnableCountText(false);
+            EnableGradeText(true);
+
             EquipItem(item);
         }
     }
@@ -35,16 +37,18 @@ public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem
         base.ClearSlot();
         item = null;
     }
-    public void EquipItem(T item)
+    public void EquipItem(T requestItem)
     {
-        if(item is T equipItem)
+        if(requestItem is T equipItem)
         {
+            if(item != null)
+            {
+                equipItem.UnEquip(status);
+            }
             equipItem.Equip(status);
         }
         else
-        {
             Debug.Log("¿Â¬¯ ΩΩ∑‘¿Ã ¥Ÿ∏®¥œ¥Ÿ.");
-        }
     }
 
     public void UnEquipItem(T item)
@@ -59,7 +63,6 @@ public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem
     #region Mouse Event Function
     public override void SlotRightClick(PointerEventData eventData)
     {
-        UnEquipItem(item);
     }
     #endregion
 

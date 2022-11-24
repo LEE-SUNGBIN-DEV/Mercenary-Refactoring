@@ -10,46 +10,37 @@ public enum ITEM_RANK
     Myth
 }
 
-public enum ITEM_TYPE
-{
-    Normal,
-
-    Weapon,
-    Helmet,
-    Armor,
-    Boots,
-
-    HPPotion,
-    SPPotion,
-
-    Quest
-}
-
 [System.Serializable]
 public abstract class BaseItem
 {
     [Header("Base Item")]
-    [SerializeField] protected ITEM_TYPE itemType;
-    [SerializeField] protected ITEM_RANK itemRank;
     [SerializeField] protected int itemID;
+    [SerializeField] protected ITEM_RANK itemRank;
     [SerializeField] protected string itemName;
     [SerializeField] protected string itemDescription;
     [SerializeField] protected Sprite itemSprite;
 
+    public virtual void Initialize(ItemData itemData)
+    {
+        BaseItem itemInformation = Managers.DataManager.ItemTable[itemData.itemID];
+        itemID = itemInformation.itemID;
+        itemRank = itemInformation.itemRank;
+        itemName = itemInformation.itemName;
+        itemDescription = itemInformation.itemDescription;
+        itemSprite = itemInformation.itemSprite;
+    }
     public virtual void Initialize<T>(T item) where T:BaseItem
     {
-        itemType = item.itemType;
-        itemRank = item.itemRank;
         itemID = item.itemID;
+        itemRank = item.itemRank;
         itemName = item.itemName;
         itemDescription = item.itemDescription;
         itemSprite = item.itemSprite;
     }
 
     #region Property
-    public ITEM_TYPE ItemType { get { return itemType; } set { itemType = value; } }
-    public ITEM_RANK ItemRank { get { return itemRank; } set { itemRank = value; } }
     public int ItemID { get { return itemID; } set { itemID = value; } }
+    public ITEM_RANK ItemRank { get { return itemRank; } set { itemRank = value; } }
     public string ItemName { get { return itemName; } set { itemName = value; } }
     public string ItemDescription { get { return itemDescription; } set { itemDescription = value; } }
     public Sprite ItemSprite { get { return itemSprite; } set { itemSprite = value; } }

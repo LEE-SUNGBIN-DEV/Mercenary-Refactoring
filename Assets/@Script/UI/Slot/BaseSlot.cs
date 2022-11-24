@@ -14,13 +14,16 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     }
     public enum TEXT
     {
-        ItemCountText
+        ItemCountText,
+        ItemGradeText
     }
 
     [Header("Base Slot")]
     [SerializeField] protected Image itemImage;
     [SerializeField] protected TextMeshProUGUI itemCountText;
+    [SerializeField] protected TextMeshProUGUI itemGradeText;
     [SerializeField] protected int itemCount;
+    [SerializeField] protected int itemGrade;
     [SerializeField] protected int slotIndex;
 
     public virtual void Initialize()
@@ -31,6 +34,7 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         itemCount = 0;
         itemImage = GetImage((int)IMAGE.ItemImage);
         itemCountText = GetText((int)TEXT.ItemCountText);
+        itemGradeText = GetText((int)TEXT.ItemGradeText);
     }
 
     public void EnableCountText(bool isEnable)
@@ -46,6 +50,18 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         }
     }
 
+    public void EnableGradeText(bool isEnable)
+    {
+        if (isEnable)
+        {
+            itemGradeText.text = $"+{itemGrade}";
+            itemGradeText.enabled = true;
+        }
+        else
+        {
+            itemGradeText.enabled = false;
+        }
+    }
     public virtual void ClearSlot()
     {
         itemImage.sprite = null;
@@ -53,6 +69,9 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
         itemCount = 0;
         itemCountText.text = null;
         itemCountText.enabled = false;
+        itemGrade = 0;
+        itemGradeText.text = null;
+        itemGradeText.enabled = false;
     }
 
     #region Mouse Event Function

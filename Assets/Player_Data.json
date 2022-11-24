@@ -1,6 +1,17 @@
 {
   "CharacterDatas": [
     {
+      "StatData": {
+        "CharacterClass": "Lancer",
+        "Level": 1,
+        "CurrentExperience": 0.0,
+        "MaxExperience": 10.0,
+        "StatPoint": 0,
+        "Strength": 10,
+        "Vitality": 10,
+        "Dexterity": 10,
+        "Luck": 10
+      },
       "StatusData": {
         "AttackPower": 20.0,
         "DefensivePower": 10.0,
@@ -13,17 +24,6 @@
         "CriticalChance": 10.0,
         "CriticalDamage": 110.0
       },
-      "StatData": {
-        "CharacterClass": "Lancer",
-        "Level": 1,
-        "CurrentExperience": 0.0,
-        "MaxExperience": 10.0,
-        "StatPoint": 0,
-        "Strength": 10,
-        "Vitality": 10,
-        "Dexterity": 10,
-        "Luck": 10
-      },
       "LocationData": {
         "LastViliage": 3
       },
@@ -31,54 +31,50 @@
         "Money": 500,
         "InventoryItems": [
           {
-            "itemType": 1,
             "itemID": 1,
             "itemCount": 1,
-            "grade": 0
+            "grade": 4
           },
           {
-            "itemType": 2,
             "itemID": 500,
             "itemCount": 1,
             "grade": 0
           },
           {
-            "itemType": 3,
             "itemID": 1000,
             "itemCount": 1,
             "grade": 0
           },
           {
-            "itemType": 4,
             "itemID": 1500,
             "itemCount": 1,
             "grade": 0
           },
           {
-            "itemType": 5,
             "itemID": 10000,
             "itemCount": 50,
             "grade": 0
           },
           {
-            "itemType": 5,
             "itemID": 10000,
             "itemCount": 50,
             "grade": 0
           },
           {
-            "itemType": 6,
             "itemID": 11000,
             "itemCount": 50,
             "grade": 0
           },
           {
-            "itemType": 6,
             "itemID": 11000,
             "itemCount": 50,
             "grade": 0
           },
-          null,
+          {
+            "itemID": 1,
+            "itemCount": 1,
+            "grade": 0
+          },
           null,
           null,
           null,
@@ -109,10 +105,10 @@
         ]
       },
       "EquipmentSlotData": {
-        "WeaponSlotItem": null,
-        "HelmetSlotItem": null,
-        "ArmorSlotItem": null,
-        "BootsSlotItem": null
+        "WeaponSlotItemData": null,
+        "HelmetSlotItemData": null,
+        "ArmorSlotItemData": null,
+        "BootsSlotItemData": null
       },
       "QuestData": {
         "MainQuestPrograss": 0,

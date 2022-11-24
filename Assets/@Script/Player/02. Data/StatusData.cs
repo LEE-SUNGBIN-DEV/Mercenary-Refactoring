@@ -24,10 +24,12 @@ public class StatusData
 
     public StatusData(StatData statData)
     {
-        statData.OnChangeStatData -= UpdateStats;
-        statData.OnChangeStatData += UpdateStats;
-
-        UpdateStats(statData);
+        if(statData != null)
+        {
+            statData.OnChangeStatData -= UpdateStats;
+            statData.OnChangeStatData += UpdateStats;
+            UpdateStats(statData);
+        }
     }
 
     public void UpdateStats(StatData statData)

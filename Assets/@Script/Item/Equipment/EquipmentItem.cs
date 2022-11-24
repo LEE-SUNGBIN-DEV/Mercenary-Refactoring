@@ -9,6 +9,11 @@ public abstract class EquipmentItem : BaseItem
     [Header("Equipment Item")]
     protected int grade;
 
+    public override void Initialize(ItemData itemData)
+    {
+        base.Initialize(itemData);
+        grade = itemData.grade;
+    }
     public override void Initialize<T>(T item)
     {
         base.Initialize(item);
