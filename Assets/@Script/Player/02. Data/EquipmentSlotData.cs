@@ -9,97 +9,103 @@ public class EquipmentSlotData
     public event UnityAction<EquipmentSlotData> OnChangeEquipmentSlotData;
     
     [Header("Equipment Slot")]
-    [SerializeField] private ItemData weaponSlotItem;
-    [SerializeField] private ItemData helmetSlotItem;
-    [SerializeField] private ItemData armorSlotItem;
-    [SerializeField] private ItemData bootsSlotItem;
+    [SerializeField] private ItemData weaponSlotItemData;
+    [SerializeField] private ItemData helmetSlotItemData;
+    [SerializeField] private ItemData armorSlotItemData;
+    [SerializeField] private ItemData bootsSlotItemData;
 
     public EquipmentSlotData()
     {
-        WeaponSlotItem = null;
-        HelmetSlotItem = null;
-        ArmorSlotItem = null;
-        BootsSlotItem = null;
+        weaponSlotItemData = null;
+        helmetSlotItemData = null;
+        armorSlotItemData = null;
+        bootsSlotItemData = null;
     }
 
     #region Equipment Slot Function
-    public void EquipWeapon(WeaponItem welaponItem)
+    public ItemData EquipWeapon(WeaponItem requestWeaponItem)
     {
-        if (welaponItem != null)
+        if (requestWeaponItem == null) return null;
+
+        ItemData equippedItemData = null;
+        if (weaponSlotItemData != null)
         {
-            weaponSlotItem = new ItemData(welaponItem)
-            {
-                grade = weaponSlotItem.grade
-            };
+            equippedItemData = weaponSlotItemData;
         }
+        ItemData requestWeaponItemData = new ItemData(requestWeaponItem);
+        weaponSlotItemData = requestWeaponItemData;
+        OnChangeEquipmentSlotData?.Invoke(this);
+
+        return equippedItemData;
     }
     public void UnEquipItem()
     {
-        if (WeaponSlotItem != null)
+        if (weaponSlotItemData != null)
         {
-            WeaponSlotItem = null;
+            weaponSlotItemData = null;
+            OnChangeEquipmentSlotData?.Invoke(this);
         }
     }
     public void EquipHelmet(HelmetItem helmetItem)
     {
-        HelmetSlotItem = new ItemData(helmetItem);
+        helmetSlotItemData = new ItemData(helmetItem);
     }
     public void ReleaseHelmet()
     {
-        HelmetSlotItem = null;
+        helmetSlotItemData = null;
     }
     public void EquipArmor(ArmorItem armorItem)
     {
-        ArmorSlotItem = new ItemData(armorItem);
+        armorSlotItemData = new ItemData(armorItem);
     }
     public void ReleaseArmor()
     {
-        ArmorSlotItem = null;
+        armorSlotItemData = null;
     }
     public void EquipBoots(BootsItem bootsItem)
     {
-        BootsSlotItem = new ItemData(bootsItem);
+        bootsSlotItemData = new ItemData(bootsItem);
     }
     public void ReleaseBoots()
     {
-        BootsSlotItem = null;
+        bootsSlotItemData = null;
     }
     #endregion
 
     #region Property
-    public ItemData WeaponSlotItem
+    public ItemData WeaponSlotItemData
     {
-        get { return weaponSlotItem; }
+        get { return weaponSlotItemData; }
         set
         {
-            weaponSlotItem = value;
+            weaponSlotItemData = value;
             OnChangeEquipmentSlotData?.Invoke(this);
         }
     }
-    public ItemData HelmetSlotItem
+    public ItemData HelmetSlotItemData
     {
-        get { return helmetSlotItem; }
+        get { return helmetSlotItemData; }
         set
         {
-            helmetSlotItem = value;
+            helmetSlotItemData = value;
             OnChangeEquipmentSlotData?.Invoke(this);
         }
     }
-    public ItemData ArmorSlotItem
+    public ItemData ArmorSlotItemData
     {
-        get { return armorSlotItem; }
+        get { return armorSlotItemData; }
         set
         {
-            armorSlotItem = value;
+            armorSlotItemData = value;
             OnChangeEquipmentSlotData?.Invoke(this);
         }
     }
-    public ItemData BootsSlotItem
+    public ItemData BootsSlotItemData
     {
-        get { return bootsSlotItem; }
+        get { return bootsSlotItemData; }
         set
         {
-            bootsSlotItem = value;
+            bootsSlotItemData = value;
             OnChangeEquipmentSlotData?.Invoke(this);
         }
     }

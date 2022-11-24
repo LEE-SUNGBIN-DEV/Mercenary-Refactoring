@@ -27,8 +27,16 @@ public class InventoryData
     }
 
     #region Inventory Function
-    public bool AddOrCombineItem<T>(T item, int count = 1) where T: BaseItem
+    public void DestroyItemByIndex(int slotIndex)
     {
+        inventoryItems[slotIndex] = null;
+        OnChangeInventoryData?.Invoke(this);
+    }
+    public bool AddItem<T>(T item, int count = 1) where T: BaseItem
+    {
+        if (item == null)
+            return false;
+
         if (item is CountItem countableItem)
         {
             for(int i=0; i<inventoryItems.Length; ++i)
@@ -41,7 +49,6 @@ public class InventoryData
                 }
             }
         }
-
         int emptySlotIndex = FindEmptySlotIndex();
         if (emptySlotIndex != Constants.NULL_INT)
         {
@@ -51,15 +58,21 @@ public class InventoryData
         }
         return false;
     }
-    public void AddItemToSlotIndex<T>(T item, int slotIndex) where T: BaseItem
+    public void AddItemByIndex<T>(T item, int slotIndex) where T: BaseItem
     {
         if(item != null)
         {
             inventoryItems[slotIndex] = new ItemData(item);
             OnChangeInventoryData?.Invoke(this);
         }
+        else
+            DestroyItemByIndex(slotIndex);
     }
-    public void SwapOrCombineItem(InventorySlot startSlot, InventorySlot endSlot)
+    public void AddItemDataByIndex(ItemData itemData, int slotIndex)
+    {
+        inventoryItems[slotIndex] = itemData;
+    }
+    public void SwapOrCombineSlotItem(InventorySlot startSlot, InventorySlot endSlot)
     {
         // Try Combine
         if (startSlot.Item is CountItem countItem && endSlot.Item is CountItem)
@@ -73,23 +86,15 @@ public class InventoryData
             }
         }
         // Swap
-        ItemData temporaryData = inventoryItems[endSlot.SlotIndex];
-        inventoryItems[endSlot.SlotIndex] = inventoryItems[startSlot.SlotIndex];
-        inventoryItems[startSlot.SlotIndex] = temporaryData;
-        OnChangeInventoryData?.Invoke(this);
-    }
-    public void DestroyItemByIndex(int slotIndex)
-    {
-        inventoryItems[slotIndex] = null;
+        (inventoryItems[startSlot.SlotIndex], inventoryItems[endSlot.SlotIndex]) = (inventoryItems[endSlot.SlotIndex], inventoryItems[startSlot.SlotIndex]);
         OnChangeInventoryData?.Invoke(this);
     }
     public void RemoveItemByIndex(int slotIndex, int amount = 1)
     {
         inventoryItems[slotIndex].itemCount -= amount;
         if (inventoryItems[slotIndex].itemCount <= 0)
-        {
             DestroyItemByIndex(slotIndex);
-        }
+
         OnChangeInventoryData?.Invoke(this);
     }
     public void UseItemByItemID(int itemID, int amount = 1)
@@ -97,7 +102,7 @@ public class InventoryData
         if (Managers.DataManager.ItemTable[itemID] is IUsableItem usableItem)
         {
             usableItem.UseItem(Managers.DataManager.SelectCharacterData.StatusData);
-            RemoveItemByIndex(FindItemSlotIndexByID(itemID), amount);
+            RemoveItemByIndex(FindSlotIndexByItemID(itemID), amount);
         }
     }
     public void UseQuickSlotItem(int slotIndex, int amount = 1)
@@ -113,7 +118,7 @@ public class InventoryData
         {
             if (CheckMoney(shopableItem.ItemPrice))
             {
-                if (AddOrCombineItem(storeSlot.Item))
+                if (AddItem(storeSlot.Item))
                 {
                     money -= shopableItem.ItemPrice;
                 }
@@ -128,19 +133,16 @@ public class InventoryData
             return false;
         }
         else
-        {
             return true;
-        }
     }
-    public int FindItemSlotIndexByID(int itemID)
+    public int FindSlotIndexByItemID(int itemID)
     {
         for (int i = 0; i < inventoryItems.Length; ++i)
         {
             if (inventoryItems[i] != null && inventoryItems[i].itemID == itemID)
-            {
                 return i;
-            }
         }
+        Debug.Log("아이템이 존재하지 않습니다.");
         return Constants.NULL_INT;
     }
     public int FindEmptySlotIndex()
@@ -148,9 +150,7 @@ public class InventoryData
         for (int i = 0; i < inventoryItems.Length; ++i)
         {
             if (inventoryItems[i] == null)
-            {
                 return i;
-            }
         }
         Debug.Log("인벤토리 공간이 부족합니다.");
         return Constants.NULL_INT;

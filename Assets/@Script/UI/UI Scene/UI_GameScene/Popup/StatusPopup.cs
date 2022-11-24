@@ -106,10 +106,10 @@ public class StatusPopup : UIPopup
 
     public void LoadEquipmentSlot(EquipmentSlotData equipmentSlotData)
     {
-        weaponSlot.LoadSlot(equipmentSlotData.WeaponSlotItem);
-        helmetSlot.LoadSlot(equipmentSlotData.HelmetSlotItem);
-        armorSlot.LoadSlot(equipmentSlotData.ArmorSlotItem);
-        bootsSlot.LoadSlot(equipmentSlotData.BootsSlotItem);
+        weaponSlot.LoadSlot(equipmentSlotData.WeaponSlotItemData);
+        helmetSlot.LoadSlot(equipmentSlotData.HelmetSlotItemData);
+        armorSlot.LoadSlot(equipmentSlotData.ArmorSlotItemData);
+        bootsSlot.LoadSlot(equipmentSlotData.BootsSlotItemData);
     }
 
     #region Button Event Function

@@ -31,8 +31,14 @@ public class InventorySlot : BaseSlot
                     itemCount = itemData.itemCount;
                     EnableCountText(true);
                 }
+                else if (item is EquipmentItem)
+                {
+                    itemGrade = itemData.grade;
+                    EnableGradeText(true);
+                }
                 else
                 {
+                    EnableGradeText(false);
                     EnableCountText(false);
                 }
             }
