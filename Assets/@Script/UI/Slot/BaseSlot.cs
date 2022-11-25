@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 [System.Serializable]
-public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public enum IMAGE
     {
@@ -39,7 +39,7 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
 
     public void EnableCountText(bool isEnable)
     {
-        if(isEnable)
+        if (isEnable)
         {
             itemCountText.text = $"{itemCount}";
             itemCountText.enabled = true;
@@ -76,7 +76,7 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
 
     #region Mouse Event Function
     public abstract void SlotRightClick(PointerEventData eventData);
-
+    public abstract void EndDrag();
     public void OnBeginDrag(PointerEventData eventData)
     {
         Managers.SlotManager.OnBeginDrag(this);
@@ -91,6 +91,7 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        EndDrag();
         Managers.SlotManager.OnEndDrag();
     }
     public void OnPointerClick(PointerEventData eventData)
@@ -108,5 +109,8 @@ public abstract class BaseSlot: UIBase, IPointerClickHandler, IBeginDragHandler,
     public TextMeshProUGUI ItemCountText { get { return itemCountText; } set { itemCountText = value; } }
     public int ItemCount { get { return itemCount; } set { itemCount = value; } }
     public int SlotIndex { get { return slotIndex; } set { slotIndex = value; } }
+    public BaseSlot EndSlot { get { return Managers.SlotManager?.EndSlot; } }
+    public InventoryData InventoryData { get { return Managers.DataManager?.SelectCharacterData?.InventoryData; } }
+    public EquipmentSlotData EquipmentSlotData { get { return Managers.DataManager?.SelectCharacterData?.EquipmentSlotData; } }
     #endregion
 }

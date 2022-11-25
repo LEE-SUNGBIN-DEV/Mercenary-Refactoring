@@ -26,25 +26,5 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
         }
     }
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            GameObject root = GameObject.Find(typeof(T).Name);
-            if (root == null)
-            {
-                root = new GameObject(typeof(T).Name);
-            }
-
-            instance = Functions.GetOrAddComponent<T>(root);
-            DontDestroyOnLoad(instance.gameObject);
-        }
-
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     public abstract void Initialize();
 }

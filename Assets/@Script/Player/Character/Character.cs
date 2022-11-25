@@ -26,7 +26,6 @@ public abstract class Character : MonoBehaviour
 
         playerInput = new PlayerInput();
         characterData = Managers.DataManager.SelectCharacterData;
-        characterData.StatusData = new StatusData(StatData);
         state = new CharacterState(this);
 
         StatusData.OnCharacterStatusChanged -= SetAttackSpeed;
@@ -106,7 +105,7 @@ public abstract class Character : MonoBehaviour
     }
     public void AutoRecoverStamina()
     {
-        characterData.StatusData.CurrentStamina += (characterData.StatusData.MaxStamina * Constants.CHARACTER_STAMINA_AUTO_RECOVERY * 0.01f * Time.deltaTime);
+        characterData.StatusData.CurrentSP += (characterData.StatusData.MaxSP * Constants.CHARACTER_STAMINA_AUTO_RECOVERY * 0.01f * Time.deltaTime);
     }
     public void SetInteract(bool isInteract)
     {

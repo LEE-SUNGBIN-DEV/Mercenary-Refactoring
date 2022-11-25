@@ -15,14 +15,22 @@
       "StatusData": {
         "AttackPower": 20.0,
         "DefensivePower": 10.0,
-        "MaxHitPoint": 100.0,
-        "CurrentHitPoint": 100.0,
-        "MaxStamina": 100.0,
-        "CurrentStamina": 100.0,
+        "MaxHP": 100.0,
+        "CurrentHP": 100.0,
+        "MaxSP": 100.0,
+        "CurrentSP": 100.0,
         "AttackSpeed": 1.1,
         "MoveSpeed": 3.2,
         "CriticalChance": 10.0,
-        "CriticalDamage": 110.0
+        "CriticalDamage": 110.0,
+        "EquipAttackPower": 0.0,
+        "EquipDefensePower": 0.0,
+        "EquipMaxHP": 0.0,
+        "EquipMaxSP": 0.0,
+        "EquipCriticalChance": 0.0,
+        "EquipCriticalDamage": 0.0,
+        "EquipAttackSpeed": 0.0,
+        "EquipMoveSpeed": 0.0
       },
       "LocationData": {
         "LastViliage": 3
@@ -70,11 +78,7 @@
             "itemCount": 50,
             "grade": 0
           },
-          {
-            "itemID": 1,
-            "itemCount": 1,
-            "grade": 0
-          },
+          null,
           null,
           null,
           null,

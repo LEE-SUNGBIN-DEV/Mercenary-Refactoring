@@ -34,6 +34,7 @@ public class UITitleScene : UIBaseScene
     public void OnClickStartGameButton()
     {
         Managers.SceneManagerCS.LoadScene(SCENE_LIST.Selection);
+        GetButton((int)BUTTON.StartGameButton).interactable = false;
     }
     public void OnClickQuitButton()
     {

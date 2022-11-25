@@ -8,7 +8,7 @@ using TMPro;
 public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem, new()
 {
     protected StatusData status;
-    protected T item;
+    [SerializeField] protected T item;
 
     public virtual void Initialize(StatusData _status)
     {
@@ -18,7 +18,7 @@ public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem, new()
 
     public void LoadSlot(ItemData itemData)
     {
-        UnEquipItem(item);
+        UnEquipItem();
         if (itemData != null)
         {
             item = new T();
@@ -41,21 +41,15 @@ public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem, new()
     {
         if(requestItem is T equipItem)
         {
-            if(item != null)
-            {
-                equipItem.UnEquip(status);
-            }
             equipItem.Equip(status);
         }
-        else
-            Debug.Log("¿Â¬¯ ΩΩ∑‘¿Ã ¥Ÿ∏®¥œ¥Ÿ.");
     }
 
-    public void UnEquipItem(T item)
+    public void UnEquipItem()
     {
-        if (item is T equipItem)
+        if (item != null)
         {
-            equipItem.UnEquip(status);
+            item.UnEquip(status);
             ClearSlot();
         }
     }

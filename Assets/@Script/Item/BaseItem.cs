@@ -44,5 +44,6 @@ public abstract class BaseItem
     public string ItemName { get { return itemName; } set { itemName = value; } }
     public string ItemDescription { get { return itemDescription; } set { itemDescription = value; } }
     public Sprite ItemSprite { get { return itemSprite; } set { itemSprite = value; } }
+    public StatusData StatusData { get { return Managers.DataManager?.SelectCharacterData?.StatusData; } }
     #endregion
 }

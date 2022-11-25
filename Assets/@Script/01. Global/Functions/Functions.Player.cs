@@ -46,6 +46,6 @@ public static partial class Functions
         // Final Damage
         damage *= ratio;
 
-        character.StatusData.CurrentHitPoint -= damage;
+        character.StatusData.CurrentHP -= damage;
     }
 }

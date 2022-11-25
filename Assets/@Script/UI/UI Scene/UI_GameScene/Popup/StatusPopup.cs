@@ -95,8 +95,8 @@ public class StatusPopup : UIPopup
         GetText((int)TEXT.AttackPowerText).text = status.AttackPower.ToString();
         GetText((int)TEXT.DefensivePowerText).text = status.DefensivePower.ToString();
 
-        GetText((int)TEXT.HPText).text = status.CurrentHitPoint.ToString("F1") + "/" + status.MaxHitPoint.ToString();
-        GetText((int)TEXT.SPText).text = status.CurrentStamina.ToString("F1") + "/" + status.MaxStamina.ToString();
+        GetText((int)TEXT.HPText).text = status.CurrentHP.ToString("F1") + "/" + status.MaxHP.ToString();
+        GetText((int)TEXT.SPText).text = status.CurrentSP.ToString("F1") + "/" + status.MaxSP.ToString();
 
         GetText((int)TEXT.AttackSpeedText).text = status.AttackSpeed.ToString();
         GetText((int)TEXT.MoveSpeedText).text = status.MoveSpeed.ToString();

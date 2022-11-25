@@ -23,7 +23,7 @@ public class HPPotion : CountItem, IUsableItem, IShopableItem
     {
         Debug.Log("Use Item");
         //Managers.AudioManager.PlaySFX("Potion Consume");
-        statusData.CurrentHitPoint += recoveryAmount;
+        statusData.CurrentHP += recoveryAmount;
     }
 
     public void BuyItem(Character character)
