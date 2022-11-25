@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class CharacterData
 {
     [SerializeField] private StatData statData;
-    private StatusData statusData;
+    [SerializeField] private StatusData statusData;
     [SerializeField] private LocationData locationData;
     [SerializeField] private InventoryData inventoryData;
     [SerializeField] private EquipmentSlotData equipmentSlotData;
@@ -16,6 +16,7 @@ public class CharacterData
     public CharacterData(CHARACTER_CLASS selectedClass)
     {
         statData = new StatData(selectedClass);
+        statusData = new StatusData(statData);
         locationData = new LocationData();
         inventoryData = new InventoryData();
         equipmentSlotData = new EquipmentSlotData();

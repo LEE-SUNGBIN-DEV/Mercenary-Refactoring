@@ -174,6 +174,12 @@ public class UISelectCharacterScene : UIBaseScene
     }
     public void OnClickStartGameButton(int slotIndex)
     {
+        GetButton((int)BUTTON.StartGameButton).interactable = false;
+        GetButton((int)BUTTON.CharacterRemoveButton).interactable = false;
+        for (int i = 0; i < characterSlots.Length; ++i)
+        {
+            characterSlots[i].slotButton.interactable = false;
+        }
         Managers.DataManager.SetCurrentCharacter(slotIndex);
         Managers.SceneManagerCS.LoadSceneAsync(SCENE_LIST.Forestia);
     }

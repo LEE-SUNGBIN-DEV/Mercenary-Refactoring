@@ -42,12 +42,12 @@ public class UserPanel : UIPanel
     }
     public void UpdateHPBar(StatusData status)
     {
-        float ratio = status.CurrentHitPoint / status.MaxHitPoint;
+        float ratio = status.CurrentHP / status.MaxHP;
         GetImage((int)IMAGE.HPBar).fillAmount = ratio;
     }
     public void UpdateSPBar(StatusData status)
     {
-        float ratio = status.CurrentStamina / status.MaxStamina;
+        float ratio = status.CurrentSP / status.MaxSP;
         GetImage((int)IMAGE.SPBar).fillAmount = ratio;
     }
 }

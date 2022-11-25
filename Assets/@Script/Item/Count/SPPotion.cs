@@ -22,7 +22,7 @@ public class SPPotion : CountItem, IUsableItem, IShopableItem
     public void UseItem(StatusData statusData)
     {
         //Managers.AudioManager.PlaySFX("Potion Consume");
-        statusData.CurrentStamina += recoveryAmount;
+        statusData.CurrentSP += recoveryAmount;
     }
 
     public void BuyItem(Character character)

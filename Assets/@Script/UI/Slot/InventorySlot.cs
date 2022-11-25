@@ -44,7 +44,30 @@ public class InventorySlot : BaseSlot
             }
         }
     }
+    public void DestroyItem() { }
+    public override void EndDrag()
+    {
+        if (EndSlot == null)
+            DestroyItem();
 
+        else if (EndSlot is InventorySlot endInventorySlot)
+            InventoryData.SwapOrCombineSlotItem(this, endInventorySlot);
+
+        else if (EndSlot is QuickSlot endQuickSlot)
+            InventoryData.RegisterQuickSlot(endQuickSlot.SlotIndex, this.Item.ItemID);
+
+        else if (EndSlot is WeaponSlot && this.Item is WeaponItem)
+            InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipWeaponData(InventoryData.InventoryItems[this.slotIndex]), this.slotIndex);
+
+        else if (EndSlot is HelmetSlot && this.Item is HelmetItem)
+            InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipHelmetData(InventoryData.InventoryItems[this.slotIndex]), this.slotIndex);
+
+        else if (EndSlot is ArmorSlot && this.Item is ArmorItem)
+            InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipArmorData(InventoryData.InventoryItems[this.slotIndex]), this.slotIndex);
+
+        else if (EndSlot is BootsSlot && this.Item is BootsItem)
+            InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipBootsData(InventoryData.InventoryItems[this.slotIndex]), this.slotIndex);
+    }
     public override void ClearSlot()
     {
         base.ClearSlot();

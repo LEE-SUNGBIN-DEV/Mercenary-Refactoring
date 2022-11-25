@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public abstract class EquipmentItem : BaseItem
 {
     [Header("Equipment Item")]
-    protected int grade;
+    [SerializeField] protected int grade;
 
     public override void Initialize(ItemData itemData)
     {
@@ -23,15 +23,8 @@ public abstract class EquipmentItem : BaseItem
         }
     }
 
-    public virtual void Equip(StatusData _status)
-    {
-        Managers.AudioManager.PlaySFX("Audio_Equipment_Mount");
-    }
-
-    public virtual void UnEquip(StatusData _status)
-    {
-        Managers.AudioManager.PlaySFX("Audio_Equipment_Dismount");
-    }
+    public abstract void Equip(StatusData _status);
+    public abstract void UnEquip(StatusData _status);
 
     public int Grade { get { return grade; } set { grade = value; } }
 }

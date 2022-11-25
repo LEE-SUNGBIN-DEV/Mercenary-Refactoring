@@ -19,13 +19,11 @@ public class BootsItem : EquipmentItem
 
     public override void Equip(StatusData _status)
     {
-        base.Equip(_status);
         _status.DefensivePower += increasedAmount;
     }
 
     public override void UnEquip(StatusData _status)
     {
-        base.UnEquip(_status);
         _status.DefensivePower -= increasedAmount;
     }
 

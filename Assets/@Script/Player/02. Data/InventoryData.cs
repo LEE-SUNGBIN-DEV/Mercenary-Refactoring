@@ -71,6 +71,7 @@ public class InventoryData
     public void AddItemDataByIndex(ItemData itemData, int slotIndex)
     {
         inventoryItems[slotIndex] = itemData;
+        OnChangeInventoryData?.Invoke(this);
     }
     public void SwapOrCombineSlotItem(InventorySlot startSlot, InventorySlot endSlot)
     {

@@ -23,52 +23,81 @@ public class EquipmentSlotData
     }
 
     #region Equipment Slot Function
-    public ItemData EquipWeapon(WeaponItem requestWeaponItem)
+    public ItemData EquipWeaponData(ItemData requestWeaponItemData)
     {
-        if (requestWeaponItem == null) return null;
+        if (requestWeaponItemData == null)
+            return null;
 
-        ItemData equippedItemData = null;
-        if (weaponSlotItemData != null)
-        {
-            equippedItemData = weaponSlotItemData;
-        }
-        ItemData requestWeaponItemData = new ItemData(requestWeaponItem);
+        ItemData equippedItemData = weaponSlotItemData;
         weaponSlotItemData = requestWeaponItemData;
         OnChangeEquipmentSlotData?.Invoke(this);
 
         return equippedItemData;
     }
-    public void UnEquipItem()
+    public ItemData UnEquipWeaponData()
     {
-        if (weaponSlotItemData != null)
-        {
-            weaponSlotItemData = null;
-            OnChangeEquipmentSlotData?.Invoke(this);
-        }
+        ItemData equippedItemData = weaponSlotItemData;
+        weaponSlotItemData = null;
+        OnChangeEquipmentSlotData?.Invoke(this);
+
+        return equippedItemData;
     }
-    public void EquipHelmet(HelmetItem helmetItem)
+    public ItemData EquipHelmetData(ItemData requestWeaponItemData)
     {
-        helmetSlotItemData = new ItemData(helmetItem);
+        if (requestWeaponItemData == null)
+            return null;
+
+        ItemData equippedItemData = helmetSlotItemData;
+        helmetSlotItemData = requestWeaponItemData;
+        OnChangeEquipmentSlotData?.Invoke(this);
+
+        return equippedItemData;
     }
-    public void ReleaseHelmet()
+    public ItemData UnEquipHelmetData()
     {
+        ItemData equippedItemData = helmetSlotItemData;
         helmetSlotItemData = null;
+        OnChangeEquipmentSlotData?.Invoke(this);
+
+        return equippedItemData;
     }
-    public void EquipArmor(ArmorItem armorItem)
+    public ItemData EquipArmorData(ItemData requestWeaponItemData)
     {
-        armorSlotItemData = new ItemData(armorItem);
+        if (requestWeaponItemData == null)
+            return null;
+
+        ItemData equippedItemData = armorSlotItemData;
+        armorSlotItemData = requestWeaponItemData;
+        OnChangeEquipmentSlotData?.Invoke(this);
+
+        return equippedItemData;
     }
-    public void ReleaseArmor()
+    public ItemData UnEquipArmorData()
     {
+        ItemData equippedItemData = armorSlotItemData;
         armorSlotItemData = null;
+        OnChangeEquipmentSlotData?.Invoke(this);
+
+        return equippedItemData;
     }
-    public void EquipBoots(BootsItem bootsItem)
+    public ItemData EquipBootsData(ItemData requestWeaponItemData)
     {
-        bootsSlotItemData = new ItemData(bootsItem);
+        if (requestWeaponItemData == null)
+            return null;
+
+        ItemData equippedItemData = bootsSlotItemData;
+        bootsSlotItemData = requestWeaponItemData;
+        OnChangeEquipmentSlotData?.Invoke(this);
+
+        return equippedItemData;
     }
-    public void ReleaseBoots()
+    public ItemData UnEquipBootsData()
     {
+        ItemData equippedItemData = bootsSlotItemData;
         bootsSlotItemData = null;
+        OnChangeEquipmentSlotData?.Invoke(this);
+
+        return equippedItemData;
     }
     #endregion
 

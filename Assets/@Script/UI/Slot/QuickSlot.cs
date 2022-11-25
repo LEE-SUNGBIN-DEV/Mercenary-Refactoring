@@ -63,6 +63,13 @@ public class QuickSlot : BaseSlot
     }
 
     #region Mouse Event Function
+    public override void EndDrag()
+    {
+        if (EndSlot is QuickSlot)
+            InventoryData.SwapQuickSlot(this.slotIndex, EndSlot.SlotIndex);
+        else
+            InventoryData.ReleaseQuickSlot(this.slotIndex);
+    }
     public override void SlotRightClick(PointerEventData eventData)
     {
         ReleaseQuickSlot();
