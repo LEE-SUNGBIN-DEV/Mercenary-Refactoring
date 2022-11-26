@@ -14,7 +14,7 @@ public class EquipmentSlotData
     [SerializeField] private ItemData armorSlotItemData;
     [SerializeField] private ItemData bootsSlotItemData;
 
-    public EquipmentSlotData()
+    public void Initialize()
     {
         weaponSlotItemData = null;
         helmetSlotItemData = null;

@@ -66,42 +66,36 @@ public class StatusPopup : UIPopup
         armorSlot.Initialize(characterData.StatusData);
         bootsSlot.Initialize(characterData.StatusData);
 
-        characterData.StatData.OnChangeStatData -= RefreshStatData;
-        characterData.StatData.OnChangeStatData += RefreshStatData;
         characterData.StatusData.OnCharacterStatusChanged -= RefreshStatus;
         characterData.StatusData.OnCharacterStatusChanged += RefreshStatus;
         characterData.EquipmentSlotData.OnChangeEquipmentSlotData -= LoadEquipmentSlot;
         characterData.EquipmentSlotData.OnChangeEquipmentSlotData += LoadEquipmentSlot;
 
-        RefreshStatData(characterData.StatData);
         RefreshStatus(characterData.StatusData);
         LoadEquipmentSlot(characterData.EquipmentSlotData);
     }
 
-    public void RefreshStatData(StatData statData)
-    {
-        GetText((int)TEXT.ClassText).text = statData.CharacterClass;
-        GetText((int)TEXT.LevelText).text = statData.Level.ToString();
-
-        GetText((int)TEXT.StatPointText).text = statData.StatPoint.ToString();
-        GetText((int)TEXT.StrengthText).text = statData.Strength.ToString();
-        GetText((int)TEXT.VitalityText).text = statData.Vitality.ToString();
-        GetText((int)TEXT.DexterityText).text = statData.Dexterity.ToString();
-        GetText((int)TEXT.LuckText).text = statData.Luck.ToString();
-    }
-
     public void RefreshStatus(StatusData status)
     {
-        GetText((int)TEXT.AttackPowerText).text = status.AttackPower.ToString();
-        GetText((int)TEXT.DefensivePowerText).text = status.DefensivePower.ToString();
+        GetText((int)TEXT.ClassText).text = status.CharacterClass;
+        GetText((int)TEXT.LevelText).text = status.Level.ToString();
+
+        GetText((int)TEXT.StatPointText).text = status.StatPoint.ToString();
+        GetText((int)TEXT.StrengthText).text = status.Strength.ToString();
+        GetText((int)TEXT.VitalityText).text = status.Vitality.ToString();
+        GetText((int)TEXT.DexterityText).text = status.Dexterity.ToString();
+        GetText((int)TEXT.LuckText).text = status.Luck.ToString();
+
+        GetText((int)TEXT.AttackPowerText).text = status.AttackPower.ToString("F1");
+        GetText((int)TEXT.DefensivePowerText).text = status.DefensivePower.ToString("F1");
 
         GetText((int)TEXT.HPText).text = status.CurrentHP.ToString("F1") + "/" + status.MaxHP.ToString();
         GetText((int)TEXT.SPText).text = status.CurrentSP.ToString("F1") + "/" + status.MaxSP.ToString();
 
-        GetText((int)TEXT.AttackSpeedText).text = status.AttackSpeed.ToString();
-        GetText((int)TEXT.MoveSpeedText).text = status.MoveSpeed.ToString();
-        GetText((int)TEXT.CriticalChanceText).text = status.CriticalChance.ToString();
-        GetText((int)TEXT.CriticalDamageText).text = status.CriticalDamage.ToString();
+        GetText((int)TEXT.AttackSpeedText).text = status.AttackSpeed.ToString("F1");
+        GetText((int)TEXT.MoveSpeedText).text = status.MoveSpeed.ToString("F1");
+        GetText((int)TEXT.CriticalChanceText).text = status.CriticalChance.ToString("F1");
+        GetText((int)TEXT.CriticalDamageText).text = status.CriticalDamage.ToString("F1");
     }
 
     public void LoadEquipmentSlot(EquipmentSlotData equipmentSlotData)
@@ -115,36 +109,36 @@ public class StatusPopup : UIPopup
     #region Button Event Function
     public void OnClickStrengthButton()
     {
-        if (characterData.StatData.StatPoint > 0)
+        if (characterData.StatusData.StatPoint > 0)
         {
-            --characterData.StatData.StatPoint;
-            ++characterData.StatData.Strength;
+            --characterData.StatusData.StatPoint;
+            ++characterData.StatusData.Strength;
         }
     }
     public void OnClickVitalityButton()
     {
-        if (characterData.StatData.StatPoint > 0)
+        if (characterData.StatusData.StatPoint > 0)
         {
-            --characterData.StatData.StatPoint;
-            ++characterData.StatData.Vitality;
+            --characterData.StatusData.StatPoint;
+            ++characterData.StatusData.Vitality;
         }
     }
 
     public void OnClickDexterityButton()
     {
-        if (characterData.StatData.StatPoint > 0)
+        if (characterData.StatusData.StatPoint > 0)
         {
-            --characterData.StatData.StatPoint;
-            ++characterData.StatData.Dexterity;
+            --characterData.StatusData.StatPoint;
+            ++characterData.StatusData.Dexterity;
         }
     }
 
     public void OnClickLuckButton()
     {
-        if (characterData.StatData.StatPoint > 0)
+        if (characterData.StatusData.StatPoint > 0)
         {
-            --characterData.StatData.StatPoint;
-            ++characterData.StatData.Luck;
+            --characterData.StatusData.StatPoint;
+            ++characterData.StatusData.Luck;
         }
     }
     #endregion

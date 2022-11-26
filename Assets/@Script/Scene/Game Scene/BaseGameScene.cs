@@ -6,15 +6,24 @@ public class BaseGameScene : BaseScene
 {
     protected UIGameScene gameSceneUI;
     protected Character character;
+    protected List<NPC> npcList;
     [SerializeField] protected Vector3 spawnPosition;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        // 캐릭터 생성
         if (Managers.DataManager.SelectCharacterData != null)
         {
             character = Functions.CreateCharacterWithCamera(spawnPosition);
+        }
+
+        // NPC 등록
+        for(int i=0; i<npcList.Count; ++i)
+        {
+            Managers.NPCManager.NPCDictionary.Add(npcList[i].NpcID, npcList[i]);
+            npcList[i].Initialize();
         }
 
         gameSceneUI = Managers.ResourceManager.InstantiatePrefabSync("Prefab_UI_Game_Scene").GetComponent<UIGameScene>();
@@ -31,6 +40,7 @@ public class BaseGameScene : BaseScene
     public override void ExitScene()
     {
         base.ExitScene();
+        Managers.NPCManager.NPCDictionary.Clear();
         character = null;
     }
 

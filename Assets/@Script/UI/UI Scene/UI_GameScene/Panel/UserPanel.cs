@@ -22,32 +22,21 @@ public class UserPanel : UIPanel
         quickSlotPanel = GetComponentInChildren<QuickSlotPanel>(true);
         quickSlotPanel.Initialize(characterData.InventoryData);
 
-        characterData.StatusData.OnCharacterStatusChanged -= UpdateHPBar;
-        characterData.StatusData.OnCharacterStatusChanged += UpdateHPBar;
-        characterData.StatusData.OnCharacterStatusChanged -= UpdateSPBar;
-        characterData.StatusData.OnCharacterStatusChanged += UpdateSPBar;
+        characterData.StatusData.OnCharacterStatusChanged -= UpdateUserPanel;
+        characterData.StatusData.OnCharacterStatusChanged += UpdateUserPanel;
 
-        characterData.StatData.OnChangeStatData -= UpdateExpBar;
-        characterData.StatData.OnChangeStatData += UpdateExpBar;
-
-        UpdateHPBar(characterData.StatusData);
-        UpdateSPBar(characterData.StatusData);
-        UpdateExpBar(characterData.StatData);
+        UpdateUserPanel(characterData.StatusData);
     }
 
-    public void UpdateExpBar(StatData statData)
-    {
-        float ratio = statData.CurrentExperience / statData.MaxExperience;
-        GetImage((int)IMAGE.ExpBar).fillAmount = ratio;
-    }
-    public void UpdateHPBar(StatusData status)
+    public void UpdateUserPanel(StatusData status)
     {
         float ratio = status.CurrentHP / status.MaxHP;
         GetImage((int)IMAGE.HPBar).fillAmount = ratio;
-    }
-    public void UpdateSPBar(StatusData status)
-    {
-        float ratio = status.CurrentSP / status.MaxSP;
+
+        ratio = status.CurrentExp / status.MaxExp;
+        GetImage((int)IMAGE.ExpBar).fillAmount = ratio;
+
+        ratio = status.CurrentSP / status.MaxSP;
         GetImage((int)IMAGE.SPBar).fillAmount = ratio;
     }
 }

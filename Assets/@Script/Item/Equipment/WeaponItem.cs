@@ -6,9 +6,13 @@ using UnityEngine;
 public class WeaponItem : EquipmentItem
 {
     [Header("Weapon Item")]
-    private float increasedAmount;
-    private float finalIncereasedAmount;
-
+    [SerializeField] private float increasedAmount;
+    [SerializeField] private float finalIncereasedAmount;
+    public override void Initialize(ItemData itemData)
+    {
+        base.Initialize(itemData);
+        increasedAmount = (Managers.DataManager.ItemDatabase[itemData.itemID] as WeaponItem).increasedAmount;
+    }
     public override void Initialize<T>(T item)
     {
         base.Initialize(item);
@@ -18,19 +22,19 @@ public class WeaponItem : EquipmentItem
         }
     }
 
-    public override void Equip(StatusData _status)
+    public override void Equip(StatusData status)
     {
         finalIncereasedAmount = increasedAmount;
         for(int i=0; i<grade; ++i)
         {
             finalIncereasedAmount *= 1.1f;
         }
-        _status.EquipAttackPower += finalIncereasedAmount;
+        status.EquipAttackPower += finalIncereasedAmount;
     }
 
-    public override void UnEquip(StatusData _status)
+    public override void UnEquip(StatusData status)
     {
-        _status.EquipAttackPower -= finalIncereasedAmount;
+        status.EquipAttackPower -= finalIncereasedAmount;
     }
 
     public float IncreasedAmount { get { return increasedAmount; } set { increasedAmount = value; } }

@@ -14,7 +14,7 @@ public class InventoryData
     [Header("Quick Slot")]
     [SerializeField] private int[] quickSlotItemIDs;
 
-    public InventoryData()
+    public void Initialize()
     {
         money = Constants.CHARACTER_DATA_DEFAULT_MONEY;
         inventoryItems = new ItemData[Constants.MAX_INVENTORY_SLOT_NUMBER];
@@ -100,7 +100,7 @@ public class InventoryData
     }
     public void UseItemByItemID(int itemID, int amount = 1)
     {
-        if (Managers.DataManager.ItemTable[itemID] is IUsableItem usableItem)
+        if (Managers.DataManager.ItemDatabase[itemID] is IUsableItem usableItem)
         {
             usableItem.UseItem(Managers.DataManager.SelectCharacterData.StatusData);
             RemoveItemByIndex(FindSlotIndexByItemID(itemID), amount);

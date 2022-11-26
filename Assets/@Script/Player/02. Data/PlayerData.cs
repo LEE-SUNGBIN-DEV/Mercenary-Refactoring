@@ -13,16 +13,13 @@ public class PlayerData
     [SerializeField] private float bgmVolume;
     [SerializeField] private float sfxVolume;
 
-    public PlayerData(bool isFirst)
+    public void Initialize()
     {
-        if(isFirst)
-        {
-            characterDatas = new CharacterData[Constants.MAX_CHARACTER_SLOT_NUMBER];
-            currentCharacterIndex = 0;
+        characterDatas = new CharacterData[Constants.MAX_CHARACTER_SLOT_NUMBER];
+        currentCharacterIndex = 0;
 
-            bgmVolume = 0.5f;
-            sfxVolume = 0.5f;
-        }
+        bgmVolume = 0.5f;
+        sfxVolume = 0.5f;
     }
 
     public CharacterData[] CharacterDatas { get { return characterDatas; } set { characterDatas = value; } }

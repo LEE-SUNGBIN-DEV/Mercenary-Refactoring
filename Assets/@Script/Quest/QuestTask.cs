@@ -11,7 +11,7 @@ public abstract class QuestTask
 
     [SerializeField] private Quest ownerQuest;
     [TextArea]
-    [SerializeField] private string taskDescription;
+    [SerializeField] private string taskTooltip;
 
     [SerializeField] private int requireAmount;
     [SerializeField] private int successAmount;
@@ -32,7 +32,7 @@ public abstract class QuestTask
 
     #region Property
     public Quest OwnerQuest { get { return ownerQuest; } }
-    public string TaskDescription { get { return taskDescription; } }
+    public string TaskTooltip { get { return taskTooltip; } }
     public int RequireAmount { get { return requireAmount; } }
 
     public int SuccessAmount

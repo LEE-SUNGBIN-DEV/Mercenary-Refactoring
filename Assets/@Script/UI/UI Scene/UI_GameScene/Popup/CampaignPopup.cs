@@ -9,7 +9,7 @@ public class CampaignPopup : UIPopup
 
     public void Initialize()
     {
-        Managers.DataManager.SelectCharacterData.QuestData.OnChangeQuestData += (QuestData questData) =>
+        Managers.DataManager.SelectCharacterData.QuestData.OnChangeQuestData += (UserQuestData questData) =>
         {
             bool canEnable = questData.MainQuestPrograss >= 1000 ? true : false;
             SetForestButton(canEnable);

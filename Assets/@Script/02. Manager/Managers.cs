@@ -14,9 +14,9 @@ public class Managers : Singleton<Managers>
     private ResourceManager resourceManager = new ResourceManager();
     private UIManager uiManager = new UIManager();
     private SlotManager slotManager = new SlotManager();
+    private NPCManager npcManager = new NPCManager();
     private AudioManager audioManager = new AudioManager();
     private EventManager eventManager = new EventManager();
-    private NPCManager npcManager = new NPCManager();
     private QuestManager questManager = new QuestManager();
     private ObjectPoolManager objectPoolManager = new ObjectPoolManager();
 
@@ -41,9 +41,9 @@ public class Managers : Singleton<Managers>
             sceneManagerCS.Initialize();
             audioManager.Initialize(transform);
             eventManager.Initialize();
+            npcManager.Initialize();
 
             /*
-            npcManager.Initialize();
             dialogueManager.Initialize();
             questManager.Initialize();
             objectPoolManager.Initialize(gameObject);

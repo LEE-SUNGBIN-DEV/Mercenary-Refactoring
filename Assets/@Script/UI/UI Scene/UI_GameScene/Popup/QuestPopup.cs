@@ -6,109 +6,84 @@ using TMPro;
 
 public class QuestPopup : UIPopup
 {
-    public static event UnityAction<QuestPopup> OnClickAcceptButton;
-    public static event UnityAction<QuestPopup> OnClickCompleteButton;
+    public enum TEXT
+    {
+        QuestTitleText,
+        QuestTooltipText,
+        MoneyRewardText,
+        ExpRewardText
+    }
 
-    [SerializeField] private GameObject buttonPrefab;
-    [SerializeField] private GameObject buttonCanvas;
+    public enum BUTTON
+    {
+        ProgressButton,
+        CompletionButton
+    }
 
-    [SerializeField] private int questCount;
+    private GameObject buttonRoot;
+
+    [Header("Popup Button List")]
     [SerializeField] private List<QuestPopupButton> questPopUpButtonList;
 
-    [Header("Select Quest Information")]
-    [SerializeField] private TextMeshProUGUI selectQuestTitleText;
-    [SerializeField] private TextMeshProUGUI selectQuestDescription;
-    [SerializeField] private TextMeshProUGUI selectMoneyRewardText;
-    [SerializeField] private TextMeshProUGUI selectExperienceRewardText;
+    //Buttons
+    private Button progressButton;
+    private Button completionButton;
 
-    [System.Serializable]
-    public class QuestPopupButton
-    {
-        public static event UnityAction<QuestPopupButton> onClickButton;
-
-        public bool isActive;
-        public Quest quest;
-        public Button button;
-        public TextMeshProUGUI buttonText;
-
-        public void OnClickButton()
-        {
-            onClickButton(this);
-        }
-    }
+    //Select Quest Texts
+    private TextMeshProUGUI questTitleText;
+    private TextMeshProUGUI questTooltipText;
+    private TextMeshProUGUI moneyRewardText;
+    private TextMeshProUGUI expRewardText;
 
     public void Initialize()
     {
-        QuestPopupButton.onClickButton -= SetQuestInformation;
-        QuestPopupButton.onClickButton += SetQuestInformation;
+        BindText(typeof(TEXT));
+        BindButton(typeof(BUTTON));
 
-        for (int i = 0; i < questCount; ++i)
-        {
-            CreateQuestButton();
-        }
+        progressButton = GetButton((int)BUTTON.ProgressButton);
+        completionButton = GetButton((int)BUTTON.CompletionButton);
 
-        SetAcceptList();
+        progressButton.onClick.AddListener(OnClickProgressButton);
+        completionButton.onClick.AddListener(OnClickCompletionButton);
+
+        questTitleText = GetText((int)TEXT.QuestTitleText);
+        questTooltipText = GetText((int)TEXT.QuestTooltipText);
+        moneyRewardText = GetText((int)TEXT.MoneyRewardText);
+        expRewardText = GetText((int)TEXT.ExpRewardText);
+
+        buttonRoot = Functions.FindChild<GameObject>(gameObject, "Content", true);
     }
-
-    public void SetQuestInformation(QuestPopupButton questPopUpButton)
-    {
-        if (questPopUpButton.quest.questState == QUEST_STATE.COMPLETE)
-        {
-            selectQuestDescription.text = "완료한 퀘스트입니다.";
-        }
-        else
-        {
-            selectQuestDescription.text = questPopUpButton.quest.QuestTasks[questPopUpButton.quest.TaskIndex].TaskDescription;
-        }
-
-        selectQuestTitleText.text = questPopUpButton.quest.QuestTitle;
-        selectMoneyRewardText.text = questPopUpButton.quest.RewardMoney.ToString();
-        selectExperienceRewardText.text = questPopUpButton.quest.RewardExperience.ToString();
-    }
-
     public void CreateQuestButton()
     {
-        Button newButton = Instantiate(buttonPrefab).GetComponent<Button>();
-        RectTransform rectTransform = newButton.GetComponent<RectTransform>();
-        rectTransform.SetParent(buttonCanvas.transform);
-        rectTransform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        newButton.gameObject.SetActive(false);
-
-        QuestPopupButton newQuestPopUpButton = new QuestPopupButton();
-        newQuestPopUpButton.isActive = false;
-        newQuestPopUpButton.quest = null;
-        newQuestPopUpButton.button = newButton;
-        newQuestPopUpButton.buttonText = newButton.GetComponentInChildren<TextMeshProUGUI>();
-
-        questPopUpButtonList.Add(newQuestPopUpButton);
+        QuestPopupButton newQuestPopupButton = Managers.ResourceManager?.InstantiatePrefabSync("Prefab_Quest_Popup_Button", buttonRoot.transform).GetComponent<QuestPopupButton>();
+        newQuestPopupButton.Initialize();
+        newQuestPopupButton.OnClickPopupButton -= ShowQuestInformation;
+        newQuestPopupButton.OnClickPopupButton += ShowQuestInformation;
+        questPopUpButtonList.Add(newQuestPopupButton);
     }
 
-    public void InitializeQuestPopup()
+    public void ShowQuestInformation(QuestPopupButton questPopUpButton)
     {
-        for(int i=0; i<questPopUpButtonList.Count; ++i)
-        {
-            questPopUpButtonList[i].isActive = false;
-            questPopUpButtonList[i].quest = null;
-            questPopUpButtonList[i].buttonText.text = null;
-            questPopUpButtonList[i].button.gameObject.SetActive(false);
-        }
+        if (questPopUpButton.Quest.QuestState == QUEST_STATE.COMPLETE)
+            questTooltipText.text = "This is a completed quest.";
+        else
+            questTooltipText.text = questPopUpButton.Quest.QuestTasks[questPopUpButton.Quest.TaskIndex].TaskTooltip;
 
-        selectQuestTitleText.text = null;
-        selectQuestDescription.text = null;
-        selectMoneyRewardText.text = null;
-        selectExperienceRewardText.text = null;
+        questTitleText.text = questPopUpButton.Quest.QuestTitle;
+        moneyRewardText.text = questPopUpButton.Quest.RewardMoney.ToString();
+        expRewardText.text = questPopUpButton.Quest.RewardExperience.ToString();
     }
 
-    public void SetAcceptList()
+    #region Button Event Function
+    public void OnClickProgressButton()
     {
-        InitializeQuestPopup();
-        OnClickAcceptButton(this);
+        Managers.QuestManager?.RequestAcceptList(this);
     }
-    public void SetCompleteList()
+    public void OnClickCompletionButton()
     {
-        InitializeQuestPopup();
-        OnClickCompleteButton(this);
+        Managers.QuestManager?.RequestCompleteList(this);
     }
+    #endregion
 
     #region Property
     public List<QuestPopupButton> QuestPopUpButtonList

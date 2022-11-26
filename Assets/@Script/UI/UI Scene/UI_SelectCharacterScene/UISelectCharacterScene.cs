@@ -102,13 +102,13 @@ public class UISelectCharacterScene : UIBaseScene
 
             int index = i;
             // Exist CharacterData
-            if (characterDatas[i]?.StatData?.CharacterClass != null)
+            if (characterDatas[i]?.StatusData?.CharacterClass != null)
             {
                 if (characterSlots[i].selectionCharacter == null)
                 {
-                    CreateCharacterObject(i, characterDatas[i].StatData.CharacterClass, characterSlots[i].characterPoint);
+                    CreateCharacterObject(i, characterDatas[i].StatusData.CharacterClass, characterSlots[i].characterPoint);
                 }
-                characterSlots[i].slotText.text = characterDatas[i].StatData.CharacterClass + "\n" + "Lv. " + characterDatas[i].StatData.Level;
+                characterSlots[i].slotText.text = characterDatas[i].StatusData.CharacterClass + "\n" + "Lv. " + characterDatas[i].StatusData.Level;
                 characterSlots[i].slotButton.onClick.AddListener(() => { OnClickCharacterSlot(index); });
             }
             // Don't Exist CharacterData

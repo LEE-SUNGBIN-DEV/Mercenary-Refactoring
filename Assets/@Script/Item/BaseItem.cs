@@ -22,7 +22,7 @@ public abstract class BaseItem
 
     public virtual void Initialize(ItemData itemData)
     {
-        BaseItem itemInformation = Managers.DataManager.ItemTable[itemData.itemID];
+        BaseItem itemInformation = Managers.DataManager.ItemDatabase[itemData.itemID];
         itemID = itemInformation.itemID;
         itemRank = itemInformation.itemRank;
         itemName = itemInformation.itemName;

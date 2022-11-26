@@ -7,11 +7,13 @@ using Newtonsoft.Json;
 [System.Serializable]
 public class DataManager
 {
-    private Dictionary<int, float> levelTableDictionary = new Dictionary<int, float>();
-    private Dictionary<int, BaseItem> itemTableDictionary = new Dictionary<int, BaseItem>();
+    private Dictionary<int, float> levelTable = new Dictionary<int, float>();
+    private Dictionary<int, BaseItem> itemDatabase = new Dictionary<int, BaseItem>();
+    private Dictionary<uint, Quest> questDatabase = new Dictionary<uint, Quest>();
 
     private string playerDataPath;
     private string levelTablePath;
+    private string questTablePath;
 
     private string weaponTablePath;
     private string helmetTablePath;
@@ -27,7 +29,9 @@ public class DataManager
     {
         playerDataPath = Application.dataPath + "/Player_Data.json";
         levelTablePath = Application.dataPath + "/Level_Table.json";
-
+        questTablePath = Application.dataPath + "/Quest_Table.json";
+        
+        //
         weaponTablePath = Application.dataPath + "/Weapon_Item_Table.json";
         helmetTablePath = Application.dataPath + "/Helmet_Item_Table.json";
         armorTablePath = Application.dataPath + "/Armor_Item_Table.json";
@@ -35,39 +39,49 @@ public class DataManager
 
         hpPotionTablePath = Application.dataPath + "/HP_Potion_Table.json";
         spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
-        spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
-        spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
-        spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
-        spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
+        //
 
-        LoadLevelTable();
-        LoadItemTable();
         LoadPlayerData();
+        LoadLevelTable();
+        LoadItemDatabase();
+        LoadQuestTable();
     }
 
-    public bool FileCheck(string filePath)
+    public bool CheckFile(string filePath)
     {
         FileInfo loadFile = new FileInfo(filePath);
-
         return loadFile.Exists;
     }
-
+    public void LoadPlayerData()
+    {
+        if (CheckFile(playerDataPath))
+        {
+            string jsonPlayerData = File.ReadAllText(playerDataPath);
+            playerData = JsonConvert.DeserializeObject<PlayerData>(jsonPlayerData);
+        }
+        else
+        {
+            playerData = new PlayerData();
+            playerData.Initialize();
+            SavePlayerData();
+        }
+    }
     public void LoadLevelTable()
     {
-        if(FileCheck(levelTablePath))
+        if (CheckFile(levelTablePath))
         {
             string jsonLevelData = File.ReadAllText(levelTablePath);
             LevelTable levelTable = JsonConvert.DeserializeObject<LevelTable>(jsonLevelData);
 
             for (int i = 0; i < levelTable.levels.Length; ++i)
             {
-                levelTableDictionary.Add(levelTable.levels[i], levelTable.maxExperiences[i]);
+                this.levelTable.Add(levelTable.levels[i], levelTable.maxExperiences[i]);
             }
         }
     }
     public void LoadItemTable<T>(string path) where T : BaseItem, new()
     {
-        if (FileCheck(path))
+        if (CheckFile(path))
         {
             string jsonItemData = File.ReadAllText(path);
             ItemTable<T> itemTable = JsonConvert.DeserializeObject<ItemTable<T>>(jsonItemData);
@@ -77,11 +91,11 @@ public class DataManager
                 itemTable.items[i].ItemSprite = Managers.ResourceManager.LoadResourceSync<Sprite>("Sprite_Item_" + itemTable.items[i].ItemName + "_" + itemTable.items[i].ItemID);
                 T item = new();
                 item.Initialize(itemTable.items[i]);
-                itemTableDictionary.Add(itemTable.items[i].ItemID, item);
+                itemDatabase.Add(itemTable.items[i].ItemID, item);
             }
         }
     }
-    public void LoadItemTable()
+    public void LoadItemDatabase()
     {
         LoadItemTable<WeaponItem>(weaponTablePath);
         LoadItemTable<HelmetItem>(helmetTablePath);
@@ -91,19 +105,22 @@ public class DataManager
         LoadItemTable<SPPotion>(spPotionTablePath);
     }
 
-    public void LoadPlayerData()
+    public void LoadQuestTable()
     {
-        if (FileCheck(playerDataPath))
+        if (CheckFile(questTablePath))
         {
-            string jsonPlayerData = File.ReadAllText(playerDataPath);
-            playerData = JsonConvert.DeserializeObject<PlayerData>(jsonPlayerData);
-        }
-        else
-        {
-            playerData = new PlayerData(true);
-            SavePlayerData();
+            string jsonLevelData = File.ReadAllText(questTablePath);
+            QuestTable questTable = JsonConvert.DeserializeObject<QuestTable>(jsonLevelData);
+
+            for(int i=0; i<questTable.questTable.Length; ++i)
+            {
+                Quest quest = new Quest();
+                quest.Initialize(questTable.questTable[i]);
+                questDatabase.Add(quest.QuestID, quest);
+            }
         }
     }
+    
     public void SavePlayerData()
     {
         string jsonPlayerData = JsonConvert.SerializeObject(playerData, Formatting.Indented);
@@ -117,8 +134,9 @@ public class DataManager
     }
 
     #region Property
-    public Dictionary<int, float> LevelTable { get { return levelTableDictionary; } }
-    public Dictionary<int, BaseItem> ItemTable { get { return itemTableDictionary; } }
+    public Dictionary<int, float> LevelTable { get { return levelTable; } }
+    public Dictionary<int, BaseItem> ItemDatabase { get { return itemDatabase; } }
+    public Dictionary<uint, Quest> QuestDatabase { get { return questDatabase; } }
     public PlayerData PlayerData { get { return playerData; } }
     public CharacterData SelectCharacterData
     {

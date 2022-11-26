@@ -125,11 +125,10 @@ public abstract class Character : MonoBehaviour
     #region Property
     public PlayerInput PlayerInput { get { return playerInput; } }
     public CharacterData CharacterData { get { return characterData; } }
-    public StatData StatData { get { return characterData?.StatData; } }
     public StatusData StatusData { get { return characterData?.StatusData; } }
     public InventoryData InventoryData { get { return characterData?.InventoryData; } }
     public EquipmentSlotData EquipmentSlotData { get { return characterData?.EquipmentSlotData; } }
-    public QuestData QuestData { get { return characterData?.QuestData; } }
+    public UserQuestData QuestData { get { return characterData?.QuestData; } }
 
     public CharacterState State { get { return state; } }
 

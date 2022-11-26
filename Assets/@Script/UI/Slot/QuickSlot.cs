@@ -19,7 +19,7 @@ public class QuickSlot : BaseSlot
         ClearSlot();
         if (inventoryData.QuickSlotItemIDs[slotIndex] != Constants.NULL_INT)
         {
-            BaseItem quickSlotItem = Managers.DataManager.ItemTable[inventoryData.QuickSlotItemIDs[slotIndex]];
+            BaseItem quickSlotItem = Managers.DataManager.ItemDatabase[inventoryData.QuickSlotItemIDs[slotIndex]];
             item = quickSlotItem as IUsableItem;
             if (item != null)
             {
