@@ -19,43 +19,38 @@ public abstract class FunctionalNPC : NPC, ITalkable
 
     [SerializeField] private List<Quest> questList;         // 퀘스트 목록
 
-    private void Awake()
-    {
-        Managers.QuestManager.OnRequestNPCQuestList -= SetQuestMark;
-        Managers.QuestManager.OnRequestNPCQuestList += SetQuestMark;
-    }
-
     public override void Initialize()
     {
-        base.Initialize();
-
         // 기본 대화 등록
         if (!Managers.QuestManager.DialogueDictionary.ContainsKey(NpcID))
         {
             Managers.QuestManager.DialogueDictionary.Add(NpcID, defaultDialogues);
         }
+
+        Managers.QuestManager.OnRequestNPCQuestList -= SetQuestMark;
+        Managers.QuestManager.OnRequestNPCQuestList += SetQuestMark;
+        Managers.QuestManager.RefreshNPCQuestList(this);
+
         CanTalk = false;
         IsTalk = false;
         dialogueIndex = 0;
         questID = 0;
     }
 
-    public override void OnDisable()
+    public void OnDisable()
     {
-        base.OnDisable();
-
         QuestList.Clear();
         DialoguePanel.onClickFunctionButton -= OpenNPCUI;
     }
 
     private void Update()
     {
-        if (CanTalk == true && Input.GetKeyDown(KeyCode.G))
+        if (CanTalk && Input.GetKeyDown(KeyCode.G))
         {
             OnDialogue();
         }
 
-        else if(IsTalk == true && Input.GetKeyDown(KeyCode.G))
+        else if(IsTalk && Input.GetKeyDown(KeyCode.G))
         {
             OnTalk();
         }
@@ -107,7 +102,7 @@ public abstract class FunctionalNPC : NPC, ITalkable
     public void OnTalk()
     {
         // Set Talk Infomation
-        uint dialogueID = QuestID + NpcID;
+        uint dialogueID = questID + NpcID;
         string dialogueData = Managers.QuestManager.GetDialogue(dialogueID, DialogueIndex);
 
         // Talk Progress
@@ -133,7 +128,7 @@ public abstract class FunctionalNPC : NPC, ITalkable
         CanTalk = false;
         IsTalk = false;
         dialogueIndex = 0;
-        QuestID = 0;
+        questID = 0;
 
         OnEndDialogue();
         CloseNPCUI();

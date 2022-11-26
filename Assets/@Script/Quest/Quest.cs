@@ -21,22 +21,20 @@ public enum QUEST_CATEGORY
 [System.Serializable]
 public class Quest
 {
-    #region Event
     public event UnityAction<Quest> OnInactiveQuest;
     public event UnityAction<Quest> OnActiveQuest;
     public event UnityAction<Quest> OnAcceptQuest;
     public event UnityAction<Quest> OnCompleteQuest;
-    #endregion
 
     [Header("Quest Infomations")]
-    public QUEST_CATEGORY questCategory;
-    public QUEST_STATE questState;
+    [SerializeField] private QUEST_CATEGORY questCategory;
+    [SerializeField] private QUEST_STATE questState;
     [SerializeField] private uint questID;
     [SerializeField] private string questTitle;
 
     [Header("Conditions")]
     [SerializeField] private int levelCondition;
-    [SerializeField] private uint questCondition;
+    [SerializeField] private uint mainQuestCondition;
 
     [Header("Tasks")]
     [SerializeField] private int taskIndex;
@@ -46,9 +44,9 @@ public class Quest
     [Header("Rewards")]
     [SerializeField] private float rewardExperience;
     [SerializeField] private int rewardMoney;
-    [SerializeField] private string[] rewardItems;
+    [SerializeField] private int[] rewardItemIDs;
 
-    public void Initialize()
+    public void Initialize(QuestData questTable)
     {
         for(int i=0; i<questTasks.Length; ++i)
         {
@@ -60,9 +58,18 @@ public class Quest
             questTasks[i].OnEndTask -= Managers.QuestManager.RemoveDialogue;
             questTasks[i].OnEndTask += Managers.QuestManager.RemoveDialogue;
 
-            questTasks[i].OnEndTask -= Managers.QuestManager.RequestNPCQuestList;
-            questTasks[i].OnEndTask += Managers.QuestManager.RequestNPCQuestList;
+            questTasks[i].OnEndTask -= Managers.QuestManager.RefreshAllNPCQuestList;
+            questTasks[i].OnEndTask += Managers.QuestManager.RefreshAllNPCQuestList;
         }
+    }
+    public bool CanActive(CharacterData characterData)
+    {
+        if(characterData.StatusData.Level >= LevelCondition
+            && characterData.QuestData.MainQuestPrograss >= MainQuestCondition)
+        {
+            return true;
+        }
+        return false;
     }
     public void InactiveQuest()
     {
@@ -79,7 +86,7 @@ public class Quest
 
     public void AcceptQuest()
     {
-        Managers.AudioManager.PlaySFX("Quest Accept");
+        Managers.AudioManager.PlaySFX("Audio_Quest_Accept");
         questState = QUEST_STATE.ACCEPT;
         for (int i = 0; i < QuestTasks.Length; ++i)
         {
@@ -91,7 +98,7 @@ public class Quest
     
     public void CompleteQuest()
     {
-        Managers.AudioManager.PlaySFX("Quest Complete");
+        Managers.AudioManager.PlaySFX("Audio_Quest_Complete");
         questState = QUEST_STATE.COMPLETE;
         Reward();
         OnCompleteQuest(this);
@@ -171,10 +178,12 @@ public class Quest
     }
 
     #region Property
+    public QUEST_CATEGORY QuestCategory { get { return questCategory; } }
+    public QUEST_STATE QuestState { get { return questState; } }
     public uint QuestID { get { return questID; } }
     public string QuestTitle { get { return questTitle; } }
     public int LevelCondition { get { return levelCondition; } }
-    public uint QuestCondition { get { return questCondition; } }
+    public uint MainQuestCondition { get { return mainQuestCondition; } }
     public int TaskIndex
     {
         get { return taskIndex; }
@@ -203,7 +212,7 @@ public class Quest
     public QuestTask[] QuestTasks { get { return questTasks; } }
     public float RewardExperience { get { return rewardExperience; } }
     public int RewardMoney { get { return rewardMoney; } }
-    public string[] RewardItems { get { return rewardItems; } }
+    public int[] RewardItemIDs { get { return rewardItemIDs; } }
     #endregion
 }
 

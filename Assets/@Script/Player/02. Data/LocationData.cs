@@ -11,7 +11,7 @@ public class LocationData
     [Header("Location")]
     [SerializeField] private SCENE_LIST lastViliage;
 
-    public LocationData()
+    public void Initialize()
     {
         lastViliage = SCENE_LIST.Forestia;
     }

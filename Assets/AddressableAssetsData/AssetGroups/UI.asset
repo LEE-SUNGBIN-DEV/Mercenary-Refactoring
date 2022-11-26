@@ -105,6 +105,10 @@ MonoBehaviour:
     m_Address: Prefab_Drag_Image
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 112713ee87dfbd947aac80e1369e013a
+    m_Address: Prefab_Quest_Popup_Button
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
   m_SchemaSet:

@@ -6,11 +6,12 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 [System.Serializable]
-public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public enum IMAGE
     {
-        ItemImage
+        ItemImage,
+        HighlightImage
     }
     public enum TEXT
     {
@@ -19,6 +20,7 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
     }
 
     [Header("Base Slot")]
+    [SerializeField] protected Image highlightImage;
     [SerializeField] protected Image itemImage;
     [SerializeField] protected TextMeshProUGUI itemCountText;
     [SerializeField] protected TextMeshProUGUI itemGradeText;
@@ -31,12 +33,20 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
         BindImage(typeof(IMAGE));
         BindText(typeof(TEXT));
 
-        itemCount = 0;
         itemImage = GetImage((int)IMAGE.ItemImage);
+        highlightImage = GetImage((int)IMAGE.HighlightImage);
         itemCountText = GetText((int)TEXT.ItemCountText);
         itemGradeText = GetText((int)TEXT.ItemGradeText);
+        itemCount = 0;
+        EnableHighlight(false);
     }
-
+    public void EnableHighlight(bool isEnable)
+    {
+        if (isEnable)
+            highlightImage.enabled = true;
+        else
+            highlightImage.enabled = false;
+    }
     public void EnableCountText(bool isEnable)
     {
         if (isEnable)
@@ -45,9 +55,7 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
             itemCountText.enabled = true;
         }
         else
-        {
             itemCountText.enabled = false;
-        }
     }
 
     public void EnableGradeText(bool isEnable)
@@ -58,9 +66,7 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
             itemGradeText.enabled = true;
         }
         else
-        {
             itemGradeText.enabled = false;
-        }
     }
     public virtual void ClearSlot()
     {
@@ -102,9 +108,19 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
             SlotRightClick(eventData);
         }
     }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        EnableHighlight(true);
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        EnableHighlight(false);
+    }
     #endregion
 
     #region Property
+    public Image HighlightImage { get { return highlightImage; } set { highlightImage = value; } }
     public Image ItemImage { get { return itemImage; } set { itemImage = value; } }
     public TextMeshProUGUI ItemCountText { get { return itemCountText; } set { itemCountText = value; } }
     public int ItemCount { get { return itemCount; } set { itemCount = value; } }

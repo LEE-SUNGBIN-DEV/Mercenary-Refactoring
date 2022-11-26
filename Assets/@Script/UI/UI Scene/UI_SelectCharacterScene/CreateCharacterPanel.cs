@@ -72,7 +72,8 @@ public class CreateCharacterPanel : UIPanel
     #region Event Function
     public void OnClickCreateButton()
     {
-        Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex] = new CharacterData(selectClass);
+        Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex] = new CharacterData();
+        Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex].Initialize(selectClass);
         Managers.DataManager.SavePlayerData();
 
         ClosePanel();

@@ -19,7 +19,7 @@ public class InventorySlot : BaseSlot
         ClearSlot();
         if (itemData != null)
         {
-            item = Managers.DataManager.ItemTable[itemData.itemID];
+            item = Managers.DataManager.ItemDatabase[itemData.itemID];
             itemCount = itemData.itemCount;
 
             if (item != null)
