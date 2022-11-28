@@ -14,7 +14,6 @@ public class SkeletonKnightVerticalSlash : EnemySkill
 
     public override void ActiveSkill()
     {
-        Owner.StopTrace();
         StartCoroutine(WaitForRotate());
         Owner.Animator.SetTrigger("doAttack1");
         StartCoroutine(SkillCooldown());

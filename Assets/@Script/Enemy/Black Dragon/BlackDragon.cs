@@ -61,11 +61,10 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
 
     private void Update()
     {
-        if (Target == null || IsAttack || IsStun || IsStagger || IsCompete || IsSpawn || IsDie)
+        if (TargetTransform == null || IsAttack || IsStun || IsStagger || IsCompete || IsSpawn || IsDie)
             return;
 
         FreezeVelocity();
-        Move();
         Attack();
     }
 
@@ -74,10 +73,7 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     {
         int randomNumber = Random.Range(0, (int)BLACK_DRAGON_SKILL.SIZE);
 
-        if(skillDictionary[randomNumber].CheckCondition(DistanceFromTarget))
-        {
             skillDictionary[randomNumber].ActiveSkill();
-        }
     }
 
     public override void Hit()
@@ -94,7 +90,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
             return;
 
         // Initialize Previous State
-        IsMove = false;
         IsAttack = false;
 
         Animator.SetBool("isMove", false);
@@ -114,7 +109,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     }
     public override void InitializeAllState()
     {
-        IsMove = false;
         IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
@@ -134,7 +128,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
             return;
 
         // Initialize Previous State
-        IsMove = false;
         IsAttack = false;
         IsStun = false;
 
@@ -161,7 +154,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
         // Initialize Previous State
         rightClaw.OffRightClaw();
 
-        IsMove = false;
         IsAttack = false;
         IsStun = false;
         IsStagger = false;
@@ -181,7 +173,7 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
         Animator.SetTrigger("doCompeteAttack");
 
         yield return new WaitForSeconds(Constants.TIME_COMPETE_ATTACK);
-        CurrentHitPoint -= (MaxHitPoint * 0.1f);
+        enemyData.CurrentHP -= (enemyData.MaxHP * 0.1f);
         IsCompete = false;
         Stagger();
     }
@@ -191,17 +183,16 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     {
         NavMeshAgent.speed = 7.0f;
         NavMeshAgent.isStopped = false;
-        NavMeshAgent.SetDestination(Target.position);
+        NavMeshAgent.SetDestination(TargetTransform.position);
     }
 
     public void SpawnMoveStop()
     {
-        NavMeshAgent.speed = MoveSpeed;
+        NavMeshAgent.speed = enemyData.MoveSpeed;
         NavMeshAgent.isStopped = true;
     }
     public void OutCompete()
     {
-        IsMove = false;
         IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;

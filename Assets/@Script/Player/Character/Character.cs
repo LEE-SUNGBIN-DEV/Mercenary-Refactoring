@@ -1,3 +1,5 @@
+#define TEST
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +14,8 @@ public abstract class Character : MonoBehaviour
     protected Animator animator;
 
     protected PlayerInput playerInput;
-    protected CharacterData characterData;
-    protected CharacterState state;
+    [SerializeField] protected CharacterData characterData;
+    protected CharacterStateController state;
 
     protected virtual void Awake()
     {
@@ -25,6 +27,17 @@ public abstract class Character : MonoBehaviour
         animator = GetComponent<Animator>();
 
         playerInput = new PlayerInput();
+#if TEST
+        state = new CharacterStateController(this);
+
+        StatusData.OnCharacterStatusChanged -= SetAttackSpeed;
+        StatusData.OnCharacterStatusChanged += SetAttackSpeed;
+
+        StatusData.OnDie -= Die;
+        StatusData.OnDie += Die;
+
+        SetAttackSpeed(StatusData);
+#else
         characterData = Managers.DataManager.SelectCharacterData;
         state = new CharacterState(this);
 
@@ -37,6 +50,7 @@ public abstract class Character : MonoBehaviour
         SetAttackSpeed(StatusData);
 
         Managers.DataManager.SavePlayerData();
+#endif
     }
 
     protected virtual void OnEnable()
@@ -57,7 +71,7 @@ public abstract class Character : MonoBehaviour
     public void PlayerDamageProcess(Enemy enemy, float ratio)
     {
         // Basic Damage Process
-        float damage = (characterData.StatusData.AttackPower - enemy.DefensivePower * 0.5f) * 0.5f;
+        float damage = (characterData.StatusData.AttackPower - enemy.EnemyData.DefensivePower * 0.5f) * 0.5f;
         if (damage < 0)
         {
             damage = 0;
@@ -86,7 +100,7 @@ public abstract class Character : MonoBehaviour
         float damageRange = Random.Range(0.9f, 1.1f);
         damage *= damageRange;
 
-        enemy.CurrentHitPoint -= damage;
+        enemy.EnemyData.CurrentHP -= damage;
         FloatingDamageText floatingDamageText = Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_PREFAB_FLOATING_DAMAGE_TEXT).GetComponent<FloatingDamageText>();
         floatingDamageText.SetDamageText(isCritical, damage, enemy.transform.position);
 
@@ -130,7 +144,7 @@ public abstract class Character : MonoBehaviour
     public EquipmentSlotData EquipmentSlotData { get { return characterData?.EquipmentSlotData; } }
     public UserQuestData QuestData { get { return characterData?.QuestData; } }
 
-    public CharacterState State { get { return state; } }
+    public CharacterStateController State { get { return state; } }
 
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }

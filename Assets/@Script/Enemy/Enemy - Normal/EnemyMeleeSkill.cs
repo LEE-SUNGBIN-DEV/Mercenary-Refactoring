@@ -14,7 +14,6 @@ public class EnemyMeleeSkill : EnemySkill
 
     public override void ActiveSkill()
     {
-        Owner.StopTrace();
         StartCoroutine(WaitForRotate());
         Owner.Animator.SetTrigger("doAttack");
         StartCoroutine(SkillCooldown());

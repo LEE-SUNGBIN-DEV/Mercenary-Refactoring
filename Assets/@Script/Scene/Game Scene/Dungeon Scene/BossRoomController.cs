@@ -16,8 +16,8 @@ public class BossRoomController : MonoBehaviour
     {
         entranceCollider = GetComponent<Collider>();
 
-        boss.OnChangeCurrentHP -= UpdateBossHPBar;
-        boss.OnChangeCurrentHP += UpdateBossHPBar;
+        boss.EnemyData.OnChanageEnemyData -= UpdateBossHPBar;
+        boss.EnemyData.OnChanageEnemyData += UpdateBossHPBar;
 
         boss.OnDie -= ClearDungeon;
         boss.OnDie += ClearDungeon;
@@ -46,9 +46,9 @@ public class BossRoomController : MonoBehaviour
         //Managers.UIManager.UIGameScene.MonsterPanel.SetBossHPBar(1f);
     }
 
-    public void UpdateBossHPBar(Enemy enemy)
+    public void UpdateBossHPBar(EnemyData enemyData)
     {
-        float ratio = enemy.CurrentHitPoint / enemy.MaxHitPoint;
+        float ratio = enemyData.CurrentHP / enemyData.MaxHP;
         if (OnUpdateBossHPBar != null)
         {
             OnUpdateBossHPBar(ratio);
@@ -66,7 +66,7 @@ public class BossRoomController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Time.timeScale = 1f;
 
-        boss.OnChangeCurrentHP -= UpdateBossHPBar;
+        boss.EnemyData.OnChanageEnemyData -= UpdateBossHPBar;
         boss.OnDie -= ClearDungeon;
 
         //Managers.UIManager.BossPanel.SetBossHPBar(1f);

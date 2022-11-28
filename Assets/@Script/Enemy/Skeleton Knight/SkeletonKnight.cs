@@ -42,10 +42,9 @@ public class SkeletonKnight : Enemy, ICompetable
 
     private void Update()
     {
-        if (Target == null || IsAttack || IsStun || IsCompete || IsSpawn || IsDie)
+        if (TargetTransform == null || IsAttack || IsStun || IsCompete || IsSpawn || IsDie)
             return;
 
-        Move();
         Attack();
     }
 
@@ -54,10 +53,7 @@ public class SkeletonKnight : Enemy, ICompetable
     {
         int randomNumber = Random.Range(0, (int)SKELETON_KNIGHT_SKILL.SIZE);
 
-        if (skillDictionary[randomNumber].CheckCondition(DistanceFromTarget))
-        {
             skillDictionary[randomNumber].ActiveSkill();
-        }
     }
 
     public override void Hit()
@@ -79,7 +75,6 @@ public class SkeletonKnight : Enemy, ICompetable
             return;
 
         // Initialize Previous State
-        IsMove = false;
         IsAttack = false;
         IsHeavyHit = false;
 
@@ -104,7 +99,6 @@ public class SkeletonKnight : Enemy, ICompetable
     public override void InitializeAllState()
     {
         // Initialize Previous State
-        IsMove = false;
         IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
@@ -146,7 +140,7 @@ public class SkeletonKnight : Enemy, ICompetable
         Animator.SetTrigger("doCompeteAttack");
 
         yield return new WaitForSeconds(Constants.TIME_COMPETE_ATTACK);
-        CurrentHitPoint -= (MaxHitPoint * 0.1f);
+        enemyData.CurrentHP -= (enemyData.MaxHP * 0.1f);
         IsCompete = false;
         Stagger();
     }
@@ -156,7 +150,6 @@ public class SkeletonKnight : Enemy, ICompetable
             return;
 
         // Initialize Previous State
-        IsMove = false;
         IsAttack = false;
         IsHeavyHit = false;
 
@@ -171,7 +164,6 @@ public class SkeletonKnight : Enemy, ICompetable
     #region Animation Event Function
     public void OutCompete()
     {
-        IsMove = false;
         IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;

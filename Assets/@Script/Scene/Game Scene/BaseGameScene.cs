@@ -6,7 +6,7 @@ public class BaseGameScene : BaseScene
 {
     protected UIGameScene gameSceneUI;
     protected Character character;
-    protected List<NPC> npcList;
+    protected List<NPC> npcList = new List<NPC>();
     [SerializeField] protected Vector3 spawnPosition;
 
     public override void Initialize()

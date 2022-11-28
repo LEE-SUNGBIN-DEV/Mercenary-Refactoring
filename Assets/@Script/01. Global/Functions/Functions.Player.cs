@@ -36,12 +36,12 @@ public static partial class Functions
     public static void EnemyDamageProcess(Enemy enemy, Character character, float ratio)
     {
         // Damage Process
-        float damage = (enemy.AttackPower - character.StatusData.DefensivePower * 0.5f) * 0.5f;
+        float damage = (enemy.EnemyData.AttackPower - character.StatusData.DefensivePower * 0.5f) * 0.5f;
         if (damage < 0)
         {
             damage = 0;
         }
-        damage += ((enemy.AttackPower / 8f - enemy.AttackPower / 16f) + 1f);
+        damage += ((enemy.EnemyData.AttackPower / 8f - enemy.EnemyData.AttackPower / 16f) + 1f);
 
         // Final Damage
         damage *= ratio;

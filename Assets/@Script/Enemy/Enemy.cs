@@ -6,32 +6,24 @@ using UnityEngine.Events;
 
 public abstract class Enemy : MonoBehaviour, IEnemy
 {
-    #region Event
     public event UnityAction<Enemy> OnBirth;
     public event UnityAction<Enemy> OnDie;
-    public event UnityAction<Enemy> OnChangeCurrentHP;
-    #endregion
 
-    // Monster Data
-    [SerializeField] private string enemyName;
-    [SerializeField] private float attackPower;
-    [SerializeField] private float defensivePower;
-    [SerializeField] private float maxHitPoint;
-    [SerializeField] private float currentHitPoint;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float moveStopDistance;
-    [SerializeField] private float experienceAmount;
-    [SerializeField] private Vector3 rotationOffset;
+    [Header("Enemy Data")]
+    [SerializeField] protected EnemyData enemyData;
+    [SerializeField] protected float traceRange;
 
-    // Component
-    private Rigidbody enemyRigidbody;
-    private NavMeshAgent navMeshAgent;
-    private Animator animator;
-    [SerializeField] private SkinnedMeshRenderer meshRenderer;
+    [Header("Component")]
+    protected Rigidbody enemyRigidbody;
+    protected NavMeshAgent navMeshAgent;
+    protected Animator animator;
+    [SerializeField] protected SkinnedMeshRenderer meshRenderer;
 
-    private Transform target;
-    private float distanceFromTarget;
-    private Vector3 targetDirection;
+    [Header("Target")]
+    [SerializeField] protected Transform targetTransform;
+
+    [Header("Behaviour Tree")]
+    [SerializeField] protected EnemyBehaviourTree behavourTree;
     
     #region Virtual Function
     public virtual void Awake()
@@ -51,11 +43,7 @@ public abstract class Enemy : MonoBehaviour, IEnemy
     }
     public virtual void OnDisable()
     {
-        NavMeshAgent.enabled = false;
-        if (Target != null)
-        {
-            Target = null;
-        }
+        targetTransform = null;
     }
     public virtual void Spawn()
     {
@@ -74,50 +62,6 @@ public abstract class Enemy : MonoBehaviour, IEnemy
     #endregion
 
     #region Common Function
-    public void Move()
-    {
-        distanceFromTarget = (Target.position - transform.position).magnitude;
-
-        if (DistanceFromTarget <= TraceRange)
-            StopTrace();
-
-        else
-        {
-            LookTarget(RotationOffset);
-            StartTrace();
-        }
-        Animator.SetBool("isMove", IsMove);
-    }
-    public void LookTarget()
-    {
-        targetDirection = (Target.position - transform.position).normalized;
-        transform.rotation
-                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 5f * Time.deltaTime);
-    }
-    public void LookTarget(Vector3 rotationOffset)
-    {
-        targetDirection = (Target.position - transform.position).normalized;
-        transform.rotation
-                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 5f * Time.deltaTime);
-    }
-    public void StartTrace()
-    {
-        NavMeshAgent.isStopped = false;
-        NavMeshAgent.SetDestination(Target.position);
-        IsMove = true;
-    }
-    public void StopTrace()
-    {
-        NavMeshAgent.isStopped = true;
-        IsMove = false;
-    }
-    public void ReturnObject()
-    {
-        if (Managers.ObjectPoolManager.ObjectPoolDictionary.ContainsKey(enemyName))
-        {
-            Managers.ObjectPoolManager.ReturnObject(enemyName, gameObject);
-        }
-    }
     public IEnumerator WaitForDisapear(float time)
     {
         OnDie(this);
@@ -130,23 +74,18 @@ public abstract class Enemy : MonoBehaviour, IEnemy
 
             yield return null;
         }
-
-        ReturnObject();
+        gameObject.layer = 10;
     }
     public void Rebirth()
     {
         IsDie = false;
-        CurrentHitPoint = MaxHitPoint;
+        enemyData.CurrentHP = enemyData.MaxHP;
         InitializeAllState();
-    }
-    public void InitializeTarget(StatusData characterStats)
-    {
-        Target = null;
     }
     public void FreezeVelocity()
     {
-        MonsterRigidbody.velocity = Vector3.zero;
-        MonsterRigidbody.angularVelocity = Vector3.zero;
+        EnemyRigidbody.velocity = Vector3.zero;
+        EnemyRigidbody.angularVelocity = Vector3.zero;
     }
     #endregion
 
@@ -157,13 +96,11 @@ public abstract class Enemy : MonoBehaviour, IEnemy
     }
     public void InSkill()
     {
-        IsMove = false;
         IsAttack = true;
     }
 
     public void OutSpawn()
     {
-        IsMove = false;
         IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
@@ -173,30 +110,26 @@ public abstract class Enemy : MonoBehaviour, IEnemy
         gameObject.tag = Constants.TAG_ENEMY;
 
         NavMeshAgent.enabled = true;
-        NavMeshAgent.speed = MoveSpeed;
+        NavMeshAgent.speed = enemyData.MoveSpeed;
     }
 
     public void OutSkill()
     {
-        IsMove = false;
         IsAttack = false;
     }
     public void OutHit()
     {
-        IsMove = false;
         IsAttack = false;
         IsHit = false;
     }
     public void OutHeavyHit()
     {
-        IsMove = false;
         IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
     }
     public void OutStun()
     {
-        IsMove = false;
         IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
@@ -205,123 +138,27 @@ public abstract class Enemy : MonoBehaviour, IEnemy
     #endregion
 
     #region Property
-    public Rigidbody MonsterRigidbody { get { return enemyRigidbody; } }
+    public EnemyData EnemyData { get { return enemyData; } }
+    public float TraceRange
+    {
+        get { return traceRange; }
+        set
+        {
+            traceRange = value;
+            if (traceRange < 0)
+            {
+                traceRange = 0;
+            }
+        }
+    }
+    public Rigidbody EnemyRigidbody { get { return enemyRigidbody; } }
     public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }
     public Animator Animator { get { return animator; } }
     public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }
-    public Transform Target
-    {
-        get { return target; }
-        set { target = value; }
-    }
-    public float DistanceFromTarget { get { return distanceFromTarget; } }
-    public Vector3 RotationOffset { get { return rotationOffset; } }
-    public string EnemyName { get { return enemyName; } }
-    public float AttackPower
-    {
-        get { return attackPower; }
-        set
-        {
-            attackPower = value;
-
-            if (attackPower < 0)
-            {
-                attackPower = 0;
-            }
-        }
-    }
-    public float DefensivePower
-    {
-        get { return defensivePower; }
-        set
-        {
-            defensivePower = value;
-
-            if (defensivePower < 0)
-            {
-                defensivePower = 0;
-            }
-        }
-    }
-    public float MaxHitPoint
-    {
-        get { return maxHitPoint; }
-        set
-        {
-            maxHitPoint = value;
-            if (maxHitPoint <= 0)
-            {
-                maxHitPoint = 1;
-            }
-        }
-    }
-    public float CurrentHitPoint
-    {
-        get { return currentHitPoint; }
-        set
-        {
-            currentHitPoint = value;
-            if (currentHitPoint > MaxHitPoint)
-            {
-                currentHitPoint = MaxHitPoint;
-            }
-
-            if (currentHitPoint < 0)
-            {
-                currentHitPoint = 0;
-                if (IsDie == false)
-                {
-                    gameObject.layer = 10;
-                    Die();
-                }
-            }
-            OnChangeCurrentHP?.Invoke(this);
-        }
-    }
-
-    public float MoveSpeed
-    {
-        get { return moveSpeed; }
-        set
-        {
-            moveSpeed = value;
-
-            if (moveSpeed < 0)
-            {
-                moveSpeed = 0;
-            }
-        }
-    }
-
-    public float TraceRange
-    {
-        get { return moveStopDistance; }
-        set
-        {
-            moveStopDistance = value;
-            if (moveStopDistance < 0)
-            {
-                moveStopDistance = 0;
-            }
-        }
-    }
-
-    public float ExperienceAmount
-    {
-        get { return experienceAmount; }
-        set
-        {
-            experienceAmount = value;
-            if (experienceAmount < 0)
-            {
-                experienceAmount = 0;
-            }
-        }
-    }
-
+    public Transform TargetTransform { get { return targetTransform; } set { targetTransform = value; } }
+    
     // State
     public bool IsSpawn { get; set; }
-    public bool IsMove { get; set; }
     public bool IsAttack { get; set; }
     public bool IsHit { get; set; }
     public bool IsHeavyHit { get; set; }

@@ -15,7 +15,6 @@ public class BlackDragonLeftClaw : EnemySkill
 
     public override void ActiveSkill()
     {
-        Owner.StopTrace();
         StartCoroutine(WaitForRotate());
         Owner.Animator.SetTrigger("doLeftClawAttack");
         StartCoroutine(SkillCooldown());
