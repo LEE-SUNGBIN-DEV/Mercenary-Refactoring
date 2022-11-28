@@ -12,10 +12,6 @@ public abstract class EnemySkill : MonoBehaviour
 
     public virtual void Update()
     {
-        if(IsRotate == true && Owner.Target != null)
-        {
-            Owner.LookTarget(owner.RotationOffset);
-        }
     }
     public abstract void ActiveSkill();
 

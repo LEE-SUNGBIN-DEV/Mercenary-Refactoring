@@ -14,7 +14,6 @@ public class SkeletonKnightHorizontalSlash : EnemySkill
 
     public override void ActiveSkill()
     {
-        Owner.StopTrace();
         StartCoroutine(WaitForRotate());
         Owner.Animator.SetTrigger("doAttack2");
         StartCoroutine(SkillCooldown());

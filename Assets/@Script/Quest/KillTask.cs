@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class KillTask : QuestTask
 {
-    [SerializeField] private string targetName;
+    [SerializeField] private uint targetID;
 
     public override void StartTask()
     {
@@ -23,16 +23,16 @@ public class KillTask : QuestTask
 
     public void Action(Character character, Enemy enemy)
     {
-        if(enemy.EnemyName == targetName)
+        if(enemy.EnemyData.EnemyID == targetID)
         {
             ++SuccessAmount;
-            Managers.UIManager.RequestNotice(targetName + " 처치: " + SuccessAmount + "/" + RequireAmount);
+            Managers.UIManager.RequestNotice(enemy.EnemyData.EnemyName + " 처치: " + SuccessAmount + "/" + RequireAmount);
         }
     }
     #region Property
-    public string TargetName
+    public uint TargetID
     {
-        get { return targetName; }
+        get { return targetID; }
     }
     #endregion
 }

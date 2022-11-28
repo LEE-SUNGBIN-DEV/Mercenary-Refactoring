@@ -10,6 +10,7 @@ public class DataManager
     private Dictionary<int, float> levelTable = new Dictionary<int, float>();
     private Dictionary<int, BaseItem> itemDatabase = new Dictionary<int, BaseItem>();
     private Dictionary<uint, Quest> questDatabase = new Dictionary<uint, Quest>();
+    private Dictionary<uint, EnemyData> enemyDatabase = new Dictionary<uint, EnemyData>(); 
 
     private string playerDataPath;
     private string levelTablePath;
@@ -41,10 +42,10 @@ public class DataManager
         spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
         //
 
-        LoadPlayerData();
         LoadLevelTable();
         LoadItemDatabase();
         LoadQuestTable();
+        LoadPlayerData();
     }
 
     public bool CheckFile(string filePath)

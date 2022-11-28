@@ -15,7 +15,6 @@ public class BlackDragonLandBreath : EnemySkill
 
     public override void ActiveSkill()
     {
-        Owner.StopTrace();
         StartCoroutine(WaitForRotate());
         Owner.Animator.SetTrigger("doLandBreath");
         StartCoroutine(SkillCooldown());

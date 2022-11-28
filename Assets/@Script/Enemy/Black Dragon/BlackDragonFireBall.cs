@@ -19,7 +19,6 @@ public class BlackDragonFireBall : EnemySkill
     }
     public override void ActiveSkill()
     {
-        Owner.StopTrace();
         StartCoroutine(WaitForRotate());
         Owner.Animator.SetTrigger("doFireBall");
         StartCoroutine(SkillCooldown());

@@ -22,10 +22,9 @@ public class NormalEnemy : Enemy
 
     private void Update()
     {
-        if (Target == null || IsAttack || IsHit || IsSpawn || IsDie)
+        if (TargetTransform == null || IsAttack || IsHit || IsSpawn || IsDie)
             return;
 
-        Move();
         Attack();
     }
 
@@ -34,10 +33,7 @@ public class NormalEnemy : Enemy
     {
         int randomNumber = Random.Range(0, monsterSkillArray.Length);
 
-        if (skillDictionary[randomNumber].CheckCondition(DistanceFromTarget))
-        {
             skillDictionary[randomNumber].ActiveSkill();
-        }
     }
    
     public override void Hit()
@@ -77,7 +73,6 @@ public class NormalEnemy : Enemy
     public override void InitializeAllState()
     {
         // Initialize Previous State
-        IsMove = false;
         IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterState
+public class CharacterStateController
 {
     [SerializeField] private Character character;
     [SerializeField] private ICharacterState currentState;
     private Dictionary<CHARACTER_STATE, ICharacterState> stateDictionary;
     private Dictionary<CHARACTER_STATE, CHARACTER_STATE_WEIGHT> stateWeightDictionary;
 
-    public CharacterState(Character character)
+    public CharacterStateController(Character character)
     {
         this.character = character;
         currentState = null;

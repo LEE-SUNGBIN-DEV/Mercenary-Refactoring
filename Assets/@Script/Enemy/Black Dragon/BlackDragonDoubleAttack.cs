@@ -17,7 +17,6 @@ public class BlackDragonDoubleAttack : EnemySkill
 
     public override void ActiveSkill()
     {
-        Owner.StopTrace();
         StartCoroutine(WaitForRotate());
         Owner.Animator.SetTrigger("doDoubleAttack");
         StartCoroutine(SkillCooldown());

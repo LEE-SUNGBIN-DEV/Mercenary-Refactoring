@@ -15,7 +15,6 @@ public class BlackDragonFlyBreath : EnemySkill
 
     public override void ActiveSkill()
     {
-        Owner.StopTrace();
         StartCoroutine(WaitForRotate());
         Owner.Animator.SetTrigger("doFlyBreath");
         StartCoroutine(SkillCooldown());
