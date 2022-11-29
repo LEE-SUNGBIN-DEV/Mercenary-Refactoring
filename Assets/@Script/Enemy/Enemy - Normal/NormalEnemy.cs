@@ -22,7 +22,7 @@ public class NormalEnemy : Enemy
 
     private void Update()
     {
-        if (TargetTransform == null || IsAttack || IsHit || IsSpawn || IsDie)
+        if (TargetTransform == null || IsHit || IsDie)
             return;
 
         Attack();
@@ -73,7 +73,6 @@ public class NormalEnemy : Enemy
     public override void InitializeAllState()
     {
         // Initialize Previous State
-        IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
         IsStun = false;

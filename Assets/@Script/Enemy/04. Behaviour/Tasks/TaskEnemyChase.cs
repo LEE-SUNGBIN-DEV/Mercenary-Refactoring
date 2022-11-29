@@ -23,26 +23,9 @@ public class TaskEnemyChase : BehaviourNode
 
     public override NODE_STATE Evaluate()
     {
-        // Condition 1
-        if (enemy.TargetTransform == null)
-        {
-            state = NODE_STATE.FAILTURE;
-            return state;
-        }
-
-        // Condition 2
-        distanceFromTarget = (enemy.TargetTransform.position - enemy.transform.position).magnitude;
-        if (distanceFromTarget <= enemy.TraceRange)
-        {
-            state = NODE_STATE.FAILTURE;
-            return state;
-        }
-        else
-        {
-            LookTarget();
-            enemy.NavMeshAgent.SetDestination(enemy.TargetTransform.position);
-            enemy.Animator.SetBool("isMove", true);
-            return NODE_STATE.RUNNING;
-        }
+        LookTarget();
+        enemy.NavMeshAgent.SetDestination(enemy.TargetTransform.position);
+        enemy.Animator.SetBool("isMove", true);
+        return NODE_STATE.Running;
     }
 }

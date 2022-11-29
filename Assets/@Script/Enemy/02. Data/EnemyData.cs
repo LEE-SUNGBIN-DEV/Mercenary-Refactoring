@@ -22,6 +22,7 @@ public class EnemyData
     [SerializeField] private float criticalDamage;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveRange;
 
     [Header("Reward")]
     [SerializeField] private float expAmount;
@@ -62,7 +63,6 @@ public class EnemyData
             if (currentHP < 0)
             {
                 currentHP = 0;
-                OnDie(this);
             }
 
             OnChanageEnemyData?.Invoke(this);
@@ -149,6 +149,19 @@ public class EnemyData
                 criticalDamage = Constants.CHARACTER_STAT_CRITICAL_DAMAGE_MIN;
 
             OnChanageEnemyData?.Invoke(this);
+        }
+    }
+
+    public float MoveRange
+    {
+        get { return moveRange; }
+        set
+        {
+            moveRange = value;
+            if (moveRange < 0)
+            {
+                moveRange = 0;
+            }
         }
     }
     #endregion
