@@ -11,7 +11,7 @@ public abstract class Enemy : MonoBehaviour, IEnemy
 
     [Header("Enemy Data")]
     [SerializeField] protected EnemyData enemyData;
-    [SerializeField] protected float traceRange;
+    [SerializeField] protected bool isAnimationDone;
 
     [Header("Component")]
     protected Rigidbody enemyRigidbody;
@@ -23,7 +23,7 @@ public abstract class Enemy : MonoBehaviour, IEnemy
     [SerializeField] protected Transform targetTransform;
 
     [Header("Behaviour Tree")]
-    [SerializeField] protected EnemyBehaviourTree behavourTree;
+    [SerializeField] protected BlackDragonBehaviourTree behavourTree;
     
     #region Virtual Function
     public virtual void Awake()
@@ -31,24 +31,21 @@ public abstract class Enemy : MonoBehaviour, IEnemy
         enemyRigidbody = GetComponent<Rigidbody>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+
+        navMeshAgent.speed = enemyData.MoveSpeed;
     }
     public virtual void OnEnable()
     {
         gameObject.tag = Constants.TAG_INVINCIBILITY;
         gameObject.layer = 8;
 
-        OnBirth?.Invoke(this);
         Rebirth();
         Spawn();
+        OnBirth?.Invoke(this);
     }
     public virtual void OnDisable()
     {
         targetTransform = null;
-    }
-    public virtual void Spawn()
-    {
-        IsSpawn = true;
-        Animator.SetTrigger("doSpawn");
     }
     #endregion
 
@@ -82,84 +79,33 @@ public abstract class Enemy : MonoBehaviour, IEnemy
         enemyData.CurrentHP = enemyData.MaxHP;
         InitializeAllState();
     }
-    public void FreezeVelocity()
+    public void Spawn()
     {
-        EnemyRigidbody.velocity = Vector3.zero;
-        EnemyRigidbody.angularVelocity = Vector3.zero;
+        tag = Constants.TAG_INVINCIBILITY;
+
+        navMeshAgent.isStopped = false;
+        navMeshAgent.SetDestination(targetTransform.position);
+        animator.SetTrigger("doSpawn");
     }
     #endregion
 
     #region Animation Event Function
-    public void InSpawn()
+    public void OnAnimationDone()
     {
-        IsSpawn = true;
-    }
-    public void InSkill()
-    {
-        IsAttack = true;
-    }
-
-    public void OutSpawn()
-    {
-        IsAttack = false;
-        IsHit = false;
-        IsHeavyHit = false;
-        IsStun = false;
-        IsSpawn = false;
-
-        gameObject.tag = Constants.TAG_ENEMY;
-
-        NavMeshAgent.enabled = true;
-        NavMeshAgent.speed = enemyData.MoveSpeed;
-    }
-
-    public void OutSkill()
-    {
-        IsAttack = false;
-    }
-    public void OutHit()
-    {
-        IsAttack = false;
-        IsHit = false;
-    }
-    public void OutHeavyHit()
-    {
-        IsAttack = false;
-        IsHit = false;
-        IsHeavyHit = false;
-    }
-    public void OutStun()
-    {
-        IsAttack = false;
-        IsHit = false;
-        IsHeavyHit = false;
-        IsStun = false;
+        isAnimationDone = true;
     }
     #endregion
 
     #region Property
     public EnemyData EnemyData { get { return enemyData; } }
-    public float TraceRange
-    {
-        get { return traceRange; }
-        set
-        {
-            traceRange = value;
-            if (traceRange < 0)
-            {
-                traceRange = 0;
-            }
-        }
-    }
     public Rigidbody EnemyRigidbody { get { return enemyRigidbody; } }
     public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }
     public Animator Animator { get { return animator; } }
     public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }
     public Transform TargetTransform { get { return targetTransform; } set { targetTransform = value; } }
-    
+    public bool IsAnimationDone { get { return isAnimationDone; } }
+
     // State
-    public bool IsSpawn { get; set; }
-    public bool IsAttack { get; set; }
     public bool IsHit { get; set; }
     public bool IsHeavyHit { get; set; }
     public bool IsStun { get; set; }

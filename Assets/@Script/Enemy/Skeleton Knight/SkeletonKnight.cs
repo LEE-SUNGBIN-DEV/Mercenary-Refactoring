@@ -42,7 +42,7 @@ public class SkeletonKnight : Enemy, ICompetable
 
     private void Update()
     {
-        if (TargetTransform == null || IsAttack || IsStun || IsCompete || IsSpawn || IsDie)
+        if (TargetTransform == null || IsStun || IsCompete || IsDie)
             return;
 
         Attack();
@@ -75,7 +75,6 @@ public class SkeletonKnight : Enemy, ICompetable
             return;
 
         // Initialize Previous State
-        IsAttack = false;
         IsHeavyHit = false;
 
         Animator.SetBool("isMove", false);
@@ -99,7 +98,6 @@ public class SkeletonKnight : Enemy, ICompetable
     public override void InitializeAllState()
     {
         // Initialize Previous State
-        IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
         IsStun = false;
@@ -150,7 +148,6 @@ public class SkeletonKnight : Enemy, ICompetable
             return;
 
         // Initialize Previous State
-        IsAttack = false;
         IsHeavyHit = false;
 
         Animator.SetBool("isMove", false);
@@ -164,7 +161,6 @@ public class SkeletonKnight : Enemy, ICompetable
     #region Animation Event Function
     public void OutCompete()
     {
-        IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
         IsStun = false;

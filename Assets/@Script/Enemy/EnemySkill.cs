@@ -21,14 +21,12 @@ public abstract class EnemySkill : MonoBehaviour
     }
     public IEnumerator WaitForRotate()
     {
-        owner.IsAttack = true;
         IsRotate = true;
         yield return new WaitForSeconds(0.5f);
         IsRotate = false;
     }
     public IEnumerator SkillCooldown()
     {
-        Owner.IsAttack = true;
         IsReady = false;
         yield return new WaitForSeconds(Cooldown);
         IsReady = true;

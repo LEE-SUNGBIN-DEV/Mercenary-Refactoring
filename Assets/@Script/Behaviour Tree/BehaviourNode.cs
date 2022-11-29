@@ -6,9 +6,9 @@ namespace BehaviourTreePackage
 {
     public enum NODE_STATE
     {
-        RUNNING,
-        SUCCESS,
-        FAILTURE,
+        Running,
+        Success,
+        Failture,
     }
 
     public class BehaviourNode
@@ -38,7 +38,7 @@ namespace BehaviourTreePackage
 
         public virtual NODE_STATE Evaluate()
         {
-            return NODE_STATE.FAILTURE;
+            return NODE_STATE.Failture;
         }
 
         public void SetData(string key, object value)

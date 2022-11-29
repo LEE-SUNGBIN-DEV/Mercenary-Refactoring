@@ -19906,9 +19906,9 @@ MonoBehaviour:
     criticalDamage: 0
     attackSpeed: 1
     moveSpeed: 4
+    moveRange: 0
     expAmount: 0
     moneyAmount: 0
-  traceRange: 0
   meshRenderer: {fileID: 0}
   targetTransform: {fileID: 1541636675}
   behavourTree: {fileID: 0}
@@ -29706,7 +29706,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608625039263381151}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 8.64}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:

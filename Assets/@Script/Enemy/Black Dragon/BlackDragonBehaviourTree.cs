@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class EnemyBehaviourTree : BehaviourTree
+public class BlackDragonBehaviourTree : BehaviourTree
 {
     private Enemy enemy;
+    private Transform targetTransform;
 
-    public EnemyBehaviourTree(Enemy enemy)
+    public BlackDragonBehaviourTree(Enemy enemy)
     {
         this.enemy = enemy;
     }

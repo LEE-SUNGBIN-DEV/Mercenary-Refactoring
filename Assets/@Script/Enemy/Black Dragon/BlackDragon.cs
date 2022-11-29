@@ -61,10 +61,9 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
 
     private void Update()
     {
-        if (TargetTransform == null || IsAttack || IsStun || IsStagger || IsCompete || IsSpawn || IsDie)
+        if (TargetTransform == null || IsStun || IsStagger || IsCompete || IsDie)
             return;
 
-        FreezeVelocity();
         Attack();
     }
 
@@ -90,8 +89,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
             return;
 
         // Initialize Previous State
-        IsAttack = false;
-
         Animator.SetBool("isMove", false);
 
         // Stun State
@@ -109,7 +106,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     }
     public override void InitializeAllState()
     {
-        IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
         IsStun = false;
@@ -128,7 +124,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
             return;
 
         // Initialize Previous State
-        IsAttack = false;
         IsStun = false;
 
         Animator.SetBool("isMove", false);
@@ -154,7 +149,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
         // Initialize Previous State
         rightClaw.OffRightClaw();
 
-        IsAttack = false;
         IsStun = false;
         IsStagger = false;
 
@@ -193,7 +187,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     }
     public void OutCompete()
     {
-        IsAttack = false;
         IsHit = false;
         IsHeavyHit = false;
         IsStun = false;
