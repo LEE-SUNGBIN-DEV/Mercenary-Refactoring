@@ -5,7 +5,7 @@ using UnityEngine;
 namespace BehaviourTreePackage
 {
     // - 자식 노드 가운데 하나를 실행하기 위한 노드
-    // - Selector의 자식 노드 중 하나라도 Success나 Running을 반환하면, Selector는 즉시, Success나 Running을 부모 노드에 반환
+    // - Selector의 자식 노드 중 하나라도 Success나 Running을 반환하면, Selector는 바로 Success나 Running을 부모 노드에 반환
     // - Selector의 모든 자식 노드가 Failure를 반환했을 때는 Selector도 부모 노드에 Failure를 반환한다.
     public class Selector : BehaviourNode
     {

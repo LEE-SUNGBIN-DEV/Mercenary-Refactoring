@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace BehaviourTreePackage
 {
-    public abstract class BehaviourTree : MonoBehaviour
+    public abstract class BehaviourTree
     {
         private BehaviourNode root = null;
 
-        private void Awake()
+        public void Initialize()
         {
             root = SetupTree();
         }
 
-        private void Update()
+        public void Update()
         {
-            if(root != null)
+            if (root != null)
             {
                 root.Evaluate();
             }

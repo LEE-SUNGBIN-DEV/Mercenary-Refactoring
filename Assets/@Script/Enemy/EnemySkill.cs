@@ -4,32 +4,32 @@ using UnityEngine;
 
 public abstract class EnemySkill : MonoBehaviour
 {
-    [SerializeField] private Enemy owner;
-    [SerializeField] private float cooldown;
-    [SerializeField] private float maxRange;
-    private bool isRotate;
-    private bool isReady;
+    [SerializeField] protected Enemy owner;
+    [SerializeField] protected float cooldown;
+    [SerializeField] protected float maxRange;
+    protected bool isRotate;
+    protected bool isReady;
 
     public virtual void Update()
     {
     }
     public abstract void ActiveSkill();
 
-    public virtual bool CheckCondition(float _targetDistance)
+    public virtual bool CheckCondition(float targetDistance)
     {
-        return (IsReady && (_targetDistance <= MaxRange));
+        return (isReady && (targetDistance <= MaxRange));
     }
     public IEnumerator WaitForRotate()
     {
-        IsRotate = true;
+        isRotate = true;
         yield return new WaitForSeconds(0.5f);
-        IsRotate = false;
+        isRotate = false;
     }
     public IEnumerator SkillCooldown()
     {
-        IsReady = false;
+        isReady = false;
         yield return new WaitForSeconds(Cooldown);
-        IsReady = true;
+        isReady = true;
     }
 
     #region Property
@@ -41,22 +41,18 @@ public abstract class EnemySkill : MonoBehaviour
     public float MaxRange
     {
         get { return maxRange; }
-        set { maxRange = value; }
     }
     public float Cooldown
     {
         get { return cooldown; }
-        set { cooldown = value; }
     }
     public bool IsRotate
     {
         get { return isRotate; }
-        set { isRotate = value; }
     }
     public bool IsReady
     {
         get { return isReady; }
-        set { isReady = value; }
     }
     #endregion
 }
