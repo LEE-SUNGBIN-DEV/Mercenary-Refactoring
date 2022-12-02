@@ -12,7 +12,6 @@ public enum SKELETON_KNIGHT_SKILL
 }
 public class SkeletonKnight : Enemy, ICompetable
 {
-    private Dictionary<int, EnemySkill> skillDictionary;
     private SkeletonKnightVerticalSlash verticalSlash;
     private SkeletonKnightHorizontalSlash horizontalSlash;
 
@@ -42,20 +41,9 @@ public class SkeletonKnight : Enemy, ICompetable
 
     private void Update()
     {
-        if (TargetTransform == null || IsStun || IsCompete || IsDie)
-            return;
-
-        Attack();
     }
 
     #region Override Function
-    public override void Attack()
-    {
-        int randomNumber = Random.Range(0, (int)SKELETON_KNIGHT_SKILL.SIZE);
-
-            skillDictionary[randomNumber].ActiveSkill();
-    }
-
     public override void Hit()
     {
     }

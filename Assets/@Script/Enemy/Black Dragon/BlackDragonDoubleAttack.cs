@@ -10,8 +10,8 @@ public class BlackDragonDoubleAttack : EnemySkill
 
     private void Awake()
     {
-        IsRotate = false;
-        IsReady = true;
+        isRotate = false;
+        isReady = true;
         Owner = GetComponent<BlackDragon>();
     }
 
@@ -61,12 +61,10 @@ public class BlackDragonDoubleAttack : EnemySkill
     public GameObject AttackEffect1
     {
         get { return attackEffect1; }
-        private set { attackEffect1 = value; }
     }
     public GameObject AttackEffect2
     {
         get { return attackEffect2; }
-        private set { attackEffect2 = value; }
     }
     #endregion
 }

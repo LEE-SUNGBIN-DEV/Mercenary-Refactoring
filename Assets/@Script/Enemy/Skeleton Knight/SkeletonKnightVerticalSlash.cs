@@ -8,8 +8,8 @@ public class SkeletonKnightVerticalSlash : EnemySkill
 
     private void Awake()
     {
-        IsRotate = false;
-        IsReady = true;
+        isRotate = false;
+        isReady = true;
     }
 
     public override void ActiveSkill()

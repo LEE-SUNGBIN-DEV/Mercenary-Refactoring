@@ -8,8 +8,8 @@ public class BlackDragonRightClaw : EnemySkill
 
     private void Awake()
     {
-        IsRotate = false;
-        IsReady = true;
+        isRotate = false;
+        isReady = true;
         Owner = GetComponent<BlackDragon>();
     }
 
