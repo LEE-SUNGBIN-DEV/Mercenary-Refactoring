@@ -10,7 +10,7 @@ public class CharacterStateAttack : ICharacterState
 
     public CharacterStateAttack()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.ATTACK;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Attack;
         isAttack = false;
     }
 

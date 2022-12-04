@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class LancerShield : CharacterCombatController
 {
-    private void Awake()
+    public override void Initialize(Character character)
     {
-        weaponCollider = GetComponent<Collider>();
-        weaponCollider.enabled = false;
-        combatType = COMBAT_TYPE.DEFENSE;
+        base.Initialize(character);
+        combatType = COMBAT_TYPE.Defense;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,31 +18,30 @@ public class LancerShield : CharacterCombatController
 
             switch (CombatType)
             {
-                case COMBAT_TYPE.DEFENSE:
+                case COMBAT_TYPE.Defense:
                     {
                         Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_LANCER_DEFENSE, triggerPoint);
                         owner.Animator.SetBool("isBreakShield", true);
                         break;
                     }
 
-                case COMBAT_TYPE.PARRYING:
+                case COMBAT_TYPE.Parrying:
                     {
                         Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_LANCER_DEFENSE, triggerPoint);
                         Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_LANCER_PERFECT_DEFENSE, triggerPoint);
 
                         owner.Animator.SetBool("isPerfectShield", true);
                         owner.Animator.SetBool("isBreakShield", false);
-                        CallSlowMotion(0.5f, 0.5f);
                         break;
                     }
             }
-            WeaponCollider.enabled = false;
+            attackCollider.enabled = false;
         }
 
         if (other.CompareTag("Enemy"))
         {
             Vector3 triggerPoint = other.bounds.ClosestPoint(transform.position);
-            if (CombatType == COMBAT_TYPE.COUNTER)
+            if (CombatType == COMBAT_TYPE.ParryingAttack)
             {
                 Enemy enemy = other.GetComponentInParent<Enemy>();
                 owner.PlayerDamageProcess(enemy, DamageRatio);
@@ -54,7 +52,6 @@ public class LancerShield : CharacterCombatController
                     Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_PLAYER_COUNTER, triggerPoint);
 
                     stunableObject.Stun();
-                    CallSlowMotion(0.2f, 0.5f);
                 }
             }
         }
@@ -66,7 +63,7 @@ public class LancerShield : CharacterCombatController
     }
     public void EndDefense()
     {
-        combatType = COMBAT_TYPE.DEFENSE;
-        weaponCollider.enabled = false;
+        combatType = COMBAT_TYPE.Defense;
+        attackCollider.enabled = false;
     }
 }

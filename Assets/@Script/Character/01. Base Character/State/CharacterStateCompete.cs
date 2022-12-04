@@ -9,7 +9,7 @@ public class CharacterStateCompete : ICharacterState
 
     public CharacterStateCompete()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.COMPETE;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Compete;
     }
 
     public void Enter(Character character)

@@ -15,15 +15,15 @@ public class CharacterStateController
         stateDictionary = new Dictionary<CHARACTER_STATE, ICharacterState>
         {
             // Common
-            { CHARACTER_STATE.MOVE, new CharacterStateMove() },
-            { CHARACTER_STATE.ATTACK, new CharacterStateAttack() },
-            { CHARACTER_STATE.SKILL, new CharacterStateSkill() },
-            { CHARACTER_STATE.ROLL, new CharacterStateRoll() },
-            { CHARACTER_STATE.HIT, new CharacterStateHit() },
-            { CHARACTER_STATE.HEAVY_HIT, new CharacterStateHeavyHit() },
-            { CHARACTER_STATE.STUN, new CharacterStateStun() },
-            { CHARACTER_STATE.COMPETE, new CharacterStateCompete() },
-            { CHARACTER_STATE.DIE, new CharacterStateDie() }
+            { CHARACTER_STATE.Move, new CharacterStateMove() },
+            { CHARACTER_STATE.Attack, new CharacterStateAttack() },
+            { CHARACTER_STATE.Skill, new CharacterStateSkill() },
+            { CHARACTER_STATE.Roll, new CharacterStateRoll() },
+            { CHARACTER_STATE.Hit, new CharacterStateHit() },
+            { CHARACTER_STATE.HeavyHit, new CharacterStateHeavyHit() },
+            { CHARACTER_STATE.Stun, new CharacterStateStun() },
+            { CHARACTER_STATE.Compete, new CharacterStateCompete() },
+            { CHARACTER_STATE.Die, new CharacterStateDie() }
         };
     }
 

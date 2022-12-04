@@ -12,7 +12,7 @@ public class CharacterStateRoll : ICharacterState
 
     public CharacterStateRoll()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.ROLL;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Roll;
     }
 
     public void Enter(Character character)

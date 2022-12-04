@@ -7,7 +7,7 @@ public class ViliageScene : BaseGameScene
     public override void Initialize()
     {
         base.Initialize();
-        sceneType = SCENE_TYPE.VILIAGE;
+        sceneType = SCENE_TYPE.Vilage;
     }
 
     public override void ExitScene()

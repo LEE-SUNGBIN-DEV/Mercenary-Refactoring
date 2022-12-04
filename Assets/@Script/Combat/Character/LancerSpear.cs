@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class LancerSpear : CharacterCombatController
 {
-    private void Awake()
-    {
-        weaponCollider = GetComponent<Collider>();
-        weaponCollider.enabled = false;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))
@@ -21,8 +15,8 @@ public class LancerSpear : CharacterCombatController
 
             switch (CombatType)
             {
-                case COMBAT_TYPE.NORMAL:
-                case COMBAT_TYPE.COUNTER_SKILL:
+                case COMBAT_TYPE.DefaultAttack:
+                case COMBAT_TYPE.Counter:
                     {
                         IHitable hitableObject = other.GetComponentInParent<IHitable>();
                         if (hitableObject != null)
@@ -34,7 +28,7 @@ public class LancerSpear : CharacterCombatController
 
                         break;
                     }
-                case COMBAT_TYPE.SMASH:
+                case COMBAT_TYPE.SmashAttack:
                     {
                         IHeavyHitable heavyHitableObject = other.GetComponentInParent<IHeavyHitable>();
                         if (heavyHitableObject != null)
@@ -42,13 +36,12 @@ public class LancerSpear : CharacterCombatController
                             Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_PLAYER_SMASH, triggerPoint);
 
                             heavyHitableObject.HeavyHit();
-                            CallSlowMotion(0.5f, 0.5f);
                         }
 
                         break;
                     }
 
-                case COMBAT_TYPE.STUN:
+                case COMBAT_TYPE.StunAttack:
                     {
                         IStunable stunableObject = other.GetComponentInParent<IStunable>();
                         if (stunableObject != null)
@@ -56,12 +49,11 @@ public class LancerSpear : CharacterCombatController
                             Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_PLAYER_SMASH, triggerPoint);
 
                             stunableObject.Stun();
-                            CallSlowMotion(0.5f, 0.5f);
                         }
                         break;
                     }
 
-                case COMBAT_TYPE.COUNTER:
+                case COMBAT_TYPE.ParryingAttack:
                     {
                         IStunable stunableObject = other.GetComponentInParent<IStunable>();
                         if (stunableObject != null)
@@ -69,7 +61,6 @@ public class LancerSpear : CharacterCombatController
                             Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_PLAYER_COUNTER, triggerPoint);
 
                             stunableObject.Stun();
-                            CallSlowMotion(0.2f, 0.5f);
                         }
                         break;
                     }
@@ -87,39 +78,39 @@ public class LancerSpear : CharacterCombatController
             case ATTACK_TYPE.COMBO4:
                 {
                     damageRatio = 1f;
-                    combatType = COMBAT_TYPE.NORMAL;
+                    combatType = COMBAT_TYPE.DefaultAttack;
                     break;
                 }
 
             case ATTACK_TYPE.SMASH1:
                 {
                     damageRatio = 1.5f;
-                    combatType = COMBAT_TYPE.SMASH;
+                    combatType = COMBAT_TYPE.SmashAttack;
                     break;
                 }
             case ATTACK_TYPE.SMASH2:
                 {
                     damageRatio = 2.5f;
-                    combatType = COMBAT_TYPE.SMASH;
+                    combatType = COMBAT_TYPE.SmashAttack;
                     break;
                 }
             case ATTACK_TYPE.SMASH3:
                 {
                     damageRatio = 4f;
-                    combatType = COMBAT_TYPE.SMASH;
+                    combatType = COMBAT_TYPE.SmashAttack;
                     break;
                 }
             case ATTACK_TYPE.SMASH4:
                 {
                     damageRatio = 3f;
-                    combatType = COMBAT_TYPE.SMASH;
+                    combatType = COMBAT_TYPE.SmashAttack;
                     break;
                 }
         }
-        weaponCollider.enabled = true;
+        attackCollider.enabled = true;
     }
     public void EndAttack()
     {
-        weaponCollider.enabled = false;
+        attackCollider.enabled = false;
     }
 }

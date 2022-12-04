@@ -57,7 +57,7 @@ public abstract class UIBaseScene : UIBase
         }
 
         RefreshPopupOrder();
-        Managers.GameManager.SetCursorMode(CURSOR_MODE.UNLOCK);
+        Managers.GameManager.SetCursorMode(CURSOR_MODE.Unlock);
     }
     public void ClosePopup(UIPopup popup)
     {
@@ -72,7 +72,7 @@ public abstract class UIBaseScene : UIBase
 
         if (currentPopUpLinkedList.Count == 0)
         {
-            Managers.GameManager.SetCursorMode(CURSOR_MODE.LOCK);
+            Managers.GameManager.SetCursorMode(CURSOR_MODE.Lock);
         }
     }
 

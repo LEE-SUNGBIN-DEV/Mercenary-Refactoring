@@ -55,55 +55,57 @@ public enum SCENE_LIST
 
 public enum SCENE_TYPE
 {
-    UNKNOWN,
-    TITLE,
-    SELECTION,
-    VILIAGE,
-    DUNGEON,
-    LOADING,
+    Unknown,
+    Title,
+    Selection,
+    Vilage,
+    Dungeon,
+    Loading,
 
-    LENGTH
+    Size
 }
 
 public enum CHARACTER_CLASS
 {
     Null,
-    Lancer
+    Lancer,
+    Warrior,
+    Berserker,
 }
 
 public enum CHARACTER_STATE
 {
     // Common Character
-    MOVE = 1,
-    ATTACK = 2,
-    SKILL = 4,
-    ROLL = 5,
-    HIT = 6,
-    HEAVY_HIT = 7,
-    STUN = 8,
-    COMPETE = 9,
-    DIE = 10,
+    Move = 1,
+    Attack = 2,
+    Skill = 4,
+    Roll = 5,
+    Hit = 6,
+    HeavyHit = 7,
+    Stun = 8,
+    Compete = 9,
+    Die = 10,
 
     // Lancer
-    LANCER_DEFENSE = 100
+    LancerDefense = 100
 
 }
 
 public enum CHARACTER_STATE_WEIGHT
 {
     // Common Character
-    MOVE = 1,
-    ATTACK = 2,
-    SKILL = 3,
-    ROLL = 4,
-    HIT = 5,
-    HEAVY_HIT = 6,
-    STUN = 7,
-    COMPETE = 8,
-    DIE = 9,
+    Move = 1,
+    Attack = 2,
+    Skill = 3,
+    Roll = 4,
+    Hit = 5,
+    HeavyHit = 6,
+    Stun = 7,
+    Compete = 8,
+    Die = 9,
 
     // Lancer
-    LANCER_DEFENSE = 2
+    LancerDefense = 2
 }
 
 public enum ATTACK_TYPE
@@ -121,14 +123,32 @@ public enum ATTACK_TYPE
     SKILL
 }
 
+public enum COMBAT_TYPE
+{
+    // Common
+    DefaultAttack,
+    SmashAttack,
+    StunAttack,
+
+    // Player
+    Defense,
+    Parrying,
+    ParryingAttack,
+    Counter,
+
+    // Enemy
+    CompetableAttack,
+    CounterableAttack
+}
+
 public enum CURSOR_MODE
 {
-    LOCK,
-    UNLOCK
+    Lock,
+    Unlock
 }
 
 public enum UI_EVENT
 {
-    CLICK,
-    PRESS
+    Click,
+    Press
 }

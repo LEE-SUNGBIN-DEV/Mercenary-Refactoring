@@ -8,15 +8,13 @@ public class EnemyMeleeSkill : EnemySkill
 
     private void Awake()
     {
-        isRotate = false;
         isReady = true;
     }
 
     public override void ActiveSkill()
     {
-        StartCoroutine(WaitForRotate());
+        base.ActiveSkill();
         Owner.Animator.SetTrigger("doAttack");
-        StartCoroutine(SkillCooldown());
     }
 
     #region Animation Event Function

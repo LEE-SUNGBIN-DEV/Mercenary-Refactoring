@@ -23,7 +23,7 @@ public class LoadingScene : BaseScene
     public override void Initialize()
     {
         base.Initialize();
-        sceneType = SCENE_TYPE.LOADING;
+        sceneType = SCENE_TYPE.Loading;
         scene = SCENE_LIST.Loading;
     }
 

@@ -13,7 +13,7 @@ public class EnemyCompeteAttack : EnemyCombatController
 
     private void Awake()
     {
-        combatType = COMBAT_TYPE.COMPETE;
+        combatType = COMBAT_TYPE.CompetableAttack;
         isReady = true;
         competableEnemy = Owner as ICompetable;
     }
@@ -26,7 +26,7 @@ public class EnemyCompeteAttack : EnemyCombatController
 
             switch (CombatType)
             {
-                case COMBAT_TYPE.COMPETE:
+                case COMBAT_TYPE.CompetableAttack:
                     {
                         heavyHitableObject.HeavyHit();
                         break;
@@ -38,7 +38,7 @@ public class EnemyCompeteAttack : EnemyCombatController
         {
             CharacterCombatController combatController = other.GetComponent<CharacterCombatController>();
 
-            if (isReady == true && combatController.CombatType == COMBAT_TYPE.PARRYING)
+            if (isReady == true && combatController.CombatType == COMBAT_TYPE.Parrying)
             {
                 Vector3 triggerPoint = other.bounds.ClosestPoint(transform.position);
                 Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_COMPETE_START, triggerPoint);

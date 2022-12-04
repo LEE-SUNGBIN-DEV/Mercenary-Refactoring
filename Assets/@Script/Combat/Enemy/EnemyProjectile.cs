@@ -28,19 +28,19 @@ public class EnemyProjectile : EnemyCombatController
 
             switch (CombatType)
             {
-                case COMBAT_TYPE.NORMAL:
+                case COMBAT_TYPE.DefaultAttack:
                     {
                         player.Hit();
                         break;
                     }
 
-                case COMBAT_TYPE.SMASH:
+                case COMBAT_TYPE.SmashAttack:
                     {
                         player.HeavyHit();
                         break;
                     }
 
-                case COMBAT_TYPE.STUN:
+                case COMBAT_TYPE.StunAttack:
                     {
                         player.Stun();
                         break;

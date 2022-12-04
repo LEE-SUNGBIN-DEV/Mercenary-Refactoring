@@ -13,7 +13,7 @@ public class DungeonScene : BaseGameScene
     {
         base.Initialize();
 
-        sceneType = SCENE_TYPE.DUNGEON;
+        sceneType = SCENE_TYPE.Dungeon;
         //Managers.UIManager.EntrancePanel.EntranceText.text = sceneName;
         //Managers.UIManager.EntrancePanel.gameObject.SetActive(true);
 

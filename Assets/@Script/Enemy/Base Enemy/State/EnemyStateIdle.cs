@@ -8,7 +8,7 @@ public class EnemyStateIdle : IEnemyState
 
     public EnemyStateIdle()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.ATTACK;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Attack;
     }
 
     public void Enter(Enemy enemy)

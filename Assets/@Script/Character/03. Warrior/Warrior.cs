@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lancer : Character
+public class Warrior : Character
 {
     [SerializeField] private LancerSpear spear;
     [SerializeField] private LancerShield shield;
-    [SerializeField] private CharacterCombatController skill; 
+    [SerializeField] private CharacterCombatController skill;
 
     protected override void Awake()
     {

@@ -10,7 +10,7 @@ public class LancerStateDefense : ICharacterState
 
     public LancerStateDefense()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.LANCER_DEFENSE;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.LancerDefense;
         isDefense = false;
         lancer = null;
     }

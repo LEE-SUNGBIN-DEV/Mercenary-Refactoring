@@ -13,7 +13,7 @@ public class CharacterStateMove : ICharacterState
 
     public CharacterStateMove()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.MOVE;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Move;
         isMove = false;
     }
 

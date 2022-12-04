@@ -7,21 +7,14 @@ public class BlackDragonFireBall : EnemySkill
     [SerializeField] private float minRange;
     [SerializeField] private GameObject muzzle;
 
-    private void Awake()
-    {
-        isRotate = false;
-        isReady = true;
-        Owner = GetComponent<BlackDragon>();
-    }
     public override bool CheckCondition(float targetDistance)
     {
-        return (IsReady && (targetDistance <= MaxRange) && (targetDistance >= minRange));
+        return (isReady && (targetDistance <= maxRange) && (targetDistance >= minRange));
     }
     public override void ActiveSkill()
     {
-        StartCoroutine(WaitForRotate());
+        base.ActiveSkill();
         Owner.Animator.SetTrigger("doFireBall");
-        StartCoroutine(SkillCooldown());
     }
 
     #region Animation Event Function
@@ -39,7 +32,6 @@ public class BlackDragonFireBall : EnemySkill
     private GameObject Muzzle
     {
         get { return muzzle; }
-        set { muzzle = value; }
     }
     #endregion
 }

@@ -10,16 +10,14 @@ public class BlackDragonDoubleAttack : EnemySkill
 
     private void Awake()
     {
-        isRotate = false;
         isReady = true;
         Owner = GetComponent<BlackDragon>();
     }
 
     public override void ActiveSkill()
     {
-        StartCoroutine(WaitForRotate());
+        base.ActiveSkill();
         Owner.Animator.SetTrigger("doDoubleAttack");
-        StartCoroutine(SkillCooldown());
     }
 
     #region Animation Event Function
