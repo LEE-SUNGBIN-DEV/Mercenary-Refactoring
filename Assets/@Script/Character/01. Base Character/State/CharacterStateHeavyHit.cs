@@ -8,7 +8,7 @@ public class CharacterStateHeavyHit : ICharacterState
 
     public CharacterStateHeavyHit()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.HEAVY_HIT;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.HeavyHit;
     }
 
     public void Enter(Character character)

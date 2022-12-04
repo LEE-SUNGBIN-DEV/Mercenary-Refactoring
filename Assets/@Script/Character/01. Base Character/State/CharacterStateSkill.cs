@@ -12,7 +12,7 @@ public class CharacterStateSkill : ICharacterState
 
     public CharacterStateSkill()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.SKILL;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Skill;
     }
 
     public void Enter(Character character)

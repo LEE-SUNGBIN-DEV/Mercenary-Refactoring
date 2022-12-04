@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyLightningStrike : EnemyAttack
+public class EnemyLightningStrike : EnemyCombatController
 {
     private Collider attachedCollider;
 

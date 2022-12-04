@@ -8,7 +8,7 @@ public class CharacterStateStun : ICharacterState
 
     public CharacterStateStun()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.STUN;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Stun;
     }
 
     public void Enter(Character character)

@@ -91,7 +91,7 @@ public abstract class Enemy : MonoBehaviour, IEnemy
     #endregion
 
     #region Animation Event Function
-    public void OnEndState()
+    private void OnEndState()
     {
         state = ENEMY_STATE.Idle;
     }

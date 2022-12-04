@@ -10,7 +10,7 @@ public class SelectCharacterScene : BaseScene
     {
         base.Initialize();
 
-        sceneType = SCENE_TYPE.SELECTION;
+        sceneType = SCENE_TYPE.Selection;
         scene = SCENE_LIST.Selection;
 
         selectCharacterSceneUI = Managers.ResourceManager.InstantiatePrefabSync("Prefab_UI_Select_Character_Scene").GetComponent<UISelectCharacterScene>();

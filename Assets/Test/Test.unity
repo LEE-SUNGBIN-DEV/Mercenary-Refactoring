@@ -142,6 +142,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combatType: 0
   damageRatio: 1
+  attackCollider: {fileID: 0}
+  owner: {fileID: 0}
 --- !u!1 &358641899
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +386,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combatType: 0
   damageRatio: 1
+  attackCollider: {fileID: 0}
+  owner: {fileID: 0}
+--- !u!4 &1710453951 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6352971121858101497, guid: 913d4c09b88541d4eaa251f425968eed, type: 3}
+  m_PrefabInstance: {fileID: 6393678113001708127}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &44169608353622114
 Transform:
   m_ObjectHideFlags: 0
@@ -19715,12 +19724,12 @@ GameObject:
   - component: {fileID: 3999094440702344360}
   - component: {fileID: 3715669387978778175}
   m_Layer: 8
-  m_Name: Double Attack 1
+  m_Name: Double Claw Left
   m_TagString: Enemy Attack
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1485680660691274350
 GameObject:
   m_ObjectHideFlags: 0
@@ -19768,6 +19777,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 1608625039263381147}
+  skillCollider: {fileID: 0}
   cooldown: 60
   maxRange: 20
   attackEffect: {fileID: 1785879793253900461}
@@ -19806,41 +19816,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 1608625039263381147}
+  skillCollider: {fileID: 0}
   cooldown: 45
   maxRange: 15
   attackEffect: {fileID: 5739686785419283859}
---- !u!114 &1608625039263381142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1608625039263381151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cc4de383475ac34eb2b9bfa8321afd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 1608625039263381147}
-  cooldown: 8
-  maxRange: 8
-  attackEffect: {fileID: 1785879792879611329}
---- !u!114 &1608625039263381143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1608625039263381151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d6f0ffe057463843be682781f792ea7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  owner: {fileID: 1608625039263381147}
-  cooldown: 8
-  maxRange: 8
-  attackEffect: {fileID: 1785879794232736027}
 --- !u!114 &1608625039263381144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19854,6 +19833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 1608625039263381147}
+  skillCollider: {fileID: 0}
   cooldown: 5
   maxRange: 30
   minRange: 15
@@ -19887,6 +19867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 1608625039263381147}
+  skillCollider: {fileID: 0}
   cooldown: 40
   maxRange: 15
   attackEffect: {fileID: 1785879793831653869}
@@ -19919,7 +19900,7 @@ MonoBehaviour:
   state: 0
   skillIndex: 0
   meshRenderer: {fileID: 0}
-  targetTransform: {fileID: 0}
+  targetTransform: {fileID: 1710453951}
   targetDirection: {x: 0, y: 0, z: 0}
   targetDistance: 0
 --- !u!1 &1608625039263381151
@@ -19932,8 +19913,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2096754792040229925}
   - component: {fileID: 1608625039263381147}
-  - component: {fileID: 1608625039263381142}
-  - component: {fileID: 1608625039263381143}
+  - component: {fileID: 5474415117067761250}
+  - component: {fileID: 5474415117067761249}
   - component: {fileID: 4816861840209132270}
   - component: {fileID: 1608625039263381146}
   - component: {fileID: 1608625039263381141}
@@ -19942,6 +19923,7 @@ GameObject:
   - component: {fileID: 1608625039263381140}
   - component: {fileID: 5474415117067761247}
   - component: {fileID: 1608625039263381145}
+  - component: {fileID: 5474415117067761248}
   m_Layer: 8
   m_Name: Black Dragon
   m_TagString: Enemy
@@ -20076,7 +20058,7 @@ GameObject:
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1785879792879611330
 Transform:
   m_ObjectHideFlags: 0
@@ -20101,7 +20083,7 @@ BoxCollider:
   m_GameObject: {fileID: 1785879792879611329}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 4, y: 3, z: 4}
   m_Center: {x: 0, y: 1.5, z: 0}
@@ -20230,7 +20212,7 @@ BoxCollider:
   m_GameObject: {fileID: 1785879794232736027}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 4, y: 3, z: 4}
   m_Center: {x: 0, y: 1.5, z: 0}
@@ -20244,13 +20226,29 @@ GameObject:
   m_Component:
   - component: {fileID: 1785879794232736020}
   - component: {fileID: 1785879794232736021}
+  - component: {fileID: 1785879794232736028}
   m_Layer: 8
-  m_Name: Left Claw Attack
+  m_Name: LeftClawAttack
   m_TagString: Enemy Attack
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
+--- !u!114 &1785879794232736028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785879794232736027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8941729aa1102e429e580ed14962181, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combatType: 0
+  damageRatio: 0
+  attackCollider: {fileID: 0}
 --- !u!4 &1822268405368821659
 Transform:
   m_ObjectHideFlags: 0
@@ -34466,7 +34464,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 8ed4df9e6653b9c4f881d4613388fc78, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -44915,6 +44912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   owner: {fileID: 1608625039263381147}
+  skillCollider: {fileID: 0}
   cooldown: 16
   maxRange: 8
   attackEffect1: {fileID: 1450215949080829345}
@@ -49909,6 +49907,52 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5474415117067761248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608625039263381151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5a78428f3599540a689ac02c8e2fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioAmount: 5
+  sfxPlayers: []
+--- !u!114 &5474415117067761249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608625039263381151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc4de383475ac34eb2b9bfa8321afd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  skillCollider: {fileID: 0}
+  cooldown: 0
+  maxRange: 0
+--- !u!114 &5474415117067761250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1608625039263381151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d6f0ffe057463843be682781f792ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  skillCollider: {fileID: 0}
+  cooldown: 0
+  maxRange: 0
 --- !u!114 &5494397631886627949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79349,7 +79393,6 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 8af3570534ae3cb43bb28e32f56dfdd8, type: 2}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -100005,9 +100048,9 @@ GameObject:
   - component: {fileID: 6780574023709531170}
   - component: {fileID: 1667457450598636499}
   m_Layer: 8
-  m_Name: Double Attack 2
+  m_Name: Double Claw Right
   m_TagString: Enemy Attack
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1

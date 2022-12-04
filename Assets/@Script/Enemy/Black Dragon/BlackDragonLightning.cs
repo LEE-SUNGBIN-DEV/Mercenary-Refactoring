@@ -8,16 +8,14 @@ public class BlackDragonLightning : EnemySkill
 
     private void Awake()
     {
-        isRotate = false;
         isReady = true;
         Owner = GetComponent<BlackDragon>();
     }
 
     public override void ActiveSkill()
     {
-        StartCoroutine(WaitForRotate());
+        base.ActiveSkill();
         Owner.Animator.SetTrigger("doLightning");
-        StartCoroutine(SkillCooldown());
     }
 
     #region Animation Event Function

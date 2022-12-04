@@ -34,13 +34,13 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     {
         base.Awake();
 
-        rightClaw = GetComponent<BlackDragonRightClaw>();
-        leftClaw = GetComponent<BlackDragonLeftClaw>();
-        doubleClaw = GetComponent<BlackDragonDoubleAttack>();
-        landBreath = GetComponent<BlackDragonLandBreath>();
-        fireBall = GetComponent<BlackDragonFireBall>();
-        flyBreath = GetComponent<BlackDragonFlyBreath>();
-        flyLightning = GetComponent<BlackDragonLightning>();
+        rightClaw = GetComponentInChildren<BlackDragonRightClaw>(true);
+        leftClaw = GetComponentInChildren<BlackDragonLeftClaw>(true);
+        doubleClaw = GetComponentInChildren<BlackDragonDoubleAttack>(true);
+        landBreath = GetComponentInChildren<BlackDragonLandBreath>(true);
+        fireBall = GetComponentInChildren<BlackDragonFireBall>(true);
+        flyBreath = GetComponentInChildren<BlackDragonFlyBreath>(true);
+        flyLightning = GetComponentInChildren<BlackDragonLightning>(true);
 
         skillDictionary = new Dictionary<int, EnemySkill>()
         {
@@ -52,6 +52,11 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
             {(int)SKILL.FlyBreath, flyBreath },
             {(int)SKILL.FlyLightning, flyLightning }
         };
+
+        foreach(var skill in skillDictionary.Values)
+        {
+            skill.Initialize(this);
+        }
 
         behaviourTree = new BlackDragonBehaviourTree(this);
         behaviourTree.Initialize();
@@ -126,8 +131,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
             return;
 
         // Initialize Previous State
-        rightClaw.OffRightClaw();
-
         IsStun = false;
         IsStagger = false;
 
@@ -152,17 +155,13 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     }
 
     #region Animation Event Function
-    public void SpawnMoveFront()
+    private void EnableSkillCollider(SKILL skill)
     {
-        NavMeshAgent.speed = 7.0f;
-        NavMeshAgent.isStopped = false;
-        NavMeshAgent.SetDestination(TargetTransform.position);
+        skillDictionary[(int)skill].EnableSkillCollider(true);
     }
-
-    public void SpawnMoveStop()
+    private void DisableSkillCollider(SKILL skill)
     {
-        NavMeshAgent.speed = enemyData.MoveSpeed;
-        NavMeshAgent.isStopped = true;
+        skillDictionary[(int)skill].EnableSkillCollider(false);
     }
     #endregion
 

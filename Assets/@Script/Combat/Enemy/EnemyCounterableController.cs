@@ -11,7 +11,7 @@ public class EnemyCounterableController : MonoBehaviour
         if (other.CompareTag("Player Attack"))
         {
             LancerSpear playerAttack = other.GetComponent<LancerSpear>();
-            if (playerAttack != null && playerAttack.CombatType == COMBAT_TYPE.COUNTER_SKILL)
+            if (playerAttack != null && playerAttack.CombatType == COMBAT_TYPE.Counter)
             {
                 Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_COMPETE_START, other.bounds.ClosestPoint(transform.position));
                 Owner.Stun();

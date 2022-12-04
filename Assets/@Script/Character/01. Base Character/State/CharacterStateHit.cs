@@ -8,7 +8,7 @@ public class CharacterStateHit : ICharacterState
 
     public CharacterStateHit()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.HIT;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Hit;
     }
 
     public void Enter(Character character)

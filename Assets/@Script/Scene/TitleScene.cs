@@ -8,7 +8,7 @@ public class TitleScene : BaseScene
     public override void Initialize()
     {
         base.Initialize();
-        sceneType = SCENE_TYPE.TITLE;
+        sceneType = SCENE_TYPE.Title;
         scene = SCENE_LIST.Title;
 
         titleSceneUI = Managers.ResourceManager.InstantiatePrefabSync("Prefab_UI_Title_Scene").GetComponent<UITitleScene>();

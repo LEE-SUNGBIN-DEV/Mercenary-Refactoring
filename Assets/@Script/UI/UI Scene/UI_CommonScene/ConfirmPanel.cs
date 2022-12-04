@@ -25,8 +25,8 @@ public class ConfirmPanel : UIPanel
         BindText(typeof(TEXT));
         BindButton(typeof(BUTTON));
 
-        BindEvent(GetButton((int)BUTTON.ConfirmButton).gameObject, OnClickConfirmButton, UI_EVENT.CLICK);
-        BindEvent(GetButton((int)BUTTON.CancelButton).gameObject, OnClickCancelButton, UI_EVENT.CLICK);
+        BindEvent(GetButton((int)BUTTON.ConfirmButton).gameObject, OnClickConfirmButton, UI_EVENT.Click);
+        BindEvent(GetButton((int)BUTTON.CancelButton).gameObject, OnClickCancelButton, UI_EVENT.Click);
     }
 
     public void OnClickConfirmButton()

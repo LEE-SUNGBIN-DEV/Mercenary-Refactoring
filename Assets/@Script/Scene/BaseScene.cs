@@ -19,7 +19,7 @@ public class BaseScene : MonoBehaviour
             Managers.ResourceManager.InstantiatePrefabSync("Prefab_EventSystem");
         }
 
-        sceneType = SCENE_TYPE.UNKNOWN;
+        sceneType = SCENE_TYPE.Unknown;
 
         Initialize();
     }

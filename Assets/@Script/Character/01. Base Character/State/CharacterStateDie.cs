@@ -8,7 +8,7 @@ public class CharacterStateDie : ICharacterState
 
     public CharacterStateDie()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.DIE;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Die;
     }
 
     public void Enter(Character character)

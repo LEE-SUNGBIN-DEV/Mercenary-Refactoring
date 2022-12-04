@@ -4,41 +4,16 @@ using UnityEngine;
 
 public class BlackDragonRightClaw : EnemySkill
 {
-    [SerializeField] private GameObject attackEffect;
-
-    private void Awake()
+    public override void Initialize(Enemy owner)
     {
-        isRotate = false;
-        isReady = true;
-        Owner = GetComponent<BlackDragon>();
+        base.Initialize(owner);
+        cooldown = 8f;
+        maxRange = 8f;
     }
 
     public override void ActiveSkill()
     {
-        StartCoroutine(WaitForRotate());
+        base.ActiveSkill();
         Owner.Animator.SetTrigger("doRightClawAttack");
-        StartCoroutine(SkillCooldown());
     }
-
-    #region Animation Event Function
-    public void OnRightClaw()
-    {
-        if (AttackEffect != null)
-            AttackEffect.SetActive(true);
-    }
-
-    public void OffRightClaw()
-    {
-        if (AttackEffect != null)
-            AttackEffect.SetActive(false);
-    }
-    #endregion
-
-    #region Property
-    public GameObject AttackEffect
-    {
-        get { return attackEffect; }
-        private set { attackEffect = value; }
-    }
-    #endregion
 }

@@ -11,6 +11,8 @@ public class GameManager
     [Header("Cursor")]
     private CURSOR_MODE cursorMode;
 
+    private IEnumerator slowMotionCoroutine;
+
     public void Initialize()
     {
         // 해상도
@@ -18,13 +20,20 @@ public class GameManager
 
         // 커서
         Managers.ResourceManager.LoadResourceAsync<Texture2D>("Sprite_Cursor_Basic", SetCursorTexture);
-        SetCursorMode(CURSOR_MODE.UNLOCK);
+        SetCursorMode(CURSOR_MODE.Unlock);
     }
 
     public void SaveAndQuit()
     {
         Managers.DataManager.SavePlayerData();
         Application.Quit();
+    }
+
+    public IEnumerator SlowMotion(float timeScale, float duration)
+    {
+        Time.timeScale = timeScale;
+        yield return new WaitForSecondsRealtime(duration);
+        Time.timeScale = 1f;
     }
 
     #region Cursor Function
@@ -37,16 +46,16 @@ public class GameManager
     {
         switch(cursorMode)
         {
-            case CURSOR_MODE.LOCK:
+            case CURSOR_MODE.Lock:
                 {
-                    this.cursorMode = CURSOR_MODE.LOCK;
+                    this.cursorMode = CURSOR_MODE.Lock;
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                     break;
                 }
-            case CURSOR_MODE.UNLOCK:
+            case CURSOR_MODE.Unlock:
                 {
-                    this.cursorMode = CURSOR_MODE.UNLOCK;
+                    this.cursorMode = CURSOR_MODE.Unlock;
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                     break;
@@ -55,14 +64,14 @@ public class GameManager
     }
     public void ToggleCursorMode()
     {
-        if(cursorMode == CURSOR_MODE.LOCK)
+        if(cursorMode == CURSOR_MODE.Lock)
         {
-            SetCursorMode(CURSOR_MODE.UNLOCK);
+            SetCursorMode(CURSOR_MODE.Unlock);
         }
 
         else
         {
-            SetCursorMode(CURSOR_MODE.LOCK);
+            SetCursorMode(CURSOR_MODE.Lock);
         }
     }
     #endregion

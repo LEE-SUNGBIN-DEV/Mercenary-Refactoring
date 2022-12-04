@@ -28,18 +28,18 @@ public class DataManager
 
     public void Initialize()
     {
-        playerDataPath = Application.dataPath + "/Player_Data.json";
-        levelTablePath = Application.dataPath + "/Level_Table.json";
-        questTablePath = Application.dataPath + "/Quest_Table.json";
+        playerDataPath = Application.dataPath + "Table/Player_Data.json";
+        levelTablePath = Application.dataPath + "Table/Level_Table.json";
+        questTablePath = Application.dataPath + "Table/Quest_Table.json";
         
         //
-        weaponTablePath = Application.dataPath + "/Weapon_Item_Table.json";
-        helmetTablePath = Application.dataPath + "/Helmet_Item_Table.json";
-        armorTablePath = Application.dataPath + "/Armor_Item_Table.json";
-        bootsTablePath = Application.dataPath + "/Boots_Item_Table.json";
+        weaponTablePath = Application.dataPath + "Table/Weapon_Item_Table.json";
+        helmetTablePath = Application.dataPath + "Table/Helmet_Item_Table.json";
+        armorTablePath = Application.dataPath + "Table/Armor_Item_Table.json";
+        bootsTablePath = Application.dataPath + "Table/Boots_Item_Table.json";
 
-        hpPotionTablePath = Application.dataPath + "/HP_Potion_Table.json";
-        spPotionTablePath = Application.dataPath + "/SP_Potion_Table.json";
+        hpPotionTablePath = Application.dataPath + "Table/HP_Potion_Table.json";
+        spPotionTablePath = Application.dataPath + "Table/SP_Potion_Table.json";
         //
 
         LoadLevelTable();

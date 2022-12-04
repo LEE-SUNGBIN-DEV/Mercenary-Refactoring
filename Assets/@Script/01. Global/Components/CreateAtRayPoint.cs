@@ -32,14 +32,13 @@ public class CreateAtRayPoint : MonoBehaviour
 
     void Update()
     {
-        RaycastHit hit;
         Debug.DrawRay(transform.position, transform.forward.normalized * rayDistance, Color.blue, 0.1f);
-        if (Physics.Raycast(transform.position, transform.forward.normalized, out hit, rayDistance, LayerMask.GetMask("Terrain")))
+        if (Physics.Raycast(transform.position, transform.forward.normalized, out RaycastHit hit, rayDistance, LayerMask.GetMask("Terrain")))
         {
             if(isGeneratable)
             {
                 EnemyAreaAttack effect = Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_BLACK_DRAGON_BREATH_AFTER).GetComponent<EnemyAreaAttack>();
-                effect.Owner = GetComponent<EnemyAttack>().Owner;
+                effect.Owner = GetComponent<EnemyCombatController>().Owner;
                 effect.transform.position = hit.point;
                 effect.transform.rotation = Quaternion.Euler(rotationOffset);
                 isGeneratable = false;
