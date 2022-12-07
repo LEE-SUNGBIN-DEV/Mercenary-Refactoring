@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CreateAtRayPoint : MonoBehaviour
 {
-    public GameObject targetObject;
-    public float rayDistance;
-    public float genarateInterval;
+    [SerializeField] protected string objectKey;
+    [SerializeField] protected float rayDistance;
+    [SerializeField] protected float interval;
     private Vector3 rotationOffset;
     private bool isGeneratable;
 
@@ -14,10 +14,25 @@ public class CreateAtRayPoint : MonoBehaviour
     {
         rotationOffset = new Vector3(-90, 0, 0);
         isGeneratable = true;
-        StartCoroutine(IntervalGenerate(genarateInterval));
+        StartCoroutine(GenerateByInterval());
     }
 
-    IEnumerator IntervalGenerate(float interval)
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, transform.forward.normalized * rayDistance, Color.blue, 0.1f);
+        if (Physics.Raycast(transform.position, transform.forward.normalized, out RaycastHit hit, rayDistance, LayerMask.GetMask("Terrain")))
+        {
+            if (isGeneratable)
+            {
+                GenerateObject(hit);
+                isGeneratable = false;
+            }
+
+            return;
+        }
+    }
+
+    IEnumerator GenerateByInterval()
     {
         while(true)
         {
@@ -30,21 +45,10 @@ public class CreateAtRayPoint : MonoBehaviour
         }
     }
 
-    void Update()
+    public virtual void GenerateObject(RaycastHit hit)
     {
-        Debug.DrawRay(transform.position, transform.forward.normalized * rayDistance, Color.blue, 0.1f);
-        if (Physics.Raycast(transform.position, transform.forward.normalized, out RaycastHit hit, rayDistance, LayerMask.GetMask("Terrain")))
-        {
-            if(isGeneratable)
-            {
-                EnemyAreaAttack effect = Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_BLACK_DRAGON_BREATH_AFTER).GetComponent<EnemyAreaAttack>();
-                effect.Owner = GetComponent<EnemyCombatController>().Owner;
-                effect.transform.position = hit.point;
-                effect.transform.rotation = Quaternion.Euler(rotationOffset);
-                isGeneratable = false;
-            }
-
-            return;
-        }
+        DotAttackArea requestObject = Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_BLACK_DRAGON_BREATH_AFTER).GetComponent<DotAttackArea>();
+        requestObject.transform.position = hit.point;
+        requestObject.transform.rotation = Quaternion.Euler(rotationOffset);
     }
 }

@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class BaseCombatController : MonoBehaviour
+public abstract class BaseCombatController : MonoBehaviour
 {
     [Header("Base Combat Controller")]
-    [SerializeField] protected COMBAT_TYPE combatType;
+    protected COMBAT_TYPE combatType;
     [SerializeField] protected float damageRatio;
-    [SerializeField] protected Collider attackCollider;
+    [SerializeField] protected Collider combatCollider;
 
     public virtual void Initialize()
     {
-        attackCollider = GetComponent<Collider>();
-        attackCollider.enabled = false;
+        combatCollider = GetComponent<Collider>();
+        combatCollider.enabled = false;
     }
 
     public COMBAT_TYPE CombatType { get { return combatType; } }
     public float DamageRatio { get { return damageRatio; } }
-    public Collider AttackCollider { get { return attackCollider; } }
+    public Collider AttackCollider { get { return combatCollider; } }
 }

@@ -19,25 +19,6 @@ public class CharacterSlot
     }
 }
 
-[System.Serializable]
-public class ObjectPool
-{
-    public string key;
-    public GameObject value;
-    public int amount;
-    public Queue<GameObject> queue = new Queue<GameObject>();
-
-    public void Initialize(GameObject parent)
-    {
-        for (int i = 0; i < amount; ++i)
-        {
-            GameObject poolObject = GameObject.Instantiate(value, parent.transform);
-            poolObject.SetActive(false);
-            queue.Enqueue(poolObject);
-        }
-    }
-}
-
 public enum SCENE_LIST
 {
     // Common
@@ -108,37 +89,32 @@ public enum CHARACTER_STATE_WEIGHT
     LancerDefense = 2
 }
 
-public enum ATTACK_TYPE
-{
-    COMBO1,
-    COMBO2,
-    COMBO3,
-    COMBO4,
-
-    SMASH1,
-    SMASH2,
-    SMASH3,
-    SMASH4,
-
-    SKILL
-}
-
 public enum COMBAT_TYPE
 {
     // Common
-    DefaultAttack,
-    SmashAttack,
     StunAttack,
 
     // Player
-    Defense,
-    Parrying,
-    ParryingAttack,
-    Counter,
+    PlayerComboAttack1,
+    PlayerComboAttack2,
+    PlayerComboAttack3,
+    PlayerComboAttack4,
+
+    PlayerSmashAttack1,
+    PlayerSmashAttack2,
+    PlayerSmashAttack3,
+    PlayerSmashAttack4,
+
+    PlayerDefense,
+    PlayerParrying,
+    PlayerParryingAttack,
+    PlayerCounterAttack,
 
     // Enemy
-    CompetableAttack,
-    CounterableAttack
+    EnemyNormalAttack,
+    EnemySmashAttack,
+    EnemyCompetableAttack,
+    EnemyCounterableAttack
 }
 
 public enum CURSOR_MODE

@@ -6,12 +6,6 @@ public class BlackDragonFlyBreath : EnemySkill
 {
     [SerializeField] private GameObject attackEffect;
 
-    private void Awake()
-    {
-        isReady = true;
-        Owner = GetComponent<BlackDragon>();
-    }
-
     public override void ActiveSkill()
     {
         base.ActiveSkill();
@@ -21,22 +15,14 @@ public class BlackDragonFlyBreath : EnemySkill
     #region Animation Event Function
     public void OnFlyBreath()
     {
-        if (AttackEffect != null)
-            AttackEffect.SetActive(true);
+        if (attackEffect != null)
+            attackEffect.SetActive(true);
     }
 
     public void OffFlyBreath()
     {
-        if (AttackEffect != null)
-            AttackEffect.SetActive(false);
-    }
-    #endregion
-
-    #region Property
-    public GameObject AttackEffect
-    {
-        get { return attackEffect; }
-        private set { attackEffect = value; } 
+        if (attackEffect != null)
+            attackEffect.SetActive(false);
     }
     #endregion
 }

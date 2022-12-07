@@ -9,6 +9,7 @@ public abstract class Character : MonoBehaviour
 {
     [SerializeField] private Vector3 cameraOffset;
 
+    [Header("Character Component")]
     protected PlayerCamera playerCamera;
     protected CharacterController characterController;
     protected Animator animator;
@@ -16,23 +17,24 @@ public abstract class Character : MonoBehaviour
     protected PlayerInput playerInput;
     [SerializeField] protected CharacterData characterData;
     protected CharacterStateController state;
+    protected bool isInvincible;
+
+    [Header("Object Pool")]
+    [SerializeField] protected ObjectPoolController objectPoolController = new ObjectPoolController();
 
     protected virtual void Awake()
     {
-        playerCamera = Managers.GameManager.PlayerCamera;
-        playerCamera.TargetTransform = transform;
-        playerCamera.TargetOffset = cameraOffset;
+        TryGetComponent(out characterController);
+        TryGetComponent(out animator);
 
-        characterController = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
-
+        isInvincible = false;
         playerInput = new PlayerInput();
 #if TEST
         StatusData.OnCharacterStatusChanged -= SetAttackSpeed;
         StatusData.OnCharacterStatusChanged += SetAttackSpeed;
 
-        StatusData.OnDie -= Die;
-        StatusData.OnDie += Die;
+        StatusData.OnDie -= OnDie;
+        StatusData.OnDie += OnDie;
 
         SetAttackSpeed(StatusData);
 #else
@@ -50,7 +52,12 @@ public abstract class Character : MonoBehaviour
         Managers.DataManager.SavePlayerData();
 #endif
     }
-
+    private void Start()
+    {
+        playerCamera = Managers.GameManager.PlayerCamera;
+        playerCamera.TargetTransform = transform;
+        playerCamera.TargetOffset = cameraOffset;
+    }
     protected virtual void OnEnable()
     {
         Managers.UIManager.InteractPlayer -= SetInteract;
@@ -63,6 +70,22 @@ public abstract class Character : MonoBehaviour
     {
         AutoRecoverStamina();
     }
+
+    public virtual void OnHit()
+    {
+        SwitchCharacterState(CHARACTER_STATE.Hit);
+    }
+    public virtual void OnHeavyHit()
+    {
+        SwitchCharacterState(CHARACTER_STATE.HeavyHit);
+    }
+    public virtual void OnStun()
+    {
+        SwitchCharacterState(CHARACTER_STATE.Stun);
+    }
+    public virtual void OnCompete() { }
+    public virtual void OnDie(StatusData characterStats) { }
+
 
     public abstract CHARACTER_STATE DetermineCharacterState();
 
@@ -109,9 +132,6 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public void Die(StatusData characterStats)
-    {
-    }
     public void Rebirth()
     {
 
@@ -146,9 +166,11 @@ public abstract class Character : MonoBehaviour
     public UserQuestData QuestData { get { return characterData?.QuestData; } }
 
     public CharacterStateController State { get { return state; } }
+    public bool IsInvincible { get { return isInvincible; } }
 
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }
     public Animator Animator { get { return animator; } }
+    public ObjectPoolController ObjectPoolController { get { return objectPoolController; } }
     #endregion
 }
