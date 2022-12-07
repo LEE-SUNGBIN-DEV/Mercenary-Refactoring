@@ -5,42 +5,29 @@ using UnityEngine.Events;
 
 public class EnemyCompeteAttack : EnemyCombatController
 {
+    [Header("Enemy Compete Attack")]
     [SerializeField] private Transform playerCompetePoint;
     [SerializeField] private Transform directingCameraPoint;
     [SerializeField] private float cooldown;
-    private bool isReady;
+    private bool isCompeteReady;
     private ICompetable competableEnemy;
 
-    private void Awake()
+    public override void Initialize()
     {
-        combatType = COMBAT_TYPE.CompetableAttack;
-        isReady = true;
-        competableEnemy = Owner as ICompetable;
+        base.Initialize();
+        isCompeteReady = true;
+        competableEnemy = owner as ICompetable;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public override void ExecuteAttackProcess(Collider target)
     {
-        if (other.CompareTag("Player"))
+        base.ExecuteAttackProcess(target);
+
+        if (target.TryGetComponent(out PlayerCombatController combatController))
         {
-            IHeavyHitable heavyHitableObject = other.GetComponent<IHeavyHitable>();
-
-            switch (CombatType)
+            if (combatController.CombatType == COMBAT_TYPE.PlayerParrying && isCompeteReady == true)
             {
-                case COMBAT_TYPE.CompetableAttack:
-                    {
-                        heavyHitableObject.HeavyHit();
-                        break;
-                    }
-            }
-        }
-
-        if (other.CompareTag("Player Defense"))
-        {
-            CharacterCombatController combatController = other.GetComponent<CharacterCombatController>();
-
-            if (isReady == true && combatController.CombatType == COMBAT_TYPE.Parrying)
-            {
-                Vector3 triggerPoint = other.bounds.ClosestPoint(transform.position);
+                Vector3 triggerPoint = target.bounds.ClosestPoint(transform.position);
                 Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_COMPETE_START, triggerPoint);
                 Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_COMPETE_PROGRESS, triggerPoint);
 
@@ -48,7 +35,8 @@ public class EnemyCompeteAttack : EnemyCombatController
             }
         }
     }
-    public void Compete(CharacterCombatController combatController)
+
+    public void Compete(PlayerCombatController combatController)
     {
         StartCoroutine(CoCompeteCooldown());
         StartCoroutine(CoCompete(combatController));
@@ -56,12 +44,12 @@ public class EnemyCompeteAttack : EnemyCombatController
 
     public IEnumerator CoCompeteCooldown()
     {
-        isReady = false;
+        isCompeteReady = false;
         yield return new WaitForSecondsRealtime(cooldown);
-        isReady = true;
+        isCompeteReady = true;
     }
 
-    public IEnumerator CoCompete(CharacterCombatController combatController)
+    public IEnumerator CoCompete(PlayerCombatController combatController)
     {
         ICompetable competableCharacter = combatController.Owner as ICompetable;
         competableCharacter?.Compete();

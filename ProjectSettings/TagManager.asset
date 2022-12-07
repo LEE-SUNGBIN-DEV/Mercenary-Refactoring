@@ -6,14 +6,15 @@ TagManager:
   tags:
   - Enemy
   - Enemy Attack
-  - Monster Weapon
-  - Counterable
+  - Enemy Counterable
   - Player Attack
   - Player Defense
+  - Player Parrying
   - Invincibility
   - Terrain
-  - Player Spawn Point
   - Player Defend
+  - Monster Weapon
+  - Counterable
   layers:
   - Default
   - TransparentFX

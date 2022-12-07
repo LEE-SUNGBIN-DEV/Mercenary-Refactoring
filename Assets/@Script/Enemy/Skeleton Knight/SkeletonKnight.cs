@@ -44,31 +44,18 @@ public class SkeletonKnight : Enemy, ICompetable
     }
 
     #region Override Function
-    public override void Hit()
+    public override void OnHit()
     {
     }
 
-    public override void HeavyHit()
+    public override void OnHeavyHit()
     {
-        if (IsStun || IsCompete || IsDie)
-            return;
-
-        IsHeavyHit = true;
         Animator.SetTrigger("doHeavyHit");
     }
 
-    public override void Stun()
+    public override void OnStun()
     {
-        if (IsStun || IsCompete || IsDie)
-            return;
-
-        // Initialize Previous State
-        IsHeavyHit = false;
-
         Animator.SetBool("isMove", false);
-
-        // Stun State
-        IsStun = true;
         Animator.SetBool("isStun", true);
 
         StartCoroutine(StunTime());
@@ -85,12 +72,6 @@ public class SkeletonKnight : Enemy, ICompetable
     }
     public override void InitializeAllState()
     {
-        // Initialize Previous State
-        IsHit = false;
-        IsHeavyHit = false;
-        IsStun = false;
-        IsCompete = false;
-
         Animator.SetBool("isMove", false);
         Animator.SetBool("isStun", false);
     }
@@ -100,7 +81,6 @@ public class SkeletonKnight : Enemy, ICompetable
     {
         yield return new WaitForSeconds(time);
 
-        IsStun = false;
         Animator.SetBool("isStun", false);
     }
 
@@ -132,16 +112,7 @@ public class SkeletonKnight : Enemy, ICompetable
     }
     public void Stagger()
     {
-        if (IsStun || IsCompete || IsDie)
-            return;
-
-        // Initialize Previous State
-        IsHeavyHit = false;
-
         Animator.SetBool("isMove", false);
-
-        // Stun State
-        IsStun = true;
         Animator.SetBool("isStun", true);
 
         StartCoroutine(StunTime(Constants.TIME_STAGGER));
@@ -149,9 +120,6 @@ public class SkeletonKnight : Enemy, ICompetable
     #region Animation Event Function
     public void OutCompete()
     {
-        IsHit = false;
-        IsHeavyHit = false;
-        IsStun = false;
         IsCompete = false;
     }
     #endregion

@@ -68,17 +68,17 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     }
 
     #region Override Function
-    public override void Hit()
+    public override void OnHit()
     {
         state = ENEMY_STATE.Hit;
     }
 
-    public override void HeavyHit()
+    public override void OnHeavyHit()
     {
         state = ENEMY_STATE.HeavyHit;
     }
 
-    public override void Stun()
+    public override void OnStun()
     {
         state = ENEMY_STATE.Stun;
     }
@@ -90,9 +90,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
     }
     public override void InitializeAllState()
     {
-        IsHit = false;
-        IsHeavyHit = false;
-        IsStun = false;
         IsStagger = false;
         IsCompete = false;
         IsDie = false;
@@ -108,7 +105,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
             return;
 
         // Initialize Previous State
-        IsStun = false;
 
         Animator.SetBool("isMove", false);
 
@@ -131,7 +127,6 @@ public class BlackDragon : Enemy, IStaggerable, ICompetable
             return;
 
         // Initialize Previous State
-        IsStun = false;
         IsStagger = false;
 
         Animator.SetBool("isMove", false);

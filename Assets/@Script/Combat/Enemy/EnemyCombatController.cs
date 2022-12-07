@@ -4,44 +4,61 @@ using UnityEngine;
 
 public class EnemyCombatController : BaseCombatController
 {
+    [Header("Enemy Combat Controller")]
     protected Enemy owner;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        owner = GetComponentInParent<Enemy>(true);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            PlayerHitProcess(other);
-        }
+        if(other != null)
+            ExecuteAttackProcess(other);
     }
 
-    public void PlayerHitProcess(Collider target)
+    public virtual void ExecuteAttackProcess(Collider target)
     {
-        Character character = target.GetComponent<Character>();
-        if (character != null)
+        if (target.TryGetComponent(out Character character))
         {
-            Functions.EnemyDamageProcess(owner, character, DamageRatio);
-
-            switch (CombatType)
+            if (character.IsInvincible)
             {
-                case COMBAT_TYPE.DefaultAttack:
+                InvincibilityProcess();
+                return;
+            }
+
+            Functions.EnemyDamageProcess(owner, character, damageRatio);
+            switch (combatType)
+            {
+                case COMBAT_TYPE.EnemyNormalAttack:
                     {
-                        character.SwitchCharacterState(CHARACTER_STATE.Hit);
+                        character.OnHit();
                         break;
                     }
-
-                case COMBAT_TYPE.SmashAttack:
+                case COMBAT_TYPE.EnemySmashAttack:
                     {
-                        character.SwitchCharacterState(CHARACTER_STATE.HeavyHit);
+                        character.OnHeavyHit();
                         break;
                     }
-
+                case COMBAT_TYPE.EnemyCounterableAttack:
+                case COMBAT_TYPE.EnemyCompetableAttack:
                 case COMBAT_TYPE.StunAttack:
                     {
-                        character.SwitchCharacterState(CHARACTER_STATE.Stun);
+                        character.OnStun();
                         break;
                     }
             }
         }
+    }
+    public void ExecuteDamageProcess(Character character)
+    {
+        Functions.EnemyDamageProcess(owner, character, DamageRatio);
+    }
+    public void InvincibilityProcess()
+    {
+
     }
 
     #region Property

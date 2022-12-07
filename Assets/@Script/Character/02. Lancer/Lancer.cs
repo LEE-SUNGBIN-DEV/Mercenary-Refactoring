@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Lancer : Character
 {
-    [SerializeField] private LancerSpear spear;
-    [SerializeField] private LancerShield shield;
-    [SerializeField] private CharacterCombatController skill; 
+    [SerializeField] private LancerWeapon spear;
+    [SerializeField] private LancerWeapon shield;
 
     protected override void Awake()
     {
@@ -48,35 +47,26 @@ public class Lancer : Character
     }
 
     #region Animation Event Function
-    // Weapon
-    private void OnStartAttack(ATTACK_TYPE attackType)
+    private void OnSetWeapon(COMBAT_TYPE requestType)
     {
-        spear.StartAttack(attackType);
+        spear.OnSetWeapon(requestType);
     }
-    private void OnEndAttack()
+    private void OnReleaseWeapon()
     {
-        spear.EndAttack();
+        spear.OnReleaseWeapon();
     }
-    private void OnStartDefense(COMBAT_TYPE combatType)
+    private void OnSetShield(COMBAT_TYPE requestType)
     {
-        shield.StartDefense(combatType);
+        shield.OnSetWeapon(requestType);
     }
-    private void OnEndDefense()
+    private void OnReleaseShield()
     {
-        shield.EndDefense();
-    }
-    private void OnStartSkill()
-    {
-        skill.StartSkill();
-    }
-    private void OnEndSkill()
-    {
-        skill.EndSkill();
+        shield.OnReleaseWeapon();
     }
     #endregion
 
     #region Property
-    public LancerSpear Spear { get { return spear; } }
-    public LancerShield Shield { get { return shield; } }
+    public LancerWeapon Spear { get { return spear; } }
+    public LancerWeapon Shield { get { return shield; } }
     #endregion
 }

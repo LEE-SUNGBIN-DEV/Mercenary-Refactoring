@@ -10,11 +10,11 @@ public class EnemyCounterableController : MonoBehaviour
     {
         if (other.CompareTag("Player Attack"))
         {
-            LancerSpear playerAttack = other.GetComponent<LancerSpear>();
-            if (playerAttack != null && playerAttack.CombatType == COMBAT_TYPE.Counter)
+            LancerWeapon playerAttack = other.GetComponent<LancerWeapon>();
+            if (playerAttack != null && playerAttack.CombatType == COMBAT_TYPE.PlayerCounterAttack)
             {
                 Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_COMPETE_START, other.bounds.ClosestPoint(transform.position));
-                Owner.Stun();
+                Owner.OnStun();
                 Owner.MeshRenderer.material.color = Color.white;
                 gameObject.SetActive(false);
             }

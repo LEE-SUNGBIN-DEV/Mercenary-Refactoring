@@ -24,28 +24,18 @@ public class NormalEnemy : Enemy
     }
 
     #region Override Function   
-    public override void Hit()
+    public override void OnHit()
     {
-        if (IsStun || IsDie)
-            return;
-
-        IsHit = true;
         Animator.SetTrigger("doHit");
     }
 
-    public override void HeavyHit()
+    public override void OnHeavyHit()
     {
-        if (IsStun || IsDie)
-            return;
-        IsHit = true;
         Animator.SetTrigger("doHit");
     }
 
-    public override void Stun()
+    public override void OnStun()
     {
-        if (IsDie)
-            return;
-        IsHit = true;
         Animator.SetTrigger("doHit");
     }
 
@@ -61,9 +51,6 @@ public class NormalEnemy : Enemy
     public override void InitializeAllState()
     {
         // Initialize Previous State
-        IsHit = false;
-        IsHeavyHit = false;
-        IsStun = false;
 
         Animator.SetBool("isMove", false);
     }

@@ -103,7 +103,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Counter Skill
+  m_Name: Counter Attack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -594,7 +594,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Defense Counter Attack
+  m_Name: Parrying Attack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1431,7 +1431,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Perfect Defense
+  m_Name: Parrying
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
