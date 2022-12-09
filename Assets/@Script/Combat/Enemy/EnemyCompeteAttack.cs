@@ -19,9 +19,9 @@ public class EnemyCompeteAttack : EnemyCombatController
         competableEnemy = owner as ICompetable;
     }
 
-    public override void ExecuteAttackProcess(Collider target)
+    public override void ExecuteCombatProcess(Collider target)
     {
-        base.ExecuteAttackProcess(target);
+        base.ExecuteCombatProcess(target);
 
         if (target.TryGetComponent(out PlayerCombatController combatController))
         {

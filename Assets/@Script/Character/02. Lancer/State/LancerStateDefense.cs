@@ -8,17 +8,16 @@ public class LancerStateDefense : ICharacterState
     private bool isDefense;
     private Lancer lancer;
 
-    public LancerStateDefense()
+    public LancerStateDefense(Lancer lancer)
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.LancerDefense;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Defense;
         isDefense = false;
-        lancer = null;
+        this.lancer = lancer;
     }
 
     public void Enter(Character character)
     {
         isDefense = false;
-        lancer = character as Lancer;
     }
     public void Update(Character character)
     {
@@ -26,10 +25,10 @@ public class LancerStateDefense : ICharacterState
         {
             if (!isDefense)
             {
-                lancer.Shield?.gameObject.SetActive(true);
+                lancer.Shield.OnSetWeapon(COMBAT_TYPE.PlayerDefense);
             }
 
-            character.gameObject.tag = Constants.TAG_INVINCIBILITY;
+            character.IsInvincible = true;
             isDefense = true;
             character.Animator.SetBool("isDefense", true);
         }
@@ -43,17 +42,17 @@ public class LancerStateDefense : ICharacterState
         {
             if (character.PlayerInput.IsMouseRightDown || character.PlayerInput.IsMouseRightUp)
             {
-                character.Animator.SetBool("isCounterAttack", !character.PlayerInput.IsMouseRightUp);
+                character.Animator.SetBool("isParryingAttack", !character.PlayerInput.IsMouseRightUp);
             }
         }
     }
     public void Exit(Character character)
     {
+        character.IsInvincible = false;
         isDefense = false;
         character.Animator.SetBool("isDefense", false);
-        character.Animator.SetBool("isCounterAttack", false);
-        lancer.Shield?.gameObject.SetActive(false);
-        lancer = null;
+        character.Animator.SetBool("isParryingAttack", false);
+        lancer.Shield.OnReleaseWeapon();
     }
 
     #region Property

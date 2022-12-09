@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LancerStateController : CharacterStateController
 {
-    public LancerStateController(Character character) : base(character)
+    public LancerStateController(Lancer lancer) : base(lancer)
     {
-        stateDictionary.Add(CHARACTER_STATE.LancerDefense, new LancerStateDefense());
+        stateDictionary.Add(CHARACTER_STATE.LancerDefense, new LancerStateDefense(lancer));
     }
 }
