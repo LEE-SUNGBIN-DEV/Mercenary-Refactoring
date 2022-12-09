@@ -16,10 +16,10 @@ public class EnemyCombatController : BaseCombatController
     private void OnTriggerEnter(Collider other)
     {
         if(other != null)
-            ExecuteAttackProcess(other);
+            ExecuteCombatProcess(other);
     }
 
-    public virtual void ExecuteAttackProcess(Collider target)
+    public virtual void ExecuteCombatProcess(Collider target)
     {
         if (target.TryGetComponent(out Character character))
         {
@@ -29,7 +29,7 @@ public class EnemyCombatController : BaseCombatController
                 return;
             }
 
-            Functions.EnemyDamageProcess(owner, character, damageRatio);
+            owner.DamageProcess(character, damageRatio);
             switch (combatType)
             {
                 case COMBAT_TYPE.EnemyNormalAttack:
@@ -51,10 +51,6 @@ public class EnemyCombatController : BaseCombatController
                     }
             }
         }
-    }
-    public void ExecuteDamageProcess(Character character)
-    {
-        Functions.EnemyDamageProcess(owner, character, DamageRatio);
     }
     public void InvincibilityProcess()
     {

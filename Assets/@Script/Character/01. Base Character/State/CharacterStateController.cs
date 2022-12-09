@@ -17,7 +17,7 @@ public class CharacterStateController
             // Common
             { CHARACTER_STATE.Move, new CharacterStateMove() },
             { CHARACTER_STATE.Attack, new CharacterStateAttack() },
-            { CHARACTER_STATE.Skill, new CharacterStateSkill() },
+            { CHARACTER_STATE.Skill, new CharacterStateCounter() },
             { CHARACTER_STATE.Roll, new CharacterStateRoll() },
             { CHARACTER_STATE.Hit, new CharacterStateHit() },
             { CHARACTER_STATE.HeavyHit, new CharacterStateHeavyHit() },

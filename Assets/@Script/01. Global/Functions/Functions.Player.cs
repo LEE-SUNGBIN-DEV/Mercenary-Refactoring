@@ -31,21 +31,4 @@ public static partial class Functions
         SetCharacterPosition(character, position);
         camera.transform.position = position;
     }
-
-    // !! 적의 대미지를 계산하는 함수
-    public static void EnemyDamageProcess(Enemy enemy, Character character, float ratio)
-    {
-        // Damage Process
-        float damage = (enemy.EnemyData.AttackPower - character.StatusData.DefensivePower * 0.5f) * 0.5f;
-        if (damage < 0)
-        {
-            damage = 0;
-        }
-        damage += ((enemy.EnemyData.AttackPower / 8f - enemy.EnemyData.AttackPower / 16f) + 1f);
-
-        // Final Damage
-        damage *= ratio;
-
-        character.StatusData.CurrentHP -= damage;
-    }
 }

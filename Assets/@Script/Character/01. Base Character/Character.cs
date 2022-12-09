@@ -52,18 +52,18 @@ public abstract class Character : MonoBehaviour
         Managers.DataManager.SavePlayerData();
 #endif
     }
-    private void Start()
-    {
-        playerCamera = Managers.GameManager.PlayerCamera;
-        playerCamera.TargetTransform = transform;
-        playerCamera.TargetOffset = cameraOffset;
-    }
     protected virtual void OnEnable()
     {
         Managers.UIManager.InteractPlayer -= SetInteract;
         Managers.UIManager.InteractPlayer += SetInteract;
 
         Rebirth();
+    }
+    protected virtual void Start()
+    {
+        playerCamera = Managers.GameManager.PlayerCamera;
+        playerCamera.TargetTransform = transform;
+        playerCamera.TargetOffset = cameraOffset;
     }
 
     protected virtual void Update()
@@ -86,18 +86,14 @@ public abstract class Character : MonoBehaviour
     public virtual void OnCompete() { }
     public virtual void OnDie(StatusData characterStats) { }
 
-
     public abstract CHARACTER_STATE DetermineCharacterState();
 
-    // !!플레이어의 대미지를 계산하는 함수
-    public void PlayerDamageProcess(Enemy enemy, float ratio)
+    public void DamageProcess(Enemy enemy, float ratio)
     {
         // Basic Damage Process
         float damage = (characterData.StatusData.AttackPower - enemy.EnemyData.DefensivePower * 0.5f) * 0.5f;
-        if (damage < 0)
-        {
-            damage = 0;
-        }
+        if (damage < 0) damage = 0;
+
         damage += ((characterData.StatusData.AttackPower / 8f - characterData.StatusData.AttackPower / 16f) + 1f);
 
         // Critical Process
@@ -127,9 +123,7 @@ public abstract class Character : MonoBehaviour
         floatingDamageText.SetDamageText(isCritical, damage, enemy.transform.position);
 
         if (enemy.IsDie)
-        {
             Managers.EventManager.OnKillEnemy?.Invoke(this, enemy);
-        }
     }
 
     public void Rebirth()
@@ -166,7 +160,7 @@ public abstract class Character : MonoBehaviour
     public UserQuestData QuestData { get { return characterData?.QuestData; } }
 
     public CharacterStateController State { get { return state; } }
-    public bool IsInvincible { get { return isInvincible; } }
+    public bool IsInvincible { get { return isInvincible; } set { isInvincible = value; } }
 
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }

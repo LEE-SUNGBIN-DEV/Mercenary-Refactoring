@@ -22,9 +22,9 @@ public class BerserkerWeapon : PlayerCombatController
 
             // Smash Attack
             {COMBAT_TYPE.PlayerSmashAttack1, 1.5f },
-            {COMBAT_TYPE.PlayerSmashAttack1, 1.8f },
-            {COMBAT_TYPE.PlayerSmashAttack1, 2.16f },
-            {COMBAT_TYPE.PlayerSmashAttack1, 2.6f },
+            {COMBAT_TYPE.PlayerSmashAttack2, 1.8f },
+            {COMBAT_TYPE.PlayerSmashAttack3, 2.16f },
+            {COMBAT_TYPE.PlayerSmashAttack4, 2.6f },
 
             {COMBAT_TYPE.PlayerParryingAttack, 2f },
         };

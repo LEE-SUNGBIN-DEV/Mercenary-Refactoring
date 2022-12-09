@@ -9,12 +9,14 @@ public class Berserker : Character
     protected override void Awake()
     {
         base.Awake();
-        state = new LancerStateController(this);
+        state = new BerserkerStateController(this);
+        weapon = GetComponentInChildren<BerserkerWeapon>();
+        weapon.Initialize(this);
     }
 
-    protected override void OnEnable()
+    protected override void Start()
     {
-        base.OnEnable();
+        base.Start();
         State.SwitchCharacterState(CHARACTER_STATE.Move);
     }
 
@@ -56,4 +58,5 @@ public class Berserker : Character
     }
     #endregion
 
+    public BerserkerWeapon Weapon { get { return weapon; } }
 }

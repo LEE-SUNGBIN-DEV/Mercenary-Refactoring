@@ -73,6 +73,21 @@ public abstract class Enemy : MonoBehaviour
     public abstract void InitializeAllState();
 
     #region Common Function
+    public void DamageProcess(Character character, float ratio)
+    {
+        // Damage Process
+        float damage = (enemyData.AttackPower - character.StatusData.DefensivePower * 0.5f) * 0.5f;
+        if (damage < 0)
+        {
+            damage = 0;
+        }
+        damage += ((enemyData.AttackPower / 8f - enemyData.AttackPower / 16f) + 1f);
+
+        // Final Damage
+        damage *= ratio;
+
+        character.StatusData.CurrentHP -= damage;
+    }
     public IEnumerator WaitForDisapear(float time)
     {
         OnDie(this);

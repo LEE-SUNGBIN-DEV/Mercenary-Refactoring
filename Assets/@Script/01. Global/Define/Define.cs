@@ -77,7 +77,8 @@ public enum CHARACTER_STATE_WEIGHT
     // Common Character
     Move = 1,
     Attack = 2,
-    Skill = 3,
+    Defense = 2,
+    Counter = 3,
     Roll = 4,
     Hit = 5,
     HeavyHit = 6,
@@ -86,7 +87,7 @@ public enum CHARACTER_STATE_WEIGHT
     Die = 9,
 
     // Lancer
-    LancerDefense = 2
+    // Berserker
 }
 
 public enum COMBAT_TYPE

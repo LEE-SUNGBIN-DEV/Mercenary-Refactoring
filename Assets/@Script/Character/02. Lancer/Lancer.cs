@@ -5,17 +5,21 @@ using UnityEngine;
 public class Lancer : Character
 {
     [SerializeField] private LancerWeapon spear;
-    [SerializeField] private LancerWeapon shield;
+    [SerializeField] private LancerShield shield;
 
     protected override void Awake()
     {
         base.Awake();
         state = new LancerStateController(this);
+        spear = GetComponentInChildren<LancerWeapon>();
+        shield = GetComponentInChildren<LancerShield>();
+        spear.Initialize(this);
+        shield.Initialize(this);
     }
 
-    protected override void OnEnable()
+    protected override void Start()
     {
-        base.OnEnable();
+        base.Start();
         State.SwitchCharacterState(CHARACTER_STATE.Move);
     }
 
@@ -67,6 +71,6 @@ public class Lancer : Character
 
     #region Property
     public LancerWeapon Spear { get { return spear; } }
-    public LancerWeapon Shield { get { return shield; } }
+    public LancerShield Shield { get { return shield; } }
     #endregion
 }
