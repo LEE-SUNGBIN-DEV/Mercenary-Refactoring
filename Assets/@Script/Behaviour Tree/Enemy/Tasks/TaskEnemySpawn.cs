@@ -5,10 +5,10 @@ using BehaviourTreePackage;
 
 public class TaskEnemySpawn : BehaviourNode
 {
-    private Enemy enemy;
+    private BaseEnemy enemy;
     private bool isCalled;
 
-    public TaskEnemySpawn(Enemy enemy)
+    public TaskEnemySpawn(BaseEnemy enemy)
     {
         this.enemy = enemy;
         isCalled = false;

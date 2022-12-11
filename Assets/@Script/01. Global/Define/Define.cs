@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class CharacterSlot
 {
     public int slotIndex;
-    public SelectionCharacter selectionCharacter;
+    public CharacterForSelection selectionCharacter;
     public Vector3 characterPoint;
     public TextMeshProUGUI slotText;
     public Button slotButton;
@@ -17,6 +15,13 @@ public class CharacterSlot
         slotText = null;
         slotButton = null;
     }
+}
+
+[System.Serializable]
+public class MaterialContainer
+{
+    public string key;
+    public Material value;
 }
 
 public enum SCENE_LIST

@@ -36,15 +36,11 @@ public class FloatingDamageText : MonoBehaviour
     {
         transform.position = Managers.GameManager.PlayerCamera.ThisCamera.WorldToScreenPoint(worldPosition) + offset;
 
-        if(isCritical == true)
-        {
+        if (isCritical == true)
             textColor = Color.red;
-        }
 
         else
-        {
             textColor = Color.white;
-        }
 
         damageText.text = damage.ToString("F0");
     }

@@ -5,9 +5,9 @@ using BehaviourTreePackage;
 
 public class BlackDragonBehaviourTree : BehaviourTree
 {
-    private Enemy enemy;
+    private BaseEnemy enemy;
 
-    public BlackDragonBehaviourTree(Enemy enemy)
+    public BlackDragonBehaviourTree(BaseEnemy enemy)
     {
         this.enemy = enemy;
     }

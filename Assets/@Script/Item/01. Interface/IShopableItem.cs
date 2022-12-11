@@ -6,6 +6,6 @@ public interface IShopableItem
 {
     public int ItemPrice { get; set; }
 
-    public void BuyItem(Character character);
-    public void SellItem(Character character);
+    public void BuyItem(BaseCharacter character);
+    public void SellItem(BaseCharacter character);
 }

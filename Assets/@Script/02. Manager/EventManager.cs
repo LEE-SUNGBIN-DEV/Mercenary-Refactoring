@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class EventManager
 {
-    public UnityAction<Character, Enemy> OnKillEnemy;
+    public UnityAction<BaseCharacter, BaseEnemy> OnKillEnemy;
 
     public void Initialize()
     {

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Effect
+  m_EditorClassIdentifier: 
+  m_GroupName: Effect
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 30da35cb4dea6c44db36989a956b711f
+  m_SerializeEntries:
+  - m_GUID: 5c1d046d9fc66cf4594a700f05e0eafc
+    m_Address: Prefab_Effect_Player_Attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 09523e6b640ca2f489e0d2d25dce96bc
+    m_Address: Prefab_Effect_Player_Defense
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5c38afae62cb9a341a14fa22e2112414
+    m_Address: Prefab_Effect_Player_Parrying
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 8bcc4d43a12915c4b8ff00264b06cc2d, type: 2}
+    - {fileID: 11400000, guid: 56956601e84c07e4e86263a723169875, type: 2}

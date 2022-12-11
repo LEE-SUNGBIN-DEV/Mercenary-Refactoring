@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DotAttackArea : MonoBehaviour
+public class DotAttackArea : PoolObject
 {
+    [Header("Dot Attack Area")]
     [SerializeField] private float damageRatio;
     [SerializeField] private float dotTime;
-    [SerializeField] private Vector2 boxScale;
+    [SerializeField] private Vector3 boxHalfScale;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         StartCoroutine(OnDotAttack());
     }
     private void OnDisable()
@@ -21,7 +23,7 @@ public class DotAttackArea : MonoBehaviour
     {
         while(true)
         {
-            Collider[] colliders = Physics.OverlapBox(transform.position, boxScale);
+            Collider[] colliders = Physics.OverlapBox(transform.position, boxHalfScale);
             for (int i = 0; i < colliders.Length; i++)
             {
                 ExecuteDotDamageProcess(colliders[i]);
@@ -32,7 +34,7 @@ public class DotAttackArea : MonoBehaviour
 
     public void ExecuteDotDamageProcess(Collider target)
     {
-        if (target.TryGetComponent(out Character character))
+        if (target.TryGetComponent(out BaseCharacter character))
         {
             switch (character.IsInvincible)
             {

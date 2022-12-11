@@ -32,7 +32,7 @@ public class EnemyProjectile : EnemyCombatController
     {
         for(int i=0; i<effectKeys.Length; ++i)
         {
-            GameObject effect = owner.ObjectPoolController.RequestObject(effectKeys[i]);
+            GameObject effect = owner.RequestObject(effectKeys[i]);
             effect.transform.position = other.bounds.ClosestPoint(transform.position);
             effect.transform.rotation = Quaternion.Euler(other.transform.rotation.eulerAngles + effectRotationOffset[i]);
         }
@@ -41,6 +41,6 @@ public class EnemyProjectile : EnemyCombatController
     private IEnumerator AutoReturn(string key, float returnTime)
     {
         yield return new WaitForSeconds(returnTime);
-        owner.ObjectPoolController.ReturnObject(key, gameObject);
+        owner.ReturnObject(key, gameObject);
     }
 }

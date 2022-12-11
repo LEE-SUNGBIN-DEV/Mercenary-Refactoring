@@ -5,9 +5,9 @@ using BehaviourTreePackage;
 
 public class ConditionSkill : BehaviourNode
 {
-    private Enemy enemy;
+    private BaseEnemy enemy;
 
-    public ConditionSkill(Enemy enemy)
+    public ConditionSkill(BaseEnemy enemy)
     {
         this.enemy = enemy;
     }

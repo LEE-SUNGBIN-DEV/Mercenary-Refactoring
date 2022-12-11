@@ -5,9 +5,9 @@ using BehaviourTreePackage;
 
 public class TaskEnemyWait : BehaviourNode
 {
-    private Enemy enemy;
+    private BaseEnemy enemy;
 
-    public TaskEnemyWait(Enemy enemy)
+    public TaskEnemyWait(BaseEnemy enemy)
     {
         this.enemy = enemy;
     }

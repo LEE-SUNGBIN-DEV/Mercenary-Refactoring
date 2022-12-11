@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BerserkerWeapon : PlayerCombatController
 {
-    public override void Initialize(Character character)
+    public override void Initialize(BaseCharacter character)
     {
         base.Initialize(character);
         ratioDictionary = new Dictionary<COMBAT_TYPE, float>()

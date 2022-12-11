@@ -7,7 +7,7 @@ public class BossRoomController : MonoBehaviour
 {
     public static event UnityAction<float> OnUpdateBossHPBar;
 
-    [SerializeField] private Enemy boss;
+    [SerializeField] private BaseEnemy boss;
     [SerializeField] private Vector3 bossSpawnPoint;
     [SerializeField] private GameObject[] bossRoomBarriers;
     private Collider entranceCollider;
@@ -55,7 +55,7 @@ public class BossRoomController : MonoBehaviour
         }
     }
 
-    public void ClearDungeon(Enemy monster)
+    public void ClearDungeon(BaseEnemy monster)
     {
         StartCoroutine(CoDungeonClear());
     }

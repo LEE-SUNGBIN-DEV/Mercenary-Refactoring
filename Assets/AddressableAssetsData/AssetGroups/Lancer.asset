@@ -21,42 +21,6 @@ MonoBehaviour:
     m_Address: Assets/Download/FANTASY MONSTER PACK01/LowPoly_Lancer/FBX/Model.FBX
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 8d51e8855dec4fe48b7b63a71d09e2b6
-    m_Address: Audio_Lancer_Smash_Attack
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 63204070a0d0a6b4684e371db4120112
-    m_Address: Audio_Lancer_Perfect_Defense
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 109ba2c32f080a44a820dc10878e658c
-    m_Address: Audio_Lancer_Defense_Start
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: c8796eb7c1a4a93459150c925ba37f02
-    m_Address: Audio_Lancer_Defense_Breaked
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: ab63ad6221d513e4fb663c1165c56313
-    m_Address: Audio_Lancer_Default_Attack
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 5a16bb1c78c43f049948e370645db9c7
-    m_Address: Audio_Lancer_Critical_Attack
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 0b6ed73c5cb18d94192dff0107553833
-    m_Address: Audio_Lancer_Counter_Skill
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 13affabff422d874a9c2fbd253c794d4
-    m_Address: Audio_Lancer_Attack
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: a459c3423e3cd9a4c9c09cf8d096ea5b
-    m_Address: Material_Lancer_Default
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: a3aedabff098b4348b330d254424a4d3
     m_Address: Assets/Download/FANTASY MONSTER PACK01/LowPoly_Lancer/Materials&&Texture/ch_h_Lancer_weapon_D.tga
     m_ReadOnly: 0
@@ -67,14 +31,6 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 33d475cc2206ecb489f56cab15bf9780
     m_Address: Assets/Download/FANTASY MONSTER PACK01/LowPoly_Lancer/Materials&&Texture/ch_h_Lancer_D.tga
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: fc70f797c04f68648862574708b87f41
-    m_Address: Material_Lancer_Outline
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 2caae8ca8451fa243848d9aac70d7793
-    m_Address: Prefab_Lancer_Slot
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

@@ -5,9 +5,9 @@ using BehaviourTreePackage;
 
 public class ConditionChaseRange : BehaviourNode
 {
-    private Enemy enemy;
+    private BaseEnemy enemy;
 
-    public ConditionChaseRange(Enemy enemy)
+    public ConditionChaseRange(BaseEnemy enemy)
     {
         this.enemy = enemy;
     }

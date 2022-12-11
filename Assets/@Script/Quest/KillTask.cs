@@ -21,7 +21,7 @@ public class KillTask : QuestTask
         base.EndTask();
     }
 
-    public void Action(Character character, Enemy enemy)
+    public void Action(BaseCharacter character, BaseEnemy enemy)
     {
         if(enemy.EnemyData.EnemyID == targetID)
         {

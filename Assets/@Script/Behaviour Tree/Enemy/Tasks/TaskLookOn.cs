@@ -5,9 +5,9 @@ using BehaviourTreePackage;
 
 public class TaskLookOn : BehaviourNode
 {
-    private Enemy enemy;
+    private BaseEnemy enemy;
 
-    public TaskLookOn(Enemy enemy)
+    public TaskLookOn(BaseEnemy enemy)
     {
         this.enemy = enemy;
     }

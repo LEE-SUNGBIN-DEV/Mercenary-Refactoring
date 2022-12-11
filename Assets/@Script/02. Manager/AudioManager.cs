@@ -50,7 +50,7 @@ public class AudioManager
 
     public void PlaySFX(AudioSource[] audioPlayers, string sfxName)
     {
-        if (sfxName == null)
+        if (string.IsNullOrEmpty(sfxName))
             return;
 
         AudioClip targetClip = Managers.ResourceManager.LoadResourceSync<AudioClip>(sfxName);
