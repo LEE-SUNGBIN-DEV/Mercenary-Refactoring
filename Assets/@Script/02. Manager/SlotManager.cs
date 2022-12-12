@@ -15,7 +15,7 @@ public class SlotManager
         startSlot = null;
         endSlot = null;
 
-        dragImage = Functions.FindChild<Image>(rootObject, "DragImage", true);
+        dragImage = Functions.FindChild<Image>(rootObject, "Prefab_Drag_Image", true);
         dragImage.raycastTarget = false;
         DisableDragImage();
     }

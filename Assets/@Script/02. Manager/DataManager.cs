@@ -1,3 +1,5 @@
+#define EDITOR_TEST
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +30,7 @@ public class DataManager
 
     public void Initialize()
     {
-        playerDataPath = Application.dataPath + "Table/Player_Data.json";
+        playerDataPath = Application.dataPath + "Player_Data.json";
         levelTablePath = Application.dataPath + "Table/Level_Table.json";
         questTablePath = Application.dataPath + "Table/Quest_Table.json";
         
@@ -45,7 +47,10 @@ public class DataManager
         LoadLevelTable();
         LoadItemDatabase();
         LoadQuestTable();
+#if EDITOR_TEST
+#else
         LoadPlayerData();
+#endif
     }
 
     public bool CheckFile(string filePath)
@@ -134,7 +139,7 @@ public class DataManager
         SavePlayerData();
     }
 
-    #region Property
+#region Property
     public Dictionary<int, float> LevelTable { get { return levelTable; } }
     public Dictionary<int, BaseItem> ItemDatabase { get { return itemDatabase; } }
     public Dictionary<uint, Quest> QuestDatabase { get { return questDatabase; } }
@@ -143,5 +148,5 @@ public class DataManager
     {
         get { return playerData.CharacterDatas[playerData.SelectCharacterIndex]; }
     }
-    #endregion
+#endregion
 }

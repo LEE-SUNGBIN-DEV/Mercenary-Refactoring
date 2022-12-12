@@ -5,9 +5,9 @@ using BehaviourTreePackage;
 
 public class ConditionHP : BehaviourNode
 {
-    private Enemy enemy;
+    private BaseEnemy enemy;
 
-    public ConditionHP(Enemy enemy)
+    public ConditionHP(BaseEnemy enemy)
     {
         this.enemy = enemy;
     }

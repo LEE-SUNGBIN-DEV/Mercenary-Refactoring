@@ -21,8 +21,8 @@ public class EnemySpawnController : MonoBehaviour
         {
             for (int j = 0; j < spawnDatas[i].spawnAmount; ++j)
             {
-                GameObject poolObject = Managers.ObjectPoolManager.RequestObject(spawnDatas[i].enemy.key);
-                Enemy enemy = poolObject.GetComponent<Enemy>();
+                GameObject poolObject = Managers.SceneManagerCS.CurrentScene.RequestObject(spawnDatas[i].enemy.key);
+                BaseEnemy enemy = poolObject.GetComponent<BaseEnemy>();
                 Vector3 monsterPosition = transform.position + Random.insideUnitSphere * 5f;
                 enemy.NavMeshAgent.Warp(monsterPosition);
             }

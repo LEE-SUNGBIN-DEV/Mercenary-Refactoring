@@ -5,11 +5,11 @@ using UnityEngine;
 public abstract class PlayerCombatController : BaseCombatController
 {
     [Header("Player CombatController")]
-    protected Character owner;
+    protected BaseCharacter owner;
     protected Dictionary<COMBAT_TYPE, float> ratioDictionary;
-    protected Dictionary<Enemy, bool> hitDictionary = new Dictionary<Enemy, bool>();
+    protected Dictionary<BaseEnemy, bool> hitDictionary = new Dictionary<BaseEnemy, bool>();
 
-    public virtual void Initialize(Character character)
+    public virtual void Initialize(BaseCharacter character)
     {
         base.Initialize();
         owner = character;
@@ -26,67 +26,75 @@ public abstract class PlayerCombatController : BaseCombatController
         AttackProcess(other);
         DefenseProcess(other);
     }
-    public void ExecuteDamageProcess(Enemy enemy)
-    {
-        owner.DamageProcess(enemy, damageRatio);
-    }
     public void InvincibilityProcess()
     {
 
     }
     public void AttackProcess(Collider other)
     {
-        if (other.TryGetComponent(out Enemy enemy))
+        if (other.TryGetComponent(out EnemyHitBox hitbox))
         {
-            // 01 Invincibility Process
-            if (enemy.IsInvincible)
+            if(hitbox.Owner != null)
             {
-                InvincibilityProcess();
-                return;
-            }
+                // 01 Invincibility Process
+                if (hitbox.Owner.SubState == SUB_STATE.Invincible)
+                {
+                    InvincibilityProcess();
+                    return;
+                }
 
-            // 02 Prevent Duplicate Damage Process
-            if (hitDictionary.ContainsKey(enemy))
-                return;
+                // 02 Prevent Duplicate Damage Process
+                if (hitDictionary.ContainsKey(hitbox.Owner))
+                    return;
 
-            hitDictionary.Add(enemy, true);
+                hitDictionary.Add(hitbox.Owner, true);
 
-            // 03 Hitting Effect Process
-            GameObject effect = owner.ObjectPoolController.RequestObject("Prefab_Effect_Player_Attack");
-            effect.transform.position = other.bounds.ClosestPoint(transform.position); ;
+                // 03 Hitting Effect Process
+                GameObject effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Attack");
+                effect.transform.position = other.bounds.ClosestPoint(transform.position); ;
 
-            // 04 Damage Process
-            owner.DamageProcess(enemy, damageRatio);
+                // 04 Damage Process
+                owner.DamageProcess(hitbox.Owner, damageRatio);
 
-            // 05 Enemy Interaction Process
-            switch (combatType)
-            {
-                // Hit
-                case COMBAT_TYPE.PlayerComboAttack1:
-                case COMBAT_TYPE.PlayerComboAttack2:
-                case COMBAT_TYPE.PlayerComboAttack3:
-                case COMBAT_TYPE.PlayerComboAttack4:
-                case COMBAT_TYPE.PlayerCounterAttack:
-                    {
-                        enemy.OnHit();
-                        break;
-                    }
-                // Heavy Hit
-                case COMBAT_TYPE.PlayerSmashAttack1:
-                case COMBAT_TYPE.PlayerSmashAttack2:
-                case COMBAT_TYPE.PlayerSmashAttack3:
-                case COMBAT_TYPE.PlayerSmashAttack4:
-                    {
-                        enemy.OnHeavyHit();
-                        break;
-                    }
-                // Stun
-                case COMBAT_TYPE.StunAttack:
-                case COMBAT_TYPE.PlayerParryingAttack:
-                    {
-                        enemy.OnStun();
-                        break;
-                    }
+                // 05 Enemy Interaction Process
+                switch (combatType)
+                {
+                    // Hit
+                    case COMBAT_TYPE.PlayerComboAttack1:
+                    case COMBAT_TYPE.PlayerComboAttack2:
+                    case COMBAT_TYPE.PlayerComboAttack3:
+                    case COMBAT_TYPE.PlayerComboAttack4:
+                        {
+                            hitbox.Owner.OnHit();
+                            break;
+                        }
+                    case COMBAT_TYPE.PlayerCounterAttack:
+                        {
+                            if(hitbox.Owner.SubState == SUB_STATE.Countable)
+                            {
+                                hitbox.Owner.OnStun();
+                                break;
+                            }
+                            hitbox.Owner.OnHit();
+                            break;
+                        }                        
+                    // Heavy Hit
+                    case COMBAT_TYPE.PlayerSmashAttack1:
+                    case COMBAT_TYPE.PlayerSmashAttack2:
+                    case COMBAT_TYPE.PlayerSmashAttack3:
+                    case COMBAT_TYPE.PlayerSmashAttack4:
+                        {
+                            hitbox.Owner.OnHeavyHit();
+                            break;
+                        }
+                    // Stun
+                    case COMBAT_TYPE.StunAttack:
+                    case COMBAT_TYPE.PlayerParryingAttack:
+                        {
+                            hitbox.Owner.OnStun();
+                            break;
+                        }
+                }
             }
         }
     }
@@ -99,14 +107,14 @@ public abstract class PlayerCombatController : BaseCombatController
             {
                 case COMBAT_TYPE.PlayerDefense:
                     {
-                        effect = owner.ObjectPoolController.RequestObject("Prefab_Effect_Player_Defense");
+                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Defense");
                         owner.Animator.SetBool("isBreakShield", true);
                         break;
                     }
 
                 case COMBAT_TYPE.PlayerParrying:
                     {
-                        effect = owner.ObjectPoolController.RequestObject("Prefab_Effect_Player_Parrying");
+                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Parrying");
 
                         owner.Animator.SetBool("isPerfectShield", true);
                         owner.Animator.SetBool("isBreakShield", false);
@@ -137,5 +145,6 @@ public abstract class PlayerCombatController : BaseCombatController
         hitDictionary.Clear();
     }
     #endregion
-    public Character Owner { get { return owner; } }
+
+    public BaseCharacter Owner { get { return owner; } }
 }

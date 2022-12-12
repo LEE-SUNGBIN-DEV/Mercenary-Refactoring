@@ -5,9 +5,9 @@ using BehaviourTreePackage;
 
 public class TaskSkill : BehaviourNode
 {
-    private Enemy enemy;
+    private BaseEnemy enemy;
 
-    public TaskSkill(Enemy enemy)
+    public TaskSkill(BaseEnemy enemy)
     {
         this.enemy = enemy;
     }

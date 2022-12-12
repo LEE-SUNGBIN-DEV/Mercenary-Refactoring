@@ -5,10 +5,10 @@ using BehaviourTreePackage;
 
 public class ConditionEnemyState : BehaviourNode
 {
-    private Enemy enemy;
+    private BaseEnemy enemy;
     private ENEMY_STATE targetState;
 
-    public ConditionEnemyState(Enemy enemy, ENEMY_STATE targetState)
+    public ConditionEnemyState(BaseEnemy enemy, ENEMY_STATE targetState)
     {
         this.enemy = enemy;
         this.targetState = targetState;

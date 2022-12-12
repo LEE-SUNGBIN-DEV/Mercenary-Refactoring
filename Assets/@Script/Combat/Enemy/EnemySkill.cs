@@ -5,8 +5,7 @@ using UnityEngine;
 public abstract class EnemySkill : MonoBehaviour
 {
     [Header("Enemy Skill")]
-    [SerializeField] protected Enemy owner;
-    [SerializeField] protected Collider skillCollider;
+    [SerializeField] protected BaseEnemy owner;
     [SerializeField] protected float cooldown;
     [SerializeField] protected float maxRange;
     protected bool isReady;
@@ -14,14 +13,12 @@ public abstract class EnemySkill : MonoBehaviour
     // Initialize
     public virtual void Initialize()
     {
-        this.owner = GetComponentInParent<Enemy>(true);
-        this.skillCollider = GetComponentInChildren<Collider>(true);
+        this.owner = GetComponentInParent<BaseEnemy>(true);
         isReady = true;
     }
-    public virtual void Initialize(Enemy owner)
+    public virtual void Initialize(BaseEnemy owner)
     {
         this.owner = owner;
-        this.skillCollider = GetComponentInChildren<Collider>(true);
         isReady = true;
     }
 
@@ -41,16 +38,7 @@ public abstract class EnemySkill : MonoBehaviour
         isReady = true;
     }
 
-    #region Animation Event Function
-    public void EnableSkillCollider(bool isEnable)
-    {
-        if (skillCollider != null)
-            skillCollider.enabled = isEnable;
-    }
-    #endregion
-
     #region Property
-    public Enemy Owner { get { return owner; } set { owner = value; } }
-    public Collider SkillCollider { get { return skillCollider; } }
+    public BaseEnemy Owner { get { return owner; } set { owner = value; } }
     #endregion
 }

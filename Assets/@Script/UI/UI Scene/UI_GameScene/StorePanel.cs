@@ -7,7 +7,7 @@ public class StorePanel : UIPanel
     [SerializeField] private List<BaseItem> sellList;
     [SerializeField] private StoreSlot[] storeSlots;
 
-    public void Initialize(Character chracter)
+    public void Initialize(BaseCharacter chracter)
     {
         storeSlots = GetComponentsInChildren<StoreSlot>();
 

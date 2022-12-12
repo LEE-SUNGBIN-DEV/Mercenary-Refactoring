@@ -9,14 +9,26 @@ public abstract class BaseCombatController : MonoBehaviour
     protected COMBAT_TYPE combatType;
     [SerializeField] protected float damageRatio;
     [SerializeField] protected Collider combatCollider;
+    protected bool isInitialized = false;
 
     public virtual void Initialize()
     {
-        combatCollider = GetComponent<Collider>();
-        combatCollider.enabled = false;
+        if (isInitialized == false)
+        {
+            TryGetComponent(out combatCollider);
+            if (combatCollider != null)
+                combatCollider.enabled = false;
+
+            isInitialized = true;
+        }
+    }
+    public void SetCombatController(COMBAT_TYPE combatType, float damageRatio)
+    {
+        this.combatType = combatType;
+        this.damageRatio = damageRatio;
     }
 
     public COMBAT_TYPE CombatType { get { return combatType; } }
     public float DamageRatio { get { return damageRatio; } }
-    public Collider AttackCollider { get { return combatCollider; } }
+    public Collider CombatCollider { get { return combatCollider; } }
 }
