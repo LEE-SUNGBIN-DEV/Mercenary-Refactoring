@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DotAttackArea : PoolObject
+public class DotAttackArea : MonoBehaviour
 {
     [Header("Dot Attack Area")]
     [SerializeField] private float damageRatio;
     [SerializeField] private float dotTime;
     [SerializeField] private Vector3 boxHalfScale;
 
-    public override void OnEnable()
+    public void OnEnable()
     {
-        base.OnEnable();
         StartCoroutine(OnDotAttack());
     }
     private void OnDisable()

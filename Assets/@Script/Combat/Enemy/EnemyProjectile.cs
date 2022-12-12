@@ -6,41 +6,40 @@ public class EnemyProjectile : EnemyCombatController
 {
     [Header("Enemy Projectile")]
     [SerializeField] private float speed;
-    [SerializeField] private float returnTime;
-    [SerializeField] private string[] effectKeys;
-    [SerializeField] private Vector3[] effectRotationOffset;
+    [SerializeField] private string[] hitVFXKeys;
 
     private void OnEnable()
     {
-        StartCoroutine(AutoReturn(gameObject.name, returnTime));
+        if(combatCollider != null)
+            combatCollider.enabled = true;
     }
-
     private void Update()
     {
         transform.position += transform.forward * speed * Time.deltaTime;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
+        Debug.Log(other.gameObject.layer);
         if (other.gameObject.layer == 6)
         {
-            OnVFX(other);
+            OnHitVFX(other);
+            Managers.SceneManagerCS.CurrentScene.ReturnObject(name, gameObject);
         }
     }
-
-    public virtual void OnVFX(Collider other)
+    public void SetProjectile(float speed, Vector3 direction)
     {
-        for(int i=0; i<effectKeys.Length; ++i)
+        this.speed = speed;
+        transform.forward = direction;
+    }
+    public virtual void OnHitVFX(Collider other)
+    {
+        for(int i=0; i<hitVFXKeys.Length; ++i)
         {
-            GameObject effect = owner.RequestObject(effectKeys[i]);
+            GameObject effect = Managers.SceneManagerCS.CurrentScene.RequestObject(hitVFXKeys[i]);
             effect.transform.position = other.bounds.ClosestPoint(transform.position);
-            effect.transform.rotation = Quaternion.Euler(other.transform.rotation.eulerAngles + effectRotationOffset[i]);
+            effect.transform.rotation = Quaternion.Euler(other.transform.rotation.eulerAngles);
         }
-    }
-
-    private IEnumerator AutoReturn(string key, float returnTime)
-    {
-        yield return new WaitForSeconds(returnTime);
-        owner.ReturnObject(key, gameObject);
     }
 }

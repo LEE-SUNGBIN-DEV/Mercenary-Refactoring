@@ -27,6 +27,7 @@ public class MaterialContainer
 public enum SCENE_LIST
 {
     // Common
+    Test,
     Title,
     Selection,
     Loading,
@@ -41,6 +42,7 @@ public enum SCENE_LIST
 
 public enum SCENE_TYPE
 {
+    Test,
     Unknown,
     Title,
     Selection,

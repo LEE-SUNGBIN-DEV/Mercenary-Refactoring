@@ -29,6 +29,18 @@ MonoBehaviour:
     m_Address: Prefab_Effect_Player_Parrying
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 06cd6a9f0bdf2b944bdb6752cca8ba59
+    m_Address: Prefab_Effect_Enemy_Flame_Area
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2f4ad8d06479e1140a066e3e16401880
+    m_Address: Prefab_Effect_Enemy_Breath
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: caa64bdd774adce48a4b2dd68f2e04ec
+    m_Address: Prefab_Projectile_Enemy_Fire_Ball
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
   m_SchemaSet:

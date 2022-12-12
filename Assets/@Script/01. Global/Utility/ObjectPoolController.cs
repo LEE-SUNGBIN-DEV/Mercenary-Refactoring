@@ -7,41 +7,75 @@ public class ObjectPool
 {
     public string key;
     public int amount;
-    public GameObject value;
     public Queue<GameObject> queue = new Queue<GameObject>();
 
-    public void Initialize(GameObject root)
+    public void Initialize(Transform rootTransform)
     {
         for (int i = 0; i < amount; ++i)
-        {
-            GameObject poolObject = Managers.ResourceManager.InstantiatePrefabSync(key, root.transform);
-            poolObject.SetActive(false);
-            queue.Enqueue(poolObject);
-        }
+            CreateAndEnqueueObject(rootTransform);
+    }
+    public void Initialize(Transform rootTransform, string key, int amount)
+    {
+        this.key = key;
+        this.amount = amount;
+        Initialize(rootTransform);
+    }
+
+    public GameObject CreateAndEnqueueObject(Transform rootTransform)
+    {
+        GameObject poolObject = Managers.ResourceManager.InstantiatePrefabSync(key, rootTransform);
+        poolObject.SetActive(false);
+        queue.Enqueue(poolObject);
+
+        return poolObject;
     }
 }
 [System.Serializable]
 public class ObjectPoolController
 {
+    private Transform rootTransform;
     private Dictionary<string, ObjectPool> objectPoolDictionary = new Dictionary<string, ObjectPool>();
-    [SerializeField] private ObjectPool[] objectPools;
+    [SerializeField] private List<ObjectPool> objectPoolList;
 
-    public void Initialize(GameObject root)
+    public void Initialize(Transform rootTransform)
     {
-        for (int i = 0; i < objectPools.Length; ++i)
+        this.rootTransform = rootTransform;
+        for (int i = 0; i < objectPoolList.Count; ++i)
         {
-            objectPools[i].Initialize(root);
-            objectPoolDictionary.Add(objectPools[i].key, objectPools[i]);
+            objectPoolList[i].Initialize(this.rootTransform);
+            objectPoolDictionary.Add(objectPoolList[i].key, objectPoolList[i]);
+        }
+    }
+    public void RegisterObject(string key, int amount)
+    {
+        if(objectPoolDictionary.TryGetValue(key, out ObjectPool objectPool))
+        {
+            for(int i=0; i<amount; ++i)
+            {
+                objectPool.CreateAndEnqueueObject(rootTransform);
+            }
+        }
+        else
+        {
+            ObjectPool newObjectPool = new ObjectPool();
+            newObjectPool.Initialize(rootTransform, key, amount);
+            objectPoolList.Add(newObjectPool);
+            objectPoolDictionary.Add(key, newObjectPool);
         }
     }
     public GameObject RequestObject(string key)
     {
-        GameObject requestObject = objectPoolDictionary[key].queue.Dequeue();
+        if(!objectPoolDictionary[key].queue.TryDequeue(out GameObject requestObject))
+        {
+            requestObject = objectPoolDictionary[key].CreateAndEnqueueObject(rootTransform);
+            Debug.Log("New");
+        }
         requestObject.SetActive(true);
         return requestObject;
     }
     public void ReturnObject(string key, GameObject returnObject)
     {
+        returnObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.Euler(Vector3.zero));
         returnObject.SetActive(false);
         objectPoolDictionary[key].queue.Enqueue(returnObject);
     }

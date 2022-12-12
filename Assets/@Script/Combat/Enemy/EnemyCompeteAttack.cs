@@ -28,9 +28,6 @@ public class EnemyCompeteAttack : EnemyCombatController
             if (combatController.CombatType == COMBAT_TYPE.PlayerParrying && isCompeteReady == true)
             {
                 Vector3 triggerPoint = target.bounds.ClosestPoint(transform.position);
-                Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_COMPETE_START, triggerPoint);
-                Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_COMPETE_PROGRESS, triggerPoint);
-
                 Compete(combatController);
             }
         }

@@ -21,7 +21,7 @@ public class EnemyRangeSkill : EnemySkill
     #region Animation Event Function
     public void OnProjectile()
     {
-        GameObject projectile = Managers.ObjectPoolManager.RequestObject(key);
+        GameObject projectile = Managers.SceneManagerCS.CurrentScene.RequestObject(key);
         projectile.transform.position = muzzle.transform.position;
 
         EnemyProjectile monsterProjectile = projectile.GetComponent<EnemyProjectile>();

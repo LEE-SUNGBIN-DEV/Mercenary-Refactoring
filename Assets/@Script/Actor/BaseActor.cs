@@ -6,7 +6,6 @@ public abstract class BaseActor : MonoBehaviour
 {
     [Header("Base Actor")]
     [SerializeField] protected SkinnedMeshRenderer meshRenderer;
-    [SerializeField] protected ObjectPoolController objectPoolController = new ObjectPoolController();
     [SerializeField] protected MaterialContainer[] materialContainers;
     protected Dictionary<string, Material> materialDictionary;
     protected Animator animator;
@@ -15,7 +14,6 @@ public abstract class BaseActor : MonoBehaviour
     {
         TryGetComponent(out animator);
         meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>(true);
-        objectPoolController.Initialize(gameObject);
         if(materialContainers != null)
         {
             materialDictionary = new Dictionary<string, Material>();
@@ -33,16 +31,6 @@ public abstract class BaseActor : MonoBehaviour
             meshRenderer.material = materialDictionary[key];
         }
     }
-
-    public GameObject RequestObject(string key)
-    {
-        return objectPoolController?.RequestObject(key);
-    }
-    public void ReturnObject(string key, GameObject returnObject)
-    {
-        objectPoolController?.ReturnObject(key, returnObject);
-    }
-
     #region Property
     public Animator Animator { get { return animator; } }
     public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }

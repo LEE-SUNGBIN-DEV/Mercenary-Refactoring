@@ -21,20 +21,18 @@ public class BlackDragonLandBreath : EnemySkill
         base.ActiveSkill();
         StartCoroutine(OnLandBreath());
     }
+
     public IEnumerator OnLandBreath()
     {
         Owner.Animator.SetTrigger("doLandBreath");
-        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.1729f);
+        yield return new WaitUntil(() =>
+        owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Land Breath") && owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.1729f);
         breath.SetCombatController(COMBAT_TYPE.EnemyNormalAttack, 1f);
-        breath.SetParticlesDuration(2.1f);
-        breath.PlayParticles();
-        breath.SetRay(20f, 0.2f);
+        breath.SetRay(20f, 0.15f);
+        StartCoroutine(breath.RayCoroutine);
 
-        while(owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.5488f)
-        {
-            StartCoroutine(breath.RayCoroutine);
-            yield return null;
-        }
+        yield return new WaitUntil(() =>
+        owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Land Breath") && owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5413f);
         StopCoroutine(breath.RayCoroutine);
     }
 }

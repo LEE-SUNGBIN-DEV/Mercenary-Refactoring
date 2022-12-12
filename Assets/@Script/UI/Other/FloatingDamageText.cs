@@ -5,15 +5,17 @@ using TMPro;
 
 public class FloatingDamageText : MonoBehaviour
 {
-    [SerializeField] private float textSpeed;
-    [SerializeField] private float alphaSpeed;
     private TextMeshProUGUI damageText;
+    private float textSpeed;
+    private float alphaSpeed;
     private Color textColor;
     private Vector3 offset;
 
     private void Awake()
     {
-        damageText = GetComponent<TextMeshProUGUI>();
+        TryGetComponent(out damageText);
+        textSpeed = 1f;
+        alphaSpeed = 1f;
         textColor = damageText.color;
         offset = Vector3.up;
     }

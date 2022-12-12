@@ -15,7 +15,7 @@ public class CharacterStateCompete : ICharacterState
     public void Enter(BaseCharacter character)
     {
         // Effect
-        Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_EFFECT_PLAYER_COMPETE_START, character.transform.position);
+        Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Compete_Start").transform.position = character.transform.position;
 
         // Set Compete State
         character.Animator.SetTrigger("doCompete");

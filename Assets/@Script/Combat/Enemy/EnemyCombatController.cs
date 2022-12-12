@@ -5,20 +5,24 @@ using UnityEngine;
 public class EnemyCombatController : BaseCombatController
 {
     [Header("Enemy Combat Controller")]
-    [SerializeField] private float rayDistance;
-    [SerializeField] private float rayInterval;
+    [SerializeField] protected float rayDistance;
+    [SerializeField] protected float rayInterval;
     protected Vector3 rotationOffset;
     protected BaseEnemy owner;
     protected IEnumerator rayCoroutine;
 
     public virtual void Initialize(BaseEnemy owner)
     {
-        base.Initialize();
-        this.owner = owner;
-        rayCoroutine = ShootRay();
+        if (isInitialized == false)
+        {
+            base.Initialize();
+            this.owner = owner;
+            rayCoroutine = ShootRay();
+            isInitialized = true;
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if(other != null)
             ExecuteCombatProcess(other);
@@ -65,23 +69,24 @@ public class EnemyCombatController : BaseCombatController
 
     public IEnumerator ShootRay()
     {
-        Ray ray = new Ray(transform.position, transform.forward.normalized);
+        RaycastHit hitData;
         var interval = new WaitForSeconds(rayInterval);
 
         while(true)
         {
-            Debug.DrawRay(transform.position, transform.forward.normalized * rayDistance, Color.blue, 0.1f);
-            if (Physics.Raycast(ray, out RaycastHit hitData, rayDistance))
-            {
-                if (hitData.transform.gameObject.layer == LayerMask.GetMask("Terrain"))
-                    CollideWithTerrain(hitData);
+            GenerateMuzzleEffect(transform);
+            Debug.DrawRay(transform.position, transform.forward.normalized * rayDistance, Color.blue, 0.2f);
 
-                if (hitData.transform.gameObject.layer == LayerMask.GetMask("Player"))
-                    CollideWithPlayer(hitData);
-            }
+            if(Physics.Raycast(transform.position, transform.forward.normalized, out hitData, rayDistance, LayerMask.GetMask("Terrain")))
+                CollideWithTerrain(hitData);
+
+            if (Physics.Raycast(transform.position, transform.forward.normalized, out hitData, rayDistance, LayerMask.GetMask("Player")))
+                CollideWithPlayer(hitData);
+            
             yield return interval;
         }
     }
+    public virtual void GenerateMuzzleEffect(Transform muzzle) { }
     public virtual void CollideWithTerrain(RaycastHit hitData) { }
     public virtual void CollideWithPlayer(RaycastHit hitData) { }
 

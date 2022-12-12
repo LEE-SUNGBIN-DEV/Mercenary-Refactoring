@@ -114,8 +114,10 @@ public abstract class BaseCharacter : BaseActor
         damage *= damageRange;
 
         enemy.EnemyData.CurrentHP -= damage;
-        FloatingDamageText floatingDamageText = Managers.ObjectPoolManager.RequestObject(Constants.RESOURCE_NAME_PREFAB_FLOATING_DAMAGE_TEXT).GetComponent<FloatingDamageText>();
-        floatingDamageText.SetDamageText(isCritical, damage, enemy.transform.position);
+        if(Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Floating_Damage_Text").TryGetComponent(out FloatingDamageText floatingDamageText))
+        {
+            floatingDamageText.SetDamageText(isCritical, damage, enemy.transform.position);
+        }
 
         if (enemy.IsDie)
             Managers.EventManager.OnKillEnemy?.Invoke(this, enemy);

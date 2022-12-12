@@ -50,7 +50,7 @@ public abstract class PlayerCombatController : BaseCombatController
                 hitDictionary.Add(hitbox.Owner, true);
 
                 // 03 Hitting Effect Process
-                GameObject effect = owner.RequestObject("Prefab_Effect_Player_Attack");
+                GameObject effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Attack");
                 effect.transform.position = other.bounds.ClosestPoint(transform.position); ;
 
                 // 04 Damage Process
@@ -107,14 +107,14 @@ public abstract class PlayerCombatController : BaseCombatController
             {
                 case COMBAT_TYPE.PlayerDefense:
                     {
-                        effect = owner.RequestObject("Prefab_Effect_Player_Defense");
+                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Defense");
                         owner.Animator.SetBool("isBreakShield", true);
                         break;
                     }
 
                 case COMBAT_TYPE.PlayerParrying:
                     {
-                        effect = owner.RequestObject("Prefab_Effect_Player_Parrying");
+                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Parrying");
 
                         owner.Animator.SetBool("isPerfectShield", true);
                         owner.Animator.SetBool("isBreakShield", false);

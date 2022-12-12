@@ -18,11 +18,6 @@ public class Managers : Singleton<Managers>
     private AudioManager audioManager = new AudioManager();
     private EventManager eventManager = new EventManager();
     private QuestManager questManager = new QuestManager();
-    private ObjectPoolManager objectPoolManager = new ObjectPoolManager();
-
-    private void Update()
-    {
-    }
 
     public override void Initialize()
     {
@@ -46,7 +41,6 @@ public class Managers : Singleton<Managers>
             /*
             dialogueManager.Initialize();
             questManager.Initialize();
-            objectPoolManager.Initialize(gameObject);
             */
 
             isInitialized = true;
@@ -65,6 +59,5 @@ public class Managers : Singleton<Managers>
     public static DataManager DataManager { get { return Instance?.dataManager; } }
     public static NPCManager NPCManager { get { return Instance?.npcManager; } }
     public static QuestManager QuestManager { get { return Instance?.questManager; } }
-    public static ObjectPoolManager ObjectPoolManager { get { return Instance?.objectPoolManager; } }
     #endregion
 }

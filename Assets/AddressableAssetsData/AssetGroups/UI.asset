@@ -77,6 +77,10 @@ MonoBehaviour:
     m_Address: Prefab_Button_Quest_Popup
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: aeef0bb8d6bc97b44ae79a86446e7e1d
+    m_Address: Prefab_Floating_Damage_Text
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
   m_SchemaSet:
