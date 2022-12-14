@@ -25,7 +25,7 @@ public class BerserkerStateDefense : ICharacterState
         {
             if (!isDefense)
             {
-                berserker.Weapon.OnSetWeapon(COMBAT_TYPE.PlayerDefense);
+                berserker.Weapon.OnSetWeapon(PLAYER_ATTACK_TYPE.PlayerDefense);
             }
 
             character.IsInvincible = true;

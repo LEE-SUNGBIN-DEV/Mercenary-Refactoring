@@ -6,7 +6,7 @@ public abstract class PlayerCombatController : BaseCombatController
 {
     [Header("Player CombatController")]
     protected BaseCharacter owner;
-    protected Dictionary<COMBAT_TYPE, float> ratioDictionary;
+    protected Dictionary<PLAYER_ATTACK_TYPE, float> ratioDictionary;
     protected Dictionary<BaseEnemy, bool> hitDictionary = new Dictionary<BaseEnemy, bool>();
 
     public virtual void Initialize(BaseCharacter character)
@@ -26,10 +26,6 @@ public abstract class PlayerCombatController : BaseCombatController
         AttackProcess(other);
         DefenseProcess(other);
     }
-    public void InvincibilityProcess()
-    {
-
-    }
     public void AttackProcess(Collider other)
     {
         if (other.TryGetComponent(out EnemyHitBox hitbox))
@@ -37,63 +33,41 @@ public abstract class PlayerCombatController : BaseCombatController
             if(hitbox.Owner != null)
             {
                 // 01 Invincibility Process
-                if (hitbox.Owner.SubState == SUB_STATE.Invincible)
-                {
-                    InvincibilityProcess();
+                if (hitbox.Owner.HitState == HIT_STATE.Invincible)
                     return;
-                }
 
                 // 02 Prevent Duplicate Damage Process
                 if (hitDictionary.ContainsKey(hitbox.Owner))
                     return;
 
                 hitDictionary.Add(hitbox.Owner, true);
-
+                
                 // 03 Hitting Effect Process
-                GameObject effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Attack");
-                effect.transform.position = other.bounds.ClosestPoint(transform.position); ;
+                GameObject effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_VFX_Player_Attack");
+                effect.transform.position = other.bounds.ClosestPoint(transform.position);
 
                 // 04 Damage Process
                 owner.DamageProcess(hitbox.Owner, damageRatio);
 
-                // 05 Enemy Interaction Process
+                // 05 Hit Process
                 switch (combatType)
                 {
-                    // Hit
-                    case COMBAT_TYPE.PlayerComboAttack1:
-                    case COMBAT_TYPE.PlayerComboAttack2:
-                    case COMBAT_TYPE.PlayerComboAttack3:
-                    case COMBAT_TYPE.PlayerComboAttack4:
-                        {
-                            hitbox.Owner.OnHit();
-                            break;
-                        }
-                    case COMBAT_TYPE.PlayerCounterAttack:
-                        {
-                            if(hitbox.Owner.SubState == SUB_STATE.Countable)
-                            {
-                                hitbox.Owner.OnStun();
-                                break;
-                            }
-                            hitbox.Owner.OnHit();
-                            break;
-                        }                        
-                    // Heavy Hit
-                    case COMBAT_TYPE.PlayerSmashAttack1:
-                    case COMBAT_TYPE.PlayerSmashAttack2:
-                    case COMBAT_TYPE.PlayerSmashAttack3:
-                    case COMBAT_TYPE.PlayerSmashAttack4:
-                        {
-                            hitbox.Owner.OnHeavyHit();
-                            break;
-                        }
-                    // Stun
-                    case COMBAT_TYPE.StunAttack:
-                    case COMBAT_TYPE.PlayerParryingAttack:
-                        {
-                            hitbox.Owner.OnStun();
-                            break;
-                        }
+                    case HIT_TYPE.Light:
+                        hitbox.Owner.OnHit();
+                        break;
+                    case HIT_TYPE.Heavy:
+                        hitbox.Owner.OnHeavyHit();
+                        break;
+                }
+
+                // 06 CC Process
+                switch (controlType)
+                {
+                    case CC_TYPE.None:
+                        break;
+                    case CC_TYPE.Stun:
+                        hitbox.Owner.OnStun();
+                        break;
                 }
             }
         }
@@ -105,19 +79,19 @@ public abstract class PlayerCombatController : BaseCombatController
             GameObject effect = null;
             switch (combatType)
             {
-                case COMBAT_TYPE.PlayerDefense:
+                case HIT_TYPE.Defense:
                     {
-                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Defense");
-                        owner.Animator.SetBool("isBreakShield", true);
+                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_VFX_Player_Defense");
+                        owner.Animator.SetBool("isBreaked", true);
                         break;
                     }
 
-                case COMBAT_TYPE.PlayerParrying:
+                case HIT_TYPE.Parrying:
                     {
-                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Parrying");
+                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_VFX_Player_Parrying");
 
-                        owner.Animator.SetBool("isPerfectShield", true);
-                        owner.Animator.SetBool("isBreakShield", false);
+                        owner.Animator.SetBool("isParrying", true);
+                        owner.Animator.SetBool("isBreaked", false);
                         break;
                     }
             }
@@ -132,11 +106,40 @@ public abstract class PlayerCombatController : BaseCombatController
         }
     }
 
-    #region Animation Event
-    public void OnSetWeapon(COMBAT_TYPE requestType)
+    #region Called by Owner's Animation Event
+    public void OnSetWeapon(PLAYER_ATTACK_TYPE playerAttackType)
     {
-        combatType = requestType;
-        damageRatio = ratioDictionary[requestType];
+        switch(playerAttackType)
+        {
+            case PLAYER_ATTACK_TYPE.PlayerCounterAttack:
+            case PLAYER_ATTACK_TYPE.PlayerComboAttack1:
+            case PLAYER_ATTACK_TYPE.PlayerComboAttack2:
+            case PLAYER_ATTACK_TYPE.PlayerComboAttack3:
+            case PLAYER_ATTACK_TYPE.PlayerComboAttack4:
+                {
+                    combatType = HIT_TYPE.Light;
+                    break;
+                }
+            case PLAYER_ATTACK_TYPE.PlayerSmashAttack1:
+            case PLAYER_ATTACK_TYPE.PlayerSmashAttack2:
+            case PLAYER_ATTACK_TYPE.PlayerSmashAttack3:
+            case PLAYER_ATTACK_TYPE.PlayerSmashAttack4:
+                {
+                    combatType = HIT_TYPE.Heavy;
+                    break;
+                }
+            case PLAYER_ATTACK_TYPE.PlayerDefense:
+                {
+                    combatType = HIT_TYPE.Defense;
+                    break;
+                }
+            case PLAYER_ATTACK_TYPE.PlayerParrying:
+                {
+                    combatType = HIT_TYPE.Parrying;
+                    break;
+                }
+        }
+        damageRatio = ratioDictionary[playerAttackType];
         combatCollider.enabled = true;
     }
     public void OnReleaseWeapon()

@@ -25,7 +25,7 @@ public class EnemyCompeteAttack : EnemyCombatController
 
         if (target.TryGetComponent(out PlayerCombatController combatController))
         {
-            if (combatController.CombatType == COMBAT_TYPE.PlayerParrying && isCompeteReady == true)
+            if (combatController.CombatType == HIT_TYPE.Parrying && isCompeteReady == true)
             {
                 Vector3 triggerPoint = target.bounds.ClosestPoint(transform.position);
                 Compete(combatController);

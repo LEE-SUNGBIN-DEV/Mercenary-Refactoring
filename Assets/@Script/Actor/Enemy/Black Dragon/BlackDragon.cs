@@ -13,7 +13,7 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         LandBreath,
         FireBall,
         FlyBreath,
-        FlyLightning,
+        Storm,
 
         SIZE
     }
@@ -25,7 +25,7 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
     private BlackDragonLandBreath landBreath;
     private BlackDragonFireBall fireBall;
     private BlackDragonFlyBreath flyBreath;
-    private BlackDragonLightning flyLightning;
+    private BlackDragonStorm storm;
 
     [Header("State Machine")]
     [SerializeField] protected BlackDragonBehaviourTree behaviourTree;
@@ -40,7 +40,7 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         landBreath = GetComponentInChildren<BlackDragonLandBreath>(true);
         fireBall = GetComponentInChildren<BlackDragonFireBall>(true);
         flyBreath = GetComponentInChildren<BlackDragonFlyBreath>(true);
-        flyLightning = GetComponentInChildren<BlackDragonLightning>(true);
+        storm = GetComponentInChildren<BlackDragonStorm>(true);
 
         skillDictionary = new Dictionary<int, EnemySkill>()
         {
@@ -50,7 +50,7 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
             {(int)SKILL.LandBreath, landBreath },
             {(int)SKILL.FireBall, fireBall },
             {(int)SKILL.FlyBreath, flyBreath },
-            {(int)SKILL.FlyLightning, flyLightning }
+            {(int)SKILL.Storm, storm }
         };
 
         foreach(var skill in skillDictionary.Values)
@@ -90,34 +90,20 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
 
     public void Stagger()
     {
-        if (IsStagger || IsCompete || IsDie)
-            return;
-
-        // Initialize Previous State
-
-        Animator.SetBool("isMove", false);
-
         // Down State
         IsStagger = true;
         Animator.SetBool("isDown", true);
-
         StartCoroutine(StaggerTime());
     }
     private IEnumerator StaggerTime()
     {
         yield return new WaitForSeconds(Constants.TIME_STAGGER);
-
         IsStagger = false;
         Animator.SetBool("isDown", false);
     }
     public void Compete()
     {
-        if (IsCompete || IsDie)
-            return;
-
-        // Initialize Previous State
         IsStagger = false;
-
         Animator.SetBool("isMove", false);
 
         // Compete State

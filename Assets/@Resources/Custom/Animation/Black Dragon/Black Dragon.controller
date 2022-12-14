@@ -7,8 +7,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spawn Fly End
-  m_Speed: 1.2
+  m_Name: Spawn End
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5776939374641778284}
@@ -162,7 +162,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fly Breath Landing
+  m_Name: Fly Breath End
   m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
@@ -642,7 +642,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Land Breath
+  m_Name: Skill_Land_Breath
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -765,8 +765,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fly Lightning Take Off
-  m_Speed: 1.2
+  m_Name: Storm Start
+  m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5999569193358922530}
@@ -819,7 +819,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Right Claw Attack
+  m_Name: Skill_Right_Claw
   m_Speed: 1.8
   m_CycleOffset: 0
   m_Transitions:
@@ -973,7 +973,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Left Claw Attack
+  m_Name: Skill_Left_Claw
   m_Speed: 1.8
   m_CycleOffset: 0
   m_Transitions:
@@ -1112,7 +1112,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: doLightning
+  - m_Name: doStorm
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1349,7 +1349,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fire Ball
+  m_Name: Skill_Fire_Ball
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1405,7 +1405,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: doLightning
+    m_ConditionEvent: doStorm
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -2479957014745519645}
@@ -1714,7 +1714,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fly Lightning Landing
+  m_Name: Storm End
   m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
@@ -1811,7 +1811,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fly Lightning
+  m_Name: Storm
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1838,7 +1838,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fly Breath Take Off
+  m_Name: Fly Breath Start
   m_Speed: 1.2
   m_CycleOffset: 0
   m_Transitions:
@@ -2030,8 +2030,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Double Claw
-  m_Speed: 1.6
+  m_Name: Skill_Double_Claw
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -5705298829648266258}
@@ -2129,7 +2129,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spawn Take Off
+  m_Name: Spawn Start
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:

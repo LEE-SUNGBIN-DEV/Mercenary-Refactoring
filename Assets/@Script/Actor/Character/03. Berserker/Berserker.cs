@@ -37,7 +37,7 @@ public class Berserker : BaseCharacter
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Attack);
 
         if (playerInput.IsMouseRightDown)
-            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.LancerDefense);
+            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Defense);
 
         if (playerInput.IsSpaceKeyDown && StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL)
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Roll);
@@ -49,9 +49,9 @@ public class Berserker : BaseCharacter
     }
 
     #region Animation Event Function
-    private void OnSetWeapon(COMBAT_TYPE changeType)
+    private void OnSetWeapon(PLAYER_ATTACK_TYPE playerAttackType)
     {
-        weapon.OnSetWeapon(changeType);
+        weapon.OnSetWeapon(playerAttackType);
     }
     private void OnReleaseWeapon()
     {

@@ -6,7 +6,7 @@ public class DotAttackArea : MonoBehaviour
 {
     [Header("Dot Attack Area")]
     [SerializeField] private float damageRatio;
-    [SerializeField] private float dotTime;
+    [SerializeField] private float damageInterval;
     [SerializeField] private Vector3 boxHalfScale;
 
     public void OnEnable()
@@ -27,7 +27,7 @@ public class DotAttackArea : MonoBehaviour
             {
                 ExecuteDotDamageProcess(colliders[i]);
             }
-            yield return new WaitForSeconds(dotTime);
+            yield return new WaitForSeconds(damageInterval);
         }
     }
 

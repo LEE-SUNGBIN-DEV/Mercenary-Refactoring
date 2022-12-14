@@ -40,21 +40,14 @@ public class EnemyCombatController : BaseCombatController
             owner.DamageProcess(character, damageRatio);
             switch (combatType)
             {
-                case COMBAT_TYPE.EnemyNormalAttack:
+                case HIT_TYPE.Light:
                     {
                         character.OnHit();
                         break;
                     }
-                case COMBAT_TYPE.EnemySmashAttack:
+                case HIT_TYPE.Heavy:
                     {
                         character.OnHeavyHit();
-                        break;
-                    }
-                case COMBAT_TYPE.EnemyCounterableAttack:
-                case COMBAT_TYPE.EnemyCompetableAttack:
-                case COMBAT_TYPE.StunAttack:
-                    {
-                        character.OnStun();
                         break;
                     }
             }

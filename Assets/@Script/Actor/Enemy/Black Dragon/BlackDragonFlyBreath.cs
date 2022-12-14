@@ -27,7 +27,7 @@ public class BlackDragonFlyBreath : EnemySkill
         Owner.Animator.SetTrigger("doFlyBreath");
         yield return new WaitUntil(() =>
         owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Fly Breath") && owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.3926);
-        breath.SetCombatController(COMBAT_TYPE.EnemyNormalAttack, 1f);
+        breath.SetCombatController(HIT_TYPE.Light, CC_TYPE.None, 1f);
         breath.SetRay(30f, 0.1f);
         StartCoroutine(breath.RayCoroutine);
 
