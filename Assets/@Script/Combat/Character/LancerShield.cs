@@ -7,14 +7,14 @@ public class LancerShield : PlayerCombatController
     public override void Initialize(BaseCharacter character)
     {
         base.Initialize(character);
-        ratioDictionary = new Dictionary<COMBAT_TYPE, float>()
+        ratioDictionary = new Dictionary<PLAYER_ATTACK_TYPE, float>()
         {
             // Default
-            {COMBAT_TYPE.PlayerDefense, 1f },
-            {COMBAT_TYPE.PlayerParrying, 1f },
+            {PLAYER_ATTACK_TYPE.PlayerDefense, 1f },
+            {PLAYER_ATTACK_TYPE.PlayerParrying, 1f },
 
             // Smash Attack
-            {COMBAT_TYPE.PlayerParryingAttack, 1f },
+            {PLAYER_ATTACK_TYPE.PlayerParryingAttack, 1f },
         };
     }
 }

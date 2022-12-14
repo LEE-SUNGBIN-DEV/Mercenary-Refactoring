@@ -27,7 +27,7 @@ public class BlackDragonLandBreath : EnemySkill
         Owner.Animator.SetTrigger("doLandBreath");
         yield return new WaitUntil(() =>
         owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Land Breath") && owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.1729f);
-        breath.SetCombatController(COMBAT_TYPE.EnemyNormalAttack, 1f);
+        breath.SetCombatController(HIT_TYPE.Light, CC_TYPE.None, 1f);
         breath.SetRay(20f, 0.15f);
         StartCoroutine(breath.RayCoroutine);
 

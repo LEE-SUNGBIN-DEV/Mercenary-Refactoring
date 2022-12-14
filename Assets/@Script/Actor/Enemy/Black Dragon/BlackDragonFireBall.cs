@@ -41,7 +41,7 @@ public class BlackDragonFireBall : EnemySkill
         if (fireBall.TryGetComponent(out EnemyProjectile projectile))
         {
             projectile.Initialize(owner);
-            projectile.SetCombatController(COMBAT_TYPE.EnemySmashAttack, 1.5f);
+            projectile.SetCombatController(HIT_TYPE.Heavy, CC_TYPE.None, 1.5f);
             projectile.SetProjectile(15f, transform.forward);
         }
     }

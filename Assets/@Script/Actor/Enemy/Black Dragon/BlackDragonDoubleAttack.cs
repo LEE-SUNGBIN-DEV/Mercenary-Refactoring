@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class BlackDragonDoubleAttack : EnemySkill
 {
+    public enum SKILL_STATE
+    {
+        OnLeftClaw,
+        OffLeftClaw,
+        OnCounterable,
+        OnRightClaw,
+        OffRightClaw
+    }
     [SerializeField] private EnemyCombatController leftClaw;
     [SerializeField] private EnemyCombatController rightClaw;
 
@@ -23,34 +31,44 @@ public class BlackDragonDoubleAttack : EnemySkill
     {
         base.ActiveSkill();
         owner.Animator.SetTrigger("doDoubleClaw");
-        StartCoroutine(OnDoubleClaw());
     }
 
-    public IEnumerator OnDoubleClaw()
+    #region Animation Event Function
+    private void OnDoubleClaw(SKILL_STATE skillState)
     {
-        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.158f);
-        leftClaw.SetCombatController(COMBAT_TYPE.EnemyNormalAttack, 1f);
-        leftClaw.CombatCollider.enabled = true;
-
-        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.198f);
-        leftClaw.CombatCollider.enabled = false;
-
-        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.594f);
-        owner.SetMaterial("Outline");
-        owner.MeshRenderer.material.color = Color.blue;
-
-        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.693f);
-        owner.SetMaterial("Default");
-        owner.MeshRenderer.material.color = Color.white;
-        rightClaw.SetCombatController(COMBAT_TYPE.StunAttack, 2f);
-        rightClaw.CombatCollider.enabled = true;
-
-        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.703f);
-        rightClaw.CombatCollider.enabled = false;
+        switch(skillState)
+        {
+            case SKILL_STATE.OnLeftClaw:
+                {
+                    leftClaw.SetCombatController(HIT_TYPE.Light, CC_TYPE.None, 1f);
+                    leftClaw.CombatCollider.enabled = true;
+                    break;
+                }
+            case SKILL_STATE.OffLeftClaw:
+                {
+                    leftClaw.CombatCollider.enabled = false;
+                    break;
+                }
+            case SKILL_STATE.OnCounterable:
+                {
+                    owner.SetMaterial("Outline");
+                    owner.MeshRenderer.material.color = Color.blue;
+                    break;
+                }
+            case SKILL_STATE.OnRightClaw:
+                {
+                    owner.SetMaterial("Default");
+                    owner.MeshRenderer.material.color = Color.white;
+                    rightClaw.SetCombatController(HIT_TYPE.Heavy, CC_TYPE.Stun, 2f);
+                    rightClaw.CombatCollider.enabled = true;
+                    break;
+                }
+            case SKILL_STATE.OffRightClaw:
+                {
+                    rightClaw.CombatCollider.enabled = false;
+                    break;
+                }
+        }
     }
-
-    #region Property
-    public EnemyCombatController LeftClaw { get { return leftClaw; } }
-    public EnemyCombatController RightClaw { get { return rightClaw; } }
     #endregion
 }

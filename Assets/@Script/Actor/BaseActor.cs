@@ -7,6 +7,9 @@ public abstract class BaseActor : MonoBehaviour
     [Header("Base Actor")]
     [SerializeField] protected SkinnedMeshRenderer meshRenderer;
     [SerializeField] protected MaterialContainer[] materialContainers;
+
+    [SerializeField] protected HIT_STATE hitState;
+    [SerializeField] protected CC_STATE ccState;
     protected Dictionary<string, Material> materialDictionary;
     protected Animator animator;
 
@@ -34,5 +37,7 @@ public abstract class BaseActor : MonoBehaviour
     #region Property
     public Animator Animator { get { return animator; } }
     public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }
+    public HIT_STATE HitState { get { return hitState; } set { hitState = value; } }
+    public CC_STATE CCState { get { return ccState; } set { ccState = value; } }
     #endregion
 }

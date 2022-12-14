@@ -4,25 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-public enum ENEMY_STATE
-{
-    Idle,
-    Attack,
-    Hit,
-    HeavyHit,
-    Stun,
-    Compete,
-    Spawn,
-    Die
-}
-
-public enum SUB_STATE
-{
-    Normal,
-    Countable,
-    Invincible,
-}
-
 public abstract class BaseEnemy : BaseActor
 {
     public event UnityAction<BaseEnemy> OnBirth;
@@ -31,7 +12,6 @@ public abstract class BaseEnemy : BaseActor
     [Header("Base Enemy")]
     [SerializeField] protected EnemyData enemyData;
     [SerializeField] protected ENEMY_STATE state;
-    [SerializeField] protected SUB_STATE subState;
 
     [Header("Skills")]
     [SerializeField] protected int skillIndex;
@@ -69,7 +49,7 @@ public abstract class BaseEnemy : BaseActor
     public virtual void Rebirth()
     {
         state = ENEMY_STATE.Spawn;
-        subState = SUB_STATE.Invincible;
+        hitState = HIT_STATE.Invincible;
         IsDie = false;
         enemyData.CurrentHP = enemyData.MaxHP;
     }
@@ -92,7 +72,7 @@ public abstract class BaseEnemy : BaseActor
     public IEnumerator WaitForDisapear(float time)
     {
         OnDie(this);
-        subState = SUB_STATE.Invincible;
+        hitState = HIT_STATE.Invincible;
         gameObject.layer = 10;
 
         float disapearTime = 0f;
@@ -108,7 +88,6 @@ public abstract class BaseEnemy : BaseActor
     #region Animation Event Function
     private void OnEndState()
     {
-        subState = SUB_STATE.Normal;
         state = ENEMY_STATE.Idle;
     }
     #endregion
@@ -116,7 +95,6 @@ public abstract class BaseEnemy : BaseActor
     #region Property
     public EnemyData EnemyData { get { return enemyData; } }
     public ENEMY_STATE State { get { return state; } set { state = value; } }
-    public SUB_STATE SubState { get { return subState; } set { subState = value; } }
     public Dictionary<int, EnemySkill> SkillDictionary { get { return skillDictionary; } }
     public int SkillIndex { get { return skillIndex; } set { skillIndex = value; } }
     public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }

@@ -41,10 +41,6 @@ MonoBehaviour:
     m_Address: Prefab_Projectile_Enemy_Fire_Ball
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: f11c5b43e6da7064086bd0707266b9c4
-    m_Address: Prefab_VFX_Enemy_Lightning_Strike
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
   m_SchemaSet:

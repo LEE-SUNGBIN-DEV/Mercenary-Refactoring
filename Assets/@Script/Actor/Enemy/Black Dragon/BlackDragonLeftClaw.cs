@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BlackDragonLeftClaw : EnemySkill
 {
+    public enum SKILL_STATE
+    {
+        OnLeftClaw,
+        OffLeftClaw
+    }
     [SerializeField] private EnemyCombatController leftClaw;
 
     public override void Initialize(BaseEnemy owner)
@@ -19,15 +24,25 @@ public class BlackDragonLeftClaw : EnemySkill
     {
         base.ActiveSkill();
         Owner.Animator.SetTrigger("doLeftClaw");
-        StartCoroutine(OnLeftClaw());
     }
-    public IEnumerator OnLeftClaw()
-    {
-        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.32f);
-        leftClaw.SetCombatController(COMBAT_TYPE.EnemyNormalAttack, 1f);
-        leftClaw.CombatCollider.enabled = true;
 
-        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.40f);
-        leftClaw.CombatCollider.enabled = false;
+    #region Animation Event Function
+    private void OnLeftClaw(SKILL_STATE skillState)
+    {
+        switch (skillState)
+        {
+            case SKILL_STATE.OnLeftClaw:
+                {
+                    leftClaw.SetCombatController(HIT_TYPE.Light, CC_TYPE.None, 1f);
+                    leftClaw.CombatCollider.enabled = true;
+                    return;
+                }
+            case SKILL_STATE.OffLeftClaw:
+                {
+                    leftClaw.CombatCollider.enabled = false;
+                    return;
+                }
+        }
     }
+    #endregion
 }

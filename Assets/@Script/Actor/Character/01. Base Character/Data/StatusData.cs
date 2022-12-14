@@ -225,7 +225,7 @@ public class StatusData
             if (currentHP < 0)
             {
                 currentHP = 0;
-                OnDie(this);
+                OnDie?.Invoke(this);
             }
 
             OnCharacterStatusChanged?.Invoke(this);

@@ -39,7 +39,7 @@ public class Lancer : BaseCharacter
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Attack);
 
         if (playerInput.IsMouseRightDown)
-            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.LancerDefense);
+            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Defense);
 
         if (playerInput.IsSpaceKeyDown && StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL)
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Roll);
@@ -51,17 +51,17 @@ public class Lancer : BaseCharacter
     }
 
     #region Animation Event Function
-    private void OnSetWeapon(COMBAT_TYPE requestType)
+    private void OnSetWeapon(PLAYER_ATTACK_TYPE playerAttackType)
     {
-        spear.OnSetWeapon(requestType);
+        spear.OnSetWeapon(playerAttackType);
     }
     private void OnReleaseWeapon()
     {
         spear.OnReleaseWeapon();
     }
-    private void OnSetShield(COMBAT_TYPE requestType)
+    private void OnSetShield(PLAYER_ATTACK_TYPE playerAttackType)
     {
-        shield.OnSetWeapon(requestType);
+        shield.OnSetWeapon(playerAttackType);
     }
     private void OnReleaseShield()
     {

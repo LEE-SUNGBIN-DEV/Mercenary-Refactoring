@@ -25,7 +25,7 @@ public class LancerStateDefense : ICharacterState
         {
             if (!isDefense)
             {
-                lancer.Shield.OnSetWeapon(COMBAT_TYPE.PlayerDefense);
+                lancer.Shield.OnSetWeapon(PLAYER_ATTACK_TYPE.PlayerDefense);
             }
 
             character.IsInvincible = true;
