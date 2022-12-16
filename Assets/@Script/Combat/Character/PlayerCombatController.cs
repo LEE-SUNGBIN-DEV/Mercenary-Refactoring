@@ -9,10 +9,12 @@ public abstract class PlayerCombatController : BaseCombatController
     protected Dictionary<PLAYER_ATTACK_TYPE, float> ratioDictionary;
     protected Dictionary<BaseEnemy, bool> hitDictionary = new Dictionary<BaseEnemy, bool>();
 
-    public virtual void Initialize(BaseCharacter character)
+    public virtual void SetWeapon(BaseCharacter character)
     {
-        base.Initialize();
         owner = character;
+        owner.ObjectPooler.RegisterObject(Constants.VFX_Player_Attack, 12);
+        owner.ObjectPooler.RegisterObject(Constants.VFX_Player_Defense, 3);
+        owner.ObjectPooler.RegisterObject(Constants.VFX_Player_Parrying, 2);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,7 +45,7 @@ public abstract class PlayerCombatController : BaseCombatController
                 hitDictionary.Add(hitbox.Owner, true);
                 
                 // 03 Hitting Effect Process
-                GameObject effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_VFX_Player_Attack");
+                GameObject effect = Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.VFX_Player_Attack);
                 effect.transform.position = other.bounds.ClosestPoint(transform.position);
 
                 // 04 Damage Process
@@ -61,11 +63,11 @@ public abstract class PlayerCombatController : BaseCombatController
                 }
 
                 // 06 CC Process
-                switch (controlType)
+                switch (crowdControlType)
                 {
-                    case CC_TYPE.None:
+                    case CROWD_CONTROL_TYPE.None:
                         break;
-                    case CC_TYPE.Stun:
+                    case CROWD_CONTROL_TYPE.Stun:
                         hitbox.Owner.OnStun();
                         break;
                 }
@@ -74,21 +76,21 @@ public abstract class PlayerCombatController : BaseCombatController
     }
     public void DefenseProcess(Collider other)
     {
-        if (other.GetComponent<EnemyCombatController>() != null)
+        if (other.GetComponent<EnemyMeleeAttack>() != null)
         {
             GameObject effect = null;
             switch (combatType)
             {
                 case HIT_TYPE.Defense:
                     {
-                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_VFX_Player_Defense");
+                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.VFX_Player_Defense);
                         owner.Animator.SetBool("isBreaked", true);
                         break;
                     }
 
                 case HIT_TYPE.Parrying:
                     {
-                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_VFX_Player_Parrying");
+                        effect = Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.VFX_Player_Parrying);
 
                         owner.Animator.SetBool("isParrying", true);
                         owner.Animator.SetBool("isBreaked", false);

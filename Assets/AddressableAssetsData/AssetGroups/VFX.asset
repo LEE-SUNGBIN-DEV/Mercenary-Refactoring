@@ -18,27 +18,35 @@ MonoBehaviour:
   m_GUID: 30da35cb4dea6c44db36989a956b711f
   m_SerializeEntries:
   - m_GUID: 5c1d046d9fc66cf4594a700f05e0eafc
-    m_Address: Prefab_Effect_Player_Attack
+    m_Address: VFX_Player_Attack
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 09523e6b640ca2f489e0d2d25dce96bc
-    m_Address: Prefab_Effect_Player_Defense
+    m_Address: VFX_Player_Defense
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 5c38afae62cb9a341a14fa22e2112414
-    m_Address: Prefab_Effect_Player_Parrying
+    m_Address: VFX_Player_Parrying
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 06cd6a9f0bdf2b944bdb6752cca8ba59
-    m_Address: Prefab_VFX_Enemy_Flame_Area
+    m_Address: VFX_Enemy_Flame_Area
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 2f4ad8d06479e1140a066e3e16401880
-    m_Address: Prefab_VFX_Enemy_Breath
+    m_Address: VFX_Enemy_Breath
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: caa64bdd774adce48a4b2dd68f2e04ec
-    m_Address: Prefab_Projectile_Enemy_Fire_Ball
+    m_Address: VFX_Black_Dragon_Fire_Ball
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d0afb79515ec3aa40846df6897bc7d6e
+    m_Address: VFX_Black_Dragon_Lightning_Strike
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 69f67ccb1c3676d4aa744f3c1ce8bbef
+    m_Address: VFX_Black_Dragon_Storm_Field
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

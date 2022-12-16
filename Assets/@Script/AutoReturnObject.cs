@@ -2,30 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoReturnObject : MonoBehaviour
+public class AutoReturnObject : MonoBehaviour, IPoolObject
 {
     [Header("Auto Return")]
-    [SerializeField] private string key;
-    [SerializeField] private float returnTime;
-    private float currentTime;
+    [SerializeField] private float duration;
+    private IEnumerator autoReturnCoroutine;
+    private ObjectPooler objectPooler;
 
-    protected virtual void OnEnable()
+    public IEnumerator CoAutoReturn()
     {
-        key = gameObject.name;
-        currentTime = 0;
+        yield return new WaitForSeconds(duration);
+        ReturnOrDestoryObject(objectPooler);
     }
 
-    protected virtual void OnDisable()
+    #region IPoolObject Interface Fucntion
+    public void ActionAfterRequest(ObjectPooler owner)
     {
-        currentTime = 0;
+        objectPooler = owner;
+        autoReturnCoroutine = CoAutoReturn();
+
+        if (autoReturnCoroutine != null)
+            StartCoroutine(autoReturnCoroutine);
     }
 
-    protected virtual void Update()
+    public void ActionBeforeReturn()
     {
-        currentTime += Time.deltaTime;
-        if(currentTime >= returnTime)
+        if (autoReturnCoroutine != null)
+            StopCoroutine(autoReturnCoroutine);
+
+        ParticleSystem[] particles = GetComponentsInChildren<ParticleSystem>();
+        for(int i=0; i<particles.Length; ++i)
         {
-            Managers.SceneManagerCS.CurrentScene.ReturnObject(key, gameObject);
+            if (!particles[i].isStopped)
+                particles[i].Stop();
         }
     }
+
+    public void ReturnOrDestoryObject(ObjectPooler owner)
+    {
+        if (owner == null)
+            Destroy(gameObject);
+
+        owner.ReturnObject(name, gameObject);
+    }
+    public ObjectPooler ObjectPooler { get { return objectPooler; } }
+    #endregion
 }

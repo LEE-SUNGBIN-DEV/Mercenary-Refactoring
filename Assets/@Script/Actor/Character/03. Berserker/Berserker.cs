@@ -12,7 +12,7 @@ public class Berserker : BaseCharacter
         base.Awake();
         state = new BerserkerStateController(this);
         weapon = GetComponentInChildren<BerserkerWeapon>();
-        weapon.Initialize(this);
+        weapon.SetWeapon(this);
     }
 
     protected override void Start()

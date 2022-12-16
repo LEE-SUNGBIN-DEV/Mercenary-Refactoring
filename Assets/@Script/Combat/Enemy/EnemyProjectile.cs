@@ -2,44 +2,78 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyProjectile : EnemyCombatController
+public class EnemyProjectile : EnemyCombatController, IPoolObject
 {
     [Header("Enemy Projectile")]
     [SerializeField] private float speed;
-    [SerializeField] private string[] hitVFXKeys;
+    [SerializeField] private float duration;
+    private IEnumerator autoReturnCoroutine;
+    private ObjectPooler objectPooler;
 
-    private void OnEnable()
+    public void SetProjectile(BaseEnemy owner, float speed, Vector3 direction)
     {
-        if(combatCollider != null)
-            combatCollider.enabled = true;
-    }
-    private void Update()
-    {
-        transform.position += transform.forward * speed * Time.deltaTime;
-    }
-
-    protected override void OnTriggerEnter(Collider other)
-    {
-        base.OnTriggerEnter(other);
-        Debug.Log(other.gameObject.layer);
-        if (other.gameObject.layer == 6)
-        {
-            OnHitVFX(other);
-            Managers.SceneManagerCS.CurrentScene.ReturnObject(name, gameObject);
-        }
-    }
-    public void SetProjectile(float speed, Vector3 direction)
-    {
+        this.owner = owner;
         this.speed = speed;
         transform.forward = direction;
+        autoReturnCoroutine = CoAutoReturn();
     }
-    public virtual void OnHitVFX(Collider other)
+
+    private void Update()
     {
-        for(int i=0; i<hitVFXKeys.Length; ++i)
+        if (owner == null) Destroy(gameObject);
+        transform.position += speed * Time.deltaTime * transform.forward;
+    }
+
+    protected virtual void OnTriggerEnter(Collider other)
+    {
+        if (other != null)
+            ExecuteAttackProcess(other);
+
+        if (other.gameObject.layer == (int)PHYSICS_LAYER.Terrain)
         {
-            GameObject effect = Managers.SceneManagerCS.CurrentScene.RequestObject(hitVFXKeys[i]);
-            effect.transform.position = other.bounds.ClosestPoint(transform.position);
-            effect.transform.rotation = Quaternion.Euler(other.transform.rotation.eulerAngles);
+            OnHitWithTerrain(other);
+            ReturnOrDestoryObject(objectPooler);
         }
     }
+
+    public virtual void OnHitWithTerrain(Collider other)
+    {
+    }
+
+    public IEnumerator CoAutoReturn()
+    {
+        yield return new WaitForSeconds(duration);
+        ReturnOrDestoryObject(objectPooler);
+    }
+
+    #region IPoolObject Interface Fucntion
+    public void ActionAfterRequest(ObjectPooler owner)
+    {
+        objectPooler = owner;
+
+        if (combatCollider != null)
+            combatCollider.enabled = true;
+
+        if (autoReturnCoroutine != null)
+            StartCoroutine(autoReturnCoroutine);
+    }
+
+    public void ActionBeforeReturn()
+    {
+        if (combatCollider != null)
+            combatCollider.enabled = false;
+
+        if (autoReturnCoroutine != null)
+            StopCoroutine(autoReturnCoroutine);
+    }
+
+    public void ReturnOrDestoryObject(ObjectPooler owner)
+    {
+        if (owner == null)
+            Destroy(gameObject);
+
+        owner.ReturnObject(name, gameObject);
+    }
+    public ObjectPooler ObjectPooler { get { return objectPooler; } }
+    #endregion
 }

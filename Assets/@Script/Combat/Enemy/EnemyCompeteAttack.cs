@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnemyCompeteAttack : EnemyCombatController
+public class EnemyCompeteAttack : EnemyMeleeAttack
 {
     [Header("Enemy Compete Attack")]
     [SerializeField] private Transform playerCompetePoint;
@@ -12,16 +12,15 @@ public class EnemyCompeteAttack : EnemyCombatController
     private bool isCompeteReady;
     private ICompetable competableEnemy;
 
-    public override void Initialize()
+    public void SetCompeteAttack()
     {
-        base.Initialize();
         isCompeteReady = true;
         competableEnemy = owner as ICompetable;
     }
 
-    public override void ExecuteCombatProcess(Collider target)
+    protected override void ExecuteAttackProcess(Collider target)
     {
-        base.ExecuteCombatProcess(target);
+        base.ExecuteAttackProcess(target);
 
         if (target.TryGetComponent(out PlayerCombatController combatController))
         {

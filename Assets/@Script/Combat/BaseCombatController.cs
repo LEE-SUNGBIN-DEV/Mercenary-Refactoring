@@ -7,31 +7,26 @@ public abstract class BaseCombatController : MonoBehaviour
 {
     [Header("Base Combat Controller")]
     [SerializeField] protected HIT_TYPE combatType;
-    [SerializeField] protected CC_TYPE controlType;
+    [SerializeField] protected CROWD_CONTROL_TYPE crowdControlType;
     [SerializeField] protected float damageRatio;
     [SerializeField] protected Collider combatCollider;
-    protected bool isInitialized = false;
 
-    public virtual void Initialize()
+    private void Awake()
     {
-        if (isInitialized == false)
-        {
-            TryGetComponent(out combatCollider);
-            if (combatCollider != null)
-                combatCollider.enabled = false;
-
-            isInitialized = true;
-        }
+        TryGetComponent(out combatCollider);
+        if (combatCollider != null)
+            combatCollider.enabled = false;
     }
-    public void SetCombatController(HIT_TYPE combatType, CC_TYPE controlType, float damageRatio)
+
+    public void SetCombatController(HIT_TYPE combatType, CROWD_CONTROL_TYPE controlType, float damageRatio)
     {
         this.combatType = combatType;
-        this.controlType = controlType;
+        this.crowdControlType = controlType;
         this.damageRatio = damageRatio;
     }
 
     public HIT_TYPE CombatType { get { return combatType; } }
-    public CC_TYPE ControlType { get { return controlType; } }
+    public CROWD_CONTROL_TYPE CrowdControlType { get { return crowdControlType; } }
     public float DamageRatio { get { return damageRatio; } }
     public Collider CombatCollider { get { return combatCollider; } }
 }

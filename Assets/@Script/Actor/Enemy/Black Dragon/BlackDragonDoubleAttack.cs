@@ -12,8 +12,8 @@ public class BlackDragonDoubleAttack : EnemySkill
         OnRightClaw,
         OffRightClaw
     }
-    [SerializeField] private EnemyCombatController leftClaw;
-    [SerializeField] private EnemyCombatController rightClaw;
+    [SerializeField] private EnemyMeleeAttack leftClaw;
+    [SerializeField] private EnemyMeleeAttack rightClaw;
 
     public override void Initialize(BaseEnemy owner)
     {
@@ -21,10 +21,10 @@ public class BlackDragonDoubleAttack : EnemySkill
         cooldown = 16f;
         maxRange = 8f;
 
-        leftClaw = Functions.FindChild<EnemyCombatController>(gameObject, "Left Claw Controller", true);
-        rightClaw = Functions.FindChild<EnemyCombatController>(gameObject, "Right Claw Controller", true);
-        leftClaw.Initialize(owner);
-        rightClaw.Initialize(owner);
+        leftClaw = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Left Claw Controller", true);
+        rightClaw = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Right Claw Controller", true);
+        leftClaw.SetMeleeAttack(owner);
+        rightClaw.SetMeleeAttack(owner);
     }
 
     public override void ActiveSkill()
@@ -40,7 +40,7 @@ public class BlackDragonDoubleAttack : EnemySkill
         {
             case SKILL_STATE.OnLeftClaw:
                 {
-                    leftClaw.SetCombatController(HIT_TYPE.Light, CC_TYPE.None, 1f);
+                    leftClaw.SetCombatController(HIT_TYPE.Light, CROWD_CONTROL_TYPE.None, 1f);
                     leftClaw.CombatCollider.enabled = true;
                     break;
                 }
@@ -59,7 +59,7 @@ public class BlackDragonDoubleAttack : EnemySkill
                 {
                     owner.SetMaterial("Default");
                     owner.MeshRenderer.material.color = Color.white;
-                    rightClaw.SetCombatController(HIT_TYPE.Heavy, CC_TYPE.Stun, 2f);
+                    rightClaw.SetCombatController(HIT_TYPE.Heavy, CROWD_CONTROL_TYPE.Stun, 2f);
                     rightClaw.CombatCollider.enabled = true;
                     break;
                 }
