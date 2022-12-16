@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class UIManager
 {
-    public event UnityAction<bool> InteractPlayer;
     public event UnityAction<string> OnRequestNotice;
 
     private UICommonScene commonSceneUI;

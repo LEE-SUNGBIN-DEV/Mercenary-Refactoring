@@ -31,7 +31,7 @@ public class ObjectPool
     }
 }
 [System.Serializable]
-public class ObjectPoolController
+public class ObjectPooler
 {
     private Transform rootTransform;
     private Dictionary<string, ObjectPool> objectPoolDictionary = new Dictionary<string, ObjectPool>();
@@ -66,16 +66,23 @@ public class ObjectPoolController
     public GameObject RequestObject(string key)
     {
         if(!objectPoolDictionary[key].queue.TryDequeue(out GameObject requestObject))
-        {
             requestObject = objectPoolDictionary[key].CreateAndEnqueueObject(rootTransform);
-            Debug.Log("New");
-        }
+
+        requestObject.transform.SetParent(null);
         requestObject.SetActive(true);
+
+        if (requestObject.TryGetComponent(out IPoolObject poolObject))
+            poolObject.ActionAfterRequest(this);
+
         return requestObject;
     }
     public void ReturnObject(string key, GameObject returnObject)
     {
-        returnObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.Euler(Vector3.zero));
+        if(returnObject.TryGetComponent(out IPoolObject poolObject))
+            poolObject.ActionBeforeReturn();
+
+        returnObject.transform.position = Vector3.zero;
+        returnObject.transform.SetParent(rootTransform);
         returnObject.SetActive(false);
         objectPoolDictionary[key].queue.Enqueue(returnObject);
     }

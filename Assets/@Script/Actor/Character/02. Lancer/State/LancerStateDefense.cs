@@ -28,7 +28,7 @@ public class LancerStateDefense : ICharacterState
                 lancer.Shield.OnSetWeapon(PLAYER_ATTACK_TYPE.PlayerDefense);
             }
 
-            character.IsInvincible = true;
+            character.HitState = HIT_STATE.Invincible;
             isDefense = true;
             character.Animator.SetBool("isDefense", true);
         }
@@ -48,7 +48,7 @@ public class LancerStateDefense : ICharacterState
     }
     public void Exit(BaseCharacter character)
     {
-        character.IsInvincible = false;
+        character.HitState = HIT_STATE.Idle;
         isDefense = false;
         character.Animator.SetBool("isDefense", false);
         character.Animator.SetBool("isParryingAttack", false);

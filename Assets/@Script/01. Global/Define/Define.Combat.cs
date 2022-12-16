@@ -10,18 +10,19 @@ public enum HIT_TYPE
 }
 public enum HIT_STATE
 {
-    Invincible = 0,
     Idle = 1,
     LightHit = 2,
     HeavyHit = 4,
+    Invincible = 1024,
+    Die = 2048
 }
 
-public enum CC_TYPE
+public enum CROWD_CONTROL_TYPE
 {
     None = 0,
     Stun = 1,
 }
-public enum CC_STATE
+public enum CROWD_CONTROL_STATE
 {
     None = 0,
     Stun = 1,

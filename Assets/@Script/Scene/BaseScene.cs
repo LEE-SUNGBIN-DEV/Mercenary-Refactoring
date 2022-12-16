@@ -7,7 +7,7 @@ public class BaseScene : MonoBehaviour
     [SerializeField] protected string mapName;
     [SerializeField] protected SCENE_TYPE sceneType;
     [SerializeField] protected SCENE_LIST scene;
-    [SerializeField] protected ObjectPoolController objectPoolController = new ObjectPoolController();
+    [SerializeField] protected ObjectPooler objectPooler = new ObjectPooler();
 
     protected virtual void Awake()
     {
@@ -28,7 +28,7 @@ public class BaseScene : MonoBehaviour
     public virtual void Initialize()
     {
         Managers.SceneManagerCS.CurrentScene = this;
-        objectPoolController.Initialize(transform);
+        objectPooler.Initialize(transform);
     }
 
     public virtual void ExitScene()
@@ -37,15 +37,15 @@ public class BaseScene : MonoBehaviour
     }
     public void RegisterObject(string key, int amount)
     {
-        objectPoolController.RegisterObject(key, amount);
+        objectPooler.RegisterObject(key, amount);
     }
     public GameObject RequestObject(string key)
     {
-        return objectPoolController.RequestObject(key);
+        return objectPooler.RequestObject(key);
     }
     public void ReturnObject(string key, GameObject returnObject)
     {
-        objectPoolController.ReturnObject(key, returnObject);
+        objectPooler.ReturnObject(key, returnObject);
     }
 
     #region Property

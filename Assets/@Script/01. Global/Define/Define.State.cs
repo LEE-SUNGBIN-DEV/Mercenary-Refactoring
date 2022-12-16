@@ -6,9 +6,12 @@ public enum CHARACTER_STATE
     Defense = 3,
     Skill = 4,
     Roll = 5,
+
     Hit = 6,
     HeavyHit = 7,
+
     Stun = 8,
+
     Compete = 9,
     Die = 10,
 

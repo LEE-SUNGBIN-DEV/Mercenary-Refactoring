@@ -15,7 +15,7 @@ public class BlackDragonFireBall : EnemySkill
         maxRange = 30f;
 
         muzzle = Functions.FindChild<Transform>(gameObject, "Muzzle", true);
-        Managers.SceneManagerCS.CurrentScene.RegisterObject("Prefab_Projectile_Enemy_Fire_Ball", 3);
+        owner.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Fire_Ball, 2);
     }
 
     public override bool CheckCondition(float targetDistance)
@@ -26,23 +26,20 @@ public class BlackDragonFireBall : EnemySkill
     public override void ActiveSkill()
     {
         base.ActiveSkill();
-        StartCoroutine(OnLandBreath());
+        Owner.Animator.SetTrigger("doFireBall");
     }
 
-    public IEnumerator OnLandBreath()
+    #region Animation Event Function
+    private void OnFireBall()
     {
-        Owner.Animator.SetTrigger("doFireBall");
-        yield return new WaitUntil(() =>
-        owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Fire Ball") && owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.428f);
-        
-        GameObject fireBall = Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Projectile_Enemy_Fire_Ball");
+        GameObject fireBall = owner.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Fire_Ball);
         fireBall.transform.position = muzzle.transform.position;
 
         if (fireBall.TryGetComponent(out EnemyProjectile projectile))
         {
-            projectile.Initialize(owner);
-            projectile.SetCombatController(HIT_TYPE.Heavy, CC_TYPE.None, 1.5f);
-            projectile.SetProjectile(15f, transform.forward);
+            projectile.SetCombatController(HIT_TYPE.Heavy, CROWD_CONTROL_TYPE.None, 1.5f);
+            projectile.SetProjectile(owner, 20f, transform.forward);
         }
     }
+    #endregion
 }

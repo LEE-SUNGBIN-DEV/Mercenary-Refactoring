@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class LancerShield : PlayerCombatController
 {
-    public override void Initialize(BaseCharacter character)
+    public override void SetWeapon(BaseCharacter character)
     {
-        base.Initialize(character);
+        base.SetWeapon(character);
         ratioDictionary = new Dictionary<PLAYER_ATTACK_TYPE, float>()
         {
             // Default

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BlackDragonLandBreath : EnemySkill
 {
+    public enum SKILL_STATE
+    {
+        OnBreath,
+        OffBreath,
+    }
     [SerializeField] private EnemyBreath breath;
 
     public override void Initialize(BaseEnemy owner)
@@ -13,26 +18,31 @@ public class BlackDragonLandBreath : EnemySkill
         maxRange = 15f;
 
         breath = Functions.FindChild<EnemyBreath>(gameObject, "Breath Controller", true);
-        breath.Initialize(owner);
+
+        owner.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Breath, 15);
+        owner.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Flame_Area, 15);
     }
 
     public override void ActiveSkill()
     {
         base.ActiveSkill();
-        StartCoroutine(OnLandBreath());
-    }
-
-    public IEnumerator OnLandBreath()
-    {
         Owner.Animator.SetTrigger("doLandBreath");
-        yield return new WaitUntil(() =>
-        owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Land Breath") && owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.1729f);
-        breath.SetCombatController(HIT_TYPE.Light, CC_TYPE.None, 1f);
-        breath.SetRay(20f, 0.15f);
-        StartCoroutine(breath.RayCoroutine);
-
-        yield return new WaitUntil(() =>
-        owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Land Breath") && owner.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.5413f);
-        StopCoroutine(breath.RayCoroutine);
     }
+
+    #region Animation Event Function
+    private void OnLandBreath(SKILL_STATE skillState)
+    {
+        switch(skillState)
+        {
+            case SKILL_STATE.OnBreath:
+                breath.SetCombatController(HIT_TYPE.Light, CROWD_CONTROL_TYPE.None, 1f);
+                breath.SetRayAttack(owner, 20f, 0.15f);
+                StartCoroutine(breath.RayCoroutine);
+                break;
+            case SKILL_STATE.OffBreath:
+                StopCoroutine(breath.RayCoroutine);
+                break;
+        }
+    }
+    #endregion
 }

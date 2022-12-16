@@ -1,4 +1,4 @@
-#define TEST
+#define EDITOR_TEST
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,22 +9,25 @@ public abstract class BaseCharacter : BaseActor
 {
     [Header("Base Character")]
     [SerializeField] protected CharacterData characterData;
-    [SerializeField] private Vector3 cameraOffset;
+    [SerializeField] protected Vector3 cameraOffset;
 
     protected PlayerCamera playerCamera;
     protected PlayerInput playerInput;
     protected CharacterController characterController;
     protected CharacterStateController state;
-    protected bool isInvincible;
 
     public override void Awake()
     {
         base.Awake();
         TryGetComponent(out characterController);
 
-        isInvincible = false;
         playerInput = new PlayerInput();
-#if TEST
+
+#if EDITOR_TEST
+#else
+        characterData = Managers.DataManager.SelectCharacterData;
+        Managers.DataManager.SavePlayerData();
+#endif
         StatusData.OnCharacterStatusChanged -= SetAttackSpeed;
         StatusData.OnCharacterStatusChanged += SetAttackSpeed;
 
@@ -32,26 +35,9 @@ public abstract class BaseCharacter : BaseActor
         StatusData.OnDie += OnDie;
 
         SetAttackSpeed(StatusData);
-#else
-        characterData = Managers.DataManager.SelectCharacterData;
-        state = new CharacterState(this);
-
-        StatusData.OnCharacterStatusChanged -= SetAttackSpeed;
-        StatusData.OnCharacterStatusChanged += SetAttackSpeed;
-
-        StatusData.OnDie -= Die;
-        StatusData.OnDie += Die;
-
-        SetAttackSpeed(StatusData);
-
-        Managers.DataManager.SavePlayerData();
-#endif
     }
     protected virtual void OnEnable()
     {
-        Managers.UIManager.InteractPlayer -= SetInteract;
-        Managers.UIManager.InteractPlayer += SetInteract;
-
         Rebirth();
     }
     protected virtual void Start()
@@ -144,7 +130,7 @@ public abstract class BaseCharacter : BaseActor
     #region Animation Event
     public void SwitchCharacterState(CHARACTER_STATE targetState)
     {
-        State.SwitchCharacterState(targetState);
+        state.SwitchCharacterState(targetState);
     }
     #endregion
 
@@ -157,7 +143,6 @@ public abstract class BaseCharacter : BaseActor
     public UserQuestData QuestData { get { return characterData?.QuestData; } }
 
     public CharacterStateController State { get { return state; } }
-    public bool IsInvincible { get { return isInvincible; } set { isInvincible = value; } }
 
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }

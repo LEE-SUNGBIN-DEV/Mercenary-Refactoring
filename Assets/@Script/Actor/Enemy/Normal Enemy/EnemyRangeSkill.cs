@@ -7,11 +7,6 @@ public class EnemyRangeSkill : EnemySkill
     [SerializeField] private GameObject muzzle;
     [SerializeField] private string key;
 
-    private void Awake()
-    {
-        isReady = true;
-    }
-
     public override void ActiveSkill()
     {
         base.ActiveSkill();
@@ -19,14 +14,13 @@ public class EnemyRangeSkill : EnemySkill
     }
 
     #region Animation Event Function
-    public void OnProjectile()
+    private void OnRangeAttack()
     {
-        GameObject projectile = Managers.SceneManagerCS.CurrentScene.RequestObject(key);
-        projectile.transform.position = muzzle.transform.position;
-
-        EnemyProjectile monsterProjectile = projectile.GetComponent<EnemyProjectile>();
-        monsterProjectile.Owner = GetComponent<BaseEnemy>();
-        monsterProjectile.transform.forward = transform.forward;
+        if(owner.ObjectPooler.RequestObject(key).TryGetComponent(out EnemyProjectile enemyProjectile))
+        {
+            enemyProjectile.transform.position = muzzle.transform.position;
+            enemyProjectile.SetProjectile(owner, 5f, transform.forward);
+        }
     }
     #endregion
 }

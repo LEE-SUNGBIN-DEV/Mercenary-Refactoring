@@ -28,7 +28,7 @@ public class CharacterStateRoll : ICharacterState
         character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
         // Set Roll State
-        character.gameObject.tag = Constants.TAG_INVINCIBILITY;
+        character.HitState = HIT_STATE.Invincible;
         character.Animator.SetTrigger("doRoll");
     }
 

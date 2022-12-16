@@ -9,15 +9,15 @@ public class BlackDragonLeftClaw : EnemySkill
         OnLeftClaw,
         OffLeftClaw
     }
-    [SerializeField] private EnemyCombatController leftClaw;
+    [SerializeField] private EnemyMeleeAttack leftClaw;
 
     public override void Initialize(BaseEnemy owner)
     {
         base.Initialize(owner);
         cooldown = 8f;
         maxRange = 8f;
-        leftClaw = Functions.FindChild<EnemyCombatController>(gameObject, "Left Claw Controller", true);
-        leftClaw.Initialize(owner);
+        leftClaw = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Left Claw Controller", true);
+        leftClaw.SetMeleeAttack(owner);
     }
 
     public override void ActiveSkill()
@@ -33,7 +33,7 @@ public class BlackDragonLeftClaw : EnemySkill
         {
             case SKILL_STATE.OnLeftClaw:
                 {
-                    leftClaw.SetCombatController(HIT_TYPE.Light, CC_TYPE.None, 1f);
+                    leftClaw.SetCombatController(HIT_TYPE.Light, CROWD_CONTROL_TYPE.None, 1f);
                     leftClaw.CombatCollider.enabled = true;
                     return;
                 }

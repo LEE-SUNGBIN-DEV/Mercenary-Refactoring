@@ -13,8 +13,8 @@ public class Lancer : BaseCharacter
         state = new LancerStateController(this);
         spear = GetComponentInChildren<LancerWeapon>();
         shield = GetComponentInChildren<LancerShield>();
-        spear.Initialize(this);
-        shield.Initialize(this);
+        spear.SetWeapon(this);
+        shield.SetWeapon(this);
     }
 
     protected override void Start()

@@ -1099,85 +1099,85 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: isDown
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doSpawn
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doStorm
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doFlyBreath
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doLandBreath
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doFireBall
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doLeftClaw
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doRightClaw
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doDoubleClaw
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doCompete
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doCompeteAttack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doStun
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: doDie
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -1811,7 +1811,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Storm
+  m_Name: Skill_Storm
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -1869,13 +1869,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1720100882507534355}
-    m_Position: {x: 570, y: -220, z: 0}
+    m_Position: {x: 570, y: -170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1042418053688106380}
-    m_Position: {x: 570, y: -270, z: 0}
+    m_Position: {x: 570, y: -220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2203708765848273947}
-    m_Position: {x: 570, y: -320, z: 0}
+    m_Position: {x: 570, y: -270, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3971706627155128832}
     m_Position: {x: -620, y: -170, z: 0}
@@ -1893,13 +1893,13 @@ AnimatorStateMachine:
     m_Position: {x: 570, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2950177828149963780}
-    m_Position: {x: 570, y: -120, z: 0}
+    m_Position: {x: 570, y: -380, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6091818402781839613}
     m_Position: {x: -410, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4615118744350306744}
-    m_Position: {x: 570, y: -170, z: 0}
+    m_Position: {x: 570, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6888437890143419817}
     m_Position: {x: -410, y: 240, z: 0}
@@ -1974,7 +1974,7 @@ AnimatorStateMachine:
     m_Position: {x: 1060, y: -460, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8060140223880296906}
-    m_Position: {x: 570, y: -370, z: 0}
+    m_Position: {x: 570, y: -320, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -1134816216430443627}
@@ -2156,7 +2156,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fly Breath
+  m_Name: Skill_Fly_Breath
   m_Speed: 1.2
   m_CycleOffset: 0
   m_Transitions:
