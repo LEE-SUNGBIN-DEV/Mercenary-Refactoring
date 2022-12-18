@@ -35,7 +35,7 @@ public abstract class PlayerCombatController : BaseCombatController
             if(hitbox.Owner != null)
             {
                 // 01 Invincibility Process
-                if (hitbox.Owner.HitState == HIT_STATE.Invincible)
+                if (hitbox.Owner.IsInvincible)
                     return;
 
                 // 02 Prevent Duplicate Damage Process
@@ -55,7 +55,7 @@ public abstract class PlayerCombatController : BaseCombatController
                 switch (combatType)
                 {
                     case HIT_TYPE.Light:
-                        hitbox.Owner.OnHit();
+                        hitbox.Owner.OnLightHit();
                         break;
                     case HIT_TYPE.Heavy:
                         hitbox.Owner.OnHeavyHit();
@@ -65,9 +65,9 @@ public abstract class PlayerCombatController : BaseCombatController
                 // 06 CC Process
                 switch (crowdControlType)
                 {
-                    case CROWD_CONTROL_TYPE.None:
+                    case ABNORMAL_STATE.None:
                         break;
-                    case CROWD_CONTROL_TYPE.Stun:
+                    case ABNORMAL_STATE.Stun:
                         hitbox.Owner.OnStun();
                         break;
                 }

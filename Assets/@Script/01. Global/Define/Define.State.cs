@@ -6,14 +6,13 @@ public enum CHARACTER_STATE
     Defense = 3,
     Skill = 4,
     Roll = 5,
+    StandRoll = 6,
 
-    Hit = 6,
-    HeavyHit = 7,
+    LightHit = 512,
+    HeavyHit = 513,
 
-    Stun = 8,
-
-    Compete = 9,
-    Die = 10,
+    Compete = 1024,
+    Die = 2048,
 
     // Lancer
     // Berserker
@@ -27,14 +26,22 @@ public enum CHARACTER_STATE_WEIGHT
     Defense = 2,
     Counter = 3,
     Roll = 4,
-    Hit = 5,
-    HeavyHit = 6,
-    Stun = 7,
-    Compete = 8,
-    Die = 9,
+    StandRoll = 4,
+
+    LightHit = 512,
+    HeavyHit = 513,
+
+    Compete = 1024,
+    Die = 2048,
 
     // Lancer
     // Berserker
+}
+
+public enum ABNORMAL_STATE
+{
+    None = 0,
+    Stun = 1,
 }
 
 public enum INPUT_STATE

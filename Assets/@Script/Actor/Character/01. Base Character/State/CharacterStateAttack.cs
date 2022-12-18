@@ -30,7 +30,7 @@ public class CharacterStateAttack : ICharacterState
             character.transform.rotation = Quaternion.Lerp(character.transform.rotation, Quaternion.LookRotation(lookDirection), 10f * Time.deltaTime);
 
             isAttack = true;
-            character.Animator.SetBool("isComboAttack", !character.PlayerInput.IsMouseLeftUp);
+            character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMBO_ATTACK, !character.PlayerInput.IsMouseLeftUp);
         }
 
         // Smash Attack
@@ -39,7 +39,7 @@ public class CharacterStateAttack : ICharacterState
             if (character.PlayerInput.IsMouseRightDown || character.PlayerInput.IsMouseRightUp)
             {
                 isAttack = true;
-                character.Animator.SetBool("isSmashAttack", !character.PlayerInput.IsMouseRightUp);
+                character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_SMASH_ATTACK, !character.PlayerInput.IsMouseRightUp);
             }
         }
     }
@@ -47,14 +47,11 @@ public class CharacterStateAttack : ICharacterState
     public void Exit(BaseCharacter character)
     {
         isAttack = false;
-        character.Animator.SetBool("isComboAttack", false);
-        character.Animator.SetBool("isSmashAttack", false);
+        character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMBO_ATTACK, false);
+        character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_SMASH_ATTACK, false);
     }
 
     #region Property
-    public int StateWeight
-    {
-        get => stateWeight;
-    }
+    public int StateWeight { get => stateWeight; }
     #endregion
 }

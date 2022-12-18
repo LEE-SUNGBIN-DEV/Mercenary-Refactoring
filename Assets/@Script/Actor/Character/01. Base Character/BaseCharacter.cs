@@ -14,7 +14,7 @@ public abstract class BaseCharacter : BaseActor
     protected PlayerCamera playerCamera;
     protected PlayerInput playerInput;
     protected CharacterController characterController;
-    protected CharacterStateController state;
+    [SerializeField] protected CharacterStateController state;
 
     public override void Awake()
     {
@@ -28,13 +28,13 @@ public abstract class BaseCharacter : BaseActor
         characterData = Managers.DataManager.SelectCharacterData;
         Managers.DataManager.SavePlayerData();
 #endif
-        StatusData.OnCharacterStatusChanged -= SetAttackSpeed;
-        StatusData.OnCharacterStatusChanged += SetAttackSpeed;
+        StatusData.OnCharacterStatusChanged -= AdjustAttackSpeed;
+        StatusData.OnCharacterStatusChanged += AdjustAttackSpeed;
 
         StatusData.OnDie -= OnDie;
         StatusData.OnDie += OnDie;
 
-        SetAttackSpeed(StatusData);
+        AdjustAttackSpeed(StatusData);
     }
     protected virtual void OnEnable()
     {
@@ -52,22 +52,27 @@ public abstract class BaseCharacter : BaseActor
         AutoRecoverStamina();
     }
 
+    public void Rebirth()
+    {
+
+    }
+
     public virtual void OnHit()
     {
-        SwitchCharacterState(CHARACTER_STATE.Hit);
+        state?.TrySwitchCharacterState(CHARACTER_STATE.LightHit);
     }
     public virtual void OnHeavyHit()
     {
-        SwitchCharacterState(CHARACTER_STATE.HeavyHit);
+        state?.TrySwitchCharacterState(CHARACTER_STATE.HeavyHit);
     }
-    public virtual void OnStun()
+    public virtual void OnStun(float duration)
     {
-        SwitchCharacterState(CHARACTER_STATE.Stun);
+        AddAbnormalState(ABNORMAL_STATE.Stun, duration);
     }
     public virtual void OnCompete() { }
     public virtual void OnDie(StatusData characterStats) { }
 
-    public abstract CHARACTER_STATE DetermineCharacterState();
+    public abstract CHARACTER_STATE NextCharacterState();
 
     public void DamageProcess(BaseEnemy enemy, float ratio)
     {
@@ -100,7 +105,7 @@ public abstract class BaseCharacter : BaseActor
         damage *= damageRange;
 
         enemy.EnemyData.CurrentHP -= damage;
-        if(Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Floating_Damage_Text").TryGetComponent(out FloatingDamageText floatingDamageText))
+        if(Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.Prefab_Floating_Damage_Text).TryGetComponent(out FloatingDamageText floatingDamageText))
         {
             floatingDamageText.SetDamageText(isCritical, damage, enemy.transform.position);
         }
@@ -109,20 +114,11 @@ public abstract class BaseCharacter : BaseActor
             Managers.EventManager.OnKillEnemy?.Invoke(this, enemy);
     }
 
-    public void Rebirth()
-    {
-
-    }
-
-    // !! 스태미나 자동 회복
     public void AutoRecoverStamina()
     {
         characterData.StatusData.CurrentSP += (characterData.StatusData.MaxSP * Constants.CHARACTER_STAMINA_AUTO_RECOVERY * 0.01f * Time.deltaTime);
     }
-    public void SetInteract(bool isInteract)
-    {
-    }
-    public void SetAttackSpeed(StatusData statusData)
+    public void AdjustAttackSpeed(StatusData statusData)
     {
         animator.SetFloat("attackSpeed", statusData.AttackSpeed);
     }
@@ -130,6 +126,7 @@ public abstract class BaseCharacter : BaseActor
     #region Animation Event
     public void SwitchCharacterState(CHARACTER_STATE targetState)
     {
+        playerInput?.Initialize();
         state.SwitchCharacterState(targetState);
     }
     #endregion

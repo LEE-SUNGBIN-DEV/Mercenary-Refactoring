@@ -45,4 +45,27 @@ public static partial class Constants
 
     public static readonly int CHARACTER_DATA_DEFAULT_MONEY = 500;
     public static readonly uint CHARACTER_DATA_MAIN_QUEST_PROGRESS = 0;
+
+    // Animator
+    public static readonly string ANIMATOR_PARAMETERS_FLOAT_MOVE = "moveFloat";
+
+    public static readonly string ANIMATOR_PARAMETERS_BOOL_COMBO_ATTACK = "isComboAttack";
+    public static readonly string ANIMATOR_PARAMETERS_BOOL_SMASH_ATTACK = "isSmashAttack";
+
+    public static readonly string ANIMATOR_PARAMETERS_BOOL_DEFENSE = "isDefense";
+    public static readonly string ANIMATOR_PARAMETERS_BOOL_BREAKED = "isBreaked";
+    public static readonly string ANIMATOR_PARAMETERS_BOOL_PARRYING = "isParrying";
+    public static readonly string ANIMATOR_PARAMETERS_BOOL_PARRYING_ATTACK = "isParryingAttack";
+
+    public static readonly string ANIMATOR_PARAMETERS_BOOL_STUN = "isStun";
+
+    public static readonly string ANIMATOR_PARAMETERS_TRIGGER_LIGHT_HIT = "doLightHit";
+    public static readonly string ANIMATOR_PARAMETERS_TRIGGER_HEAVY_HIT = "doHeavyHit";
+    public static readonly string ANIMATOR_PARAMETERS_BOOL_DOWN = "isDown";
+    public static readonly string ANIMATOR_PARAMETERS_TRIGGER_ROLL = "doRoll";
+    public static readonly string ANIMATOR_PARAMETERS_TRIGGER_STAND_ROLL = "doStandRoll";
+    public static readonly string ANIMATOR_PARAMETERS_TRIGGER_COUNTER = "doCounter";
+
+    public static readonly string ANIMATOR_PARAMETERS_TRIGGER_COMPETE = "doCompete";
+    public static readonly string ANIMATOR_PARAMETERS_TRIGGER_DIE = "doDie";
 }

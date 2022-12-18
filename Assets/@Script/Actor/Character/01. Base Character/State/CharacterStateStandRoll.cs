@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateRoll : ICharacterState
+public class CharacterStateStandRoll : ICharacterState
 {
     public int stateWeight;
     private Vector3 moveInput;
@@ -10,15 +10,13 @@ public class CharacterStateRoll : ICharacterState
     private Vector3 horizontalDirection;
     private Vector3 moveDirection;
 
-    public CharacterStateRoll()
+    public CharacterStateStandRoll()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Roll;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.StandRoll;
     }
 
     public void Enter(BaseCharacter character)
     {
-        character.StatusData.CurrentSP -= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL;
-
         // 키보드 입력 방향으로 회피
         moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
         verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
@@ -27,9 +25,8 @@ public class CharacterStateRoll : ICharacterState
 
         character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
-        // Set Roll State
         character.IsInvincible = true;
-        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_ROLL);
+        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_STAND_ROLL);
     }
 
     public void Update(BaseCharacter character)

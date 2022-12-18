@@ -19,7 +19,7 @@ public class TaskEnemySpawn : BehaviourNode
         if (!isCalled)
         {
             isCalled = true;
-            enemy.HitState = HIT_STATE.Invincible;
+            enemy.IsInvincible = true;
             enemy.Animator.SetTrigger("doSpawn");
         }
         state = NODE_STATE.Success;

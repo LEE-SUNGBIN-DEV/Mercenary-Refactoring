@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateStun : ICharacterState
+public class CharacterStateLightHit : ICharacterState
 {
     private int stateWeight;
 
-    public CharacterStateStun()
+    public CharacterStateLightHit()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Stun;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.LightHit;
     }
 
     public void Enter(BaseCharacter character)
     {
-        character.Animator.SetTrigger("doStun");
+        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_LIGHT_HIT);
     }
 
     public void Update(BaseCharacter character)
@@ -25,9 +25,6 @@ public class CharacterStateStun : ICharacterState
     }
 
     #region Property
-    public int StateWeight
-    {
-        get => stateWeight;
-    }
+    public int StateWeight { get => stateWeight; }
     #endregion
 }

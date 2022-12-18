@@ -11,25 +11,34 @@ public abstract class EnemyCombatController : BaseCombatController
     {
         if (target.TryGetComponent(out BaseCharacter character))
         {
-            if (character.HitState == HIT_STATE.Invincible)
+            if (character.IsInvincible)
             {
                 return;
             }
 
             owner.DamageProcess(character, damageRatio);
+
+            // CC Process
+            switch (crowdControlType)
+            {
+                case ABNORMAL_STATE.Stun:
+                    character.OnStun(7f);
+                    break;
+
+                default:
+                    break;
+            }
+
+            // Hit Process
             switch (combatType)
             {
                 case HIT_TYPE.Light:
-                    {
-                        character.OnHit();
-                        break;
-                    }
+                    character.OnHit();
+                    break;
                 case HIT_TYPE.Heavy:
-                    {
-                        character.OnHeavyHit();
-                        break;
-                    }
-            }
+                    character.OnHeavyHit();
+                    break;
+            }            
         }
     }
 
