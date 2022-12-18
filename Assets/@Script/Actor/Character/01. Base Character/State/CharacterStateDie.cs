@@ -13,7 +13,7 @@ public class CharacterStateDie : ICharacterState
 
     public void Enter(BaseCharacter character)
     {
-        character.Animator.SetTrigger("doDie");
+        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_DIE);
     }
 
     public void Update(BaseCharacter character)
@@ -25,9 +25,6 @@ public class CharacterStateDie : ICharacterState
     }
 
     #region Property
-    public int StateWeight
-    {
-        get => stateWeight;
-    }
+    public int StateWeight { get => stateWeight; }
     #endregion
 }

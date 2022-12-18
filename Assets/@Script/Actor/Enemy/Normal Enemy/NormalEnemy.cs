@@ -24,7 +24,7 @@ public class NormalEnemy : BaseEnemy
     }
 
     #region Override Function   
-    public override void OnHit()
+    public override void OnLightHit()
     {
         Animator.SetTrigger("doHit");
     }

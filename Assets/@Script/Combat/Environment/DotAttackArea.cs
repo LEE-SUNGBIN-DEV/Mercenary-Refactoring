@@ -23,15 +23,9 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
     {
         if (target.TryGetComponent(out BaseCharacter character))
         {
-            switch (character.HitState)
+            if(character.IsInvincible == false)
             {
-                case HIT_STATE.Invincible:
-                    return;
-                case HIT_STATE.Idle:
-                case HIT_STATE.LightHit:
-                case HIT_STATE.HeavyHit:
-                    character.StatusData.CurrentHP -= (character.StatusData.MaxHP * damageRatio * 0.01f);
-                    return;
+                character.StatusData.CurrentHP -= (character.StatusData.MaxHP * damageRatio * 0.01f);
             }
         }
     }

@@ -27,7 +27,7 @@ public class CharacterStateCounter : ICharacterState
             moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
             character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
-            character.Animator.SetTrigger("doCounter");
+            character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COUNTER);
     }
 
     public void Update(BaseCharacter character)
@@ -39,9 +39,6 @@ public class CharacterStateCounter : ICharacterState
     }
 
     #region Property
-    public int StateWeight
-    {
-        get => stateWeight;
-    }
+    public int StateWeight { get => stateWeight; }
     #endregion
 }

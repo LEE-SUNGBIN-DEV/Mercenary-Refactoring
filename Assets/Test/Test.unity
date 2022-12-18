@@ -564,7 +564,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860411513}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -19.23}
+  m_LocalPosition: {x: 1.74, y: 1, z: -1.02}
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatType: 0
-  controlType: 0
+  crowdControlType: 0
   damageRatio: 0
   combatCollider: {fileID: 0}
 --- !u!65 &874502022
@@ -968,7 +968,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatType: 0
-  controlType: 0
+  crowdControlType: 0
   damageRatio: 0
   combatCollider: {fileID: 0}
   owner: {fileID: 0}
@@ -1050,7 +1050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatType: 0
-  controlType: 0
+  crowdControlType: 0
   damageRatio: 0
   combatCollider: {fileID: 0}
   owner: {fileID: 0}
@@ -2249,8 +2249,8 @@ MonoBehaviour:
     value: {fileID: 2100000, guid: 0e747a4c98ceb6d4ba9b91f9ced8922e, type: 2}
   objectPooler:
     objectPoolList: []
-  hitState: 0
-  ccState: 0
+  isDie: 0
+  isInvincible: 0
   enemyData:
     enemyID: 0
     enemyName: Black Dragon
@@ -2517,7 +2517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatType: 0
-  controlType: 0
+  crowdControlType: 0
   damageRatio: 0
   combatCollider: {fileID: 0}
   owner: {fileID: 0}
@@ -2611,7 +2611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combatType: 0
-  controlType: 0
+  crowdControlType: 0
   damageRatio: 0
   combatCollider: {fileID: 0}
   owner: {fileID: 0}
@@ -4804,6 +4804,7 @@ GameObject:
   - component: {fileID: 7083001945567103557}
   - component: {fileID: 7083001945567103555}
   - component: {fileID: 7083001945567103556}
+  - component: {fileID: 7083001945567103558}
   m_Layer: 7
   m_Name: Berserker
   m_TagString: Player
@@ -6698,8 +6699,8 @@ MonoBehaviour:
   materialContainers: []
   objectPooler:
     objectPoolList: []
-  hitState: 1
-  ccState: 0
+  isDie: 0
+  isInvincible: 0
   characterData:
     statusData:
       characterClass: Berserker
@@ -6748,7 +6749,23 @@ MonoBehaviour:
       mainQuestPrograss: 0
       questSaveList: []
   cameraOffset: {x: 0, y: 2, z: 0}
+  state:
+    character: {fileID: 0}
   weapon: {fileID: 0}
+--- !u!114 &7083001945567103558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4602710455417309827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5a78428f3599540a689ac02c8e2fb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioAmount: 5
+  sfxPlayers: []
 --- !u!1 &7096544642631919258
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,8 +9,9 @@ public abstract class BaseActor : MonoBehaviour
     [SerializeField] protected MaterialContainer[] materialContainers;
     [SerializeField] protected ObjectPooler objectPooler = new ObjectPooler();
 
-    [SerializeField] protected HIT_STATE hitState;
-    [SerializeField] protected int crowdControlState;
+    [SerializeField] protected AbnormalStateController abnormalStateController;
+    [SerializeField] protected bool isDie;
+    [SerializeField] protected bool isInvincible;
     protected Dictionary<string, Material> materialDictionary;
     protected Animator animator;
 
@@ -37,20 +38,21 @@ public abstract class BaseActor : MonoBehaviour
         }
     }
 
-    public void AddCrowdControlState(CROWD_CONTROL_STATE crowdControlState)
+    public void AddAbnormalState(ABNORMAL_STATE targetState, float duration)
     {
-        this.crowdControlState |= (int)crowdControlState; 
+        abnormalStateController.AddState(targetState, duration);
     }
-    public void SubCrowdControlState(CROWD_CONTROL_STATE crowdControlState)
+    public void SubAbnormalState(ABNORMAL_STATE targetState)
     {
-        this.crowdControlState &= ~(int)crowdControlState;
+        abnormalStateController.SubtractState(targetState);
     }
 
     #region Property
     public Animator Animator { get { return animator; } }
     public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }
     public ObjectPooler ObjectPooler { get { return objectPooler; } }
-    public HIT_STATE HitState { get { return hitState; } set { hitState = value; } }
-    public int CrowdControlState { get { return crowdControlState; } set { crowdControlState = value; } }
+    public bool IsDie { get { return isDie; } set { isDie = value; } }
+    public bool IsInvincible { get { return isInvincible; } set { isInvincible = value; } }
+    public AbnormalStateController AbnormalStateController { get { return abnormalStateController; } }
     #endregion
 }

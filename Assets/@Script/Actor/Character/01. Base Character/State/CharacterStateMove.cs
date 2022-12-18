@@ -20,9 +20,9 @@ public class CharacterStateMove : ICharacterState
     public void Enter(BaseCharacter character)
     {
         isMove = false;
-        verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z);
-        moveDirection = (verticalDirection * character.PlayerInput.MoveInput.z + horizontalDirection * character.PlayerInput.MoveInput.x).normalized;
+        verticalDirection = Vector3.zero;
+        horizontalDirection = Vector3.zero;
+        moveDirection = Vector3.zero;
         moveBlendTreeFloat = 0;
 
         return;
@@ -37,7 +37,7 @@ public class CharacterStateMove : ICharacterState
 
         moveDirection = (verticalDirection * character.PlayerInput.MoveInput.z + horizontalDirection * character.PlayerInput.MoveInput.x).normalized;
 
-        isMove = (moveDirection.magnitude != 0) ? true : false;
+        isMove = (moveDirection.magnitude != 0f);
 
         // Move
         if (isMove)
@@ -46,15 +46,15 @@ public class CharacterStateMove : ICharacterState
             if (character.PlayerInput.IsLeftShiftKeyDown && character.StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_RUN)
             {
                 character.StatusData.CurrentSP -= Constants.CHARACTER_STAMINA_CONSUMPTION_RUN * Time.deltaTime;
-                character.CharacterController.Move(moveDirection * (character.StatusData.MoveSpeed * 2) * Time.deltaTime);
-                moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 2, 10f * Time.deltaTime);
+                character.CharacterController.Move((character.StatusData.MoveSpeed * 2) * Time.deltaTime * moveDirection);
+                moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 2, 5f * Time.deltaTime);
             }
 
             // Walk
             else
             {
-                character.CharacterController.Move(moveDirection * character.StatusData.MoveSpeed * Time.deltaTime);
-                moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 1, 10f * Time.deltaTime);
+                character.CharacterController.Move(character.StatusData.MoveSpeed * Time.deltaTime * moveDirection);
+                moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 1, 5f * Time.deltaTime);
             }
 
             // Character Look Direction
@@ -64,21 +64,19 @@ public class CharacterStateMove : ICharacterState
         // Stop
         else
         {
-            moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 0, 10f * Time.deltaTime);
+            moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 0, 5f * Time.deltaTime);
         }
 
-        character.Animator.SetFloat("moveFloat", moveBlendTreeFloat);
+        character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_MOVE, moveBlendTreeFloat);
     }
     public void Exit(BaseCharacter character)
     {
+        isMove = false;
         moveBlendTreeFloat = 0f;
-        character.Animator.SetFloat("moveFloat", moveBlendTreeFloat);
+        character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_MOVE, moveBlendTreeFloat);
     }
 
     #region Property
-    public int StateWeight
-    {
-        get => stateWeight;
-    }
+    public int StateWeight { get => stateWeight; }
     #endregion
 }

@@ -26,6 +26,11 @@ public class PlayerInput
     // »ý¼ºÀÚ
     public PlayerInput()
     {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
         moveInput = Vector3.zero;
         isMouseLeftDown = false;
         isMouseLeftUp = false;
@@ -43,8 +48,7 @@ public class PlayerInput
         isQKeyDown = false;
         isHKeyDown = false;
     }
-
-    public void GetPlayerInput()
+    public void UpdateCharacterInput()
     {
         moveInput.x = Input.GetAxisRaw("Horizontal");
         moveInput.y = 0;
@@ -60,7 +64,9 @@ public class PlayerInput
         isEscapeKeyDown = Input.GetKeyDown(KeyCode.Escape);
 
         isRKeyDown = Input.GetKey(KeyCode.R);
-
+    }
+    public void UpdateUIInput()
+    {
         isOKeyDown = Input.GetKeyDown(KeyCode.O);
         isIKeyDown = Input.GetKeyDown(KeyCode.I);
         isTKeyDown = Input.GetKeyDown(KeyCode.T);

@@ -10,9 +10,12 @@ public class Berserker : BaseCharacter
     public override void Awake()
     {
         base.Awake();
-        state = new BerserkerStateController(this);
+
         weapon = GetComponentInChildren<BerserkerWeapon>();
         weapon.SetWeapon(this);
+
+        abnormalStateController = new AbnormalStateController(this);
+        state = new BerserkerStateController(this);
     }
 
     protected override void Start()
@@ -24,12 +27,15 @@ public class Berserker : BaseCharacter
     protected override void Update()
     {
         base.Update();
-        playerInput?.GetPlayerInput();
-        state?.SwitchCharacterStateByWeight(DetermineCharacterState());
-        state?.CurrentState?.Update(this);
+        if (!abnormalStateController.UpdateState())
+        {
+            playerInput?.UpdateCharacterInput();
+            state?.TrySwitchCharacterState(NextCharacterState());
+        }
+        state?.Update();
     }
 
-    public override CHARACTER_STATE DetermineCharacterState()
+    public override CHARACTER_STATE NextCharacterState()
     {
         CHARACTER_STATE nextState = CHARACTER_STATE.Move;
 

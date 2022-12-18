@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static partial class Constants
 {
+    // VFX
     public static readonly string VFX_Player_Parrying = "VFX_Player_Parrying";
     public static readonly string VFX_Player_Defense = "VFX_Player_Defense";
     public static readonly string VFX_Player_Attack = "VFX_Player_Attack";
@@ -15,4 +16,9 @@ public static partial class Constants
     public static readonly string VFX_Black_Dragon_Lightning_Strike = "VFX_Black_Dragon_Lightning_Strike";
     public static readonly string VFX_Black_Dragon_Fire_Ball = "VFX_Black_Dragon_Fire_Ball";
 
+    // Audio
+
+
+    // Prefab
+    public static readonly string Prefab_Floating_Damage_Text = "Prefab_Floating_Damage_Text";
 }

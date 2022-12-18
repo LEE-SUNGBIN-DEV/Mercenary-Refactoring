@@ -66,7 +66,7 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
     }
 
     #region Override Function
-    public override void OnHit()
+    public override void OnLightHit()
     {
         state = ENEMY_STATE.Hit;
     }

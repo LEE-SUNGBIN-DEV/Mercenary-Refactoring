@@ -44,7 +44,7 @@ public class SkeletonKnight : BaseEnemy, ICompetable
     }
 
     #region Override Function
-    public override void OnHit()
+    public override void OnLightHit()
     {
     }
 

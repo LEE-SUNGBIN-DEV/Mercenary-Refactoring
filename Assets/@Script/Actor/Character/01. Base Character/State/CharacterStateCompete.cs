@@ -18,7 +18,7 @@ public class CharacterStateCompete : ICharacterState
         Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Compete_Start").transform.position = character.transform.position;
 
         // Set Compete State
-        character.Animator.SetTrigger("doCompete");
+        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
         competeTime = 0f;
     }
 
@@ -38,13 +38,10 @@ public class CharacterStateCompete : ICharacterState
 
     public void Exit(BaseCharacter character)
     {
-        character.Animator.SetTrigger("doCompeteAttack");
+        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
     }
 
     #region Property
-    public int StateWeight
-    {
-        get => stateWeight;
-    }
+    public int StateWeight { get => stateWeight; }
     #endregion
 }

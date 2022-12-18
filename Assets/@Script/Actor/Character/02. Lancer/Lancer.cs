@@ -26,12 +26,12 @@ public class Lancer : BaseCharacter
     protected override void Update()
     {
         base.Update();
-        playerInput?.GetPlayerInput();
-        state?.SwitchCharacterStateByWeight(DetermineCharacterState());
-        state?.CurrentState?.Update(this);
+        playerInput?.UpdateCharacterInput();
+        state?.TrySwitchCharacterState(NextCharacterState());
+        state?.Update();
     }
 
-    public override CHARACTER_STATE DetermineCharacterState()
+    public override CHARACTER_STATE NextCharacterState()
     {
         CHARACTER_STATE nextState = CHARACTER_STATE.Move;
 

@@ -42,14 +42,14 @@ public abstract class BaseEnemy : BaseActor
         targetTransform = null;
     }
 
-    public abstract void OnHit();
+    public abstract void OnLightHit();
     public abstract void OnHeavyHit();
     public abstract void OnStun();
     public abstract void Die();
     public virtual void Rebirth()
     {
         state = ENEMY_STATE.Spawn;
-        hitState = HIT_STATE.Invincible;
+        isInvincible = true;
         IsDie = false;
         enemyData.CurrentHP = enemyData.MaxHP;
     }
@@ -72,7 +72,7 @@ public abstract class BaseEnemy : BaseActor
     public IEnumerator WaitForDisapear(float time)
     {
         OnDie(this);
-        hitState = HIT_STATE.Invincible;
+        isInvincible = true;
         gameObject.layer = 10;
 
         float disapearTime = 0f;

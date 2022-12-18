@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class CharacterStateController
 {
     [SerializeField] protected BaseCharacter character;
@@ -19,12 +20,17 @@ public class CharacterStateController
             { CHARACTER_STATE.Attack, new CharacterStateAttack() },
             { CHARACTER_STATE.Skill, new CharacterStateCounter() },
             { CHARACTER_STATE.Roll, new CharacterStateRoll() },
-            { CHARACTER_STATE.Hit, new CharacterStateHit() },
+            { CHARACTER_STATE.StandRoll, new CharacterStateStandRoll() },
+            { CHARACTER_STATE.LightHit, new CharacterStateLightHit() },
             { CHARACTER_STATE.HeavyHit, new CharacterStateHeavyHit() },
-            { CHARACTER_STATE.Stun, new CharacterStateStun() },
             { CHARACTER_STATE.Compete, new CharacterStateCompete() },
             { CHARACTER_STATE.Die, new CharacterStateDie() }
         };
+    }
+
+    public void Update()
+    {
+        currentState?.Update(character);
     }
 
     public void SwitchCharacterState(CHARACTER_STATE targetState)
@@ -34,7 +40,7 @@ public class CharacterStateController
         currentState?.Enter(character);
     }
 
-    public void SwitchCharacterStateByWeight(CHARACTER_STATE targetState)
+    public void TrySwitchCharacterState(CHARACTER_STATE targetState)
     {
         if (currentState?.StateWeight < stateDictionary[targetState].StateWeight)
         {
@@ -48,10 +54,6 @@ public class CharacterStateController
     }
 
     #region Property
-    public ICharacterState CurrentState
-    {
-        get => currentState;
-    }
     public Dictionary<CHARACTER_STATE, ICharacterState> StateDictionary
     {
         get => stateDictionary;
