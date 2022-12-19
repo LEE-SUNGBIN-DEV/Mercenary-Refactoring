@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class CharacterSlot
 {
     public int slotIndex;
-    public CharacterForSelection selectionCharacter;
+    public SelectionCharacter selectionCharacter;
     public Vector3 characterPoint;
     public TextMeshProUGUI slotText;
     public Button slotButton;

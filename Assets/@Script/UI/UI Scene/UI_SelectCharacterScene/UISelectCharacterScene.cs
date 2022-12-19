@@ -128,7 +128,7 @@ public class UISelectCharacterScene : UIBaseScene
 
     public void CreateCharacterObject(int slotIndex, string className, Vector3 position)
     {
-        characterSlots[slotIndex].selectionCharacter = Managers.ResourceManager.InstantiatePrefabSync("Prefab_" + className + "_Slot").GetComponent<CharacterForSelection>();
+        characterSlots[slotIndex].selectionCharacter = Managers.ResourceManager.InstantiatePrefabSync("Prefab_" + className + "_Slot").GetComponent<SelectionCharacter>();
         characterSlots[slotIndex].selectionCharacter.transform.position = position;
     }
 
