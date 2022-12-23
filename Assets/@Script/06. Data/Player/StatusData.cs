@@ -42,9 +42,9 @@ public class StatusData
     private float equipAttackSpeed;
     private float equipMoveSpeed;
 
-    public void Initialize(CHARACTER_CLASS selectedClass)
+    public void Initialize(CHARACTER_TYPE selectedClass)
     {
-        characterClass = System.Enum.GetName(typeof(CHARACTER_CLASS), selectedClass);
+        characterClass = System.Enum.GetName(typeof(CHARACTER_TYPE), selectedClass);
         level = Constants.CHARACTER_DATA_DEFALUT_LEVEL;
 
         maxExp = Managers.DataManager.LevelTable[level];

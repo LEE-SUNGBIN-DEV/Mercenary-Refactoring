@@ -67,14 +67,14 @@ public abstract class BaseCharacter : BaseActor
     }
     public virtual void OnStun(float duration)
     {
-        AddAbnormalState(ABNORMAL_STATE.Stun, duration);
+        AddAbnormalState(ABNORMAL_TYPE.Stun, duration);
     }
     public virtual void OnCompete() { }
     public virtual void OnDie(StatusData characterStats) { }
 
     public abstract CHARACTER_STATE NextCharacterState();
 
-    public void DamageProcess(BaseEnemy enemy, float ratio)
+    public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)
     {
         // Basic Damage Process
         float damage = (characterData.StatusData.AttackPower - enemy.EnemyData.DefensivePower * 0.5f) * 0.5f;
@@ -89,12 +89,12 @@ public abstract class BaseCharacter : BaseActor
         {
             isCritical = true;
             damage *= (1 + characterData.StatusData.CriticalDamage * 0.01f);
-            Managers.AudioManager.PlaySFX("Player Critical Attack");
+            //Managers.AudioManager.PlaySFX("Player Critical Attack");
         }
         else
         {
             isCritical = false;
-            Managers.AudioManager.PlaySFX("Player Attack");
+            //Managers.AudioManager.PlaySFX("Player Attack");
         }
 
         // Damage Ratio Process
@@ -105,13 +105,14 @@ public abstract class BaseCharacter : BaseActor
         damage *= damageRange;
 
         enemy.EnemyData.CurrentHP -= damage;
+
         if(Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.Prefab_Floating_Damage_Text).TryGetComponent(out FloatingDamageText floatingDamageText))
-        {
-            floatingDamageText.SetDamageText(isCritical, damage, enemy.transform.position);
-        }
+            floatingDamageText.SetDamageText(isCritical, damage, hitPoint);
 
         if (enemy.IsDie)
             Managers.EventManager.OnKillEnemy?.Invoke(this, enemy);
+
+        return damage;
     }
 
     public void AutoRecoverStamina()

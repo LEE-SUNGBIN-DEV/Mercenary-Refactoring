@@ -1,7 +1,8 @@
-public enum CHARACTER_CLASS
+public enum CHARACTER_TYPE
 {
     Null,
     Lancer,
     Berserker,
     Warrior,
 }
+

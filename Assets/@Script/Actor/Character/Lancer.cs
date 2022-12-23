@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Lancer : BaseCharacter
 {
-    [SerializeField] private LancerWeapon spear;
+    [SerializeField] private LancerWeapon weapon;
     [SerializeField] private LancerShield shield;
 
     public override void Awake()
     {
         base.Awake();
-        state = new LancerStateController(this);
-        spear = GetComponentInChildren<LancerWeapon>();
+        weapon = GetComponentInChildren<LancerWeapon>();
         shield = GetComponentInChildren<LancerShield>();
-        spear.SetWeapon(this);
-        shield.SetWeapon(this);
+        weapon.SetWeapon(this);
+        shield.SetShield(this);
+
+        abnormalStateController = new AbnormalStateController(this);
+        state = new LancerStateController(this);
     }
 
     protected override void Start()
@@ -50,27 +52,27 @@ public class Lancer : BaseCharacter
         return nextState;
     }
 
-    #region Animation Event Function
-    private void OnSetWeapon(PLAYER_ATTACK_TYPE playerAttackType)
+    #region Animation Event
+    private void OnEnableAttack(LANCER_ATTACK_TYPE attackType)
     {
-        spear.OnSetWeapon(playerAttackType);
+        weapon.OnEnableAttack(attackType);
     }
-    private void OnReleaseWeapon()
+    private void OnDisableAttack()
     {
-        spear.OnReleaseWeapon();
+        weapon.OnDisableAttack();
     }
-    private void OnSetShield(PLAYER_ATTACK_TYPE playerAttackType)
+    private void OnEnableDefense(LANCER_DEFENSE_TYPE attackType)
     {
-        shield.OnSetWeapon(playerAttackType);
+        shield.OnEnableDefense(attackType);
     }
-    private void OnReleaseShield()
+    private void OnDisableDefense()
     {
-        shield.OnReleaseWeapon();
+        shield.OnDisableDefense();
     }
     #endregion
 
     #region Property
-    public LancerWeapon Spear { get { return spear; } }
+    public LancerWeapon Spear { get { return weapon; } }
     public LancerShield Shield { get { return shield; } }
     #endregion
 }

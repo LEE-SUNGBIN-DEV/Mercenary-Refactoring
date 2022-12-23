@@ -9,20 +9,25 @@ public abstract class EnemyCombatController : BaseCombatController
 
     protected virtual void ExecuteAttackProcess(Collider target)
     {
-        if (target.TryGetComponent(out BaseCharacter character))
+        if (target.TryGetComponent(out BaseCharacter playerCharacter))
         {
-            if (character.IsInvincible)
+            if (playerCharacter.IsInvincible)
             {
                 return;
             }
 
-            owner.DamageProcess(character, damageRatio);
+            if (hitDictionary.ContainsKey(playerCharacter))
+                return;
+
+            hitDictionary.Add(playerCharacter, true);
+
+            owner.DamageProcess(playerCharacter, damageRatio);
 
             // CC Process
-            switch (crowdControlType)
+            switch (abnormalType)
             {
-                case ABNORMAL_STATE.Stun:
-                    character.OnStun(7f);
+                case ABNORMAL_TYPE.Stun:
+                    playerCharacter.OnStun(abnormalStateDuration);
                     break;
 
                 default:
@@ -33,12 +38,31 @@ public abstract class EnemyCombatController : BaseCombatController
             switch (combatType)
             {
                 case HIT_TYPE.Light:
-                    character.OnHit();
+                    playerCharacter.OnHit();
                     break;
                 case HIT_TYPE.Heavy:
-                    character.OnHeavyHit();
+                    playerCharacter.OnHeavyHit();
                     break;
-            }            
+            }
+        }
+
+        if (target.TryGetComponent(out PlayerShield playerDefense))
+        {
+
+        }
+    }
+
+    public virtual void OnEnableCollider()
+    {
+        if(combatCollider != null)
+            combatCollider.enabled = true;
+    }
+    public virtual void OnDisableCollider()
+    {
+        if(combatCollider != null)
+        {
+            combatCollider.enabled = false;
+            hitDictionary.Clear();
         }
     }
 

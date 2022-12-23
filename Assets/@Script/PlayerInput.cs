@@ -65,6 +65,7 @@ public class PlayerInput
 
         isRKeyDown = Input.GetKey(KeyCode.R);
     }
+
     public void UpdateUIInput()
     {
         isOKeyDown = Input.GetKeyDown(KeyCode.O);

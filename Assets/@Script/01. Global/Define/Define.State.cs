@@ -38,20 +38,6 @@ public enum CHARACTER_STATE_WEIGHT
     // Berserker
 }
 
-public enum ABNORMAL_STATE
-{
-    None = 0,
-    Stun = 1,
-}
-
-public enum INPUT_STATE
-{
-    Title,
-    Selection,
-    InGame,
-    UI,
-}
-
 public enum ENEMY_STATE
 {
     Idle,
@@ -62,4 +48,12 @@ public enum ENEMY_STATE
     Compete,
     Spawn,
     Die
+}
+
+public enum INPUT_STATE
+{
+    Title,
+    Selection,
+    InGame,
+    UI,
 }

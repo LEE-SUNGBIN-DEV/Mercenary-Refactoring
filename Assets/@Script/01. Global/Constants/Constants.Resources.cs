@@ -8,7 +8,11 @@ public static partial class Constants
     public static readonly string VFX_Player_Parrying = "VFX_Player_Parrying";
     public static readonly string VFX_Player_Defense = "VFX_Player_Defense";
     public static readonly string VFX_Player_Attack = "VFX_Player_Attack";
-    
+
+    public static readonly string VFX_Berserker_Combo_Attack = "VFX_Berserker_Combo_Attack";
+    public static readonly string VFX_Berserker_Smash_Attack = "VFX_Berserker_Smash_Attack";
+    public static readonly string VFX_Berserker_Stinger_Attack = "VFX_Berserker_Stinger_Attack";
+
     public static readonly string VFX_Enemy_Flame_Area = "VFX_Enemy_Flame_Area";
     public static readonly string VFX_Enemy_Breath = "VFX_Enemy_Breath";
     
@@ -21,4 +25,7 @@ public static partial class Constants
 
     // Prefab
     public static readonly string Prefab_Floating_Damage_Text = "Prefab_Floating_Damage_Text";
+    public static readonly string Prefab_UI_Game_Scene = "Prefab_UI_Game_Scene";
+    public static readonly string Prefab_EventSystem = "Prefab_EventSystem";
+
 }

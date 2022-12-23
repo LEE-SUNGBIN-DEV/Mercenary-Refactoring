@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestScene : BaseScene
+public class TestScene : BaseGameScene
 {
     protected override void Awake()
     {

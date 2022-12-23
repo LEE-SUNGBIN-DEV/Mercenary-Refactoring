@@ -33,13 +33,13 @@ public class BlackDragonRightClaw : EnemySkill
         {
             case SKILL_STATE.OnRightClaw:
                 {
-                    rightClaw.SetCombatController(HIT_TYPE.Heavy, ABNORMAL_STATE.Stun, 2f);
-                    rightClaw.CombatCollider.enabled = true;
+                    rightClaw.SetCombatController(HIT_TYPE.Light, 2f, ABNORMAL_TYPE.Stun, 3f);
+                    rightClaw.OnEnableCollider();
                     return;
                 }
             case SKILL_STATE.OffRightClaw:
                 {
-                    rightClaw.CombatCollider.enabled = false;
+                    rightClaw.OnDisableCollider();
                     return;
                 }
         }

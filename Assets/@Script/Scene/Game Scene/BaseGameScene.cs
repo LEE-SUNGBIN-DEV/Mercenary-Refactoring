@@ -1,12 +1,14 @@
+#define EDITOR_TEST
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseGameScene : BaseScene
 {
-    protected UIGameScene gameSceneUI;
-    protected BaseCharacter character;
-    protected List<NPC> npcList = new List<NPC>();
+    [SerializeField] protected UIGameScene gameSceneUI;
+    [SerializeField] protected BaseCharacter character;
+    [SerializeField] protected List<NPC> npcList = new List<NPC>();
     [SerializeField] protected Vector3 spawnPosition;
 
     public override void Initialize()
@@ -26,7 +28,10 @@ public class BaseGameScene : BaseScene
             npcList[i].Initialize();
         }
 
-        gameSceneUI = Managers.ResourceManager.InstantiatePrefabSync("Prefab_UI_Game_Scene").GetComponent<UIGameScene>();
+#if EDITOR_TEST
+        character.CharacterData.EquipmentSlotData.Initialize();
+#endif
+        gameSceneUI = Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_UI_Game_Scene).GetComponent<UIGameScene>();
         gameSceneUI.transform.SetParent(Managers.UIManager.RootObject.transform);
         gameSceneUI.transform.SetAsFirstSibling();
         gameSceneUI.Initialize(character.CharacterData);
@@ -35,6 +40,8 @@ public class BaseGameScene : BaseScene
         {
             gameSceneUI.gameObject.SetActive(true);
         }
+
+        RegisterObject(Constants.Prefab_Floating_Damage_Text, 16);
     }
 
     public override void ExitScene()

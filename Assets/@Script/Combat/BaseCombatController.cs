@@ -7,9 +7,11 @@ public abstract class BaseCombatController : MonoBehaviour
 {
     [Header("Base Combat Controller")]
     [SerializeField] protected HIT_TYPE combatType;
-    [SerializeField] protected ABNORMAL_STATE crowdControlType;
     [SerializeField] protected float damageRatio;
+    [SerializeField] protected ABNORMAL_TYPE abnormalType;
+    [SerializeField] protected float abnormalStateDuration;
     [SerializeField] protected Collider combatCollider;
+    protected Dictionary<BaseActor, bool> hitDictionary = new Dictionary<BaseActor, bool>();
 
     private void Awake()
     {
@@ -18,15 +20,24 @@ public abstract class BaseCombatController : MonoBehaviour
             combatCollider.enabled = false;
     }
 
-    public void SetCombatController(HIT_TYPE combatType, ABNORMAL_STATE controlType, float damageRatio)
+    public void SetCombatController(HIT_TYPE combatType, float damageRatio, ABNORMAL_TYPE abnormalType = ABNORMAL_TYPE.None, float abnormalStateDuration = 0f)
     {
         this.combatType = combatType;
-        this.crowdControlType = controlType;
         this.damageRatio = damageRatio;
+        this.abnormalType = abnormalType;
+        this.abnormalStateDuration = abnormalStateDuration;
+    }
+
+    public void SetCombatInformation(CombatInformation combatInformation)
+    {
+        this.combatType = combatInformation.hitType;
+        this.damageRatio = combatInformation.damageRatio;
+        this.abnormalType = combatInformation.abnormalType;
+        this.abnormalStateDuration = combatInformation.abnormalDuration;
     }
 
     public HIT_TYPE CombatType { get { return combatType; } }
-    public ABNORMAL_STATE CrowdControlType { get { return crowdControlType; } }
+    public ABNORMAL_TYPE AbnormalType { get { return abnormalType; } }
     public float DamageRatio { get { return damageRatio; } }
     public Collider CombatCollider { get { return combatCollider; } }
 }

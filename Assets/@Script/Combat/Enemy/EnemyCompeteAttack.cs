@@ -22,7 +22,7 @@ public class EnemyCompeteAttack : EnemyMeleeAttack
     {
         base.ExecuteAttackProcess(target);
 
-        if (target.TryGetComponent(out PlayerCombatController combatController))
+        if (target.TryGetComponent(out PlayerWeapon combatController))
         {
             if (combatController.CombatType == HIT_TYPE.Parrying && isCompeteReady == true)
             {
@@ -32,7 +32,7 @@ public class EnemyCompeteAttack : EnemyMeleeAttack
         }
     }
 
-    public void Compete(PlayerCombatController combatController)
+    public void Compete(PlayerWeapon combatController)
     {
         StartCoroutine(CoCompeteCooldown());
         StartCoroutine(CoCompete(combatController));
@@ -45,7 +45,7 @@ public class EnemyCompeteAttack : EnemyMeleeAttack
         isCompeteReady = true;
     }
 
-    public IEnumerator CoCompete(PlayerCombatController combatController)
+    public IEnumerator CoCompete(PlayerWeapon combatController)
     {
         ICompetable competableCharacter = combatController.Owner as ICompetable;
         competableCharacter?.Compete();

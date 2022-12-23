@@ -23,26 +23,21 @@ public class LancerStateDefense : ICharacterState
     {
         if (character.PlayerInput.IsMouseRightDown)
         {
-            if (!isDefense)
-            {
-                lancer.Shield.OnSetWeapon(PLAYER_ATTACK_TYPE.PlayerDefense);
-            }
-
             character.IsInvincible = true;
             isDefense = true;
-            character.Animator.SetBool("isDefense", true);
+            character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_DEFENSE, true);
         }
 
         if (character.PlayerInput.IsMouseRightUp && isDefense)
         {
-            character.Animator.SetBool("isDefense", false);
+            character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_DEFENSE, false);
         }
 
         if (isDefense)
         {
             if (character.PlayerInput.IsMouseRightDown || character.PlayerInput.IsMouseRightUp)
             {
-                character.Animator.SetBool("isParryingAttack", !character.PlayerInput.IsMouseRightUp);
+                character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_PARRYING_ATTACK, !character.PlayerInput.IsMouseRightUp);
             }
         }
     }
@@ -50,9 +45,9 @@ public class LancerStateDefense : ICharacterState
     {
         character.IsInvincible = false;
         isDefense = false;
-        character.Animator.SetBool("isDefense", false);
-        character.Animator.SetBool("isParryingAttack", false);
-        lancer.Shield.OnReleaseWeapon();
+        character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_DEFENSE, false);
+        character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_PARRYING_ATTACK, false);
+        lancer.Shield.OnDisableDefense();
     }
 
     #region Property
