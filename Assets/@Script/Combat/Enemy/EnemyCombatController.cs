@@ -38,7 +38,7 @@ public abstract class EnemyCombatController : BaseCombatController
             switch (combatType)
             {
                 case HIT_TYPE.Light:
-                    playerCharacter.OnHit();
+                    playerCharacter.OnLightHit();
                     break;
                 case HIT_TYPE.Heavy:
                     playerCharacter.OnHeavyHit();

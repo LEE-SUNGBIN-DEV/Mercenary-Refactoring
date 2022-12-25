@@ -2,11 +2,23 @@ public enum CHARACTER_STATE
 {
     // Common Character
     Move = 1,
-    Attack = 2,
-    Defense = 3,
-    Skill = 4,
-    Roll = 5,
-    StandRoll = 6,
+
+    Combo_1 = 16,
+    Combo_2 = 17,
+    Combo_3 = 18,
+    Combo_4 = 19,
+
+    Smash_1 = 32,
+    Smash_2 = 33,
+    Smash_3 = 34,
+    Smash_4 = 35,
+
+    Defense = 64,
+
+    Skill = 128,
+
+    Roll = 256,
+    StandRoll = 257,
 
     LightHit = 512,
     HeavyHit = 513,
@@ -22,11 +34,14 @@ public enum CHARACTER_STATE_WEIGHT
 {
     // Common Character
     Move = 1,
-    Attack = 2,
-    Defense = 2,
-    Counter = 3,
-    Roll = 4,
-    StandRoll = 4,
+
+    Attack = 8,
+    Defense = 8,
+
+    Counter = 32,
+
+    Roll = 64,
+    StandRoll = 64,
 
     LightHit = 512,
     HeavyHit = 513,
@@ -56,4 +71,12 @@ public enum INPUT_STATE
     Selection,
     InGame,
     UI,
+}
+
+public enum KEY_STATE
+{
+    None,
+    Down,
+    Click,
+    Press,
 }

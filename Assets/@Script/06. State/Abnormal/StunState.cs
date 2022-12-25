@@ -7,7 +7,6 @@ public class StunState : AbnormalState
     public StunState()
     {
         state = ABNORMAL_TYPE.Stun;
-        animationParameter = Constants.ANIMATOR_PARAMETERS_BOOL_STUN;
         duration = 0f;
     }
 
@@ -21,13 +20,13 @@ public class StunState : AbnormalState
     {
         if (duration > 0f)
         {
-            controller.Actor.Animator.SetBool(animationParameter, true);
+            controller.Actor.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STUN, true);
             duration -= Time.deltaTime;
             return true;
         }
         else
         {
-            controller.Actor.Animator.SetBool(animationParameter, false);
+            controller.Actor.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STUN, false);
             duration = 0f;
             return false;
         }

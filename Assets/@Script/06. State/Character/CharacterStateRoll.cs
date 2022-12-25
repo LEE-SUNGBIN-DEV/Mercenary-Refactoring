@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterStateRoll : ICharacterState
 {
-    public int stateWeight;
+    private int stateWeight;
     private Vector3 moveInput;
     private Vector3 verticalDirection;
     private Vector3 horizontalDirection;
@@ -20,7 +20,7 @@ public class CharacterStateRoll : ICharacterState
         character.StatusData.CurrentSP -= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL;
 
         // 키보드 입력 방향으로 회피
-        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
+        moveInput = Managers.InputManager.MoveInput;
         verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
         horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z);
         moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
@@ -34,6 +34,8 @@ public class CharacterStateRoll : ICharacterState
 
     public void Update(BaseCharacter character)
     {
+        if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
+            character.SwitchCharacterState(CHARACTER_STATE.Move);
     }
 
     public void Exit(BaseCharacter character)
@@ -42,6 +44,6 @@ public class CharacterStateRoll : ICharacterState
     }
 
     #region Property
-    public int StateWeight { get => stateWeight; }
+    public int StateWeight { get { return stateWeight; } }
     #endregion
 }

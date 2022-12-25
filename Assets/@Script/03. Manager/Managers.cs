@@ -12,6 +12,7 @@ public class Managers : Singleton<Managers>
     private GameManager gameManager = new GameManager();
     private SceneManagerCS sceneManagerCS = new SceneManagerCS();
     private ResourceManager resourceManager = new ResourceManager();
+    private InputManager inputManager = new InputManager();
     private UIManager uiManager = new UIManager();
     private SlotManager slotManager = new SlotManager();
     private NPCManager npcManager = new NPCManager();
@@ -30,6 +31,7 @@ public class Managers : Singleton<Managers>
         {
             resourceManager.Initialize();
             dataManager.Initialize();
+            inputManager.Initialize();
             uiManager.Initialize(transform);
             slotManager.Initialize(gameObject);
             gameManager.Initialize();
@@ -52,6 +54,7 @@ public class Managers : Singleton<Managers>
     public static GameManager GameManager { get { return Instance?.gameManager; } }
     public static SceneManagerCS SceneManagerCS { get { return Instance?.sceneManagerCS; } }
     public static ResourceManager ResourceManager { get { return Instance?.resourceManager; } }
+    public static InputManager InputManager { get { return Instance?.inputManager; } }
     public static UIManager UIManager { get { return Instance?.uiManager; } }
     public static SlotManager SlotManager { get { return Instance?.slotManager; } }
     public static AudioManager AudioManager { get { return Instance?.audioManager; } }

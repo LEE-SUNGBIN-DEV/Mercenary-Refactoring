@@ -26,7 +26,8 @@ public enum BERSERKER_ATTACK_TYPE
 
     SmashAttack1,
     SmashAttack2,
-    SmashAttack3,
+    SmashAttack3_1,
+    SmashAttack3_2,
     SmashAttack4_1,
     SmashAttack4_2,
 

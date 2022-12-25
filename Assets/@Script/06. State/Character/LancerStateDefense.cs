@@ -21,26 +21,23 @@ public class LancerStateDefense : ICharacterState
     }
     public void Update(BaseCharacter character)
     {
-        if (character.PlayerInput.IsMouseRightDown)
+        if (Managers.InputManager.MouseRightPress || Managers.InputManager.MouseRightDown)
         {
             character.IsInvincible = true;
             isDefense = true;
             character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_DEFENSE, true);
         }
 
-        if (character.PlayerInput.IsMouseRightUp && isDefense)
-        {
+        if (isDefense && !Managers.InputManager.MouseRightDown && !Managers.InputManager.MouseRightPress)
             character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_DEFENSE, false);
-        }
 
-        if (isDefense)
-        {
-            if (character.PlayerInput.IsMouseRightDown || character.PlayerInput.IsMouseRightUp)
-            {
-                character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_PARRYING_ATTACK, !character.PlayerInput.IsMouseRightUp);
-            }
-        }
+        if (isDefense && (Managers.InputManager.MouseRightDown || Managers.InputManager.MouseRightPress))
+            character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_PARRYING_ATTACK, true);
+
+        if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
+            character.SwitchCharacterState(CHARACTER_STATE.Move);
     }
+
     public void Exit(BaseCharacter character)
     {
         character.IsInvincible = false;
@@ -51,9 +48,6 @@ public class LancerStateDefense : ICharacterState
     }
 
     #region Property
-    public int StateWeight
-    {
-        get => stateWeight;
-    }
+    public int StateWeight { get { return stateWeight; } }
     #endregion
 }

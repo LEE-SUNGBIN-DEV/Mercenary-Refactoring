@@ -12,16 +12,13 @@ public abstract class BaseCharacter : BaseActor
     [SerializeField] protected Vector3 cameraOffset;
 
     protected PlayerCamera playerCamera;
-    protected PlayerInput playerInput;
     protected CharacterController characterController;
-    [SerializeField] protected CharacterStateController state;
+    protected CharacterStateController state;
 
     public override void Awake()
     {
         base.Awake();
         TryGetComponent(out characterController);
-
-        playerInput = new PlayerInput();
 
 #if EDITOR_TEST
 #else
@@ -57,7 +54,7 @@ public abstract class BaseCharacter : BaseActor
 
     }
 
-    public virtual void OnHit()
+    public virtual void OnLightHit()
     {
         state?.TrySwitchCharacterState(CHARACTER_STATE.LightHit);
     }
@@ -72,7 +69,7 @@ public abstract class BaseCharacter : BaseActor
     public virtual void OnCompete() { }
     public virtual void OnDie(StatusData characterStats) { }
 
-    public abstract CHARACTER_STATE NextCharacterState();
+    public abstract CHARACTER_STATE NextState();
 
     public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)
     {
@@ -127,13 +124,12 @@ public abstract class BaseCharacter : BaseActor
     #region Animation Event
     public void SwitchCharacterState(CHARACTER_STATE targetState)
     {
-        playerInput?.Initialize();
+        Managers.InputManager?.Initialize();
         state.SwitchCharacterState(targetState);
     }
     #endregion
 
     #region Property
-    public PlayerInput PlayerInput { get { return playerInput; } }
     public CharacterData CharacterData { get { return characterData; } }
     public StatusData StatusData { get { return characterData?.StatusData; } }
     public InventoryData InventoryData { get { return characterData?.InventoryData; } }
