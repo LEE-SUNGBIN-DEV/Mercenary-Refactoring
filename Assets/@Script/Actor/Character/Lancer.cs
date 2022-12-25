@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Lancer : BaseCharacter
 {
-    [SerializeField] private LancerWeapon spear;
+    [SerializeField] private LancerWeapon weapon;
     [SerializeField] private LancerShield shield;
 
     public override void Awake()
     {
         base.Awake();
-        state = new LancerStateController(this);
-        spear = GetComponentInChildren<LancerWeapon>();
+        weapon = GetComponentInChildren<LancerWeapon>();
         shield = GetComponentInChildren<LancerShield>();
-        spear.SetWeapon(this);
-        shield.SetWeapon(this);
+        weapon.SetWeapon(this);
+        shield.SetShield(this);
+
+        abnormalStateController = new AbnormalStateController(this);
+        state = new LancerStateController(this);
     }
 
     protected override void Start()
@@ -26,51 +28,51 @@ public class Lancer : BaseCharacter
     protected override void Update()
     {
         base.Update();
-        playerInput?.UpdateCharacterInput();
-        state?.TrySwitchCharacterState(NextCharacterState());
+        Managers.InputManager.UpdateCombatInput();
+        state?.TrySwitchCharacterState(NextState());
         state?.Update();
     }
 
-    public override CHARACTER_STATE NextCharacterState()
+    public override CHARACTER_STATE NextState()
     {
         CHARACTER_STATE nextState = CHARACTER_STATE.Move;
 
-        if (playerInput.IsMouseLeftDown)
-            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Attack);
+        if (Managers.InputManager.MouseLeftDown)
+            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Combo_1);
 
-        if (playerInput.IsMouseRightDown)
+        if (Managers.InputManager.MouseRightDown || Managers.InputManager.MouseRightPress)
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Defense);
 
-        if (playerInput.IsSpaceKeyDown && StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL)
+        if (Managers.InputManager.IsSpaceKeyDown && StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL)
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Roll);
 
-        if (playerInput.IsRKeyDown && StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_COUNTER)
+        if (Managers.InputManager.IsRKeyDown && StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_COUNTER)
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Skill);
 
         return nextState;
     }
 
-    #region Animation Event Function
-    private void OnSetWeapon(PLAYER_ATTACK_TYPE playerAttackType)
+    #region Animation Event
+    private void OnEnableAttack(LANCER_ATTACK_TYPE attackType)
     {
-        spear.OnSetWeapon(playerAttackType);
+        weapon.OnEnableAttack(attackType);
     }
-    private void OnReleaseWeapon()
+    private void OnDisableAttack()
     {
-        spear.OnReleaseWeapon();
+        weapon.OnDisableAttack();
     }
-    private void OnSetShield(PLAYER_ATTACK_TYPE playerAttackType)
+    private void OnEnableDefense(LANCER_DEFENSE_TYPE attackType)
     {
-        shield.OnSetWeapon(playerAttackType);
+        shield.OnEnableDefense(attackType);
     }
-    private void OnReleaseShield()
+    private void OnDisableDefense()
     {
-        shield.OnReleaseWeapon();
+        shield.OnDisableDefense();
     }
     #endregion
 
     #region Property
-    public LancerWeapon Spear { get { return spear; } }
+    public LancerWeapon Spear { get { return weapon; } }
     public LancerShield Shield { get { return shield; } }
     #endregion
 }

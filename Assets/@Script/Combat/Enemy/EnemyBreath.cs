@@ -14,7 +14,7 @@ public class EnemyBreath : EnemyRayAttack
     {
         base.CollideWithTerrain(hitData);
         GameObject requestObject = owner.ObjectPooler.RequestObject(Constants.VFX_Enemy_Flame_Area);
-        requestObject.transform.SetPositionAndRotation(hitData.point + new Vector3(0, 0.36f, 0), Quaternion.Euler(Vector3.zero));
+        requestObject.transform.position = hitData.point;
     }
     public override void CollideWithPlayer(RaycastHit hitData)
     {

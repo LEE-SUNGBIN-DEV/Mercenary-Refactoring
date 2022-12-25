@@ -7,12 +7,14 @@ public class ObjectPool
 {
     public string key;
     public int amount;
+    public GameObject sampleObject;
     public Queue<GameObject> queue = new Queue<GameObject>();
 
     public void Initialize(Transform rootTransform)
     {
+        sampleObject = Managers.ResourceManager.LoadResourceSync<GameObject>(key);
         for (int i = 0; i < amount; ++i)
-            CreateAndEnqueueObject(rootTransform);
+            CreateObject(rootTransform);
     }
     public void Initialize(Transform rootTransform, string key, int amount)
     {
@@ -21,13 +23,20 @@ public class ObjectPool
         Initialize(rootTransform);
     }
 
-    public GameObject CreateAndEnqueueObject(Transform rootTransform)
+    public GameObject CreateObject(Transform rootTransform)
     {
         GameObject poolObject = Managers.ResourceManager.InstantiatePrefabSync(key, rootTransform);
         poolObject.SetActive(false);
-        queue.Enqueue(poolObject);
+        Enqueue(poolObject);
 
         return poolObject;
+    }
+
+    public void Enqueue(GameObject enqueueObject)
+    {
+        enqueueObject.transform.SetLocalPositionAndRotation(sampleObject.transform.position, sampleObject.transform.rotation);
+        enqueueObject.SetActive(false);
+        queue.Enqueue(enqueueObject);
     }
 }
 [System.Serializable]
@@ -46,14 +55,13 @@ public class ObjectPooler
             objectPoolDictionary.Add(objectPoolList[i].key, objectPoolList[i]);
         }
     }
+
     public void RegisterObject(string key, int amount)
     {
-        if(objectPoolDictionary.TryGetValue(key, out ObjectPool objectPool))
+        if (objectPoolDictionary.TryGetValue(key, out ObjectPool objectPool))
         {
-            for(int i=0; i<amount; ++i)
-            {
-                objectPool.CreateAndEnqueueObject(rootTransform);
-            }
+            for (int i = 0; i < amount; ++i)
+                objectPool.CreateObject(rootTransform);
         }
         else
         {
@@ -63,12 +71,16 @@ public class ObjectPooler
             objectPoolDictionary.Add(key, newObjectPool);
         }
     }
+
     public GameObject RequestObject(string key)
     {
-        if(!objectPoolDictionary[key].queue.TryDequeue(out GameObject requestObject))
-            requestObject = objectPoolDictionary[key].CreateAndEnqueueObject(rootTransform);
+        if (objectPoolDictionary.ContainsKey(key) == false)
+            RegisterObject(key, 1);
 
-        requestObject.transform.SetParent(null);
+        if (objectPoolDictionary[key].queue.TryDequeue(out GameObject requestObject) == false)
+            requestObject = objectPoolDictionary[key].CreateObject(rootTransform);
+
+        requestObject.transform.SetParent(null, false);
         requestObject.SetActive(true);
 
         if (requestObject.TryGetComponent(out IPoolObject poolObject))
@@ -76,14 +88,13 @@ public class ObjectPooler
 
         return requestObject;
     }
+
     public void ReturnObject(string key, GameObject returnObject)
     {
         if(returnObject.TryGetComponent(out IPoolObject poolObject))
             poolObject.ActionBeforeReturn();
 
-        returnObject.transform.position = Vector3.zero;
-        returnObject.transform.SetParent(rootTransform);
-        returnObject.SetActive(false);
-        objectPoolDictionary[key].queue.Enqueue(returnObject);
+        returnObject.transform.SetParent(rootTransform, false);
+        objectPoolDictionary[key].Enqueue(returnObject);
     }
 }

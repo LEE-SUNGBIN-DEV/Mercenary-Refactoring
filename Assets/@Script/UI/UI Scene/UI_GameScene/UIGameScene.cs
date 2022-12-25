@@ -47,7 +47,7 @@ public class UIGameScene : UIBaseScene
         helpPopup.Initialize();
         //questPopup.Initialize();
         storePopup.Initialize();
-        campaignPopup.Initialize();
+        campaignPopup.Initialize(characterData);
 
         OpenPanel(userPanel);
     }

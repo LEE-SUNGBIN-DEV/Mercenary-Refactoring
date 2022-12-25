@@ -25,26 +25,27 @@ public class CharacterStateHeavyHit : ICharacterState
     public void Update(BaseCharacter character)
     {
         if(time >= duration)
-        {
             character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_DOWN, false);
-        }
+
         else if (time > 1.133f && time < duration)
         {
-            if(character.PlayerInput.IsSpaceKeyDown)
+            if(Managers.InputManager.IsSpaceKeyDown)
             {
                 character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_DOWN, false);
                 character.State.SwitchCharacterState(CHARACTER_STATE.StandRoll);
             }
         }
         time += Time.deltaTime;
+
+        if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
+            character.SwitchCharacterState(CHARACTER_STATE.Move);
     }
 
     public void Exit(BaseCharacter character)
     {
-        time = 0f;
     }
 
     #region Property
-    public int StateWeight { get => stateWeight; }
+    public int StateWeight { get { return stateWeight; } }
     #endregion
 }

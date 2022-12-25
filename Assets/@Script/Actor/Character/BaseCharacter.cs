@@ -12,16 +12,13 @@ public abstract class BaseCharacter : BaseActor
     [SerializeField] protected Vector3 cameraOffset;
 
     protected PlayerCamera playerCamera;
-    protected PlayerInput playerInput;
     protected CharacterController characterController;
-    [SerializeField] protected CharacterStateController state;
+    protected CharacterStateController state;
 
     public override void Awake()
     {
         base.Awake();
         TryGetComponent(out characterController);
-
-        playerInput = new PlayerInput();
 
 #if EDITOR_TEST
 #else
@@ -57,7 +54,7 @@ public abstract class BaseCharacter : BaseActor
 
     }
 
-    public virtual void OnHit()
+    public virtual void OnLightHit()
     {
         state?.TrySwitchCharacterState(CHARACTER_STATE.LightHit);
     }
@@ -67,14 +64,14 @@ public abstract class BaseCharacter : BaseActor
     }
     public virtual void OnStun(float duration)
     {
-        AddAbnormalState(ABNORMAL_STATE.Stun, duration);
+        AddAbnormalState(ABNORMAL_TYPE.Stun, duration);
     }
     public virtual void OnCompete() { }
     public virtual void OnDie(StatusData characterStats) { }
 
-    public abstract CHARACTER_STATE NextCharacterState();
+    public abstract CHARACTER_STATE NextState();
 
-    public void DamageProcess(BaseEnemy enemy, float ratio)
+    public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)
     {
         // Basic Damage Process
         float damage = (characterData.StatusData.AttackPower - enemy.EnemyData.DefensivePower * 0.5f) * 0.5f;
@@ -89,12 +86,12 @@ public abstract class BaseCharacter : BaseActor
         {
             isCritical = true;
             damage *= (1 + characterData.StatusData.CriticalDamage * 0.01f);
-            Managers.AudioManager.PlaySFX("Player Critical Attack");
+            //Managers.AudioManager.PlaySFX("Player Critical Attack");
         }
         else
         {
             isCritical = false;
-            Managers.AudioManager.PlaySFX("Player Attack");
+            //Managers.AudioManager.PlaySFX("Player Attack");
         }
 
         // Damage Ratio Process
@@ -105,13 +102,14 @@ public abstract class BaseCharacter : BaseActor
         damage *= damageRange;
 
         enemy.EnemyData.CurrentHP -= damage;
+
         if(Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.Prefab_Floating_Damage_Text).TryGetComponent(out FloatingDamageText floatingDamageText))
-        {
-            floatingDamageText.SetDamageText(isCritical, damage, enemy.transform.position);
-        }
+            floatingDamageText.SetDamageText(isCritical, damage, hitPoint);
 
         if (enemy.IsDie)
             Managers.EventManager.OnKillEnemy?.Invoke(this, enemy);
+
+        return damage;
     }
 
     public void AutoRecoverStamina()
@@ -126,13 +124,12 @@ public abstract class BaseCharacter : BaseActor
     #region Animation Event
     public void SwitchCharacterState(CHARACTER_STATE targetState)
     {
-        playerInput?.Initialize();
+        Managers.InputManager?.Initialize();
         state.SwitchCharacterState(targetState);
     }
     #endregion
 
     #region Property
-    public PlayerInput PlayerInput { get { return playerInput; } }
     public CharacterData CharacterData { get { return characterData; } }
     public StatusData StatusData { get { return characterData?.StatusData; } }
     public InventoryData InventoryData { get { return characterData?.InventoryData; } }

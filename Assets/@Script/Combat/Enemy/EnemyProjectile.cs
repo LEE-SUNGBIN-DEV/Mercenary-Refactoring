@@ -50,9 +50,7 @@ public class EnemyProjectile : EnemyCombatController, IPoolObject
     public void ActionAfterRequest(ObjectPooler owner)
     {
         objectPooler = owner;
-
-        if (combatCollider != null)
-            combatCollider.enabled = true;
+        OnEnableCollider();
 
         if (autoReturnCoroutine != null)
             StartCoroutine(autoReturnCoroutine);
@@ -60,8 +58,7 @@ public class EnemyProjectile : EnemyCombatController, IPoolObject
 
     public void ActionBeforeReturn()
     {
-        if (combatCollider != null)
-            combatCollider.enabled = false;
+        OnDisableCollider();
 
         if (autoReturnCoroutine != null)
             StopCoroutine(autoReturnCoroutine);

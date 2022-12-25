@@ -19,21 +19,24 @@ public class EnemyRayAttack : EnemyCombatController
 
     public IEnumerator CoShootRay()
     {
-        var interval = new WaitForSeconds(rayInterval);
-        RaycastHit hitData;
-
+        float time = 0f;
         while (true)
         {
             GenerateMuzzleEffect(transform);
-            Debug.DrawRay(transform.position, transform.forward.normalized * rayDistance, Color.blue, 0.2f);
-
-            if (Physics.Raycast(transform.position, transform.forward.normalized, out hitData, rayDistance, LayerMask.GetMask("Terrain")))
-                CollideWithTerrain(hitData);
-
-            if (Physics.Raycast(transform.position, transform.forward.normalized, out hitData, rayDistance, LayerMask.GetMask("Player")))
+            Debug.DrawRay(transform.position, transform.forward.normalized * rayDistance, Color.blue, 0.1f);
+            if (Physics.SphereCast(transform.position, 1f, transform.forward, out RaycastHit hitData, 30f, LayerMask.GetMask("Player")))
+            {
                 CollideWithPlayer(hitData);
+            }
 
-            yield return interval;
+            if ((time >= rayInterval) && Physics.Raycast(transform.position, transform.forward, out hitData, 30f, LayerMask.GetMask("Terrain")))
+            {
+                CollideWithTerrain(hitData);
+                time -= rayInterval;
+            }
+            
+            time += Time.deltaTime;
+            yield return null;
         }
     }
 

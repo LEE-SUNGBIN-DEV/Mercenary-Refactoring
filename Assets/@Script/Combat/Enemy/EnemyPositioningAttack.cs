@@ -40,9 +40,9 @@ public class EnemyPositioningAttack : EnemyCombatController, IPoolObject
     public IEnumerator CoDelayAttack()
     {
         yield return new WaitForSeconds(delayTime);
-        combatCollider.enabled = true;
+        OnEnableCollider();
         yield return new WaitForSeconds(attackTime);
-        combatCollider.enabled = false;
+        OnDisableCollider();
     }
     public IEnumerator CoAutoReturn()
     {
@@ -57,13 +57,11 @@ public class EnemyPositioningAttack : EnemyCombatController, IPoolObject
         delayAttackCoroutine = CoDelayAttack();
         autoReturnCoroutine = CoAutoReturn();
 
-        if (combatCollider != null)
-            combatCollider.enabled = false;
+        OnDisableCollider();
     }
     public void ActionBeforeReturn()
     {
-        if (combatCollider != null)
-            combatCollider.enabled = false;
+        OnDisableCollider();
 
         if (delayAttackCoroutine != null)
             StopCoroutine(delayAttackCoroutine);

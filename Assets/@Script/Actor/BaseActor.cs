@@ -38,11 +38,11 @@ public abstract class BaseActor : MonoBehaviour
         }
     }
 
-    public void AddAbnormalState(ABNORMAL_STATE targetState, float duration)
+    public void AddAbnormalState(ABNORMAL_TYPE targetState, float duration)
     {
         abnormalStateController.AddState(targetState, duration);
     }
-    public void SubAbnormalState(ABNORMAL_STATE targetState)
+    public void SubAbnormalState(ABNORMAL_TYPE targetState)
     {
         abnormalStateController.SubtractState(targetState);
     }

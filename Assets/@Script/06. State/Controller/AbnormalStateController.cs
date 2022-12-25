@@ -6,14 +6,14 @@ public class AbnormalStateController
 {
     private BaseActor actor;
     private int actorStateBit;
-    private Dictionary<ABNORMAL_STATE, AbnormalState> stateDictionary;
+    private Dictionary<ABNORMAL_TYPE, AbnormalState> stateDictionary;
 
     public AbnormalStateController(BaseActor actor)
     {
         this.actor = actor;
-        stateDictionary = new Dictionary<ABNORMAL_STATE, AbnormalState>()
+        stateDictionary = new Dictionary<ABNORMAL_TYPE, AbnormalState>()
         {
-            { ABNORMAL_STATE.Stun, new AbnormalState(ABNORMAL_STATE.Stun, Constants.ANIMATOR_PARAMETERS_BOOL_STUN)}
+            { ABNORMAL_TYPE.Stun, new StunState()}
         };
     }
 
@@ -34,16 +34,16 @@ public class AbnormalStateController
         return isAnyStateRunning;
     }
 
-    public void AddState(ABNORMAL_STATE targetState, float duration)
+    public void AddState(ABNORMAL_TYPE targetState, float duration)
     {
         actorStateBit |= (int)targetState;
-        stateDictionary[targetState].Duration += duration;
+        stateDictionary[targetState].SetDuration(duration);
     }
     public void AddState(AbnormalState targetState, float duration)
     {
         AddState(targetState.State, duration);
     }
-    public void SubtractState(ABNORMAL_STATE targetState)
+    public void SubtractState(ABNORMAL_TYPE targetState)
     {
         actorStateBit &= ~(int)targetState;
     }
@@ -51,7 +51,7 @@ public class AbnormalStateController
     {
         SubtractState(targetState.State);
     }
-    public bool CheckState(ABNORMAL_STATE targetState)
+    public bool CheckState(ABNORMAL_TYPE targetState)
     {
         return (actorStateBit &= (int)targetState) == (int)targetState;
     }

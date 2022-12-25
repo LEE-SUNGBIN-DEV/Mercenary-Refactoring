@@ -7,9 +7,9 @@ public class CampaignPopup : UIPopup
     [SerializeField] private Button forestButton;
     [SerializeField] private Button templeButton;
 
-    public void Initialize()
+    public void Initialize(CharacterData characterData)
     {
-        Managers.DataManager.SelectCharacterData.QuestData.OnChangeQuestData += (CharacterQuestData questData) =>
+        characterData.QuestData.OnChangeQuestData += (CharacterQuestData questData) =>
         {
             bool canEnable = questData.MainQuestPrograss >= 1000 ? true : false;
             SetForestButton(canEnable);

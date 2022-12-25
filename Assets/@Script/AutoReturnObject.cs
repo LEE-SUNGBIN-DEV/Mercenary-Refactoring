@@ -41,8 +41,10 @@ public class AutoReturnObject : MonoBehaviour, IPoolObject
     public void ReturnOrDestoryObject(ObjectPooler owner)
     {
         if (owner == null)
+        {
             Destroy(gameObject);
-
+            return;
+        }
         owner.ReturnObject(name, gameObject);
     }
     public ObjectPooler ObjectPooler { get { return objectPooler; } }

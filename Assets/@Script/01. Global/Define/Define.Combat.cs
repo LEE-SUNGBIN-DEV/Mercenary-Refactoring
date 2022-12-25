@@ -1,6 +1,7 @@
 public enum HIT_TYPE
 {
     // Attack
+    Normal,
     Light,
     Heavy,
 
@@ -9,20 +10,55 @@ public enum HIT_TYPE
     Parrying,
 }
 
-public enum PLAYER_ATTACK_TYPE
+public enum ABNORMAL_TYPE
 {
-    PlayerComboAttack1,
-    PlayerComboAttack2,
-    PlayerComboAttack3,
-    PlayerComboAttack4,
+    None = 0,
+    Stun = 1,
+}
 
-    PlayerSmashAttack1,
-    PlayerSmashAttack2,
-    PlayerSmashAttack3,
-    PlayerSmashAttack4,
 
-    PlayerDefense,
-    PlayerParrying,
-    PlayerParryingAttack,
-    PlayerCounterAttack,
+public enum BERSERKER_ATTACK_TYPE
+{
+    ComboAttack1,
+    ComboAttack2,
+    ComboAttack3,
+    ComboAttack4,
+
+    SmashAttack1,
+    SmashAttack2,
+    SmashAttack3_1,
+    SmashAttack3_2,
+    SmashAttack4_1,
+    SmashAttack4_2,
+
+    ParryingAttack,
+    CounterAttack,
+}
+public enum BERSERKER_DEFENSE_TYPE
+{
+    Defense,
+    Parrying,
+}
+
+
+public enum LANCER_ATTACK_TYPE
+{
+    ComboAttack1,
+    ComboAttack2,
+    ComboAttack3,
+    ComboAttack4,
+
+    SmashAttack1,
+    SmashAttack2,
+    SmashAttack3,
+    SmashAttack4_1,
+    SmashAttack4_2,
+
+    ParryingAttack,
+    CounterAttack,
+}
+public enum LANCER_DEFENSE_TYPE
+{
+    Defense,
+    Parrying,
 }
