@@ -6,6 +6,5 @@ public class BerserkerStateController : CharacterStateController
 {
     public BerserkerStateController(Berserker berserker) : base(berserker)
     {
-        stateDictionary.Add(CHARACTER_STATE.Defense, new BerserkerStateDefense(berserker));
     }
 }

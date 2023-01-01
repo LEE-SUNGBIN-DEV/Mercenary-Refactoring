@@ -20,14 +20,14 @@ public class AbnormalStateController
     public bool UpdateState()
     {
         bool isAnyStateRunning = false;
-        foreach(var state in stateDictionary.Values)
+        foreach(var abnormalState in stateDictionary.Values)
         {
             bool isStateRunning = false;
-            if (CheckState(state))
+            if (CheckState(abnormalState))
             {
-                isStateRunning = state.UpdateState(this);
+                isStateRunning = abnormalState.UpdateState(this);
                 if (!isStateRunning)
-                    SubtractState(state);
+                    SubtractState(abnormalState);
             }
             isAnyStateRunning = isAnyStateRunning || isStateRunning;
         }

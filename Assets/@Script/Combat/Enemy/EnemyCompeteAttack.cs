@@ -3,55 +3,52 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnemyCompeteAttack : EnemyMeleeAttack
+public class EnemyCompeteAttack : EnemyCombatController
 {
     [Header("Enemy Compete Attack")]
     [SerializeField] private Transform playerCompetePoint;
     [SerializeField] private Transform directingCameraPoint;
-    [SerializeField] private float cooldown;
+    private float competeCooldown;
     private bool isCompeteReady;
     private ICompetable competableEnemy;
 
-    public void SetCompeteAttack()
+    public void SetCompeteAttack(BaseEnemy owner)
     {
+        this.owner = owner;
         isCompeteReady = true;
+        competeCooldown = Constants.TIME_COMPETE_COOLDOWN;
         competableEnemy = owner as ICompetable;
     }
 
-    protected override void ExecuteAttackProcess(Collider target)
+    protected virtual void OnTriggerEnter(Collider other)
     {
-        base.ExecuteAttackProcess(target);
-
-        if (target.TryGetComponent(out PlayerWeapon combatController))
-        {
-            if (combatController.CombatType == HIT_TYPE.Parrying && isCompeteReady == true)
-            {
-                Vector3 triggerPoint = target.bounds.ClosestPoint(transform.position);
-                Compete(combatController);
-            }
-        }
+        if (other != null)
+            ExecuteAttackProcess(other);
     }
 
-    public void Compete(PlayerWeapon combatController)
+    public bool TryCompete(PlayerShield shieldController)
     {
-        StartCoroutine(CoCompeteCooldown());
-        StartCoroutine(CoCompete(combatController));
+        if (!isCompeteReady || competableEnemy == null || shieldController.Owner is not ICompetable competableCharacter)
+            return false;
+
+        StartCoroutine(CoStartCooldown());
+        StartCoroutine(CoStartCompete(competableCharacter));
+        return true;
     }
 
-    public IEnumerator CoCompeteCooldown()
+    public IEnumerator CoStartCooldown()
     {
         isCompeteReady = false;
-        yield return new WaitForSecondsRealtime(cooldown);
+        yield return new WaitForSecondsRealtime(competeCooldown);
         isCompeteReady = true;
     }
 
-    public IEnumerator CoCompete(PlayerWeapon combatController)
+    public IEnumerator CoStartCompete(ICompetable competableCharacter)
     {
-        ICompetable competableCharacter = combatController.Owner as ICompetable;
-        competableCharacter?.Compete();
-        competableEnemy?.Compete();
+        competableCharacter?.OnCompete();
+        competableEnemy?.OnCompete();
 
-        Functions.SetCharacterTransform(combatController.Owner, playerCompetePoint);
+        Functions.SetCharacterTransform(competableCharacter as BaseCharacter, playerCompetePoint);
         Managers.GameManager.PlayerCamera.SetCameraTransform(playerCompetePoint);
         Managers.GameManager.DirectingCamera.SetCameraTransform(directingCameraPoint);
 

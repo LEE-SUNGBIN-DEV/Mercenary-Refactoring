@@ -6,27 +6,30 @@ public class CharacterStateCompete : ICharacterState
 {
     private int stateWeight;
     private float competeTime;
+    private float inputTime;
 
     public CharacterStateCompete()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Compete;
+        competeTime = Constants.TIME_COMPETE;
+        inputTime = 0f;
     }
 
     public void Enter(BaseCharacter character)
     {
         // Effect
-        Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Compete_Start").transform.position = character.transform.position;
+        //Managers.SceneManagerCS.CurrentScene.RequestObject("Prefab_Effect_Player_Compete_Start").transform.position = character.transform.position;
 
         // Set Compete State
-        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
-        competeTime = 0f;
+        character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMPETE, true);
+        inputTime = 0f;
     }
 
     public void Update(BaseCharacter character)
     {
-        if(competeTime < Constants.TIME_COMPETE)
+        if(inputTime < competeTime)
         {
-            competeTime += Time.deltaTime;
+            inputTime += Time.deltaTime;
         }
 
         else
@@ -38,7 +41,7 @@ public class CharacterStateCompete : ICharacterState
 
     public void Exit(BaseCharacter character)
     {
-        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
+        character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMPETE, false);
     }
 
     #region Property

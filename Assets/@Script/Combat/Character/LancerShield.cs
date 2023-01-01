@@ -38,10 +38,9 @@ public class LancerShield : PlayerShield
                 Quaternion.Euler(owner.transform.rotation.eulerAngles + defenseDictionary[attackType].effectLocation.rotation));
         }
     }
-    public virtual void OnDisableDefense()
+    public override void OnDisableDefense()
     {
-        combatCollider.enabled = false;
-        hitDictionary.Clear();
+        base.OnDisableDefense();
     }
     #endregion
 }

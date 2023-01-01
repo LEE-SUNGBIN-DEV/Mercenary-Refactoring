@@ -19,8 +19,8 @@ public class BossRoomController : MonoBehaviour
         boss.EnemyData.OnChanageEnemyData -= UpdateBossHPBar;
         boss.EnemyData.OnChanageEnemyData += UpdateBossHPBar;
 
-        boss.OnDie -= ClearDungeon;
-        boss.OnDie += ClearDungeon;
+        boss.OnEnemyDie -= ClearDungeon;
+        boss.OnEnemyDie += ClearDungeon;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,7 +55,7 @@ public class BossRoomController : MonoBehaviour
         }
     }
 
-    public void ClearDungeon(BaseEnemy monster)
+    public void ClearDungeon(BaseEnemy enemy)
     {
         StartCoroutine(CoDungeonClear());
     }
@@ -67,7 +67,7 @@ public class BossRoomController : MonoBehaviour
         Time.timeScale = 1f;
 
         boss.EnemyData.OnChanageEnemyData -= UpdateBossHPBar;
-        boss.OnDie -= ClearDungeon;
+        boss.OnEnemyDie -= ClearDungeon;
 
         //Managers.UIManager.BossPanel.SetBossHPBar(1f);
         Managers.UIManager.RequestNotice("던전 클리어");

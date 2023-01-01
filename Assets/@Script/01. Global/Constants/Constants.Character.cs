@@ -45,40 +45,4 @@ public static partial class Constants
 
     public static readonly int CHARACTER_DATA_DEFAULT_MONEY = 500;
     public static readonly uint CHARACTER_DATA_MAIN_QUEST_PROGRESS = 0;
-
-    // Animator
-    public static readonly int ANIMATOR_PARAMETERS_FLOAT_MOVE = Animator.StringToHash("moveFloat");
-
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_ATTACK = Animator.StringToHash("doAttack");
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_COMBO_ATTACK = Animator.StringToHash("isComboAttack");
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_SMASH_ATTACK = Animator.StringToHash("isSmashAttack");
-
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_DEFENSE = Animator.StringToHash("isDefense");
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_BREAKED = Animator.StringToHash("isBreaked");
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_PARRYING = Animator.StringToHash("isParrying");
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_PARRYING_ATTACK = Animator.StringToHash("isParryingAttack");
-
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_STUN = Animator.StringToHash("isStun");
-
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_LIGHT_HIT = Animator.StringToHash("doLightHit");
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_HEAVY_HIT = Animator.StringToHash("doHeavyHit");
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_DOWN = Animator.StringToHash("isDown");
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_ROLL = Animator.StringToHash("doRoll");
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_STAND_ROLL = Animator.StringToHash("doStandRoll");
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_COUNTER = Animator.StringToHash("doCounter");
-
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_COMPETE = Animator.StringToHash("doCompete");
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_DIE = Animator.StringToHash("doDie");
-
-    public static readonly string ANIMATOR_STATE_NAME_MOVE_BLEND_TREE = "Move Blend Tree";
-
-    public static readonly string ANIMATOR_STATE_NAME_COMBO_1 = "Combo 1";
-    public static readonly string ANIMATOR_STATE_NAME_COMBO_2 = "Combo 2";
-    public static readonly string ANIMATOR_STATE_NAME_COMBO_3 = "Combo 3";
-    public static readonly string ANIMATOR_STATE_NAME_COMBO_4 = "Combo 4";
-
-    public static readonly string ANIMATOR_STATE_NAME_SMASH_1 = "Smash 1";
-    public static readonly string ANIMATOR_STATE_NAME_SMASH_2 = "Smash 2";
-    public static readonly string ANIMATOR_STATE_NAME_SMASH_3 = "Smash 3";
-    public static readonly string ANIMATOR_STATE_NAME_SMASH_4 = "Smash 4";
 }

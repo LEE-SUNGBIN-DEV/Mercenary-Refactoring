@@ -7,7 +7,6 @@ using UnityEngine.Events;
 public class EnemyData
 {
     public event UnityAction<EnemyData> OnChanageEnemyData;
-    public event UnityAction<EnemyData> OnDie;
 
     [Header("Identifier")]
     [SerializeField] private uint enemyID;
@@ -22,7 +21,7 @@ public class EnemyData
     [SerializeField] private float criticalDamage;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float chaseRange;
+    [SerializeField] private float minChaseRange;
 
     [Header("Reward")]
     [SerializeField] private float expAmount;
@@ -35,10 +34,7 @@ public class EnemyData
 
     #region Status Property
     public uint EnemyID { get { return enemyID; } }
-    public string EnemyName
-    {
-        get { return enemyName; }
-    }
+    public string EnemyName { get { return enemyName; } }
     public float MaxHP
     {
         get { return maxHP; }
@@ -61,9 +57,7 @@ public class EnemyData
                 currentHP = MaxHP;
 
             if (currentHP < 0)
-            {
                 currentHP = 0;
-            }
 
             OnChanageEnemyData?.Invoke(this);
         }
@@ -152,16 +146,14 @@ public class EnemyData
         }
     }
 
-    public float ChaseRange
+    public float MinChaseRange
     {
-        get { return chaseRange; }
+        get { return minChaseRange; }
         set
         {
-            chaseRange = value;
-            if (chaseRange < 0)
-            {
-                chaseRange = 0;
-            }
+            minChaseRange = value;
+            if (minChaseRange < 0)
+                minChaseRange = 0;
         }
     }
     #endregion

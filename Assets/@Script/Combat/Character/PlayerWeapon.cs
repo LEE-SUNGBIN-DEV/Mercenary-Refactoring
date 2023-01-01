@@ -52,10 +52,13 @@ public abstract class PlayerWeapon : BaseCombatController
                 switch (combatType)
                 {
                     case HIT_TYPE.Light:
-                        hitbox.Owner.OnLightHit();
+                        if(hitbox.Owner is ILightHitable lightHitableObject)
+                            lightHitableObject.OnLightHit();
                         break;
+
                     case HIT_TYPE.Heavy:
-                        hitbox.Owner.OnHeavyHit();
+                        if (hitbox.Owner is IHeavyHitable heavyHitableObject)
+                            heavyHitableObject.OnHeavyHit();
                         break;
                 }
 
@@ -65,7 +68,8 @@ public abstract class PlayerWeapon : BaseCombatController
                     case ABNORMAL_TYPE.None:
                         break;
                     case ABNORMAL_TYPE.Stun:
-                        hitbox.Owner.OnStun();
+                        if (hitbox.Owner is IStunable stunableObject)
+                            stunableObject.OnStun(abnormalStateDuration);
                         break;
                 }
             }

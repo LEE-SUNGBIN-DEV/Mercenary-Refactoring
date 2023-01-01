@@ -39,4 +39,11 @@ public static partial class Functions
 
         return new Vector3(pointX, pointY, pointZ);
     }
+
+    public static float GetAngle(Vector2 startPoint, Vector2 endPoint)
+    {
+        Vector2 directionVector = endPoint - startPoint;
+        return Mathf.Atan2(directionVector.y, directionVector.x) * Mathf.Rad2Deg;
+    }
+
 }

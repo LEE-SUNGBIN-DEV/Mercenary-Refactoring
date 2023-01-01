@@ -4,7 +4,9 @@ using UnityEngine;
 
 public static partial class Constants
 {
-    public static readonly float TIME_COMPETE = 4f;
+    public static readonly float TIME_COMPETE = 5f;
+    public static readonly float TIME_COMPETE_COOLDOWN = 60f;
+
     public static readonly float TIME_COMPETE_ATTACK = 1f;
     public static readonly float TIME_STAGGER = 6f;
 

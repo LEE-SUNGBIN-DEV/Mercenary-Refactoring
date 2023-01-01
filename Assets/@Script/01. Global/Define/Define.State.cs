@@ -14,6 +14,9 @@ public enum CHARACTER_STATE
     Smash_4 = 35,
 
     Defense = 64,
+    Defense_Breaked = 65,
+    Parrying = 66,
+    Parrying_Attack = 67,
 
     Skill = 128,
 
@@ -24,7 +27,8 @@ public enum CHARACTER_STATE
     HeavyHit = 513,
 
     Compete = 1024,
-    Die = 2048,
+    Spawn = 2048,
+    Die = 4096,
 
     // Lancer
     // Berserker
@@ -38,6 +42,9 @@ public enum CHARACTER_STATE_WEIGHT
     Attack = 8,
     Defense = 8,
 
+    Defense_Breaked = 9,
+    Parrying = 9,
+
     Counter = 32,
 
     Roll = 64,
@@ -47,7 +54,8 @@ public enum CHARACTER_STATE_WEIGHT
     HeavyHit = 513,
 
     Compete = 1024,
-    Die = 2048,
+    Spawn = 2048,
+    Die = 4096,
 
     // Lancer
     // Berserker
@@ -56,13 +64,35 @@ public enum CHARACTER_STATE_WEIGHT
 public enum ENEMY_STATE
 {
     Idle,
-    Attack,
-    Hit,
+    Move,
+    Skill,
+
+    LightHit,
     HeavyHit,
-    Stun,
+    Stagger,
+
     Compete,
-    Spawn,
+    Birth,
     Die
+}
+
+public enum ENEMY_STATE_WEIGHT
+{
+    Idle = 0,
+    Move = 1,
+
+    Skill = 8,
+
+    LightHit = 512,
+    HeavyHit = 513,
+    Stagger = 514,
+
+    Compete = 1024,
+    Birth = 2048,
+    Die = 4096,
+
+    // Lancer
+    // Berserker
 }
 
 public enum INPUT_STATE

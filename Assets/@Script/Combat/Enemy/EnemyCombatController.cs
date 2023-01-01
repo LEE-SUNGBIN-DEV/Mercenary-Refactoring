@@ -9,25 +9,29 @@ public abstract class EnemyCombatController : BaseCombatController
 
     protected virtual void ExecuteAttackProcess(Collider target)
     {
-        if (target.TryGetComponent(out BaseCharacter playerCharacter))
+        // Hit With Character
+        if (target.TryGetComponent(out BaseCharacter character))
         {
-            if (playerCharacter.IsInvincible)
+            // Invincible
+            if (character.IsInvincible)
             {
                 return;
             }
 
-            if (hitDictionary.ContainsKey(playerCharacter))
+            // Duplication Check
+            if (hitDictionary.ContainsKey(character))
                 return;
 
-            hitDictionary.Add(playerCharacter, true);
+            hitDictionary.Add(character, true);
 
-            owner.DamageProcess(playerCharacter, damageRatio);
+            // Damage Process
+            owner.DamageProcess(character, damageRatio);
 
             // CC Process
             switch (abnormalType)
             {
                 case ABNORMAL_TYPE.Stun:
-                    playerCharacter.OnStun(abnormalStateDuration);
+                    character.OnStun(abnormalStateDuration);
                     break;
 
                 default:
@@ -38,18 +42,19 @@ public abstract class EnemyCombatController : BaseCombatController
             switch (combatType)
             {
                 case HIT_TYPE.Light:
-                    playerCharacter.OnLightHit();
+                    if (character is ILightHitable lightHitableObject)
+                        lightHitableObject.OnLightHit();
                     break;
                 case HIT_TYPE.Heavy:
-                    playerCharacter.OnHeavyHit();
+                    if (character is IHeavyHitable heavyHitableObject)
+                        heavyHitableObject.OnHeavyHit();
                     break;
             }
         }
 
-        if (target.TryGetComponent(out PlayerShield playerDefense))
-        {
-
-        }
+        // Hit With Shield
+        if (target.TryGetComponent(out PlayerShield shield))
+            shield.DefenseProcess(this, target.ClosestPoint(shield.transform.position));
     }
 
     public virtual void OnEnableCollider()

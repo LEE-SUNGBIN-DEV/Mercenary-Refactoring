@@ -17,13 +17,13 @@ public class BerserkerShield : PlayerShield
     }
 
     #region Called by Owner's Animation Event
-    public void OnEnableDefense(BERSERKER_DEFENSE_TYPE attackType)
+    public void OnEnableDefense(BERSERKER_DEFENSE_TYPE defenseType)
     {
-        SetCombatInformation(defenseDictionary[attackType]);
+        SetCombatInformation(defenseDictionary[defenseType]);
         combatCollider.enabled = true;
 
         GameObject effectObject = null;
-        switch (attackType)
+        switch (defenseType)
         {
             case BERSERKER_DEFENSE_TYPE.Defense:
             case BERSERKER_DEFENSE_TYPE.Parrying:
@@ -34,14 +34,13 @@ public class BerserkerShield : PlayerShield
 
         if (effectObject != null)
         {
-            effectObject.transform.SetPositionAndRotation(owner.transform.position + defenseDictionary[attackType].effectLocation.position,
-                Quaternion.Euler(owner.transform.rotation.eulerAngles + defenseDictionary[attackType].effectLocation.rotation));
+            effectObject.transform.SetPositionAndRotation(owner.transform.position + defenseDictionary[defenseType].effectLocation.position,
+                Quaternion.Euler(owner.transform.rotation.eulerAngles + defenseDictionary[defenseType].effectLocation.rotation));
         }
     }
-    public virtual void OnDisableDefense()
+    public override void OnDisableDefense()
     {
-        combatCollider.enabled = false;
-        hitDictionary.Clear();
+        base.OnDisableDefense();
     }
     #endregion
 }
