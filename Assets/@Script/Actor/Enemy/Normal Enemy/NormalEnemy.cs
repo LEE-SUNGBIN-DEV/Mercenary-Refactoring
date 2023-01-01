@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NormalEnemy : BaseEnemy
+public class NormalEnemy : BaseEnemy, ILightHitable, IHeavyHitable
 {
     private EnemySkill[] monsterSkillArray;
 
@@ -24,22 +24,22 @@ public class NormalEnemy : BaseEnemy
     }
 
     #region Override Function   
-    public override void OnLightHit()
+    public virtual void OnLightHit()
     {
         Animator.SetTrigger("doHit");
     }
 
-    public override void OnHeavyHit()
+    public virtual void OnHeavyHit()
     {
         Animator.SetTrigger("doHit");
     }
 
-    public override void OnStun()
+    public virtual void OnStun(float duration)
     {
         Animator.SetTrigger("doHit");
     }
 
-    public override void Die()
+    public override void OnDie()
     {
         IsDie = true;
         Animator.SetTrigger("doDie");

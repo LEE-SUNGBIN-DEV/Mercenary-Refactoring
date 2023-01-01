@@ -10,6 +10,7 @@ public static partial class Constants
     public const int LAYER_TERRAIN = 6;
     public const int LAYER_PLAYER = 7;
     public const int LAYER_ENEMY = 8;
+    public const int LAYER_ENEMY_DIE = 10;
 
 
 }

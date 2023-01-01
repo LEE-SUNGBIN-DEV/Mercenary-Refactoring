@@ -16,9 +16,7 @@ namespace BehaviourTreePackage
         public void Update()
         {
             if (root != null)
-            {
                 root.Evaluate();
-            }
         }
 
         public abstract BehaviourNode SetupTree();

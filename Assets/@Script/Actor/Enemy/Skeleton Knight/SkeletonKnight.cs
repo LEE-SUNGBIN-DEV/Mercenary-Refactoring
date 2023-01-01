@@ -44,23 +44,23 @@ public class SkeletonKnight : BaseEnemy, ICompetable
     }
 
     #region Override Function
-    public override void OnLightHit()
+    public virtual void OnLightHit()
     {
     }
 
-    public override void OnHeavyHit()
+    public virtual void OnHeavyHit()
     {
         Animator.SetTrigger("doHeavyHit");
     }
 
-    public override void OnStun()
+    public virtual void OnStun(float duration)
     {
         Animator.SetBool("isMove", false);
         Animator.SetBool("isStun", true);
 
         StartCoroutine(StunTime());
     }
-    public override void Die()
+    public override void OnDie()
     {
         // Die State
         IsDie = true;
@@ -77,7 +77,7 @@ public class SkeletonKnight : BaseEnemy, ICompetable
         Animator.SetBool("isStun", false);
     }
 
-    public void Compete()
+    public void OnCompete()
     {
         if (IsCompete || IsDie)
             return;

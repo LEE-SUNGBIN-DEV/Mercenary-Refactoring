@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class BaseCharacter : BaseActor
+public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightHitable, IHeavyHitable
 {
     [Header("Base Character")]
     [SerializeField] protected CharacterData characterData;
@@ -14,6 +14,9 @@ public abstract class BaseCharacter : BaseActor
     protected PlayerCamera playerCamera;
     protected CharacterController characterController;
     protected CharacterStateController state;
+
+    protected PlayerWeapon weapon;
+    protected PlayerShield shield;
 
     public override void Awake()
     {
@@ -54,19 +57,10 @@ public abstract class BaseCharacter : BaseActor
 
     }
 
-    public virtual void OnLightHit()
-    {
-        state?.TrySwitchCharacterState(CHARACTER_STATE.LightHit);
-    }
-    public virtual void OnHeavyHit()
-    {
-        state?.TrySwitchCharacterState(CHARACTER_STATE.HeavyHit);
-    }
-    public virtual void OnStun(float duration)
-    {
-        AddAbnormalState(ABNORMAL_TYPE.Stun, duration);
-    }
-    public virtual void OnCompete() { }
+    public virtual void OnLightHit() { TrySwitchCharacterState(CHARACTER_STATE.LightHit); }
+    public virtual void OnHeavyHit() { TrySwitchCharacterState(CHARACTER_STATE.HeavyHit); }
+    public virtual void OnStun(float duration) { AddAbnormalState(ABNORMAL_TYPE.Stun, duration); }
+    public virtual void OnCompete() { TrySwitchCharacterState(CHARACTER_STATE.Compete); }
     public virtual void OnDie(StatusData characterStats) { }
 
     public abstract CHARACTER_STATE NextState();
@@ -121,13 +115,15 @@ public abstract class BaseCharacter : BaseActor
         animator.SetFloat("attackSpeed", statusData.AttackSpeed);
     }
 
-    #region Animation Event
+    public void TrySwitchCharacterState(CHARACTER_STATE targetState)
+    {
+        state.TrySwitchState(targetState);
+    }
     public void SwitchCharacterState(CHARACTER_STATE targetState)
     {
         Managers.InputManager?.Initialize();
-        state.SwitchCharacterState(targetState);
+        state.SwitchState(targetState);
     }
-    #endregion
 
     #region Property
     public CharacterData CharacterData { get { return characterData; } }
@@ -140,5 +136,8 @@ public abstract class BaseCharacter : BaseActor
 
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }
+
+    public PlayerWeapon Weapon { get { return weapon; } }
+    public PlayerShield Shield { get { return shield; } }
     #endregion
 }

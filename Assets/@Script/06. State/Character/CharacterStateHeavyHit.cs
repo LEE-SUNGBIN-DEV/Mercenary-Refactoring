@@ -32,7 +32,7 @@ public class CharacterStateHeavyHit : ICharacterState
             if(Managers.InputManager.IsSpaceKeyDown)
             {
                 character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_DOWN, false);
-                character.State.SwitchCharacterState(CHARACTER_STATE.StandRoll);
+                character.State.SwitchState(CHARACTER_STATE.StandRoll);
             }
         }
         time += Time.deltaTime;

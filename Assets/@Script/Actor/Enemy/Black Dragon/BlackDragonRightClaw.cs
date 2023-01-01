@@ -9,15 +9,15 @@ public class BlackDragonRightClaw : EnemySkill
         OnRightClaw,
         OffRightClaw
     }
-    [SerializeField] private EnemyMeleeAttack rightClaw;
+    [SerializeField] private EnemyCompeteAttack rightClaw;
 
     public override void Initialize(BaseEnemy owner)
     {
         base.Initialize(owner);
         cooldown = 8f;
         maxRange = 8f;
-        rightClaw = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Right Claw Controller", true);
-        rightClaw.SetMeleeAttack(owner);
+        rightClaw = Functions.FindChild<EnemyCompeteAttack>(gameObject, "Compete Controller", true);
+        rightClaw.SetCompeteAttack(owner);
     }
 
     public override void ActiveSkill()

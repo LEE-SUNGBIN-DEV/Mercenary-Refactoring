@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Berserker : BaseCharacter
 {
-    [Header("Berserker")]
-    [SerializeField] private BerserkerWeapon weapon;
-    [SerializeField] private BerserkerShield shield;
+    public BerserkerWeapon BerserkerWeapon { get { return weapon as BerserkerWeapon; } }
+    public BerserkerShield BerserkerShield { get { return shield as BerserkerShield; } }
 
     public override void Awake()
     {
@@ -16,24 +15,24 @@ public class Berserker : BaseCharacter
         weapon.SetWeapon(this);
         shield.SetShield(this);
 
-        abnormalStateController = new AbnormalStateController(this);
         state = new BerserkerStateController(this);
     }
 
     protected override void Start()
     {
         base.Start();
-        State.SwitchCharacterState(CHARACTER_STATE.Move);
+        state.SwitchState(CHARACTER_STATE.Move);
     }
 
     protected override void Update()
     {
         base.Update();
-        Managers.InputManager?.UpdateMoveInput();
-        Managers.InputManager?.UpdateCombatInput();
+        Managers.InputManager?.UpdateUIInput();
         if (!abnormalStateController.UpdateState())
         {
-            state?.TrySwitchCharacterState(NextState());
+            Managers.InputManager?.UpdateMoveInput();
+            Managers.InputManager?.UpdateCombatInput();
+            state?.TrySwitchState(NextState());
         }
         state?.Update();
     }
@@ -60,22 +59,19 @@ public class Berserker : BaseCharacter
     #region Animation Event
     private void OnEnableAttack(BERSERKER_ATTACK_TYPE attackType)
     {
-        weapon.OnEnableAttack(attackType);
+        BerserkerWeapon.OnEnableAttack(attackType);
     }
     private void OnDisableAttack()
     {
-        weapon.OnDisableAttack();
+        BerserkerWeapon.OnDisableAttack();
     }
     private void OnEnableDefense(BERSERKER_DEFENSE_TYPE attackType)
     {
-        shield.OnEnableDefense(attackType);
+        BerserkerShield.OnEnableDefense(attackType);
     }
     private void OnDisableDefense()
     {
-        shield.OnDisableDefense();
+        BerserkerShield.OnDisableDefense();
     }
     #endregion
-
-    public BerserkerWeapon Weapon { get { return weapon; } }
-    public BerserkerShield Shield { get { return shield; } }
 }

@@ -28,6 +28,7 @@ public abstract class BaseActor : MonoBehaviour
             }
         }
         objectPooler.Initialize(transform);
+        abnormalStateController = new AbnormalStateController(this);
     }
 
     public void SetMaterial(string key)

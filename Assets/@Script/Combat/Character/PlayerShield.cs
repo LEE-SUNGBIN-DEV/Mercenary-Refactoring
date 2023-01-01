@@ -14,48 +14,44 @@ public class PlayerShield : BaseCombatController
         owner.ObjectPooler.RegisterObject(Constants.VFX_Player_Parrying, 5);
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void DefenseProcess(EnemyCombatController enemyCombatController, Vector3 hitPoint)
     {
-        if (other != null)
-            ExecuteCombatProcess(other);
-    }
+        GameObject effect = null;
 
-    public virtual void ExecuteCombatProcess(Collider other)
-    {
-        Vector3 hitPoint = other.bounds.ClosestPoint(transform.position);
-        DefenseProcess(other, hitPoint);
-    }
-
-    public void DefenseProcess(Collider other, Vector3 hitPoint)
-    {
-        if (other.GetComponent<EnemyMeleeAttack>() != null)
+        switch (combatType)
         {
-            GameObject effect = null;
-            switch (combatType)
-            {
-                case HIT_TYPE.Defense:
+            case HIT_TYPE.Defense:
+                {
+                    effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
+                    owner.TrySwitchCharacterState(CHARACTER_STATE.Defense_Breaked);
+                    break;
+                }
+
+            case HIT_TYPE.Parrying:
+                {
+                    if (enemyCombatController is EnemyCompeteAttack competeAttackController && competeAttackController.TryCompete(this))
                     {
-                        effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
-                        owner.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_BREAKED, true);
                         break;
                     }
-
-                case HIT_TYPE.Parrying:
+                    else
                     {
                         effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Parrying);
-
-                        owner.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_PARRYING, true);
-                        owner.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_BREAKED, false);
+                        owner.TrySwitchCharacterState(CHARACTER_STATE.Parrying);
                         break;
                     }
-            }
-
-            if (effect != null)
-                effect.transform.position = hitPoint;
-
-            combatCollider.enabled = false;
+                }
         }
+
+        if (effect != null)
+            effect.transform.position = hitPoint;
+
+        combatCollider.enabled = false;
     }
 
+    public virtual void OnDisableDefense()
+    {
+        combatCollider.enabled = false;
+        hitDictionary.Clear();
+    }
     public BaseCharacter Owner { get { return owner; } }
 }

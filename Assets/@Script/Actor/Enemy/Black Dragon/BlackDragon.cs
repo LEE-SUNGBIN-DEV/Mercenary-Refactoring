@@ -27,9 +27,6 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
     private BlackDragonFlyBreath flyBreath;
     private BlackDragonStorm storm;
 
-    [Header("State Machine")]
-    [SerializeField] protected BlackDragonBehaviourTree behaviourTree;
-
     public override void Awake()
     {
         base.Awake();
@@ -56,76 +53,59 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         foreach(var skill in skillDictionary.Values)
             skill.Initialize(this);
 
+        state = new EnemyStateController(this);
+
         behaviourTree = new BlackDragonBehaviourTree(this);
         behaviourTree.Initialize();
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
     }
 
     private void Update()
     {
         behaviourTree.Update();
+        state.Update();
     }
 
-    #region Override Function
-    public override void OnLightHit()
+    public override void OnBirth()
     {
-        state = ENEMY_STATE.Hit;
+        base.OnBirth();
+        state.TrySwitchState(ENEMY_STATE.Birth);
     }
 
-    public override void OnHeavyHit()
+    public override void OnDie()
     {
-        state = ENEMY_STATE.HeavyHit;
-    }
-
-    public override void OnStun()
-    {
-        state = ENEMY_STATE.Stun;
-    }
-    public override void Die()
-    {
-        state = ENEMY_STATE.Die;
-
+        base.OnDie();
         StartCoroutine(WaitForDisapear(10f));
     }
-    #endregion
-
-    public void Stagger()
+    public virtual void OnLightHit()
     {
-        // Down State
-        IsStagger = true;
-        Animator.SetBool("isDown", true);
+        state.TrySwitchState(ENEMY_STATE.LightHit);
+    }
+
+    public virtual void OnHeavyHit()
+    {
+        state.TrySwitchState(ENEMY_STATE.HeavyHit);
+    }
+       
+
+    public void OnStagger()
+    {
+        Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STAGGER, true);
         StartCoroutine(StaggerTime());
     }
+
     private IEnumerator StaggerTime()
     {
         yield return new WaitForSeconds(Constants.TIME_STAGGER);
-        IsStagger = false;
-        Animator.SetBool("isDown", false);
+        Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STAGGER, false);
     }
-    public void Compete()
+
+    public void OnCompete()
     {
-        IsStagger = false;
-        Animator.SetBool("isMove", false);
-
-        // Compete State
-        IsCompete = true;
-        Animator.SetTrigger("doCompete");
-
-        StartCoroutine(CompeteTime());
+        animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMPETE, true);
     }
-    
-    private IEnumerator CompeteTime()
-    {
-        yield return new WaitForSeconds(Constants.TIME_COMPETE);
-        Animator.SetTrigger("doCompeteAttack");
-
-        yield return new WaitForSeconds(Constants.TIME_COMPETE_ATTACK);
-        enemyData.CurrentHP -= (enemyData.MaxHP * 0.1f);
-        IsCompete = false;
-        Stagger();
-    }
-
-    #region Property
-    public bool IsCompete { get; set; }
-    public bool IsStagger { get; set; }
-    #endregion
 }

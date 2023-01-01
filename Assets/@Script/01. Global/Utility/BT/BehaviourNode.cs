@@ -22,12 +22,11 @@ namespace BehaviourTreePackage
         {
             parent = null;
         }
+
         public BehaviourNode(List<BehaviourNode> children)
         {
             foreach (var child in children)
-            {
                 AddNode(child);
-            }
         }
 
         public void AddNode(BehaviourNode node)

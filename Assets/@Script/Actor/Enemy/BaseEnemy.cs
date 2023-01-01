@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using BehaviourTreePackage;
 
 public abstract class BaseEnemy : BaseActor
 {
-    public event UnityAction<BaseEnemy> OnBirth;
-    public event UnityAction<BaseEnemy> OnDie;
+    public event UnityAction<BaseEnemy> OnEnemyBirth;
+    public event UnityAction<BaseEnemy> OnEnemyDie;
 
     [Header("Base Enemy")]
+    [SerializeField] protected bool isSpawn;
     [SerializeField] protected EnemyData enemyData;
-    [SerializeField] protected ENEMY_STATE state;
+    protected EnemyStateController state;
+    protected BehaviourTree behaviourTree;
 
     [Header("Skills")]
-    [SerializeField] protected int skillIndex;
+    [SerializeField] protected EnemySkill selectSkill;
     protected Dictionary<int, EnemySkill> skillDictionary;
 
     protected NavMeshAgent navMeshAgent;
@@ -32,79 +35,106 @@ public abstract class BaseEnemy : BaseActor
         TryGetComponent(out navMeshAgent);
         navMeshAgent.speed = enemyData.MoveSpeed;
     }
+
     public virtual void OnEnable()
     {
-        gameObject.layer = 8;
-        Rebirth();
+        OnBirth();
     }
+
     public virtual void OnDisable()
     {
         targetTransform = null;
     }
-
-    public abstract void OnLightHit();
-    public abstract void OnHeavyHit();
-    public abstract void OnStun();
-    public abstract void Die();
-    public virtual void Rebirth()
+    public virtual void OnBirth()
     {
-        state = ENEMY_STATE.Spawn;
+        OnEnemyBirth?.Invoke(this);
         isInvincible = true;
         IsDie = false;
         enemyData.CurrentHP = enemyData.MaxHP;
+        gameObject.layer = Constants.LAYER_ENEMY;
     }
-    #region Common Function
+    public virtual void OnDie()
+    {
+        if (isDie)
+            return;
+
+        OnEnemyDie?.Invoke(this);
+    }
+
+    public void LookTarget()
+    {
+        targetDirection = (targetTransform.position - transform.position).normalized;
+        transform.rotation
+                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 2f * Time.deltaTime);
+    }
+
     public void DamageProcess(BaseCharacter character, float ratio)
     {
-        // Damage Process
         float damage = (enemyData.AttackPower - character.StatusData.DefensivePower * 0.5f) * 0.5f;
-        if (damage < 0)
-        {
-            damage = 0;
-        }
-        damage += ((enemyData.AttackPower / 8f - enemyData.AttackPower / 16f) + 1f);
 
-        // Final Damage
+        if (damage < 0)
+            damage = 0;
+
+        damage += ((enemyData.AttackPower / 8f - enemyData.AttackPower / 16f) + 1f);
         damage *= ratio;
 
         character.StatusData.CurrentHP -= damage;
     }
     public IEnumerator WaitForDisapear(float time)
     {
-        OnDie(this);
-        isInvincible = true;
-        gameObject.layer = 10;
-
         float disapearTime = 0f;
-        while(disapearTime <= time)
+
+        isDie = true;
+        isInvincible = true;
+        gameObject.layer = Constants.LAYER_ENEMY_DIE;
+
+        while (disapearTime <= time)
         {
             disapearTime += Time.deltaTime;
-
             yield return null;
         }
     }
-    #endregion
 
-    #region Animation Event Function
-    private void OnEndState()
+    public void TrySwitchState(ENEMY_STATE targetState)
     {
-        state = ENEMY_STATE.Idle;
+        state.TrySwitchState(targetState);
     }
-    #endregion
+    public void SwitchState(ENEMY_STATE targetState)
+    {
+        state.SwitchState(targetState);
+    }
 
     #region Property
     public EnemyData EnemyData { get { return enemyData; } }
-    public ENEMY_STATE State { get { return state; } set { state = value; } }
+    public EnemyStateController State { get { return state; } }
+    public BehaviourTree BehaviourTree { get { return behaviourTree; } }
     public Dictionary<int, EnemySkill> SkillDictionary { get { return skillDictionary; } }
-    public int SkillIndex { get { return skillIndex; } set { skillIndex = value; } }
+    public EnemySkill SelectSkill { get { return selectSkill; } set { selectSkill = value; } }
     public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }
 
     // Target
     public Transform TargetTransform { get { return targetTransform; } set { targetTransform = value; } }
-    public Vector3 TargetDirection { get { return targetDirection; } set { targetDirection = value; } }
-    public float TargetDistance { get { return targetDistance; } set { targetDistance = value; } }
+    public Vector3 TargetDirection
+    {
+        get
+        {
+            if (targetTransform != null)
+                targetDirection = (targetTransform.position - transform.position).normalized;
 
-    // State
-    public bool IsDie { get; set; }
+            return targetDirection;
+        }
+        set { targetDirection = value; }
+    }
+    public float TargetDistance
+    {
+        get
+        {
+            if (targetTransform != null)
+                targetDistance = (targetTransform.position - transform.position).magnitude;
+
+            return targetDistance;
+        }
+        set { targetDistance = value; }
+    }
     #endregion
 }

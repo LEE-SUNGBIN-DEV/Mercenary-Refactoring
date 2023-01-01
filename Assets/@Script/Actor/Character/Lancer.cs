@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Lancer : BaseCharacter
 {
-    [SerializeField] private LancerWeapon weapon;
-    [SerializeField] private LancerShield shield;
+    public LancerWeapon LancerWeapon { get { return weapon as LancerWeapon; } }
+    public LancerShield LancerShield { get { return shield as LancerShield; } }
 
     public override void Awake()
     {
@@ -22,14 +22,14 @@ public class Lancer : BaseCharacter
     protected override void Start()
     {
         base.Start();
-        State.SwitchCharacterState(CHARACTER_STATE.Move);
+        State.SwitchState(CHARACTER_STATE.Move);
     }
 
     protected override void Update()
     {
         base.Update();
         Managers.InputManager.UpdateCombatInput();
-        state?.TrySwitchCharacterState(NextState());
+        state?.TrySwitchState(NextState());
         state?.Update();
     }
 
@@ -55,24 +55,19 @@ public class Lancer : BaseCharacter
     #region Animation Event
     private void OnEnableAttack(LANCER_ATTACK_TYPE attackType)
     {
-        weapon.OnEnableAttack(attackType);
+        LancerWeapon.OnEnableAttack(attackType);
     }
     private void OnDisableAttack()
     {
-        weapon.OnDisableAttack();
+        LancerWeapon.OnDisableAttack();
     }
     private void OnEnableDefense(LANCER_DEFENSE_TYPE attackType)
     {
-        shield.OnEnableDefense(attackType);
+        LancerShield.OnEnableDefense(attackType);
     }
     private void OnDisableDefense()
     {
-        shield.OnDisableDefense();
+        LancerShield.OnDisableDefense();
     }
-    #endregion
-
-    #region Property
-    public LancerWeapon Spear { get { return weapon; } }
-    public LancerShield Shield { get { return shield; } }
     #endregion
 }

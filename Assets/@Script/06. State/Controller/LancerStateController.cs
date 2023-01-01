@@ -6,6 +6,5 @@ public class LancerStateController : CharacterStateController
 {
     public LancerStateController(Lancer lancer) : base(lancer)
     {
-        stateDictionary.Add(CHARACTER_STATE.Defense, new LancerStateDefense(lancer));
     }
 }
