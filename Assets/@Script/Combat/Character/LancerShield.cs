@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LancerShield : PlayerShield
+public class LancerShield : PlayerDefenseController
 {
     private Dictionary<LANCER_DEFENSE_TYPE, CombatInformation> defenseDictionary;
 

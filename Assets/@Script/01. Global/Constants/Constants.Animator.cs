@@ -18,6 +18,7 @@ public static partial class Constants
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_ROLL = Animator.StringToHash("doRoll");
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_STAND_ROLL = Animator.StringToHash("doStandRoll");
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_COUNTER = Animator.StringToHash("doCounter");
+    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_COMPETE_ATTACK = Animator.StringToHash("doCompeteAttack");
 
     // Enemy
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_BIRTH = Animator.StringToHash("doBirth");
@@ -26,6 +27,8 @@ public static partial class Constants
     public static readonly int ANIMATOR_PARAMETERS_BOOL_STAGGER = Animator.StringToHash("isStagger");
 
     // Common
+    public static readonly int ANIMATOR_PARAMETERS_FLOAT_ATTACK_SPEED = Animator.StringToHash("attackSpeed");
+    public static readonly int ANIMATOR_PARAMETERS_FLOAT_COMPETE = Animator.StringToHash("competeFloat");
     public static readonly int ANIMATOR_PARAMETERS_BOOL_STUN = Animator.StringToHash("isStun");
 
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_LIGHT_HIT = Animator.StringToHash("doLightHit");

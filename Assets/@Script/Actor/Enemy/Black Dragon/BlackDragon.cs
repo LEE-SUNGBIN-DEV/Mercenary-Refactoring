@@ -54,9 +54,6 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
             skill.Initialize(this);
 
         state = new EnemyStateController(this);
-
-        behaviourTree = new BlackDragonBehaviourTree(this);
-        behaviourTree.Initialize();
     }
 
     public override void OnEnable()
@@ -66,7 +63,7 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
 
     private void Update()
     {
-        behaviourTree.Update();
+        BaseEnemyBehaviour();
         state.Update();
     }
 
@@ -81,31 +78,7 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         base.OnDie();
         StartCoroutine(WaitForDisapear(10f));
     }
-    public virtual void OnLightHit()
-    {
-        state.TrySwitchState(ENEMY_STATE.LightHit);
-    }
-
-    public virtual void OnHeavyHit()
-    {
-        state.TrySwitchState(ENEMY_STATE.HeavyHit);
-    }
        
-
-    public void OnStagger()
-    {
-        Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STAGGER, true);
-        StartCoroutine(StaggerTime());
-    }
-
-    private IEnumerator StaggerTime()
-    {
-        yield return new WaitForSeconds(Constants.TIME_STAGGER);
-        Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STAGGER, false);
-    }
-
-    public void OnCompete()
-    {
-        animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMPETE, true);
-    }
+    public void OnStagger() { state.TrySwitchState(ENEMY_STATE.Stagger); }
+    public void OnCompete() { state.TrySwitchState(ENEMY_STATE.Compete); }
 }

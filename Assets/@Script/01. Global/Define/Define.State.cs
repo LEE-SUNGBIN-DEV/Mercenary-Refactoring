@@ -85,7 +85,7 @@ public enum ENEMY_STATE_WEIGHT
 
     LightHit = 512,
     HeavyHit = 513,
-    Stagger = 514,
+    Stagger = 515,
 
     Compete = 1024,
     Birth = 2048,

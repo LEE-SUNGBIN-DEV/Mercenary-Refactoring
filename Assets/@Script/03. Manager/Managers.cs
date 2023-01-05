@@ -17,8 +17,9 @@ public class Managers : Singleton<Managers>
     private SlotManager slotManager = new SlotManager();
     private NPCManager npcManager = new NPCManager();
     private AudioManager audioManager = new AudioManager();
-    private EventManager eventManager = new EventManager();
+    private GameEventManager gameEventManager = new GameEventManager();
     private QuestManager questManager = new QuestManager();
+    private CompeteManager competeManager;
 
     public override void Initialize()
     {
@@ -37,13 +38,15 @@ public class Managers : Singleton<Managers>
             gameManager.Initialize();
             sceneManagerCS.Initialize();
             audioManager.Initialize(transform);
-            eventManager.Initialize();
+            gameEventManager.Initialize();
             npcManager.Initialize();
-
             /*
             dialogueManager.Initialize();
             questManager.Initialize();
             */
+
+            // Mono
+            competeManager = Functions.GetOrAddComponent<CompeteManager>(gameObject);
 
             isInitialized = true;
             Debug.Log($"{this} Initialization Complete!");
@@ -58,9 +61,10 @@ public class Managers : Singleton<Managers>
     public static UIManager UIManager { get { return Instance?.uiManager; } }
     public static SlotManager SlotManager { get { return Instance?.slotManager; } }
     public static AudioManager AudioManager { get { return Instance?.audioManager; } }
-    public static EventManager EventManager { get { return Instance?.eventManager; } }
+    public static GameEventManager GameEventManager { get { return Instance?.gameEventManager; } }
     public static DataManager DataManager { get { return Instance?.dataManager; } }
     public static NPCManager NPCManager { get { return Instance?.npcManager; } }
     public static QuestManager QuestManager { get { return Instance?.questManager; } }
+    public static CompeteManager CompeteManager { get { return Instance?.competeManager; } }
     #endregion
 }

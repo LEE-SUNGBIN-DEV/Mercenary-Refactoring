@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LancerWeapon : PlayerWeapon
+public class LancerWeapon : PlayerAttackController
 {
     private Dictionary<LANCER_ATTACK_TYPE, CombatInformation> combatDictionary;
 
