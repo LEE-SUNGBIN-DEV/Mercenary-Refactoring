@@ -15,8 +15,8 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
     protected CharacterController characterController;
     protected CharacterStateController state;
 
-    protected PlayerWeapon weapon;
-    protected PlayerShield shield;
+    protected PlayerAttackController weapon;
+    protected PlayerDefenseController shield;
 
     public override void Awake()
     {
@@ -101,7 +101,7 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
             floatingDamageText.SetDamageText(isCritical, damage, hitPoint);
 
         if (enemy.IsDie)
-            Managers.EventManager.OnKillEnemy?.Invoke(this, enemy);
+            Managers.GameEventManager.EventQueue.Enqueue(new GameEventMessage(GAME_EVENT_TYPE.OnKillEnemy, enemy));
 
         return damage;
     }
@@ -112,7 +112,7 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
     }
     public void AdjustAttackSpeed(StatusData statusData)
     {
-        animator.SetFloat("attackSpeed", statusData.AttackSpeed);
+        animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_ATTACK_SPEED, statusData.AttackSpeed);
     }
 
     public void TrySwitchCharacterState(CHARACTER_STATE targetState)
@@ -137,7 +137,7 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }
 
-    public PlayerWeapon Weapon { get { return weapon; } }
-    public PlayerShield Shield { get { return shield; } }
+    public PlayerAttackController Weapon { get { return weapon; } }
+    public PlayerDefenseController Shield { get { return shield; } }
     #endregion
 }

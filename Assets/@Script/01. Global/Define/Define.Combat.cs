@@ -1,13 +1,13 @@
 public enum HIT_TYPE
 {
     // Attack
-    Normal,
-    Light,
-    Heavy,
+    Normal = 1,
+    Light = 2,
+    Heavy = 4,
 
     // Defense
-    Defense,
-    Parrying,
+    Defense = 32,
+    Parrying = 64,
 }
 
 public enum ABNORMAL_TYPE

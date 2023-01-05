@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BerserkerShield : PlayerShield
+public class BerserkerShield : PlayerDefenseController
 {
     private Dictionary<BERSERKER_DEFENSE_TYPE, CombatInformation> defenseDictionary;
 

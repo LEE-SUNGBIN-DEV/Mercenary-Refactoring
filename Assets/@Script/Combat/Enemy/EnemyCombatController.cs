@@ -7,27 +7,27 @@ public abstract class EnemyCombatController : BaseCombatController
     [Header("Enemy Combat Controller")]
     [SerializeField] protected BaseEnemy owner;
 
-    protected virtual void ExecuteAttackProcess(Collider target)
+    protected virtual void ExecuteAttackProcess(Collider other)
     {
         // Hit With Character
-        if (target.TryGetComponent(out BaseCharacter character))
+        if (other.TryGetComponent(out BaseCharacter character))
         {
-            // Invincible
+            // 01. Invincibility Process
             if (character.IsInvincible)
             {
                 return;
             }
 
-            // Duplication Check
+            // 02. Prevent Duplicate Damage Process
             if (hitDictionary.ContainsKey(character))
                 return;
 
             hitDictionary.Add(character, true);
 
-            // Damage Process
+            // 03. Damage Process
             owner.DamageProcess(character, damageRatio);
 
-            // CC Process
+            // 04. CC Process
             switch (abnormalType)
             {
                 case ABNORMAL_TYPE.Stun:
@@ -38,9 +38,11 @@ public abstract class EnemyCombatController : BaseCombatController
                     break;
             }
 
-            // Hit Process
+            // 05. Hit Process
             switch (combatType)
             {
+                case HIT_TYPE.Normal:
+                    break;
                 case HIT_TYPE.Light:
                     if (character is ILightHitable lightHitableObject)
                         lightHitableObject.OnLightHit();
@@ -53,8 +55,8 @@ public abstract class EnemyCombatController : BaseCombatController
         }
 
         // Hit With Shield
-        if (target.TryGetComponent(out PlayerShield shield))
-            shield.DefenseProcess(this, target.ClosestPoint(shield.transform.position));
+        if (other.TryGetComponent(out PlayerDefenseController shield))
+            shield.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
     }
 
     public virtual void OnEnableCollider()

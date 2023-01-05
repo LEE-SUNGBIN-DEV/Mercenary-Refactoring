@@ -6,7 +6,7 @@ public class GameManager
 {
     [Header("Camera")]
     private PlayerCamera playerCamera;
-    private BaseCamera directingCamera;
+    private DirectingCamera directingCamera;
 
     [Header("Cursor")]
     private CURSOR_MODE cursorMode;
@@ -82,7 +82,7 @@ public class GameManager
         get { return playerCamera; }
         set { playerCamera = value; }
     }
-    public BaseCamera DirectingCamera
+    public DirectingCamera DirectingCamera
     {
         get { return directingCamera; }
         set { directingCamera = value; }

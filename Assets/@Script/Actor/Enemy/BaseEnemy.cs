@@ -14,7 +14,6 @@ public abstract class BaseEnemy : BaseActor
     [SerializeField] protected bool isSpawn;
     [SerializeField] protected EnemyData enemyData;
     protected EnemyStateController state;
-    protected BehaviourTree behaviourTree;
 
     [Header("Skills")]
     [SerializeField] protected EnemySkill selectSkill;
@@ -45,6 +44,7 @@ public abstract class BaseEnemy : BaseActor
     {
         targetTransform = null;
     }
+
     public virtual void OnBirth()
     {
         OnEnemyBirth?.Invoke(this);
@@ -59,6 +59,25 @@ public abstract class BaseEnemy : BaseActor
             return;
 
         OnEnemyDie?.Invoke(this);
+    }
+
+    public virtual void BaseEnemyBehaviour()
+    {
+        if (targetTransform != null)
+        {
+            foreach (var skill in skillDictionary.Values)
+            {
+                if (skill.CheckCondition(targetDistance))
+                {
+                    selectSkill = skill;
+                    break;
+                }
+            }
+            state.TrySwitchState(ENEMY_STATE.Skill);
+
+            if (targetDistance > enemyData.MinChaseRange)
+                state.TrySwitchState(ENEMY_STATE.Move);
+        }
     }
 
     public void LookTarget()
@@ -107,7 +126,6 @@ public abstract class BaseEnemy : BaseActor
     #region Property
     public EnemyData EnemyData { get { return enemyData; } }
     public EnemyStateController State { get { return state; } }
-    public BehaviourTree BehaviourTree { get { return behaviourTree; } }
     public Dictionary<int, EnemySkill> SkillDictionary { get { return skillDictionary; } }
     public EnemySkill SelectSkill { get { return selectSkill; } set { selectSkill = value; } }
     public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }

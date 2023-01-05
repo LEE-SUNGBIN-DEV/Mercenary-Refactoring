@@ -42,14 +42,14 @@ public class CharacterStateMove : ICharacterState
             {
                 character.StatusData.CurrentSP -= Constants.CHARACTER_STAMINA_CONSUMPTION_RUN * Time.deltaTime;
                 character.CharacterController.Move((character.StatusData.MoveSpeed * 2) * Time.deltaTime * moveDirection);
-                moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 2, 3f * Time.deltaTime);
+                moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 2, 4f * Time.deltaTime);
             }
 
             // Walk
             else
             {
                 character.CharacterController.Move(character.StatusData.MoveSpeed * Time.deltaTime * moveDirection);
-                moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 1, 3f * Time.deltaTime);
+                moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 1, 4f * Time.deltaTime);
             }
 
             // Character Look Direction
@@ -58,7 +58,7 @@ public class CharacterStateMove : ICharacterState
 
         // Stop
         else
-            moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 0, 3f * Time.deltaTime);
+            moveBlendTreeFloat = Mathf.Lerp(moveBlendTreeFloat, 0, 4f * Time.deltaTime);
 
         character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_MOVE, moveBlendTreeFloat);
     }
