@@ -3,20 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class TaskEnemyChase : BehaviourNode
-{
-    private BaseEnemy enemy;
+namespace Legacy
+{    // ======================================
+     //              Legacy Script
+     // ======================================
 
-    public TaskEnemyChase(BaseEnemy enemy)
+    /*
+    public class TaskEnemyChase : BehaviourNode
     {
-        this.enemy = enemy;
-    }
+        private BaseEnemy enemy;
 
-    public override NODE_STATE Evaluate()
-    {
-        enemy.State.TrySwitchState(ENEMY_STATE.Move);
-        state = NODE_STATE.Running;
+        public TaskEnemyChase(BaseEnemy enemy)
+        {
+            this.enemy = enemy;
+        }
 
-        return state;
+        public override NODE_STATE Evaluate()
+        {
+            enemy.State.TrySwitchState(ENEMY_STATE.Move);
+            state = NODE_STATE.Running;
+
+            return state;
+        }
     }
+    */
 }

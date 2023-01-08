@@ -23,7 +23,7 @@ public class PlayerDefenseController : BaseCombatController
             case HIT_TYPE.Defense:
                 {
                     effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
-                    owner.TrySwitchCharacterState(CHARACTER_STATE.Defense_Breaked);
+                    owner.TrySwitchState(CHARACTER_STATE.Defense_Breaked);
                     break;
                 }
 
@@ -33,7 +33,7 @@ public class PlayerDefenseController : BaseCombatController
                         break;
 
                     effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Parrying);
-                    owner.TrySwitchCharacterState(CHARACTER_STATE.Parrying);
+                    owner.TrySwitchState(CHARACTER_STATE.Parrying);
                     break;
                 }
         }

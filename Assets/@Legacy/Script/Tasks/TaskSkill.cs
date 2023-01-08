@@ -3,20 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class TaskSkill : BehaviourNode
+namespace Legacy
 {
-    private BaseEnemy enemy;
+    // ======================================
+    //              Legacy Script
+    // ======================================
 
-    public TaskSkill(BaseEnemy enemy)
+    /*
+    public class TaskSkill : BehaviourNode
     {
-        this.enemy = enemy;
-    }
+        private BaseEnemy enemy;
 
-    public override NODE_STATE Evaluate()
-    {
-        enemy.State.TrySwitchState(ENEMY_STATE.Skill);
-        state = NODE_STATE.Success;
+        public TaskSkill(BaseEnemy enemy)
+        {
+            this.enemy = enemy;
+        }
 
-        return state;
+        public override NODE_STATE Evaluate()
+        {
+            enemy.State.TrySwitchState(ENEMY_STATE.Skill);
+            state = NODE_STATE.Success;
+
+            return state;
+        }
     }
+    */
 }

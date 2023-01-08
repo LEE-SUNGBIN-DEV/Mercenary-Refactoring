@@ -3,24 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class ConditionEqualWeight : BehaviourNode
+namespace Legacy
 {
-    private BaseEnemy enemy;
-    private ENEMY_STATE targetState;
+    // ======================================
+    //              Legacy Script
+    // ======================================
 
-    public ConditionEqualWeight(BaseEnemy enemy, ENEMY_STATE targetState)
+    /*
+    public class ConditionEqualWeight : BehaviourNode
     {
-        this.enemy = enemy;
-        this.targetState = targetState;
-    }
+        private BaseEnemy enemy;
+        private ENEMY_STATE targetState;
 
-    public override NODE_STATE Evaluate()
-    {
-        if (enemy.State.IsUpperStateThanCurrentState(targetState))
-            state = NODE_STATE.Success;
-        else
-            state = NODE_STATE.Failture;
+        public ConditionEqualWeight(BaseEnemy enemy, ENEMY_STATE targetState)
+        {
+            this.enemy = enemy;
+            this.targetState = targetState;
+        }
 
-        return state;
+        public override NODE_STATE Evaluate()
+        {
+            if (enemy.State.IsUpperStateThanCurrentState(targetState))
+                state = NODE_STATE.Success;
+            else
+                state = NODE_STATE.Failture;
+
+            return state;
+        }
     }
+    */
 }

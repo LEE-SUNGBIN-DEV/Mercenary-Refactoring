@@ -3,19 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class TaskStun : BehaviourNode
+namespace Legacy
 {
-    private BaseEnemy enemy;
+    // ======================================
+    //              Legacy Script
+    // ======================================
 
-    public TaskStun(BaseEnemy enemy)
+    /*
+    public class TaskStun : BehaviourNode
     {
-        this.enemy = enemy;
-    }
+        private BaseEnemy enemy;
 
-    public override NODE_STATE Evaluate()
-    {
-        enemy.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STUN, true);
+        public TaskStun(BaseEnemy enemy)
+        {
+            this.enemy = enemy;
+        }
 
-        return NODE_STATE.Running;
+        public override NODE_STATE Evaluate()
+        {
+            enemy.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STUN, true);
+
+            return NODE_STATE.Running;
+        }
     }
+    */
 }

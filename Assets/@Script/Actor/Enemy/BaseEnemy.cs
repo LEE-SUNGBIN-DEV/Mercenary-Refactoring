@@ -65,15 +65,21 @@ public abstract class BaseEnemy : BaseActor
     {
         if (targetTransform != null)
         {
-            foreach (var skill in skillDictionary.Values)
+            targetDistance = (targetTransform.position - transform.position).magnitude;
+            targetDirection = (targetTransform.position - transform.position).normalized;
+
+            if(state.IsUpperStateThanCurrentState(ENEMY_STATE.Skill))
             {
-                if (skill.CheckCondition(targetDistance))
+                foreach (var skill in skillDictionary.Values)
                 {
-                    selectSkill = skill;
-                    break;
+                    if (skill.CheckCondition(targetDistance))
+                    {
+                        selectSkill = skill;
+                        state.TrySwitchState(ENEMY_STATE.Skill);
+                        return;
+                    }
                 }
             }
-            state.TrySwitchState(ENEMY_STATE.Skill);
 
             if (targetDistance > enemyData.MinChaseRange)
                 state.TrySwitchState(ENEMY_STATE.Move);
@@ -84,7 +90,7 @@ public abstract class BaseEnemy : BaseActor
     {
         targetDirection = (targetTransform.position - transform.position).normalized;
         transform.rotation
-                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 2f * Time.deltaTime);
+                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 5f * Time.deltaTime);
     }
 
     public void DamageProcess(BaseCharacter character, float ratio)
@@ -132,27 +138,7 @@ public abstract class BaseEnemy : BaseActor
 
     // Target
     public Transform TargetTransform { get { return targetTransform; } set { targetTransform = value; } }
-    public Vector3 TargetDirection
-    {
-        get
-        {
-            if (targetTransform != null)
-                targetDirection = (targetTransform.position - transform.position).normalized;
-
-            return targetDirection;
-        }
-        set { targetDirection = value; }
-    }
-    public float TargetDistance
-    {
-        get
-        {
-            if (targetTransform != null)
-                targetDistance = (targetTransform.position - transform.position).magnitude;
-
-            return targetDistance;
-        }
-        set { targetDistance = value; }
-    }
+    public Vector3 TargetDirection { get { return targetDirection; } }
+    public float TargetDistance { get { return targetDistance; } }
     #endregion
 }

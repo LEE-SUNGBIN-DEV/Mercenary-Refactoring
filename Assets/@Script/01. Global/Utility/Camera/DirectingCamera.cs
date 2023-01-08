@@ -8,5 +8,6 @@ public class DirectingCamera : BaseCamera
     {
         base.Awake();
         Managers.GameManager.DirectingCamera = this;
+        gameObject.SetActive(false);
     }
 }

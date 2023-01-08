@@ -3,24 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class ConditionLowerHP : BehaviourNode
+namespace Legacy
 {
-    private BaseEnemy enemy;
-    private float targetHP;
+    // ======================================
+    //              Legacy Script
+    // ======================================
 
-    public ConditionLowerHP(BaseEnemy enemy, float targetHP)
+    /*
+    public class ConditionLowerHP : BehaviourNode
     {
-        this.enemy = enemy;
-        this.targetHP = targetHP;
+        private BaseEnemy enemy;
+        private float targetHP;
+
+        public ConditionLowerHP(BaseEnemy enemy, float targetHP)
+        {
+            this.enemy = enemy;
+            this.targetHP = targetHP;
+        }
+
+        public override NODE_STATE Evaluate()
+        {
+            state = NODE_STATE.Failture;
+
+            if (enemy.EnemyData.CurrentHP <= targetHP)
+                state = NODE_STATE.Success;
+
+            return state;
+        }
     }
 
-    public override NODE_STATE Evaluate()
-    {
-        state = NODE_STATE.Failture;
-
-        if (enemy.EnemyData.CurrentHP <= targetHP)
-            state = NODE_STATE.Success;
-
-        return state;
-    }
+        */
 }

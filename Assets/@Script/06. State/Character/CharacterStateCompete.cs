@@ -14,37 +14,22 @@ public class CharacterStateCompete : ICharacterState
     public void Enter(BaseCharacter character)
     {
         // Set Compete State
+        character.IsInvincible = true;
         character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
-        character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMPETE, true);
+        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
     }
 
     public void Update(BaseCharacter character)
     {
-        Managers.CompeteManager.CompetePower -= (0.3f * Time.deltaTime);
-
-        if (Input.GetKeyDown(KeyCode.A))
-            Managers.CompeteManager.CompetePower += 0.06f;
-
-        if (Input.GetKeyDown(KeyCode.D))
-            Managers.CompeteManager.CompetePower += 0.06f;
-
-        if (Managers.CompeteManager.CumulativeTime < Managers.CompeteManager.CompeteDuration)
-            Managers.CompeteManager.CumulativeTime += Time.deltaTime;
-
-        // Compete Success Condition
-        if(Managers.CompeteManager.CompetePower >= 1.0f)
-            Managers.CompeteManager.OnSuccessCompete();
-
-        // Compete Fail Condition
-        if(Managers.CompeteManager.CompetePower <= 0f || Managers.CompeteManager.CumulativeTime >= Managers.CompeteManager.CompeteDuration)
-            Managers.CompeteManager.OnFailCompete();
-
         character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
+
+        if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
+            character.SwitchState(CHARACTER_STATE.Move);
     }
 
     public void Exit(BaseCharacter character)
     {
-        character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMPETE, false);
+        character.IsInvincible = false;
     }
 
     #region Property

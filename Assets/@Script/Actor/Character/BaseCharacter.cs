@@ -57,10 +57,10 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
 
     }
 
-    public virtual void OnLightHit() { TrySwitchCharacterState(CHARACTER_STATE.LightHit); }
-    public virtual void OnHeavyHit() { TrySwitchCharacterState(CHARACTER_STATE.HeavyHit); }
+    public virtual void OnLightHit() { TrySwitchState(CHARACTER_STATE.LightHit); }
+    public virtual void OnHeavyHit() { TrySwitchState(CHARACTER_STATE.HeavyHit); }
     public virtual void OnStun(float duration) { AddAbnormalState(ABNORMAL_TYPE.Stun, duration); }
-    public virtual void OnCompete() { TrySwitchCharacterState(CHARACTER_STATE.Compete); }
+    public virtual void OnCompete() { TrySwitchState(CHARACTER_STATE.Compete); }
     public virtual void OnDie(StatusData characterStats) { }
 
     public abstract CHARACTER_STATE NextState();
@@ -115,14 +115,18 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
         animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_ATTACK_SPEED, statusData.AttackSpeed);
     }
 
-    public void TrySwitchCharacterState(CHARACTER_STATE targetState)
+    public void TrySwitchState(CHARACTER_STATE targetState)
     {
         state.TrySwitchState(targetState);
     }
-    public void SwitchCharacterState(CHARACTER_STATE targetState)
+    public void SwitchState(CHARACTER_STATE targetState)
     {
         Managers.InputManager?.Initialize();
         state.SwitchState(targetState);
+    }
+    public void OnCompetSuccess()
+    {
+        Managers.CompeteManager.OnEnemyFail();
     }
 
     #region Property

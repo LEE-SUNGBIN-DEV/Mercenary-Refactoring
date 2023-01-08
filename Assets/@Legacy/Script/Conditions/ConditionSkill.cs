@@ -3,28 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class ConditionSkill : BehaviourNode
+namespace Legacy
 {
-    private BaseEnemy enemy;
+    // ======================================
+    //              Legacy Script
+    // ======================================
 
-    public ConditionSkill(BaseEnemy enemy)
+    /*
+    public class ConditionSkill : BehaviourNode
     {
-        this.enemy = enemy;
-    }
+        private BaseEnemy enemy;
 
-    public override NODE_STATE Evaluate()
-    {
-        state = NODE_STATE.Failture;
-        foreach(var skill in enemy.SkillDictionary.Values)
+        public ConditionSkill(BaseEnemy enemy)
         {
-            if(skill.CheckCondition(enemy.TargetDistance))
-            {
-                enemy.SelectSkill = skill;
-                state = NODE_STATE.Success;
-                return state;
-            }
+            this.enemy = enemy;
         }
 
-        return state;
+        public override NODE_STATE Evaluate()
+        {
+            state = NODE_STATE.Failture;
+            foreach (var skill in enemy.SkillDictionary.Values)
+            {
+                if (skill.CheckCondition(enemy.TargetDistance))
+                {
+                    enemy.SelectSkill = skill;
+                    state = NODE_STATE.Success;
+                    return state;
+                }
+            }
+
+            return state;
+        }
     }
+    */
 }

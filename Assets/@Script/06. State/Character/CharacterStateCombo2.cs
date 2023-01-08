@@ -30,13 +30,13 @@ public class CharacterStateCombo2 : ICharacterState
             character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_SMASH_ATTACK, true);
 
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_SMASH_2))
-            character.SwitchCharacterState(CHARACTER_STATE.Smash_2);
+            character.SwitchState(CHARACTER_STATE.Smash_2);
 
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_COMBO_3))
-            character.SwitchCharacterState(CHARACTER_STATE.Combo_3);
+            character.SwitchState(CHARACTER_STATE.Combo_3);
 
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
-            character.SwitchCharacterState(CHARACTER_STATE.Move);
+            character.SwitchState(CHARACTER_STATE.Move);
     }
 
     public void Exit(BaseCharacter character)

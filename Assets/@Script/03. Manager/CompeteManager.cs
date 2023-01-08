@@ -1,9 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CompeteManager : MonoBehaviour
 {
+    public event UnityAction OnStartCompete;
+    public event UnityAction OnEndCompete;
+    public event UnityAction<float> OnChangeCompetePower;
+    public event UnityAction OnPressAKey;
+    public event UnityAction OnPressDKey;
+
+    private IEnumerator competeControlFunction;
+
     private BaseCharacter character;
     private BaseEnemy enemy;
     private ICompetable competableCharacter;
@@ -17,13 +26,17 @@ public class CompeteManager : MonoBehaviour
     private float cumulativeTime;
     private float competePower;
 
+    private bool isSuccess;
+
     private void Awake()
     {
+        competeControlFunction = CoCompeteControl();
         isReady = true;
         competeCooldown = Constants.TIME_COMPETE_COOLDOWN;
         competeDuration = Constants.TIME_COMPETE;
         cumulativeTime = 0;
         competePower = 0.5f;
+        isSuccess = false;
     }
 
     public bool TryCompete(PlayerDefenseController defenseController, EnemyCompeteAttack competeController)
@@ -38,8 +51,10 @@ public class CompeteManager : MonoBehaviour
             competePoint = competeController.CompetePoint;
             cameraPoint = competeController.CameraPoint;
 
-            Functions.SetCharacterTransform(defenseController.Owner, competeController.CompetePoint);
-            OnStartCompete();
+            OnStartCompete?.Invoke();
+            StartCoroutine(CoStartCooldown());
+            StartCoroutine(competeControlFunction);
+            Functions.SetCharacterTransform(character, competeController.CompetePoint);
 
             return true;
         }
@@ -47,10 +62,16 @@ public class CompeteManager : MonoBehaviour
         return false;
     }
 
-    public void OnStartCompete()
+    public IEnumerator CoStartCooldown()
     {
-        StartCoroutine(CoStartCooldown());
+        isReady = false;
+        yield return new WaitForSeconds(competeCooldown);
+        isReady = true;
+        Debug.Log("Compete Ready");
+    }
 
+    public IEnumerator CoCompeteControl()
+    {
         // Camera
         Managers.GameManager.PlayerCamera.SetCameraTransform(competePoint);
         Managers.GameManager.DirectingCamera.SetCameraTransform(cameraPoint);
@@ -62,43 +83,84 @@ public class CompeteManager : MonoBehaviour
         // Actor
         competableCharacter?.OnCompete();
         competableEnemy?.OnCompete();
+
+        isSuccess = false;
+
+        while (true)
+        {
+            CompetePower -= (0.3f * Time.deltaTime);
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                OnPressAKey?.Invoke();
+                CompetePower += 0.06f;
+            }
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                OnPressDKey?.Invoke();
+                CompetePower += 0.06f;
+            }
+
+            if (cumulativeTime < competeDuration)
+                cumulativeTime += Time.deltaTime;
+
+            // Compete Success Condition
+            if (CompetePower >= 1.0f)
+                SuccessCompete();
+
+            // Compete Fail Condition
+            if (competePower <= 0f || cumulativeTime >= competeDuration)
+                FailCompete();
+
+            yield return null;
+        }
     }
-    public void OnSuccessCompete()
+
+    public void SuccessCompete()
     {
-        OnEndCompete();
+        isSuccess = true;
+        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE_SUCCESS);
+        enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE_FAIL);
+        EndCompete();
     }
-    public void OnFailCompete()
+
+    public void FailCompete()
     {
-        character.SwitchCharacterState(CHARACTER_STATE.HeavyHit);
-        OnEndCompete();
+        isSuccess = false;
+        enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE_SUCCESS);
+        character.SwitchState(CHARACTER_STATE.HeavyHit);
+        EndCompete();
     }
-    public void OnEndCompete()
+
+    public void EndCompete()
     {
-        character = null;
-        enemy = null;
+        OnEndCompete?.Invoke();
+        StopCoroutine(competeControlFunction);
+
+        if(!isSuccess)
+        {
+            character = null;
+            enemy = null;
+        }
         competableCharacter = null;
         competableEnemy = null;
 
         cumulativeTime = 0;
         competePower = 0.5f;
+
         Managers.GameManager.DirectingCamera.gameObject.SetActive(false);
         Managers.GameManager.PlayerCamera.gameObject.SetActive(true);
     }
 
-    public IEnumerator CoStartCooldown()
+    public void OnEnemyFail()
     {
-        isReady = false;
-        yield return new WaitForSeconds(competeCooldown);
-        isReady = true;
+        enemy.SwitchState(ENEMY_STATE.Stagger);
+        character = null;
+        enemy = null;
     }
 
     #region Property
-    public ICompetable CompetableCharacter { get { return competableCharacter; } }
-    public ICompetable CompetableEnemy { get { return competableEnemy; } }
-    public Transform CompetePoint { get { return competePoint; } }
-    public Transform CameraPoint { get { return cameraPoint; } }
-    public float CompeteDuration { get { return competeDuration; } }
-    public float CumulativeTime { get { return cumulativeTime; } set { cumulativeTime = value; } }
     public float CompetePower
     {
         get { return competePower; }
@@ -111,6 +173,8 @@ public class CompeteManager : MonoBehaviour
 
             if (competePower > 1f)
                 competePower = 1f;
+
+            OnChangeCompetePower?.Invoke(competePower);
         }
     }
     #endregion

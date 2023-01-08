@@ -11,12 +11,13 @@ public class EnemyStateStagger : IEnemyState
     public EnemyStateStagger()
     {
         stateWeight = (int)ENEMY_STATE_WEIGHT.Stagger;
-        staggerTime = 0f;
+        staggerTime = 5f;
         cumulativeTime = 0f;
     }
 
     public void Enter(BaseEnemy enemy)
     {
+        enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_STAGGER);
         enemy.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STAGGER, true);
     }
 

@@ -3,24 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class ConditionLowerRange : BehaviourNode
+namespace Legacy
 {
-    private BaseEnemy enemy;
-    private float targetRange;
+    // ======================================
+    //              Legacy Script
+    // ======================================
 
-    public ConditionLowerRange(BaseEnemy enemy, float targetRange)
+    /*
+    public class ConditionLowerRange : BehaviourNode
     {
-        this.enemy = enemy;
-        this.targetRange = targetRange;
-    }
+        private BaseEnemy enemy;
+        private float targetRange;
 
-    public override NODE_STATE Evaluate()
-    {
-        state = NODE_STATE.Failture;
-        if (enemy.TargetDistance > targetRange)
+        public ConditionLowerRange(BaseEnemy enemy, float targetRange)
         {
-            state = NODE_STATE.Success;
+            this.enemy = enemy;
+            this.targetRange = targetRange;
         }
-        return state;
+
+        public override NODE_STATE Evaluate()
+        {
+            state = NODE_STATE.Failture;
+            if (enemy.TargetDistance > targetRange)
+            {
+                state = NODE_STATE.Success;
+            }
+            return state;
+        }
     }
+    */
 }
