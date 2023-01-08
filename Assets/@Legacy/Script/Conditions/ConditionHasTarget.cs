@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class ConditionHasTarget : BehaviourNode
+namespace Legacy
 {
-    private BaseEnemy enemy;
+    // ======================================
+    //              Legacy Script
+    // ======================================
 
-    public ConditionHasTarget(BaseEnemy enemy)
+    /*
+    public class ConditionHasTarget : BehaviourNode
     {
-        this.enemy = enemy;
+        private BaseEnemy enemy;
+
+        public ConditionHasTarget(BaseEnemy enemy)
+        {
+            this.enemy = enemy;
+        }
+
+        public override NODE_STATE Evaluate()
+        {
+            if (enemy.TargetTransform == null)
+                state = NODE_STATE.Failture;
+
+            else
+                state = NODE_STATE.Success;
+
+            return state;
+        }
     }
-
-    public override NODE_STATE Evaluate()
-    {
-        if (enemy.TargetTransform == null)
-            state = NODE_STATE.Failture;
-
-        else
-            state = NODE_STATE.Success;
-
-        return state;
-    }
+    */
 }

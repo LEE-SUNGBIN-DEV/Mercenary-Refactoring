@@ -3,26 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class ConditionStun : BehaviourNode
-{
-    private BaseEnemy enemy;
+namespace Legacy
+{    // ======================================
+     //              Legacy Script
+     // ======================================
 
-    public ConditionStun(BaseEnemy enemy)
+    /*
+    public class ConditionStun : BehaviourNode
     {
-        this.enemy = enemy;
-    }
+        private BaseEnemy enemy;
 
-    public override NODE_STATE Evaluate()
-    {
-        if (enemy.AbnormalStateController.CheckState(ABNORMAL_TYPE.Stun))
+        public ConditionStun(BaseEnemy enemy)
         {
-            state = NODE_STATE.Success;
+            this.enemy = enemy;
         }
-        else
+
+        public override NODE_STATE Evaluate()
         {
-            enemy.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STUN, false);
-            state = NODE_STATE.Failture;
+            if (enemy.AbnormalStateController.CheckState(ABNORMAL_TYPE.Stun))
+            {
+                state = NODE_STATE.Success;
+            }
+            else
+            {
+                enemy.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STUN, false);
+                state = NODE_STATE.Failture;
+            }
+            return state;
         }
-        return state;
     }
+    */
 }

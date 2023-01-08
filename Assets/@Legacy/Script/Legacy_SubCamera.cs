@@ -2,53 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ======================================
-//              Legacy Script
-// ======================================
-
-/*
-public class SubCamera : MonoBehaviour
+namespace Legacy
 {
-    // Private Variable
-    [SerializeField] private Transform playerTransform;
-    [SerializeField] private float shakeAmount;
-    private Vector3 originalPosition;
-    private bool isShake;
-    private float shakeTime;
+    // ======================================
+    //              Legacy Script
+    // ======================================
 
-    // Private Function
-    private void Awake()
+    /*
+    public class SubCamera : MonoBehaviour
     {
-        shakeTime = GameConstants.TIME_COMPETE;
-    }
-    private void OnEnable()
-    {
-        isShake = true;
-    }
+        // Private Variable
+        [SerializeField] private Transform playerTransform;
+        [SerializeField] private float shakeAmount;
+        private Vector3 originalPosition;
+        private bool isShake;
+        private float shakeTime;
 
-    private void OnDisable()
-    {
-        isShake = false;
-    }
-
-    private void Update()
-    {
-        if (isShake == true)
+        // Private Function
+        private void Awake()
         {
-            transform.position = (Random.insideUnitSphere * shakeAmount) + originalPosition;
-            shakeTime -= Time.deltaTime;
+            shakeTime = GameConstants.TIME_COMPETE;
+        }
+        private void OnEnable()
+        {
+            isShake = true;
+        }
 
-            if (shakeTime <= 0)
+        private void OnDisable()
+        {
+            isShake = false;
+        }
+
+        private void Update()
+        {
+            if (isShake == true)
             {
-                isShake = false;
+                transform.position = (Random.insideUnitSphere * shakeAmount) + originalPosition;
+                shakeTime -= Time.deltaTime;
+
+                if (shakeTime <= 0)
+                {
+                    isShake = false;
+                }
             }
         }
-    }
 
-    public Vector3 OriginalPosition
-    {
-        get { return originalPosition; }
-        set { originalPosition = value; }
+        public Vector3 OriginalPosition
+        {
+            get { return originalPosition; }
+            set { originalPosition = value; }
+        }
     }
+    */
 }
-*/

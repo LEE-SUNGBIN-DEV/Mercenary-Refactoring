@@ -14,8 +14,9 @@ public class EnemyStateCompete : IEnemyState
     public void Enter(BaseEnemy enemy)
     {
         // Set Compete State
+        enemy.IsInvincible = true;
         enemy.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
-        enemy.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMPETE, true);
+        enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
     }
 
     public void Update(BaseEnemy enemy)
@@ -25,7 +26,7 @@ public class EnemyStateCompete : IEnemyState
 
     public void Exit(BaseEnemy enemy)
     {
-        enemy.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMPETE, false);
+        enemy.IsInvincible = false;
     }
 
     #region Property

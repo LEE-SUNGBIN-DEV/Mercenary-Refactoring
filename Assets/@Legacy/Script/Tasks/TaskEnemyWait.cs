@@ -3,21 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class TaskEnemyWait : BehaviourNode
+namespace Legacy
 {
-    private BaseEnemy enemy;
+    // ======================================
+    //              Legacy Script
+    // ======================================
 
-    public TaskEnemyWait(BaseEnemy enemy)
+    /*
+    public class TaskEnemyWait : BehaviourNode
     {
-        this.enemy = enemy;
-    }
+        private BaseEnemy enemy;
 
-    public override NODE_STATE Evaluate()
-    {
-        enemy.NavMeshAgent.isStopped = true;
-        enemy.NavMeshAgent.velocity = Vector3.zero;
-        enemy.Animator.SetBool("isMove", false);
+        public TaskEnemyWait(BaseEnemy enemy)
+        {
+            this.enemy = enemy;
+        }
 
-        return NODE_STATE.Running;
+        public override NODE_STATE Evaluate()
+        {
+            enemy.NavMeshAgent.isStopped = true;
+            enemy.NavMeshAgent.velocity = Vector3.zero;
+            enemy.Animator.SetBool("isMove", false);
+
+            return NODE_STATE.Running;
+        }
     }
+    */
 }

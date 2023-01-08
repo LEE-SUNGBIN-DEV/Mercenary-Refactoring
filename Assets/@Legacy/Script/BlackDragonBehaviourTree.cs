@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class BlackDragonBehaviourTree : BehaviourTree
+namespace Legacy
 {
-    private BaseEnemy enemy;
-
-    public BlackDragonBehaviourTree(BaseEnemy enemy)
+    /*
+    // ======================================
+    //              Legacy Script
+    // ======================================
+    public class BlackDragonBehaviourTree : BehaviourTree
     {
-        this.enemy = enemy;
-    }
+        private BaseEnemy enemy;
 
-    public override BehaviourNode SetupTree()
-    {
-        BehaviourNode root = new Selector(new List<BehaviourNode>()
+        public BlackDragonBehaviourTree(BaseEnemy enemy)
+        {
+            this.enemy = enemy;
+        }
+
+        public override BehaviourNode SetupTree()
+        {
+            BehaviourNode root = new Selector(new List<BehaviourNode>()
         {
             // Combat State
             new Sequence(new List<BehaviourNode>()
@@ -41,6 +47,8 @@ public class BlackDragonBehaviourTree : BehaviourTree
             })
         });
 
-        return root;
+            return root;
+        }
     }
+    */
 }

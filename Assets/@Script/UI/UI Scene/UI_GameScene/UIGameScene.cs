@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class UIGameScene : UIBaseScene
 {
+    // Panel
     private UserPanel userPanel;
     private DialoguePanel dialoguePanel;
     private MonsterPanel monsterPanel;
     private MapPanel mapPanel;
+    private CompetePanel competePanel;
 
+    // Popup
     private DiePopup diePopup;
     private InventoryPopup inventoryPopup;
     private StatusPopup statusPopup;
@@ -26,12 +29,12 @@ public class UIGameScene : UIBaseScene
         }
         isInitialized = true;
 
+        // Get Component
         userPanel = GetComponentInChildren<UserPanel>(true);
         dialoguePanel = GetComponentInChildren<DialoguePanel>(true);
         monsterPanel = GetComponentInChildren<MonsterPanel>(true);
         mapPanel = GetComponentInChildren<MapPanel>(true);
-        userPanel.Initialize(characterData);
-        dialoguePanel.Initialize(characterData);
+        competePanel = GetComponentInChildren<CompetePanel>(true);
 
         diePopup = GetComponentInChildren<DiePopup>(true);
         inventoryPopup = GetComponentInChildren<InventoryPopup>(true);
@@ -41,6 +44,11 @@ public class UIGameScene : UIBaseScene
         storePopup = GetComponentInChildren<StorePopup>(true);
         campaignPopup = GetComponentInChildren<CampaignPopup>(true);
 
+        // Initialize
+        userPanel.Initialize(characterData);
+        dialoguePanel.Initialize(characterData);
+        competePanel.Initialize();
+
         diePopup.Initialize();
         inventoryPopup.Initialize(characterData.InventoryData);
         statusPopup.Initialize(characterData);
@@ -48,6 +56,13 @@ public class UIGameScene : UIBaseScene
         //questPopup.Initialize();
         storePopup.Initialize();
         campaignPopup.Initialize(characterData);
+
+        // Add Event
+        Managers.CompeteManager.OnStartCompete -= OpenCompetePanel;
+        Managers.CompeteManager.OnStartCompete += OpenCompetePanel;
+
+        Managers.CompeteManager.OnEndCompete -= CloseCompetePanel;
+        Managers.CompeteManager.OnEndCompete += CloseCompetePanel;
 
         OpenPanel(userPanel);
     }
@@ -66,6 +81,9 @@ public class UIGameScene : UIBaseScene
         if (Input.GetKeyDown(KeyCode.H))
             TogglePopup(helpPopup);
     }
+
+    public void OpenCompetePanel() { OpenPanel(competePanel); }
+    public void CloseCompetePanel() { ClosePanel(competePanel); }
 
     #region Property
     public DiePopup DiePopup { get { return diePopup; } }

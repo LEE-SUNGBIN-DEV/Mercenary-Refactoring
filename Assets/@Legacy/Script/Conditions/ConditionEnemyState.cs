@@ -3,24 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTreePackage;
 
-public class ConditionEnemyState : BehaviourNode
-{
-    private BaseEnemy enemy;
-    private ENEMY_STATE targetState;
+namespace Legacy
+{    // ======================================
+     //              Legacy Script
+     // ======================================
 
-    public ConditionEnemyState(BaseEnemy enemy, ENEMY_STATE targetState)
+    /*
+    public class ConditionEnemyState : BehaviourNode
     {
-        this.enemy = enemy;
-        this.targetState = targetState;
-    }
+        private BaseEnemy enemy;
+        private ENEMY_STATE targetState;
 
-    public override NODE_STATE Evaluate()
-    {
-        if (enemy.State.IsCurrentState(targetState))
-            state = NODE_STATE.Success;
-        else
-            state = NODE_STATE.Failture;
+        public ConditionEnemyState(BaseEnemy enemy, ENEMY_STATE targetState)
+        {
+            this.enemy = enemy;
+            this.targetState = targetState;
+        }
 
-        return state;
+        public override NODE_STATE Evaluate()
+        {
+            if (enemy.State.IsCurrentState(targetState))
+                state = NODE_STATE.Success;
+            else
+                state = NODE_STATE.Failture;
+
+            return state;
+        }
     }
+    */
 }
+

@@ -11,7 +11,7 @@ public class EnemyStateSkill : IEnemyState
     public EnemyStateSkill()
     {
         stateWeight = (int)ENEMY_STATE_WEIGHT.Skill;
-        lookTime = 0.3f;
+        lookTime = 0.5f;
         cumulativeTime = 0f;
     }
 

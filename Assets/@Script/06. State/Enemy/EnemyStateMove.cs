@@ -19,10 +19,9 @@ public class EnemyStateMove : IEnemyState
 
     public void Update(BaseEnemy enemy)
     {
-        if (enemy.TargetDistance > enemy.EnemyData.MinChaseRange)
-            enemy.NavMeshAgent.SetDestination(enemy.TargetTransform.position);
+        enemy.NavMeshAgent.SetDestination(enemy.TargetTransform.position);
 
-        else
+        if (enemy.TargetDistance <= enemy.EnemyData.MinChaseRange)
         {
             enemy.NavMeshAgent.isStopped = false;
             enemy.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_MOVE, false);

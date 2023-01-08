@@ -72,6 +72,8 @@ public enum ENEMY_STATE
     Stagger,
 
     Compete,
+    Compete_Defeat,
+
     Birth,
     Die
 }
@@ -88,6 +90,8 @@ public enum ENEMY_STATE_WEIGHT
     Stagger = 515,
 
     Compete = 1024,
+    Compete_Defeat = 1025,
+
     Birth = 2048,
     Die = 4096,
 
