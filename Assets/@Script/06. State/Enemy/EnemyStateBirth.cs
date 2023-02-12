@@ -21,7 +21,6 @@ public class EnemyStateBirth : IEnemyState
         if (enemy.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_IDLE))
         {
             enemy.State.SwitchState(ENEMY_STATE.Idle);
-            Debug.Log("Idle Called");
         }
     }
 

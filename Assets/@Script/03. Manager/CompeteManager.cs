@@ -30,7 +30,6 @@ public class CompeteManager : MonoBehaviour
 
     private void Awake()
     {
-        competeControlFunction = CoCompeteControl();
         isReady = true;
         competeCooldown = Constants.TIME_COMPETE_COOLDOWN;
         competeDuration = Constants.TIME_COMPETE;
@@ -48,6 +47,8 @@ public class CompeteManager : MonoBehaviour
 
         if (competableCharacter != null && competableEnemy != null && isReady)
         {
+            competeControlFunction = CoCompeteControl();
+
             competePoint = competeController.CompetePoint;
             cameraPoint = competeController.CameraPoint;
 
@@ -72,6 +73,7 @@ public class CompeteManager : MonoBehaviour
 
     public IEnumerator CoCompeteControl()
     {
+        Debug.Log("Compete Control");
         // Camera
         Managers.GameManager.PlayerCamera.SetCameraTransform(competePoint);
         Managers.GameManager.DirectingCamera.SetCameraTransform(cameraPoint);
@@ -129,7 +131,7 @@ public class CompeteManager : MonoBehaviour
     {
         isSuccess = false;
         enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE_SUCCESS);
-        character.SwitchState(CHARACTER_STATE.HeavyHit);
+        character.SetState(CHARACTER_STATE.HeavyHit);
         EndCompete();
     }
 

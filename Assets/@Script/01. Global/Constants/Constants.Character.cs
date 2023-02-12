@@ -10,8 +10,9 @@ public static partial class Constants
     public static readonly int MAX_EQUIPMENT_SLOT_NUMBER = 4;
 
     // Character
-    public static readonly float CHARACTER_STAMINA_AUTO_RECOVERY = 15f;
-    public static readonly float CHARACTER_STAMINA_CONSUMPTION_RUN = 2f;
+    public static readonly float CHARACTER_STAMINA_IDLE_AUTO_RECOVERY = 15f;
+    public static readonly float CHARACTER_STAMINA_WALK_AUTO_RECOVERY = 10f;
+    public static readonly float CHARACTER_STAMINA_CONSUMPTION_RUN = 3f;
     public static readonly float CHARACTER_STAMINA_CONSUMPTION_DEFEND = 2f;
     public static readonly float CHARACTER_STAMINA_CONSUMPTION_ROLL = 15f;
     public static readonly float CHARACTER_STAMINA_CONSUMPTION_COUNTER = 30f;

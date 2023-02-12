@@ -26,10 +26,10 @@ public class CharacterStateSmash1 : ICharacterState
             character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_COMBO_ATTACK, true);
 
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_COMBO_1))
-            character.SwitchState(CHARACTER_STATE.Combo_1);
+            character.SetState(CHARACTER_STATE.Combo_1);
 
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
-            character.SwitchState(CHARACTER_STATE.Move);
+            character.SetState(CHARACTER_STATE.Walk);
     }
 
     public void Exit(BaseCharacter character)
