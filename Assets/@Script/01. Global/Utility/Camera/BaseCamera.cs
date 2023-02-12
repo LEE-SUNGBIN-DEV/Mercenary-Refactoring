@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BaseCamera : MonoBehaviour
 {
-    [SerializeField] private Camera thisCamera;
-    [SerializeField] private Transform targetTransform;
-    private Vector3 targetOffset;
-    private Vector3 originalPosition;
-    private IEnumerator shakeCoroutine;
+    [SerializeField] protected Camera thisCamera;
+    [SerializeField] protected Transform targetTransform;
+    protected Vector3 targetOffset;
+    protected Vector3 originalPosition;
+    protected IEnumerator shakeCoroutine;
     
     protected virtual void Awake()
     {

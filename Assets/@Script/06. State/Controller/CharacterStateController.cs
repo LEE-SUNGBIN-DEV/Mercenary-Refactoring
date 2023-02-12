@@ -16,7 +16,9 @@ public class CharacterStateController
         stateDictionary = new Dictionary<CHARACTER_STATE, ICharacterState>
         {
             // Common
-            { CHARACTER_STATE.Move, new CharacterStateMove() },
+            { CHARACTER_STATE.Idle, new CharacterStateIdle() },
+            { CHARACTER_STATE.Walk, new CharacterStateWalk() },
+            { CHARACTER_STATE.Run, new CharacterStateRun() },
             { CHARACTER_STATE.Combo_1, new CharacterStateCombo1() },
             { CHARACTER_STATE.Combo_2, new CharacterStateCombo2() },
             { CHARACTER_STATE.Combo_3, new CharacterStateCombo3() },
@@ -50,7 +52,7 @@ public class CharacterStateController
         currentState?.Update(character);
     }
 
-    public void SwitchState(CHARACTER_STATE targetState)
+    public void SetState(CHARACTER_STATE targetState)
     {
         prevState = currentState;
         currentState?.Exit(character);
@@ -61,7 +63,7 @@ public class CharacterStateController
     public void TrySwitchState(CHARACTER_STATE targetState)
     {
         if (IsUpperStateThanCurrentState(targetState))
-            SwitchState(targetState);
+            SetState(targetState);
     }
 
     public CHARACTER_STATE CompareStateWeight(CHARACTER_STATE targetStateA, CHARACTER_STATE targetStateB)

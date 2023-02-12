@@ -15,8 +15,8 @@ public class CharacterStateCompete : ICharacterState
     {
         // Set Compete State
         character.IsInvincible = true;
-        character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
         character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
+        character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
     }
 
     public void Update(BaseCharacter character)
@@ -24,7 +24,7 @@ public class CharacterStateCompete : ICharacterState
         character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
 
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
-            character.SwitchState(CHARACTER_STATE.Move);
+            character.SetState(CHARACTER_STATE.Walk);
     }
 
     public void Exit(BaseCharacter character)

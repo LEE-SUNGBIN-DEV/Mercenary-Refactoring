@@ -97,6 +97,10 @@ MonoBehaviour:
     m_Address: Audio_Lancer_Attack
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 6fd09ddcb0781364488e08feb72ac197
+    m_Address: Audio_Foot_Step
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
   m_SchemaSet:

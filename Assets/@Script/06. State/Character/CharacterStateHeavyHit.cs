@@ -32,13 +32,13 @@ public class CharacterStateHeavyHit : ICharacterState
             if(Managers.InputManager.IsSpaceKeyDown)
             {
                 character.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_DOWN, false);
-                character.State.SwitchState(CHARACTER_STATE.StandRoll);
+                character.State.SetState(CHARACTER_STATE.StandRoll);
             }
         }
         time += Time.deltaTime;
 
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
-            character.SwitchState(CHARACTER_STATE.Move);
+            character.SetState(CHARACTER_STATE.Walk);
     }
 
     public void Exit(BaseCharacter character)

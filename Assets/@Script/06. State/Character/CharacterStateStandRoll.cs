@@ -32,7 +32,7 @@ public class CharacterStateStandRoll : ICharacterState
     public void Update(BaseCharacter character)
     {
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
-            character.SwitchState(CHARACTER_STATE.Move);
+            character.SetState(CHARACTER_STATE.Walk);
     }
 
     public void Exit(BaseCharacter character)

@@ -82,6 +82,15 @@ public class StatusData
         StatPoint += 5;
     }
 
+    public void AutoRecoverStamina(float amount = 0f)
+    {
+        CurrentSP += (maxSP * amount * 0.01f * Time.deltaTime);
+    }
+    public bool CheckStamina(float amount)
+    {
+        return currentSP >= amount;
+    }
+
     #region Stat Property
     public string CharacterClass
     {

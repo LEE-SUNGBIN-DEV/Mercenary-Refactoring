@@ -6,7 +6,12 @@ public static partial class Constants
 {
     #region Animator String Hash
     // Character
-    public static readonly int ANIMATOR_PARAMETERS_FLOAT_MOVE = Animator.StringToHash("moveFloat");
+    public static readonly int ANIMATION_NAME_IDLE = Animator.StringToHash("Idle");
+    public static readonly int ANIMATION_NAME_WALK = Animator.StringToHash("Walk");
+    public static readonly int ANIMATION_NAME_RUN = Animator.StringToHash("Run");
+    public static readonly int ANIMATION_NAME_SKILL_COUNTER = Animator.StringToHash("Skill_Counter");
+    public static readonly int ANIMATION_NAME_ROLL = Animator.StringToHash("Roll");
+
     public static readonly int ANIMATOR_PARAMETERS_BOOL_COMBO_ATTACK = Animator.StringToHash("isComboAttack");
     public static readonly int ANIMATOR_PARAMETERS_BOOL_SMASH_ATTACK = Animator.StringToHash("isSmashAttack");
 
@@ -15,7 +20,6 @@ public static partial class Constants
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_PARRYING = Animator.StringToHash("doParrying");
     public static readonly int ANIMATOR_PARAMETERS_BOOL_PARRYING_ATTACK = Animator.StringToHash("isParryingAttack");
 
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_ROLL = Animator.StringToHash("doRoll");
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_STAND_ROLL = Animator.StringToHash("doStandRoll");
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_COUNTER = Animator.StringToHash("doCounter");
 

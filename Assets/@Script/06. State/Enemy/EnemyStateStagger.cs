@@ -17,6 +17,7 @@ public class EnemyStateStagger : IEnemyState
 
     public void Enter(BaseEnemy enemy)
     {
+        cumulativeTime = 0f;
         enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_STAGGER);
         enemy.Animator.SetBool(Constants.ANIMATOR_PARAMETERS_BOOL_STAGGER, true);
     }

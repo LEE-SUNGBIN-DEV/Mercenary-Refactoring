@@ -17,6 +17,7 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
 
     protected PlayerAttackController weapon;
     protected PlayerDefenseController shield;
+    protected bool isGround;
 
     public override void Awake()
     {
@@ -49,7 +50,6 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
 
     protected virtual void Update()
     {
-        AutoRecoverStamina();
     }
 
     public void Rebirth()
@@ -62,8 +62,6 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
     public virtual void OnStun(float duration) { AddAbnormalState(ABNORMAL_TYPE.Stun, duration); }
     public virtual void OnCompete() { TrySwitchState(CHARACTER_STATE.Compete); }
     public virtual void OnDie(StatusData characterStats) { }
-
-    public abstract CHARACTER_STATE NextState();
 
     public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)
     {
@@ -106,10 +104,6 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
         return damage;
     }
 
-    public void AutoRecoverStamina()
-    {
-        characterData.StatusData.CurrentSP += (characterData.StatusData.MaxSP * Constants.CHARACTER_STAMINA_AUTO_RECOVERY * 0.01f * Time.deltaTime);
-    }
     public void AdjustAttackSpeed(StatusData statusData)
     {
         animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_ATTACK_SPEED, statusData.AttackSpeed);
@@ -119,10 +113,9 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
     {
         state.TrySwitchState(targetState);
     }
-    public void SwitchState(CHARACTER_STATE targetState)
+    public void SetState(CHARACTER_STATE targetState)
     {
-        Managers.InputManager?.Initialize();
-        state.SwitchState(targetState);
+        state.SetState(targetState);
     }
     public void OnCompetSuccess()
     {
@@ -143,5 +136,22 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
 
     public PlayerAttackController Weapon { get { return weapon; } }
     public PlayerDefenseController Shield { get { return shield; } }
+
+    public bool IsGround
+    {
+        get
+        {
+            if (characterController.isGrounded)
+                isGround = true;
+
+            else
+            {
+                var ray = new Ray(transform.position, Vector3.down);
+                var rayDistance = 0.5f;
+                isGround = Physics.Raycast(ray, rayDistance, LayerMask.GetMask("Terrain"));
+            }
+            return isGround;
+        }
+    }
     #endregion
 }

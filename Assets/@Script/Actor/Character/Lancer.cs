@@ -22,7 +22,7 @@ public class Lancer : BaseCharacter
     protected override void Start()
     {
         base.Start();
-        State.SwitchState(CHARACTER_STATE.Move);
+        State.SetState(CHARACTER_STATE.Walk);
     }
 
     protected override void Update()
@@ -33,9 +33,9 @@ public class Lancer : BaseCharacter
         state?.Update();
     }
 
-    public override CHARACTER_STATE NextState()
+    public CHARACTER_STATE NextState()
     {
-        CHARACTER_STATE nextState = CHARACTER_STATE.Move;
+        CHARACTER_STATE nextState = CHARACTER_STATE.Walk;
 
         if (Managers.InputManager.MouseLeftDown)
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Combo_1);

@@ -65,7 +65,7 @@ public class AudioManager
                 return;
             }
         }
-        Debug.Log("알림: 모든 오디오 플레이어가 동작중입니다.");
+        Debug.Log("Notice: 모든 오디오 플레이어가 동작중입니다.");
     }
     public void PlaySFX(string sfxName)
     {

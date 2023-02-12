@@ -1,7 +1,9 @@
 public enum CHARACTER_STATE
 {
     // Common Character
-    Move = 1,
+    Idle = 0,
+    Walk = 1,
+    Run = 2,
 
     Combo_1 = 16,
     Combo_2 = 17,
@@ -37,7 +39,9 @@ public enum CHARACTER_STATE
 public enum CHARACTER_STATE_WEIGHT
 {
     // Common Character
-    Move = 1,
+    Idle = 0,
+    Walk = 1,
+    Run = 2,
 
     Attack = 8,
     Defense = 8,

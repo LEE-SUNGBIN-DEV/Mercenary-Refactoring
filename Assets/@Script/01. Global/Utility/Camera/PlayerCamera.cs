@@ -45,10 +45,10 @@ public class PlayerCamera : BaseCamera
 
     private void LateUpdate()
     {
-        if (TargetTransform == null)
+        if (targetTransform == null)
             return;
 
-        transform.position = Vector3.MoveTowards(transform.position, TargetTransform.position + TargetOffset, cameraSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, targetTransform.position + TargetOffset, cameraSpeed * Time.deltaTime);
         finalDirection = transform.TransformPoint(normalizedDirection * maxDistance);
 
         if (Physics.Linecast(transform.position, finalDirection, out RaycastHit hitObject))

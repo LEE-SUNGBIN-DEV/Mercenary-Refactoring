@@ -27,11 +27,11 @@ TagManager:
   - Enemy
   - Die
   - VFX
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Camera
+  - Player Weapon
+  - Player Shield
+  - Enemy Weapon
+  - Enemy Shield
   - 
   - 
   - 

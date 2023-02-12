@@ -7,7 +7,7 @@ public class UIGameScene : UIBaseScene
     // Panel
     private UserPanel userPanel;
     private DialoguePanel dialoguePanel;
-    private MonsterPanel monsterPanel;
+    private EnemyPanel enemyPanel;
     private MapPanel mapPanel;
     private CompetePanel competePanel;
 
@@ -32,7 +32,7 @@ public class UIGameScene : UIBaseScene
         // Get Component
         userPanel = GetComponentInChildren<UserPanel>(true);
         dialoguePanel = GetComponentInChildren<DialoguePanel>(true);
-        monsterPanel = GetComponentInChildren<MonsterPanel>(true);
+        enemyPanel = GetComponentInChildren<EnemyPanel>(true);
         mapPanel = GetComponentInChildren<MapPanel>(true);
         competePanel = GetComponentInChildren<CompetePanel>(true);
 
@@ -96,7 +96,7 @@ public class UIGameScene : UIBaseScene
 
     public UserPanel UserPanel { get { return userPanel; } }
     public DialoguePanel DialoguePanel { get { return dialoguePanel; } }
-    public MonsterPanel MonsterPanel { get { return monsterPanel; } }
+    public EnemyPanel EnemyPanel { get { return enemyPanel; } }
     public MapPanel MapPanel { get { return mapPanel; } }
     #endregion
 }
