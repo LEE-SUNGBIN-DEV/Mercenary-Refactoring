@@ -5,49 +5,49 @@ using UnityEngine;
 public class CharacterStateIdle : ICharacterState
 {
     private int stateWeight;
+    private int animationNameHash;
     private Vector3 moveInput;
 
     public CharacterStateIdle()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Idle;
+        animationNameHash = Constants.ANIMATION_NAME_IDLE;
         moveInput = Vector3.zero;
     }
 
     public void Enter(BaseCharacter character)
     {
         moveInput = Vector3.zero;
-        character.Animator.CrossFade(Constants.ANIMATION_NAME_IDLE, 0.2f);
+        character.Animator.CrossFade(animationNameHash, 0.2f);
     }
 
     public void Update(BaseCharacter character)
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL))
         {
-            character.TrySwitchState(CHARACTER_STATE.Roll);
+            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_COUNTER))
+        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
-            character.TrySwitchState(CHARACTER_STATE.Skill);
+            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Skill);
             return;
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
-            character.TrySwitchState(CHARACTER_STATE.Combo_1);
+            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Light_Attack_01);
             return;
         }
 
         if (Input.GetMouseButtonDown(1) || Input.GetMouseButton(1))
         {
-            character.TrySwitchState(CHARACTER_STATE.Defense);
+            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Defense);
             return;
         }
 
-        moveInput.x = Input.GetAxisRaw("Horizontal");
-        moveInput.y = 0;
-        moveInput.z = Input.GetAxisRaw("Vertical");
+        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
         if(character.IsGround)
         {
@@ -57,13 +57,13 @@ public class CharacterStateIdle : ICharacterState
                 // Run
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    character.TrySwitchState(CHARACTER_STATE.Run);
+                    character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Run);
                     return;
                 }
                 // Walk
                 else
                 {
-                    character.TrySwitchState(CHARACTER_STATE.Walk);
+                    character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Walk);
                     return;
                 }
             }

@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class BaseCombatController : MonoBehaviour
 {
     [Header("Base Combat Controller")]
-    [SerializeField] protected HIT_TYPE combatType;
+    [SerializeField] protected COMBAT_TYPE combatType;
     [SerializeField] protected float damageRatio;
     [SerializeField] protected ABNORMAL_TYPE abnormalType;
     [SerializeField] protected float abnormalStateDuration;
@@ -20,7 +20,7 @@ public abstract class BaseCombatController : MonoBehaviour
             combatCollider.enabled = false;
     }
 
-    public void SetCombatController(HIT_TYPE combatType, float damageRatio, ABNORMAL_TYPE abnormalType = ABNORMAL_TYPE.None, float abnormalStateDuration = 0f)
+    public void SetCombatController(COMBAT_TYPE combatType, float damageRatio, ABNORMAL_TYPE abnormalType = ABNORMAL_TYPE.None, float abnormalStateDuration = 0f)
     {
         this.combatType = combatType;
         this.damageRatio = damageRatio;
@@ -36,7 +36,7 @@ public abstract class BaseCombatController : MonoBehaviour
         this.abnormalStateDuration = combatInformation.abnormalDuration;
     }
 
-    public HIT_TYPE CombatType { get { return combatType; } }
+    public COMBAT_TYPE CombatType { get { return combatType; } }
     public ABNORMAL_TYPE AbnormalType { get { return abnormalType; } }
     public float DamageRatio { get { return damageRatio; } }
     public Collider CombatCollider { get { return combatCollider; } }

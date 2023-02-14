@@ -21,7 +21,7 @@ public class EnemyData
     [SerializeField] private float criticalDamage;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float minChaseRange;
+    [SerializeField] private float chaseRange;
 
     [Header("Reward")]
     [SerializeField] private float expAmount;
@@ -146,14 +146,14 @@ public class EnemyData
         }
     }
 
-    public float MinChaseRange
+    public float ChaseRange
     {
-        get { return minChaseRange; }
+        get { return chaseRange; }
         set
         {
-            minChaseRange = value;
-            if (minChaseRange < 0)
-                minChaseRange = 0;
+            chaseRange = value;
+            if (chaseRange < 0)
+                chaseRange = 0;
         }
     }
     #endregion

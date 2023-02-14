@@ -5,23 +5,50 @@ using UnityEngine;
 public static partial class Constants
 {
     #region Animator String Hash
-    // Character
+    // Playerable Character
+    // Movement
     public static readonly int ANIMATION_NAME_IDLE = Animator.StringToHash("Idle");
     public static readonly int ANIMATION_NAME_WALK = Animator.StringToHash("Walk");
     public static readonly int ANIMATION_NAME_RUN = Animator.StringToHash("Run");
+
+    // Attack
+    public static readonly int ANIMATION_NAME_LIGHT_ATTACK_01 = Animator.StringToHash("Light_Attack_01");
+    public static readonly int ANIMATION_NAME_LIGHT_ATTACK_02 = Animator.StringToHash("Light_Attack_02");
+    public static readonly int ANIMATION_NAME_LIGHT_ATTACK_03 = Animator.StringToHash("Light_Attack_03");
+    public static readonly int ANIMATION_NAME_LIGHT_ATTACK_04 = Animator.StringToHash("Light_Attack_04");
+
+    public static readonly int ANIMATION_NAME_HEAVY_ATTACK_01 = Animator.StringToHash("Heavy_Attack_01");
+    public static readonly int ANIMATION_NAME_HEAVY_ATTACK_02 = Animator.StringToHash("Heavy_Attack_02");
+    public static readonly int ANIMATION_NAME_HEAVY_ATTACK_03 = Animator.StringToHash("Heavy_Attack_03");
+    public static readonly int ANIMATION_NAME_HEAVY_ATTACK_04 = Animator.StringToHash("Heavy_Attack_04");
+
+    // Defense
+    public static readonly int ANIMATION_NAME_DEFENSE = Animator.StringToHash("Defense");
+    public static readonly int ANIMATION_NAME_DEFENSE_LOOP = Animator.StringToHash("Defense_Loop");
+    public static readonly int ANIMATION_NAME_DEFENSE_END = Animator.StringToHash("Defense_End");
+    public static readonly int ANIMATION_NAME_DEFENSE_BREAK = Animator.StringToHash("Defense_Break");
+
+    public static readonly int ANIMATION_NAME_PARRYING = Animator.StringToHash("Parrying");
+    public static readonly int ANIMATION_NAME_PARRYING_ATTACK = Animator.StringToHash("Parrying_Attack");
+
+    // Skill
     public static readonly int ANIMATION_NAME_SKILL_COUNTER = Animator.StringToHash("Skill_Counter");
+
+    // Roll
     public static readonly int ANIMATION_NAME_ROLL = Animator.StringToHash("Roll");
 
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_COMBO_ATTACK = Animator.StringToHash("isComboAttack");
-    public static readonly int ANIMATOR_PARAMETERS_BOOL_SMASH_ATTACK = Animator.StringToHash("isSmashAttack");
+    // Hit
+    public static readonly int ANIMATION_NAME_LIGHT_HIT = Animator.StringToHash("Light_Hit");
+    public static readonly int ANIMATION_NAME_HEAVY_HIT = Animator.StringToHash("Heavy_Hit");
+    public static readonly int ANIMATION_NAME_HEAVY_HIT_Loop = Animator.StringToHash("Heavy_Hit_Loop");
+    public static readonly int ANIMATION_NAME_STAND_UP = Animator.StringToHash("Stand_Up");
+    public static readonly int ANIMATION_NAME_STAND_ROLL = Animator.StringToHash("Stand_Roll");
 
+    //
     public static readonly int ANIMATOR_PARAMETERS_BOOL_DEFENSE = Animator.StringToHash("isDefense");
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_BREAKED = Animator.StringToHash("doBreaked");
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_PARRYING = Animator.StringToHash("doParrying");
     public static readonly int ANIMATOR_PARAMETERS_BOOL_PARRYING_ATTACK = Animator.StringToHash("isParryingAttack");
-
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_STAND_ROLL = Animator.StringToHash("doStandRoll");
-    public static readonly int ANIMATOR_PARAMETERS_TRIGGER_COUNTER = Animator.StringToHash("doCounter");
 
     // Enemy
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_BIRTH = Animator.StringToHash("doBirth");

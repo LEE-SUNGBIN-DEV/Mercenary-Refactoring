@@ -41,13 +41,13 @@ public abstract class EnemyCombatController : BaseCombatController
             // 05. Hit Process
             switch (combatType)
             {
-                case HIT_TYPE.Normal:
+                case COMBAT_TYPE.Normal_Attack:
                     break;
-                case HIT_TYPE.Light:
+                case COMBAT_TYPE.Light_Attack:
                     if (character is ILightHitable lightHitableObject)
                         lightHitableObject.OnLightHit();
                     break;
-                case HIT_TYPE.Heavy:
+                case COMBAT_TYPE.Heavy_Attack:
                     if (character is IHeavyHitable heavyHitableObject)
                         heavyHitableObject.OnHeavyHit();
                     break;

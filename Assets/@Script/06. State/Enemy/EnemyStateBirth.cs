@@ -5,10 +5,12 @@ using UnityEngine;
 public class EnemyStateBirth : IEnemyState
 {
     private int stateWeight;
+    private int animationNameHash;
 
     public EnemyStateBirth()
     {
         stateWeight = (int)ENEMY_STATE_WEIGHT.Birth;
+
     }
 
     public void Enter(BaseEnemy enemy)
@@ -20,7 +22,7 @@ public class EnemyStateBirth : IEnemyState
     {
         if (enemy.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_IDLE))
         {
-            enemy.State.SwitchState(ENEMY_STATE.Idle);
+            enemy.State.SetState(ENEMY_STATE.Idle);
         }
     }
 

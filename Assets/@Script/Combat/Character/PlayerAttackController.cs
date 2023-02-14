@@ -47,14 +47,14 @@ public abstract class PlayerAttackController : BaseCombatController
                 // 05. Hit Process
                 switch (combatType)
                 {
-                    case HIT_TYPE.Normal:
+                    case COMBAT_TYPE.Normal_Attack:
                         break;
-                    case HIT_TYPE.Light:
+                    case COMBAT_TYPE.Light_Attack:
                         if (hitbox.Owner is ILightHitable lightHitableObject)
                             lightHitableObject.OnLightHit();
                         break;
 
-                    case HIT_TYPE.Heavy:
+                    case COMBAT_TYPE.Heavy_Attack:
                         if (hitbox.Owner is IHeavyHitable heavyHitableObject)
                             heavyHitableObject.OnHeavyHit();
                         break;

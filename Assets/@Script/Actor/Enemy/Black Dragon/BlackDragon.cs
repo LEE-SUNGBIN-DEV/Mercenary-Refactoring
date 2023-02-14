@@ -61,16 +61,18 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         base.OnEnable();
     }
 
-    private void Update()
+    public void Update()
     {
-        BaseEnemyBehaviour();
-        state.Update();
+        if (UpdateTargetInformation())
+        {
+            state.Update();
+        }
     }
 
-    public override void OnBirth()
+    public override void Birth()
     {
-        base.OnBirth();
-        state.TrySwitchState(ENEMY_STATE.Birth);
+        base.Birth();
+        state.TryStateSwitchingByWeight(ENEMY_STATE.Birth);
     }
 
     public override void OnDie()
@@ -79,6 +81,6 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         StartCoroutine(WaitForDisapear(10f));
     }
        
-    public void OnStagger() { state.TrySwitchState(ENEMY_STATE.Stagger); }
-    public void OnCompete() { state.TrySwitchState(ENEMY_STATE.Compete); }
+    public void OnStagger() { state.TryStateSwitchingByWeight(ENEMY_STATE.Stagger); }
+    public void OnCompete() { state.TryStateSwitchingByWeight(ENEMY_STATE.Compete); }
 }

@@ -43,13 +43,22 @@ public struct Location
 
 public struct CombatInformation
 {
-    public HIT_TYPE hitType;
+    public COMBAT_TYPE hitType;
     public float damageRatio;
     public ABNORMAL_TYPE abnormalType;
     public float abnormalDuration;
     public Location effectLocation;
 
-    public CombatInformation(HIT_TYPE hitType, float damageRatio, ABNORMAL_TYPE abnormalType, float abnormalDuration, Vector3 effectPosition, Vector3 effectRotation)
+    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, ABNORMAL_TYPE abnormalType, float abnormalDuration)
+    {
+        this.hitType = hitType;
+        this.damageRatio = damageRatio;
+        this.abnormalType = abnormalType;
+        this.abnormalDuration = abnormalDuration;
+        this.effectLocation = new Location(Vector3.zero, Vector3.zero);
+    }
+
+    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, ABNORMAL_TYPE abnormalType, float abnormalDuration, Vector3 effectPosition, Vector3 effectRotation)
     {
         this.hitType = hitType;
         this.damageRatio = damageRatio;
@@ -57,7 +66,8 @@ public struct CombatInformation
         this.abnormalDuration = abnormalDuration;
         this.effectLocation = new Location(effectPosition, effectRotation);
     }
-    public CombatInformation(HIT_TYPE hitType, float damageRatio, ABNORMAL_TYPE abnormalType, float abnormalDuration, Location effectLocation)
+
+    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, ABNORMAL_TYPE abnormalType, float abnormalDuration, Location effectLocation)
     {
         this.hitType = hitType;
         this.damageRatio = damageRatio;

@@ -5,21 +5,24 @@ using UnityEngine;
 public class CharacterStateLightHit : ICharacterState
 {
     private int stateWeight;
+    private int animationNameHash;
 
     public CharacterStateLightHit()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.LightHit;
+        animationNameHash = Constants.ANIMATION_NAME_LIGHT_HIT;
     }
 
     public void Enter(BaseCharacter character)
     {
-        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_LIGHT_HIT);
+        character.Animator.Play(animationNameHash);
     }
 
     public void Update(BaseCharacter character)
     {
-        if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
-            character.SetState(CHARACTER_STATE.Walk);
+        // !! When animation is over
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 0.9f))
+            return;
     }
 
     public void Exit(BaseCharacter character)

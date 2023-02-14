@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterStateRoll : ICharacterState
 {
     private int stateWeight;
-    private Animator animator;
+    private int animationNameHash;
     private Vector3 moveInput;
     private Vector3 verticalDirection;
     private Vector3 horizontalDirection;
@@ -14,14 +14,13 @@ public class CharacterStateRoll : ICharacterState
     public CharacterStateRoll()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Roll;
+        animationNameHash = Constants.ANIMATION_NAME_ROLL;
     }
 
     public void Enter(BaseCharacter character)
     {
-        animator = character.Animator;
-
         // 키보드 입력 방향으로 회피
-        moveInput = Managers.InputManager.MoveInput;
+        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
         verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
         horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z);
         moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
@@ -29,18 +28,15 @@ public class CharacterStateRoll : ICharacterState
 
         character.IsInvincible = true;
         character.StatusData.CurrentSP -= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL;
-        character.Animator.CrossFade(Constants.ANIMATION_NAME_ROLL, 0.1f);
+        character.Animator.CrossFade(animationNameHash, 0.1f);
     }
 
     public void Update(BaseCharacter character)
     {
-        Debug.Log(animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-        if (animator.GetCurrentAnimatorStateInfo(0).shortNameHash == Constants.ANIMATION_NAME_ROLL
-            && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f
-            && !animator.IsInTransition(0))
-        {
-            character.SetState(CHARACTER_STATE.Idle);
-        }
+
+        // !! When Animation is over
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 0.9f))
+            return;
     }
 
     public void Exit(BaseCharacter character)

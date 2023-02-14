@@ -2,42 +2,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateStandRoll : ICharacterState
+public class CharacterStateSkillCounter : ICharacterState
 {
-    public int stateWeight;
+    private int stateWeight;
+    private int animationNameHash;
     private Vector3 moveInput;
     private Vector3 verticalDirection;
     private Vector3 horizontalDirection;
     private Vector3 moveDirection;
 
-    public CharacterStateStandRoll()
+    public CharacterStateSkillCounter()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.StandRoll;
+        stateWeight = (int)CHARACTER_STATE_WEIGHT.Counter;
+        animationNameHash = Constants.ANIMATION_NAME_SKILL_COUNTER;
     }
 
     public void Enter(BaseCharacter character)
     {
-        // 키보드 입력 방향으로 회피
+        // 키보드 입력 방향으로 공격
         moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
         verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
         horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z);
         moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
-
         character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
-        character.IsInvincible = true;
-        character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_STAND_ROLL);
+        character.StatusData.CurrentSP -= Constants.CHARACTER_STAMINA_CONSUMPTION_SKILL_COUNTER;
+        character.Animator.CrossFade(animationNameHash, 0.1f);
     }
 
     public void Update(BaseCharacter character)
     {
-        if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
-            character.SetState(CHARACTER_STATE.Walk);
+        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL))
+        {
+            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
+            return;
+        }
+
+        // !! When animation is over
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 0.9f))
+            return;
     }
 
     public void Exit(BaseCharacter character)
     {
-        character.IsInvincible = false;
     }
 
     #region Property

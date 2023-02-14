@@ -40,7 +40,7 @@ public class BlackDragonDoubleAttack : EnemySkill
         {
             case SKILL_STATE.OnLeftClaw:
                 {
-                    leftClaw.SetCombatController(HIT_TYPE.Light, 1f);
+                    leftClaw.SetCombatController(COMBAT_TYPE.Light_Attack, 1f);
                     leftClaw.OnEnableCollider();
                     break;
                 }
@@ -59,7 +59,7 @@ public class BlackDragonDoubleAttack : EnemySkill
                 {
                     owner.SetMaterial("Default");
                     owner.MeshRenderer.material.color = Color.white;
-                    rightClaw.SetCombatController(HIT_TYPE.Heavy, 1.2f, ABNORMAL_TYPE.Stun, 4f);
+                    rightClaw.SetCombatController(COMBAT_TYPE.Heavy_Attack, 1.2f, ABNORMAL_TYPE.Stun, 4f);
                     rightClaw.OnEnableCollider();
                     break;
                 }

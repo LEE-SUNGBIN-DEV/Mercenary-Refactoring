@@ -5,28 +5,32 @@ public enum CHARACTER_STATE
     Walk = 1,
     Run = 2,
 
-    Combo_1 = 16,
-    Combo_2 = 17,
-    Combo_3 = 18,
-    Combo_4 = 19,
+    Light_Attack_01 = 16,
+    Light_Attack_02 = 17,
+    Light_Attack_03 = 18,
+    Light_Attack_04 = 19,
 
-    Smash_1 = 32,
-    Smash_2 = 33,
-    Smash_3 = 34,
-    Smash_4 = 35,
+    Heavy_Attack_01 = 32,
+    Heavy_Attack_02 = 33,
+    Heavy_Attack_03 = 34,
+    Heavy_Attack_04 = 35,
 
     Defense = 64,
-    Defense_Breaked = 65,
-    Parrying = 66,
-    Parrying_Attack = 67,
+    Defense_Loop = 65,
+    Defense_End = 66,
+    Defense_Breaked = 67,
+    Parrying = 68,
+    Parrying_Attack = 69,
 
     Skill = 128,
 
     Roll = 256,
-    StandRoll = 257,
 
-    LightHit = 512,
-    HeavyHit = 513,
+    Light_Hit = 512,
+    Heavy_Hit = 513,
+    Heavy_Hit_Loop = 514,
+    Stand_Up = 515,
+    Stand_Roll = 516,
 
     Compete = 1024,
     Spawn = 2048,
@@ -43,19 +47,32 @@ public enum CHARACTER_STATE_WEIGHT
     Walk = 1,
     Run = 2,
 
-    Attack = 8,
-    Defense = 8,
+    Light_Attack_01 = 8,
+    Light_Attack_02 = 8,
+    Light_Attack_03 = 8,
+    Light_Attack_04 = 8,
 
-    Defense_Breaked = 9,
-    Parrying = 9,
+    Heavy_Attack_01 = 8,
+    Heavy_Attack_02 = 8,
+    Heavy_Attack_03 = 8,
+    Heavy_Attack_04 = 8,
+
+    Defense = 8,
+    Defense_Loop = 8,
+    Defense_End = 8,
+    Defense_Break = 8,
+    Parrying = 8,
+    Parrying_Attack = 8,
 
     Counter = 32,
 
     Roll = 64,
-    StandRoll = 64,
 
     LightHit = 512,
     HeavyHit = 513,
+    HeavyHitLoop = 514,
+    StandUp = 515,
+    StandRoll = 516,
 
     Compete = 1024,
     Spawn = 2048,
@@ -68,11 +85,13 @@ public enum CHARACTER_STATE_WEIGHT
 public enum ENEMY_STATE
 {
     Idle,
-    Move,
+    Walk,
+    Run,
+
     Skill,
 
-    LightHit,
-    HeavyHit,
+    Light_Hit,
+    Heavy_Hit,
     Stagger,
 
     Compete,
@@ -85,7 +104,8 @@ public enum ENEMY_STATE
 public enum ENEMY_STATE_WEIGHT
 {
     Idle = 0,
-    Move = 1,
+    Walk = 1,
+    Run = 2,
 
     Skill = 8,
 
@@ -109,12 +129,4 @@ public enum INPUT_STATE
     Selection,
     InGame,
     UI,
-}
-
-public enum KEY_STATE
-{
-    None,
-    Down,
-    Click,
-    Press,
 }

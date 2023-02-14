@@ -17,11 +17,11 @@ public class EnemyStateController
         {
             // Common
             { ENEMY_STATE.Idle, new EnemyStateIdle() },
-            { ENEMY_STATE.Move, new EnemyStateMove() },
+            { ENEMY_STATE.Walk, new EnemyStateWalk() },
             { ENEMY_STATE.Skill, new EnemyStateSkill() },
 
-            { ENEMY_STATE.LightHit, new EnemyStateLightHit() },
-            { ENEMY_STATE.HeavyHit, new EnemyStateHeavyHit() },
+            { ENEMY_STATE.Light_Hit, new EnemyStateLightHit() },
+            { ENEMY_STATE.Heavy_Hit, new EnemyStateHeavyHit() },
             { ENEMY_STATE.Stagger, new EnemyStateStagger() },
 
             { ENEMY_STATE.Compete, new EnemyStateCompete() },
@@ -37,7 +37,7 @@ public class EnemyStateController
         currentState?.Update(enemy);
     }
 
-    public void SwitchState(ENEMY_STATE targetState)
+    public void SetState(ENEMY_STATE targetState)
     {
         prevState = currentState;
         currentState?.Exit(enemy);
@@ -45,10 +45,10 @@ public class EnemyStateController
         currentState?.Enter(enemy);
     }
 
-    public void TrySwitchState(ENEMY_STATE targetState)
+    public void TryStateSwitchingByWeight(ENEMY_STATE targetState)
     {
         if (IsUpperStateThanCurrentState(targetState))
-            SwitchState(targetState);
+            SetState(targetState);
     }
 
     public ENEMY_STATE CompareStateWeight(ENEMY_STATE targetStateA, ENEMY_STATE targetStateB)
@@ -69,6 +69,51 @@ public class EnemyStateController
     public bool IsPrevState(ENEMY_STATE targetState)
     {
         return prevState == stateDictionary[targetState];
+    }
+    public bool SetStateNotInTransition(int currentNameHash, ENEMY_STATE targetState)
+    {
+        if (enemy.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
+            && !enemy.Animator.IsInTransition(0))
+        {
+            SetState(targetState);
+            return true;
+        }
+        return false;
+    }
+
+    public bool SetStateByUpperAnimationTime(int currentNameHash, ENEMY_STATE targetState, float normalizedTime)
+    {
+        if (enemy.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
+            && enemy.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTime
+            && !enemy.Animator.IsInTransition(0))
+        {
+            SetState(targetState);
+            return true;
+        }
+        return false;
+    }
+    public bool SetStateByLowerAnimationTime(int currentNameHash, ENEMY_STATE targetState, float normalizedTime)
+    {
+        if (enemy.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
+            && enemy.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= normalizedTime
+            && !enemy.Animator.IsInTransition(0))
+        {
+            SetState(targetState);
+            return true;
+        }
+        return false;
+    }
+    public bool SetStateByBetweenAnimationTime(int currentNameHash, ENEMY_STATE targetState, float lowerNormalizedTime, float upperNormalizedTime)
+    {
+        if (enemy.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
+            && enemy.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= lowerNormalizedTime
+            && enemy.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= upperNormalizedTime
+            && !enemy.Animator.IsInTransition(0))
+        {
+            SetState(targetState);
+            return true;
+        }
+        return false;
     }
 
     #region Property

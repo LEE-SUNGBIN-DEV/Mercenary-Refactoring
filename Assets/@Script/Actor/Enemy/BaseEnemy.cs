@@ -37,7 +37,7 @@ public abstract class BaseEnemy : BaseActor
 
     public virtual void OnEnable()
     {
-        OnBirth();
+        Birth();
     }
 
     public virtual void OnDisable()
@@ -45,14 +45,15 @@ public abstract class BaseEnemy : BaseActor
         targetTransform = null;
     }
 
-    public virtual void OnBirth()
+    public virtual void Birth()
     {
         OnEnemyBirth?.Invoke(this);
-        isInvincible = true;
+        isInvincible = false;
         IsDie = false;
         enemyData.CurrentHP = enemyData.MaxHP;
         gameObject.layer = Constants.LAYER_ENEMY;
     }
+
     public virtual void OnDie()
     {
         if (isDie)
@@ -61,29 +62,16 @@ public abstract class BaseEnemy : BaseActor
         OnEnemyDie?.Invoke(this);
     }
 
-    public virtual void BaseEnemyBehaviour()
+    public bool UpdateTargetInformation()
     {
         if (targetTransform != null)
         {
             targetDistance = (targetTransform.position - transform.position).magnitude;
             targetDirection = (targetTransform.position - transform.position).normalized;
-
-            if(state.IsUpperStateThanCurrentState(ENEMY_STATE.Skill))
-            {
-                foreach (var skill in skillDictionary.Values)
-                {
-                    if (skill.CheckCondition(targetDistance))
-                    {
-                        selectSkill = skill;
-                        state.TrySwitchState(ENEMY_STATE.Skill);
-                        return;
-                    }
-                }
-            }
-
-            if (targetDistance > enemyData.MinChaseRange)
-                state.TrySwitchState(ENEMY_STATE.Move);
+            return true;
         }
+        else
+            return false;
     }
 
     public void LookTarget()
@@ -122,11 +110,11 @@ public abstract class BaseEnemy : BaseActor
 
     public void TrySwitchState(ENEMY_STATE targetState)
     {
-        state.TrySwitchState(targetState);
+        state.TryStateSwitchingByWeight(targetState);
     }
     public void SwitchState(ENEMY_STATE targetState)
     {
-        state.SwitchState(targetState);
+        state.SetState(targetState);
     }
 
     #region Property

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerDefenseController : BaseCombatController
 {
-    [Header("Player Defense")]
+    [Header("Player Defense Controller")]
     protected BaseCharacter owner;
+    protected Dictionary<DEFENSE_TYPE, CombatInformation> defenseDictionary;
 
     public virtual void SetShield(BaseCharacter character)
     {
@@ -20,20 +21,20 @@ public class PlayerDefenseController : BaseCombatController
 
         switch (combatType)
         {
-            case HIT_TYPE.Defense:
+            case COMBAT_TYPE.Defense:
                 {
                     effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
-                    owner.TrySwitchState(CHARACTER_STATE.Defense_Breaked);
+                    owner.State.TryStateSwitchingByWeight(CHARACTER_STATE.Defense_Breaked);
                     break;
                 }
 
-            case HIT_TYPE.Parrying:
+            case COMBAT_TYPE.Parrying:
                 {
                     if (enemyCombatController is EnemyCompeteAttack competeController && Managers.CompeteManager.TryCompete(this, competeController))
                         break;
 
                     effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Parrying);
-                    owner.TrySwitchState(CHARACTER_STATE.Parrying);
+                    owner.State.TryStateSwitchingByWeight(CHARACTER_STATE.Parrying);
                     break;
                 }
         }
@@ -42,6 +43,12 @@ public class PlayerDefenseController : BaseCombatController
             effect.transform.position = hitPoint;
 
         combatCollider.enabled = false;
+    }
+
+    public virtual void OnEnableDefense(DEFENSE_TYPE defenseType)
+    {
+        Debug.Log("Virtual Function Called");
+        combatCollider.enabled = true;
     }
 
     public virtual void OnDisableDefense()
