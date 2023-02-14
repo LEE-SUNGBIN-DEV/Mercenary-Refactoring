@@ -57,10 +57,10 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
 
     }
 
-    public virtual void OnLightHit() { TrySwitchState(CHARACTER_STATE.LightHit); }
-    public virtual void OnHeavyHit() { TrySwitchState(CHARACTER_STATE.HeavyHit); }
+    public virtual void OnLightHit() { state.TryStateSwitchingByWeight(CHARACTER_STATE.Light_Hit); }
+    public virtual void OnHeavyHit() { state.TryStateSwitchingByWeight(CHARACTER_STATE.Heavy_Hit); }
     public virtual void OnStun(float duration) { AddAbnormalState(ABNORMAL_TYPE.Stun, duration); }
-    public virtual void OnCompete() { TrySwitchState(CHARACTER_STATE.Compete); }
+    public virtual void OnCompete() { state.TryStateSwitchingByWeight(CHARACTER_STATE.Compete); }
     public virtual void OnDie(StatusData characterStats) { }
 
     public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)
@@ -109,14 +109,6 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
         animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_ATTACK_SPEED, statusData.AttackSpeed);
     }
 
-    public void TrySwitchState(CHARACTER_STATE targetState)
-    {
-        state.TrySwitchState(targetState);
-    }
-    public void SetState(CHARACTER_STATE targetState)
-    {
-        state.SetState(targetState);
-    }
     public void OnCompetSuccess()
     {
         Managers.CompeteManager.OnEnemyFail();

@@ -18,5 +18,5 @@ public static partial class Constants
     public static readonly float TIME_CLIENT_NOTICE = 1.6f;
     public static readonly float TIME_GLOBAL_NOTICE = 2.0f;
 
-    public static readonly float TIME_CHARACTER_STAND_UP = 3.133f;
+    public static readonly float TIME_CHARACTER_STAND_UP = 2f;
 }

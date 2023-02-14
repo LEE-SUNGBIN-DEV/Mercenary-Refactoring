@@ -38,7 +38,7 @@ public class BlackDragonStorm : EnemySkill
             Vector3 generateCoordinate = Functions.GetRandomCircleCoordinate(12f);
             if (owner.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Lightning_Strike).TryGetComponent(out EnemyPositioningAttack lightningStrike))
             {
-                lightningStrike.SetCombatController(HIT_TYPE.Light, 1.3f, ABNORMAL_TYPE.Stun, 1.5f);
+                lightningStrike.SetCombatController(COMBAT_TYPE.Light_Attack, 1.3f, ABNORMAL_TYPE.Stun, 1.5f);
                 lightningStrike.SetPositioningAttack(owner, owner.transform.position + generateCoordinate, 1f, 0.2f);
                 lightningStrike.OnAttack();
             }

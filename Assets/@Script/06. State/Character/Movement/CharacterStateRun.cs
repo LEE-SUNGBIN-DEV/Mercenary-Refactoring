@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterStateRun : ICharacterState
 {
     private int stateWeight;
+    private int animationNameHash;
     private float runSpeed;
     private Vector3 moveInput;
     private Vector3 verticalDirection;
@@ -14,36 +15,37 @@ public class CharacterStateRun : ICharacterState
     public CharacterStateRun()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Run;
+        animationNameHash = Constants.ANIMATION_NAME_RUN;
     }
 
     public void Enter(BaseCharacter character)
     {
-        character.Animator.CrossFade(Constants.ANIMATION_NAME_RUN, 0.2f);
+        character.Animator.CrossFade(animationNameHash, 0.2f);
     }
 
     public void Update(BaseCharacter character)
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL))
         {
-            character.TrySwitchState(CHARACTER_STATE.Roll);
+            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_COUNTER))
+        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
-            character.TrySwitchState(CHARACTER_STATE.Skill);
+            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Skill);
             return;
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
-            character.TrySwitchState(CHARACTER_STATE.Combo_1);
+            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Light_Attack_01);
             return;
         }
 
         if (Input.GetMouseButtonDown(1) || Input.GetMouseButton(1))
         {
-            character.TrySwitchState(CHARACTER_STATE.Defense);
+            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Defense);
             return;
         }
 
@@ -67,7 +69,7 @@ public class CharacterStateRun : ICharacterState
                 // Run
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    character.CharacterData.StatusData.CurrentSP -= (Constants.CHARACTER_STAMINA_CONSUMPTION_RUN * 0.01f * Time.deltaTime);
+                    character.CharacterData.StatusData.CurrentSP -= (Constants.CHARACTER_STAMINA_CONSUMPTION_RUN * Time.deltaTime);
                     runSpeed = character.StatusData.MoveSpeed * 2;
                     // Look Direction
                     character.transform.rotation = Quaternion.Lerp(character.transform.rotation, Quaternion.LookRotation(moveDirection), 10f * Time.deltaTime);
@@ -75,14 +77,14 @@ public class CharacterStateRun : ICharacterState
                 }
                 else
                 {
-                    character.SetState(CHARACTER_STATE.Walk);
+                    character.State.SetState(CHARACTER_STATE.Walk);
                     return;
                 }
             }
             // Idle
             else
             {
-                character.SetState(CHARACTER_STATE.Idle);
+                character.State.SetState(CHARACTER_STATE.Idle);
                 return;
             }
         }

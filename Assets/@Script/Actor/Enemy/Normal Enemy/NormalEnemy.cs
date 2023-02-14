@@ -19,30 +19,31 @@ public class NormalEnemy : BaseEnemy, ILightHitable, IHeavyHitable
         }
     }
 
-    private void Update()
+    public virtual void Update()
     {
+        UpdateTargetInformation();
+        state.Update();
     }
 
     #region Override Function   
     public virtual void OnLightHit()
     {
-        Animator.SetTrigger("doHit");
+        state.TryStateSwitchingByWeight(ENEMY_STATE.Light_Hit);
     }
 
     public virtual void OnHeavyHit()
     {
-        Animator.SetTrigger("doHit");
+        state.TryStateSwitchingByWeight(ENEMY_STATE.Heavy_Hit);
     }
 
     public virtual void OnStun(float duration)
     {
-        Animator.SetTrigger("doHit");
     }
 
     public override void OnDie()
     {
         IsDie = true;
-        Animator.SetTrigger("doDie");
+        state.TryStateSwitchingByWeight(ENEMY_STATE.Die);
 
         StartCoroutine(WaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
     }

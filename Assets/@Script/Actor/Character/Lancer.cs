@@ -29,7 +29,7 @@ public class Lancer : BaseCharacter
     {
         base.Update();
         Managers.InputManager.UpdateCombatInput();
-        state?.TrySwitchState(NextState());
+        state?.TryStateSwitchingByWeight(NextState());
         state?.Update();
     }
 
@@ -38,7 +38,7 @@ public class Lancer : BaseCharacter
         CHARACTER_STATE nextState = CHARACTER_STATE.Walk;
 
         if (Managers.InputManager.MouseLeftDown)
-            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Combo_1);
+            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Light_Attack_01);
 
         if (Managers.InputManager.MouseRightDown || Managers.InputManager.MouseRightPress)
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Defense);
@@ -46,7 +46,7 @@ public class Lancer : BaseCharacter
         if (Managers.InputManager.IsSpaceKeyDown && StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL)
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Roll);
 
-        if (Managers.InputManager.IsRKeyDown && StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_COUNTER)
+        if (Managers.InputManager.IsRKeyDown && StatusData.CurrentSP >= Constants.CHARACTER_STAMINA_CONSUMPTION_SKILL_COUNTER)
             nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Skill);
 
         return nextState;
@@ -61,7 +61,7 @@ public class Lancer : BaseCharacter
     {
         LancerWeapon.OnDisableAttack();
     }
-    private void OnEnableDefense(LANCER_DEFENSE_TYPE attackType)
+    private void OnEnableDefense(DEFENSE_TYPE attackType)
     {
         LancerShield.OnEnableDefense(attackType);
     }

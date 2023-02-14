@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class BerserkerShield : PlayerDefenseController
 {
-    private Dictionary<BERSERKER_DEFENSE_TYPE, CombatInformation> defenseDictionary;
-
     public override void SetShield(BaseCharacter character)
     {
         base.SetShield(character);
-        defenseDictionary = new Dictionary<BERSERKER_DEFENSE_TYPE, CombatInformation>()
+        defenseDictionary = new Dictionary<DEFENSE_TYPE, CombatInformation>()
         {
-            {BERSERKER_DEFENSE_TYPE.Defense, new CombatInformation(HIT_TYPE.Defense, 0f, ABNORMAL_TYPE.None, 0f, Vector3.zero, Vector3.zero) },
-            {BERSERKER_DEFENSE_TYPE.Parrying, new CombatInformation(HIT_TYPE.Parrying, 0f, ABNORMAL_TYPE.None, 0f, Vector3.zero, Vector3.zero) },
+            {DEFENSE_TYPE.Defense, new CombatInformation(COMBAT_TYPE.Defense, 0f, ABNORMAL_TYPE.None, 0f) },
+            {DEFENSE_TYPE.Parrying, new CombatInformation(COMBAT_TYPE.Parrying, 0f, ABNORMAL_TYPE.None, 0f) },
         };
     }
 
     #region Called by Owner's Animation Event
-    public void OnEnableDefense(BERSERKER_DEFENSE_TYPE defenseType)
+    public override void OnEnableDefense(DEFENSE_TYPE defenseType)
     {
         SetCombatInformation(defenseDictionary[defenseType]);
         combatCollider.enabled = true;
@@ -25,8 +23,8 @@ public class BerserkerShield : PlayerDefenseController
         GameObject effectObject = null;
         switch (defenseType)
         {
-            case BERSERKER_DEFENSE_TYPE.Defense:
-            case BERSERKER_DEFENSE_TYPE.Parrying:
+            case DEFENSE_TYPE.Defense:
+            case DEFENSE_TYPE.Parrying:
 
             default:
                 break;

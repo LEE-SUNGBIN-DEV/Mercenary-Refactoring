@@ -12,10 +12,14 @@ public static partial class Constants
     // Character
     public static readonly float CHARACTER_STAMINA_IDLE_AUTO_RECOVERY = 15f;
     public static readonly float CHARACTER_STAMINA_WALK_AUTO_RECOVERY = 10f;
-    public static readonly float CHARACTER_STAMINA_CONSUMPTION_RUN = 3f;
-    public static readonly float CHARACTER_STAMINA_CONSUMPTION_DEFEND = 2f;
+    public static readonly float CHARACTER_STAMINA_CONSUMPTION_RUN = 2f;
+    public static readonly float CHARACTER_STAMINA_CONSUMPTION_DEFENSE = 2f;
     public static readonly float CHARACTER_STAMINA_CONSUMPTION_ROLL = 15f;
-    public static readonly float CHARACTER_STAMINA_CONSUMPTION_COUNTER = 30f;
+    public static readonly float CHARACTER_STAMINA_CONSUMPTION_SKILL_COUNTER = 30f;
+    public static readonly float CHARACTER_STAMINA_CONSUMPTION_DEFENSE_BREAK = 20f;
+
+    public static readonly float CHARACTER_STAMINA_CONSUMPTION_LIGHT_ATTACK = 5f;
+    public static readonly float CHARACTER_STAMINA_CONSUMPTION_HEAVY_ATTACK = 10f;
 
     // Character Stat
     public static readonly float CHARACTER_STAT_ATTACK_SPEED_MIN = 0.1f;

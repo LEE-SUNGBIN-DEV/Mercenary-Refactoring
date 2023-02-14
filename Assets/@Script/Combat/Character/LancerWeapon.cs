@@ -12,20 +12,20 @@ public class LancerWeapon : PlayerAttackController
         combatDictionary = new Dictionary<LANCER_ATTACK_TYPE, CombatInformation>()
         {
             // Combo Attack
-            {LANCER_ATTACK_TYPE.ComboAttack1, new CombatInformation(HIT_TYPE.Light, 1f, ABNORMAL_TYPE.None, 0f, new Vector3(0,0,0), new Vector3(-185.053f, 346.911f, 42.899f)) },
-            {LANCER_ATTACK_TYPE.ComboAttack2, new CombatInformation(HIT_TYPE.Light, 1.03f, ABNORMAL_TYPE.None, 0f, new Vector3(0,0,0), new Vector3(168.597f, 359.226f, 118.723f)) },
-            {LANCER_ATTACK_TYPE.ComboAttack3, new CombatInformation(HIT_TYPE.Light, 1.06f, ABNORMAL_TYPE.None, 0f, new Vector3(0,0,0), new Vector3(55.857f, 210.166f, 147.803f)) },
-            {LANCER_ATTACK_TYPE.ComboAttack4, new CombatInformation(HIT_TYPE.Light, 1.09f, ABNORMAL_TYPE.None, 0f, new Vector3(0,0,0), new Vector3(194.172f, -19.111f, 108.139f)) },
+            {LANCER_ATTACK_TYPE.Light_Attack_01, new CombatInformation(COMBAT_TYPE.Light_Attack, 1f, ABNORMAL_TYPE.None, 0f, new Vector3(0,0,0), new Vector3(-185.053f, 346.911f, 42.899f)) },
+            {LANCER_ATTACK_TYPE.Light_Attack_02, new CombatInformation(COMBAT_TYPE.Light_Attack, 1.03f, ABNORMAL_TYPE.None, 0f, new Vector3(0,0,0), new Vector3(168.597f, 359.226f, 118.723f)) },
+            {LANCER_ATTACK_TYPE.Light_Attack_03, new CombatInformation(COMBAT_TYPE.Light_Attack, 1.06f, ABNORMAL_TYPE.None, 0f, new Vector3(0,0,0), new Vector3(55.857f, 210.166f, 147.803f)) },
+            {LANCER_ATTACK_TYPE.Light_Attack_04, new CombatInformation(COMBAT_TYPE.Light_Attack, 1.09f, ABNORMAL_TYPE.None, 0f, new Vector3(0,0,0), new Vector3(194.172f, -19.111f, 108.139f)) },
 
             // Smash Attack
-            {LANCER_ATTACK_TYPE.SmashAttack1, new CombatInformation(HIT_TYPE.Heavy, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCER_ATTACK_TYPE.SmashAttack2, new CombatInformation(HIT_TYPE.Heavy, 1.8f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCER_ATTACK_TYPE.SmashAttack3, new CombatInformation(HIT_TYPE.Heavy, 2.16f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCER_ATTACK_TYPE.SmashAttack4_1, new CombatInformation(HIT_TYPE.Heavy, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCER_ATTACK_TYPE.SmashAttack4_2, new CombatInformation(HIT_TYPE.Heavy, 2.6f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCER_ATTACK_TYPE.Heavy_Attack_01, new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCER_ATTACK_TYPE.Heavy_Attack_02, new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.8f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCER_ATTACK_TYPE.Heavy_Attack_03, new CombatInformation(COMBAT_TYPE.Heavy_Attack, 2.16f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCER_ATTACK_TYPE.Heavy_Attack_04_1, new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCER_ATTACK_TYPE.Heavy_Attack_04_2, new CombatInformation(COMBAT_TYPE.Heavy_Attack, 2.6f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
 
-            {LANCER_ATTACK_TYPE.ParryingAttack, new CombatInformation(HIT_TYPE.Heavy, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCER_ATTACK_TYPE.CounterAttack, new CombatInformation(HIT_TYPE.Light, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCER_ATTACK_TYPE.Parrying_Attack, new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCER_ATTACK_TYPE.Skill_Counter, new CombatInformation(COMBAT_TYPE.Light_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
         };
     }
 
@@ -38,11 +38,11 @@ public class LancerWeapon : PlayerAttackController
         GameObject effectObject = null;
         switch (attackType)
         {
-            case LANCER_ATTACK_TYPE.ComboAttack1:
-            case LANCER_ATTACK_TYPE.ComboAttack2:
-            case LANCER_ATTACK_TYPE.ComboAttack3:
-            case LANCER_ATTACK_TYPE.ComboAttack4:
-            case LANCER_ATTACK_TYPE.SmashAttack1:
+            case LANCER_ATTACK_TYPE.Light_Attack_01:
+            case LANCER_ATTACK_TYPE.Light_Attack_02:
+            case LANCER_ATTACK_TYPE.Light_Attack_03:
+            case LANCER_ATTACK_TYPE.Light_Attack_04:
+            case LANCER_ATTACK_TYPE.Heavy_Attack_01:
                 break;
 
             default:

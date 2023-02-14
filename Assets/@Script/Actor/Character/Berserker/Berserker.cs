@@ -41,13 +41,5 @@ public class Berserker : BaseCharacter
     {
         BerserkerWeapon.OnDisableAttack();
     }
-    private void OnEnableDefense(BERSERKER_DEFENSE_TYPE attackType)
-    {
-        BerserkerShield.OnEnableDefense(attackType);
-    }
-    private void OnDisableDefense()
-    {
-        BerserkerShield.OnDisableDefense();
-    }
     #endregion
 }
