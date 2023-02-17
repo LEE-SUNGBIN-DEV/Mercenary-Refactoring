@@ -10,14 +10,14 @@ public class CharacterStateDefenseBreak : ICharacterState
     public CharacterStateDefenseBreak()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Defense_Break;
-        animationNameHash = Constants.ANIMATION_NAME_DEFENSE_BREAK;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_DEFENSE_BREAK;
     }
 
     public void Enter(BaseCharacter character)
     {
         character.IsInvincible = true;
         character.Animator.Play(animationNameHash);
-        character.StatusData.CurrentSP -= Constants.CHARACTER_STAMINA_CONSUMPTION_DEFENSE_BREAK;
+        character.StatusData.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_DEFENSE_BREAK;
     }
 
     public void Update(BaseCharacter character)

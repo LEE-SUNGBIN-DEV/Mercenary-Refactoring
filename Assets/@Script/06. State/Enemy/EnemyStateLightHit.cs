@@ -8,7 +8,7 @@ public class EnemyStateLightHit : IEnemyState
 
     public EnemyStateLightHit()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.LightHit;
+        stateWeight = (int)ENEMY_STATE_WEIGHT.Light_Hit;
     }
 
     public void Enter(BaseEnemy enemy)

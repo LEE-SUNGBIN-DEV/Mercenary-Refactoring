@@ -11,7 +11,7 @@ public class CharacterStateParrying : ICharacterState
     public CharacterStateParrying()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Parrying;
-        animationNameHash = Constants.ANIMATION_NAME_PARRYING;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_PARRYING;
         mouseRightDown = false;
     }
 

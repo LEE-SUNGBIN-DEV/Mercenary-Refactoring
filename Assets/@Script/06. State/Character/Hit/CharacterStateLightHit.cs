@@ -10,7 +10,7 @@ public class CharacterStateLightHit : ICharacterState
     public CharacterStateLightHit()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.LightHit;
-        animationNameHash = Constants.ANIMATION_NAME_LIGHT_HIT;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_LIGHT_HIT;
     }
 
     public void Enter(BaseCharacter character)

@@ -10,7 +10,7 @@ public class CharacterStateParryingAttack : ICharacterState
     public CharacterStateParryingAttack()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Parrying_Attack;
-        animationNameHash = Constants.ANIMATION_NAME_PARRYING_ATTACK;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_PARRYING_ATTACK;
     }
 
     public void Enter(BaseCharacter character)

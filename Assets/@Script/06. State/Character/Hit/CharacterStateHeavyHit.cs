@@ -11,7 +11,7 @@ public class CharacterStateHeavyHit : ICharacterState
     public CharacterStateHeavyHit()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.HeavyHit;
-        animationNameHash = Constants.ANIMATION_NAME_HEAVY_HIT;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_HEAVY_HIT;
     }
 
     public void Enter(BaseCharacter character)

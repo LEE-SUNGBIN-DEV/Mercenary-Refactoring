@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Newtonsoft.Json;
 
 [System.Serializable]
 public class EnemyData
@@ -14,18 +15,20 @@ public class EnemyData
 
     [Header("Status")]
     [SerializeField] private float maxHP;
-    [SerializeField] private float currentHP;
+    [JsonIgnore][SerializeField] private float currentHP;
     [SerializeField] private float attackPower;
     [SerializeField] private float defensivePower;
     [SerializeField] private float criticalChance;
     [SerializeField] private float criticalDamage;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float chaseRange;
+
+    [SerializeField] private float stopDistance;
+    [SerializeField] private float chaseDistance;
 
     [Header("Reward")]
-    [SerializeField] private float expAmount;
-    [SerializeField] private float moneyAmount;
+    [SerializeField] private float expReward;
+    [SerializeField] private float stoneReward;
 
     public void Initialize()
     {
@@ -93,11 +96,11 @@ public class EnemyData
         {
             attackSpeed = value;
 
-            if (attackSpeed < Constants.CHARACTER_STAT_ATTACK_SPEED_MIN)
-                attackSpeed = Constants.CHARACTER_STAT_ATTACK_SPEED_MIN;
+            if (attackSpeed < Constants.PLAYER_STAT_ATTACK_SPEED_MIN)
+                attackSpeed = Constants.PLAYER_STAT_ATTACK_SPEED_MIN;
 
-            if (attackSpeed > Constants.CHARACTER_STAT_ATTACK_SPEED_MAX)
-                attackSpeed = Constants.CHARACTER_STAT_ATTACK_SPEED_MAX;
+            if (attackSpeed > Constants.PLAYER_STAT_ATTACK_SPEED_MAX)
+                attackSpeed = Constants.PLAYER_STAT_ATTACK_SPEED_MAX;
 
             OnChanageEnemyData?.Invoke(this);
         }
@@ -109,11 +112,11 @@ public class EnemyData
         {
             moveSpeed = value;
 
-            if (moveSpeed < Constants.CHARACTER_STAT_MOVE_SPEED_MIN)
-                moveSpeed = Constants.CHARACTER_STAT_MOVE_SPEED_MIN;
+            if (moveSpeed < Constants.PLAYER_STAT_MOVE_SPEED_MIN)
+                moveSpeed = Constants.PLAYER_STAT_MOVE_SPEED_MIN;
 
-            if (moveSpeed > Constants.CHARACTER_STAT_MOVE_SPEED_MAX)
-                moveSpeed = Constants.CHARACTER_STAT_MOVE_SPEED_MAX;
+            if (moveSpeed > Constants.PLAYER_STAT_MOVE_SPEED_MAX)
+                moveSpeed = Constants.PLAYER_STAT_MOVE_SPEED_MAX;
 
             OnChanageEnemyData?.Invoke(this);
         }
@@ -124,11 +127,11 @@ public class EnemyData
         set
         {
             criticalChance = value;
-            if (criticalChance < Constants.CHARACTER_STAT_CRITICAL_CHANCE_MIN)
-                criticalChance = Constants.CHARACTER_STAT_CRITICAL_CHANCE_MIN;
+            if (criticalChance < Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN)
+                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN;
 
-            if (criticalChance > Constants.CHARACTER_STAT_CRITICAL_CHANCE_MAX)
-                criticalChance = Constants.CHARACTER_STAT_CRITICAL_CHANCE_MAX;
+            if (criticalChance > Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX)
+                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX;
 
             OnChanageEnemyData?.Invoke(this);
         }
@@ -139,21 +142,51 @@ public class EnemyData
         set
         {
             criticalDamage = value;
-            if (criticalDamage < Constants.CHARACTER_STAT_CRITICAL_DAMAGE_MIN)
-                criticalDamage = Constants.CHARACTER_STAT_CRITICAL_DAMAGE_MIN;
+            if (criticalDamage < Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN)
+                criticalDamage = Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN;
 
             OnChanageEnemyData?.Invoke(this);
         }
     }
 
-    public float ChaseRange
+    public float StopDistance
     {
-        get { return chaseRange; }
+        get { return stopDistance; }
         set
         {
-            chaseRange = value;
-            if (chaseRange < 0)
-                chaseRange = 0;
+            stopDistance = value;
+            if (stopDistance < 0)
+                stopDistance = 0;
+        }
+    }
+    public float ChaseDistance
+    {
+        get { return chaseDistance; }
+        set
+        {
+            chaseDistance = value;
+            if (chaseDistance < 0)
+                chaseDistance = 0;
+        }
+    }
+    public float ExpReward
+    {
+        get { return expReward; }
+        set
+        {
+            expReward = value;
+            if (expReward < 0)
+                expReward = 0;
+        }
+    }
+    public float StoneReward
+    {
+        get { return stoneReward; }
+        set
+        {
+            stoneReward = value;
+            if (stoneReward < 0)
+                stoneReward = 0;
         }
     }
     #endregion

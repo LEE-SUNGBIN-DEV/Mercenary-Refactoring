@@ -15,7 +15,7 @@ public class CharacterStateRun : ICharacterState
     public CharacterStateRun()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Run;
-        animationNameHash = Constants.ANIMATION_NAME_RUN;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_RUN;
     }
 
     public void Enter(BaseCharacter character)
@@ -25,13 +25,13 @@ public class CharacterStateRun : ICharacterState
 
     public void Update(BaseCharacter character)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL))
+        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
             character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_SKILL_COUNTER))
+        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
             character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Skill);
             return;
@@ -69,7 +69,7 @@ public class CharacterStateRun : ICharacterState
                 // Run
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    character.CharacterData.StatusData.CurrentSP -= (Constants.CHARACTER_STAMINA_CONSUMPTION_RUN * Time.deltaTime);
+                    character.CharacterData.StatusData.CurrentSP -= (Constants.PLAYER_STAMINA_CONSUMPTION_RUN * Time.deltaTime);
                     runSpeed = character.StatusData.MoveSpeed * 2;
                     // Look Direction
                     character.transform.rotation = Quaternion.Lerp(character.transform.rotation, Quaternion.LookRotation(moveDirection), 10f * Time.deltaTime);

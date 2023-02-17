@@ -506,12 +506,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: doAttack
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
   - m_Name: doCompete
     m_Type: 9
     m_DefaultFloat: 0
@@ -519,12 +513,6 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: doCompeteSuccess
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: doCompeteFail
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1019,13 +1007,13 @@ AnimatorStateMachine:
     m_Position: {x: 160, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3260593462776166318}
-    m_Position: {x: 370, y: 40, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 9037992074650357827}
     m_Position: {x: 370, y: -10, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: -2184033726461947810}
+    m_State: {fileID: 9037992074650357827}
     m_Position: {x: 370, y: -60, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -2184033726461947810}
+    m_Position: {x: 370, y: -110, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -6365997898023679026}

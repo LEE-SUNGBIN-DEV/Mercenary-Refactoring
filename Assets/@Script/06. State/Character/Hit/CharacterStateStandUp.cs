@@ -10,7 +10,7 @@ public class CharacterStateStandUp : ICharacterState
     public CharacterStateStandUp()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.StandUp;
-        animationNameHash = Constants.ANIMATION_NAME_STAND_UP;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_STAND_UP;
     }
 
     public void Enter(BaseCharacter character)

@@ -14,7 +14,7 @@ public class CharacterStateStandRoll : ICharacterState
     public CharacterStateStandRoll()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.StandRoll;
-        animationNameHash = Constants.ANIMATION_NAME_STAND_ROLL;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_STAND_ROLL;
     }
 
     public void Enter(BaseCharacter character)

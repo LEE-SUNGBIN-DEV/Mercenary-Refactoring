@@ -18,7 +18,7 @@ public class BlackDragonFireBall : EnemySkill
         owner.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Fire_Ball, 2);
     }
 
-    public override bool CheckCondition(float targetDistance)
+    public override bool IsReady(float targetDistance)
     {
         return (isReady && (targetDistance <= maxRange) && (targetDistance >= minRange));
     }

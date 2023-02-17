@@ -57,6 +57,7 @@ public class CharacterStateController
         currentState?.Update(character);
     }
 
+    // 상태 전환
     public void SetState(CHARACTER_STATE targetState)
     {
         prevState = currentState;
@@ -65,6 +66,7 @@ public class CharacterStateController
         currentState?.Enter(character);
     }
 
+    // 상태 가중치에 따라 강제 전환이 필요한 경우
     public void TryStateSwitchingByWeight(CHARACTER_STATE targetState)
     {
         if (stateDictionary[targetState].StateWeight > currentState?.StateWeight)
@@ -86,6 +88,7 @@ public class CharacterStateController
         return prevState == stateDictionary[targetState];
     }
 
+    // Transition 되는 동안 실행을 방지하면서 상태 전환이 필요한 경우
     public bool SetStateNotInTransition(int currentNameHash, CHARACTER_STATE targetState)
     {
         if (character.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
@@ -97,6 +100,7 @@ public class CharacterStateController
         return false;
     }
 
+    // !! 해당 Animation의 특정 구간을 만족하고, Transition 되는 동안 실행을 방지하면서 상태 전환이 필요한 경우
     public bool SetStateByUpperAnimationTime(int currentNameHash, CHARACTER_STATE targetState, float normalizedTime)
     {
         if (character.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
