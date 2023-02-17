@@ -12,7 +12,7 @@ public class CharacterStateHeavyHitLoop : ICharacterState
     public CharacterStateHeavyHitLoop()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.HeavyHitLoop;
-        animationNameHash = Constants.ANIMATION_NAME_HEAVY_HIT_Loop;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_HEAVY_HIT_Loop;
         duration = Constants.TIME_CHARACTER_STAND_UP;
         time = 0f;
     }

@@ -157,7 +157,7 @@ public class CompeteManager : MonoBehaviour
 
     public void OnEnemyFail()
     {
-        enemy.SwitchState(ENEMY_STATE.Stagger);
+        enemy.State.SetState(ENEMY_STATE.Stagger);
         character = null;
         enemy = null;
     }

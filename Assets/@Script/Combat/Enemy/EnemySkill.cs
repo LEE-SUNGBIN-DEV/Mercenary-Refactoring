@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class EnemySkill : MonoBehaviour
 {
+    public event UnityAction<bool> OnSKillEnd;
+
     [Header("Enemy Skill")]
     [SerializeField] protected BaseEnemy owner;
     [SerializeField] protected float cooldown;
@@ -13,7 +16,7 @@ public abstract class EnemySkill : MonoBehaviour
     // Initialize
     public virtual void Initialize()
     {
-        this.owner = GetComponentInParent<BaseEnemy>(true);
+        owner = GetComponentInParent<BaseEnemy>(true);
         isReady = true;
     }
     public virtual void Initialize(BaseEnemy owner)
@@ -22,12 +25,11 @@ public abstract class EnemySkill : MonoBehaviour
         isReady = true;
     }
 
-    // 
     public virtual void ActiveSkill()
     {
         StartCoroutine(WaitForCooldown());
     }
-    public virtual bool CheckCondition(float targetDistance)
+    public virtual bool IsReady(float targetDistance)
     {
         return (isReady && (targetDistance <= maxRange));
     }

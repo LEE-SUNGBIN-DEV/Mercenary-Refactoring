@@ -5,53 +5,43 @@ using UnityEngine;
 public class EnemyStateIdle : IEnemyState
 {
     private int stateWeight;
-    private int animationNameHash;
-    private float walkChaseRange;
-    private float runChaseRange;
+    private float idleTime;
+    private float patrolInterval;
+    private int idleAnimationNameHash;
 
     public EnemyStateIdle()
     {
         stateWeight = (int)ENEMY_STATE_WEIGHT.Idle;
-        animationNameHash = Constants.ANIMATION_NAME_IDLE;
+        idleAnimationNameHash = Constants.ANIMATION_NAME_HASH_IDLE;
     }
 
     public void Enter(BaseEnemy enemy)
     {
+        idleTime = 0f;
+        patrolInterval = Random.Range(Constants.TIME_ENEMY_MIN_PATROL, Constants.TIME_ENEMY_MAX_PATROL);
         enemy.NavMeshAgent.isStopped = true;
         enemy.NavMeshAgent.velocity = Vector3.zero;
-        enemy.Animator.CrossFade(animationNameHash, 0.2f);
-        walkChaseRange = enemy.EnemyData.ChaseRange;
-        runChaseRange = walkChaseRange * 0.5f;
+        enemy.Animator.CrossFade(idleAnimationNameHash, 0.2f);
     }
 
     public void Update(BaseEnemy enemy)
     {
-        if (enemy.State.IsUpperStateThanCurrentState(ENEMY_STATE.Skill))
+        // 추적 가능한 상태라면
+        // Idle -> Chase
+        if (enemy.IsTargetInChaseDistance() && enemy.IsTargetInSight())
         {
-            foreach (var skill in enemy.SkillDictionary.Values)
-            {
-                if (skill.CheckCondition(enemy.TargetDistance))
-                {
-                    enemy.SelectSkill = skill;
-                    enemy.State.TryStateSwitchingByWeight(ENEMY_STATE.Skill);
-                    return;
-                }
-            }
-        }
-
-        if (enemy.State.StateDictionary.ContainsKey(ENEMY_STATE.Run)
-            && enemy.TargetDistance >= runChaseRange)
-        {
-            enemy.State.TryStateSwitchingByWeight(ENEMY_STATE.Run);
+            enemy.State.TryStateSwitchingByWeight(ENEMY_STATE.Chase);
             return;
         }
 
-        if (enemy.TargetDistance > enemy.EnemyData.ChaseRange)
+        // 일정 시간마다 패트롤 상태로 전환
+        // Idle -> Patrol
+        idleTime += Time.deltaTime;
+        if(idleTime >= patrolInterval)
         {
-            enemy.State.TryStateSwitchingByWeight(ENEMY_STATE.Walk);
+            enemy.State.TryStateSwitchingByWeight(ENEMY_STATE.Patrol);
             return;
         }
-
     }
 
     public void Exit(BaseEnemy enemy)

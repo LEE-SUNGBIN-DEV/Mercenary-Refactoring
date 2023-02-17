@@ -12,7 +12,7 @@ public class CharacterStateLightAttack01 : ICharacterState
     public CharacterStateLightAttack01()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Light_Attack_01;
-        animationNameHash = Constants.ANIMATION_NAME_LIGHT_ATTACK_01;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_LIGHT_ATTACK_01;
         mouseLeftDown = false;
         mouseRightDown = false;
     }
@@ -27,13 +27,13 @@ public class CharacterStateLightAttack01 : ICharacterState
 
     public void Update(BaseCharacter character)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL))
+        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
             character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_SKILL_COUNTER))
+        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
             character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Skill);
             return;

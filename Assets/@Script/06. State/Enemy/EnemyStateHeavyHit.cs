@@ -8,7 +8,7 @@ public class EnemyStateHeavyHit : IEnemyState
 
     public EnemyStateHeavyHit()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.HeavyHit;
+        stateWeight = (int)ENEMY_STATE_WEIGHT.Heavy_Hit;
     }
 
     public void Enter(BaseEnemy enemy)

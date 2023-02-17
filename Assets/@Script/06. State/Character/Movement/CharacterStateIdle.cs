@@ -11,7 +11,7 @@ public class CharacterStateIdle : ICharacterState
     public CharacterStateIdle()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Idle;
-        animationNameHash = Constants.ANIMATION_NAME_IDLE;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_IDLE;
         moveInput = Vector3.zero;
     }
 
@@ -23,13 +23,13 @@ public class CharacterStateIdle : ICharacterState
 
     public void Update(BaseCharacter character)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL))
+        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
             character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_SKILL_COUNTER))
+        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
             character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Skill);
             return;
@@ -51,7 +51,7 @@ public class CharacterStateIdle : ICharacterState
 
         if(character.IsGround)
         {
-            character.CharacterData.StatusData.AutoRecoverStamina(Constants.CHARACTER_STAMINA_IDLE_AUTO_RECOVERY);
+            character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY);
             if (moveInput.sqrMagnitude > 0)
             {
                 // Run

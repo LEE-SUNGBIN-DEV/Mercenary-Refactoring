@@ -85,8 +85,8 @@ public enum CHARACTER_STATE_WEIGHT
 public enum ENEMY_STATE
 {
     Idle,
-    Walk,
-    Run,
+    Patrol,
+    Chase,
 
     Skill,
 
@@ -97,26 +97,26 @@ public enum ENEMY_STATE
     Compete,
     Compete_Defeat,
 
-    Birth,
+    Spawn,
     Die
 }
 
 public enum ENEMY_STATE_WEIGHT
 {
     Idle = 0,
-    Walk = 1,
-    Run = 2,
+    Patrol = 1,
+    Chase = 2,
 
     Skill = 8,
 
-    LightHit = 512,
-    HeavyHit = 513,
+    Light_Hit = 512,
+    Heavy_Hit = 513,
     Stagger = 515,
 
     Compete = 1024,
     Compete_Defeat = 1025,
 
-    Birth = 2048,
+    Spawn = 2048,
     Die = 4096,
 
     // Lancer

@@ -10,7 +10,7 @@ public class CharacterStateDefenseEnd : ICharacterState
     public CharacterStateDefenseEnd()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Defense_End;
-        animationNameHash = Constants.ANIMATION_NAME_DEFENSE_END;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_DEFENSE_END;
     }
 
     public void Enter(BaseCharacter character)

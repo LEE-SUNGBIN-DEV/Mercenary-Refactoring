@@ -5,33 +5,49 @@ using UnityEngine;
 public class EnemyStateSkill : IEnemyState
 {
     private int stateWeight;
-    private float lookTime;
-    private float cumulativeTime;
+    private bool isDone;
+    private float rotationTime;
+    private float timer;
 
     public EnemyStateSkill()
     {
         stateWeight = (int)ENEMY_STATE_WEIGHT.Skill;
-        lookTime = 0.5f;
-        cumulativeTime = 0f;
+        isDone = false;
+        rotationTime = 0.5f;
+        timer = 0f;
     }
 
     public void Enter(BaseEnemy enemy)
     {
-        cumulativeTime = 0f;
-        enemy.SelectSkill.ActiveSkill();
+        isDone = false;
+        timer = 0f;
+        enemy.CurrentSkill.OnSKillEnd += IsDone;
+        enemy.CurrentSkill.ActiveSkill();
     }
 
     public void Update(BaseEnemy enemy)
     {
-        if(cumulativeTime < lookTime)
+        if(timer < rotationTime)
         {
-            cumulativeTime += Time.deltaTime;
+            timer += Time.deltaTime;
             enemy.LookTarget();
+        }
+
+        if(isDone)
+        {
+            enemy.State.SetState(ENEMY_STATE.Chase);
+            return;
         }
     }
 
     public void Exit(BaseEnemy enemy)
     {
+        enemy.CurrentSkill.OnSKillEnd -= IsDone;
+    }
+
+    public void IsDone(bool isSkillDone)
+    {
+        isDone = isSkillDone;
     }
 
     #region Property

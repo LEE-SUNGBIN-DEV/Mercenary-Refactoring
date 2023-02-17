@@ -63,16 +63,13 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
 
     public void Update()
     {
-        if (UpdateTargetInformation())
-        {
-            state.Update();
-        }
+        state.Update();
     }
 
-    public override void Birth()
+    public override void Spawn()
     {
-        base.Birth();
-        state.TryStateSwitchingByWeight(ENEMY_STATE.Birth);
+        base.Spawn();
+        state.TryStateSwitchingByWeight(ENEMY_STATE.Spawn);
     }
 
     public override void OnDie()

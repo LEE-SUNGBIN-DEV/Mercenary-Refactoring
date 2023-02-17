@@ -16,8 +16,12 @@ public class EnemyStateController
         stateDictionary = new Dictionary<ENEMY_STATE, IEnemyState>
         {
             // Common
+            { ENEMY_STATE.Spawn, new EnemyStateSpawn() },
+
             { ENEMY_STATE.Idle, new EnemyStateIdle() },
-            { ENEMY_STATE.Walk, new EnemyStateWalk() },
+            { ENEMY_STATE.Patrol, new EnemyStatePatrol() },
+            { ENEMY_STATE.Chase, new EnemyStateChase() },
+
             { ENEMY_STATE.Skill, new EnemyStateSkill() },
 
             { ENEMY_STATE.Light_Hit, new EnemyStateLightHit() },
@@ -25,7 +29,6 @@ public class EnemyStateController
             { ENEMY_STATE.Stagger, new EnemyStateStagger() },
 
             { ENEMY_STATE.Compete, new EnemyStateCompete() },
-            { ENEMY_STATE.Birth, new EnemyStateBirth() },
             { ENEMY_STATE.Die, new EnemyStateDie() }
         };
 
@@ -70,6 +73,7 @@ public class EnemyStateController
     {
         return prevState == stateDictionary[targetState];
     }
+
     public bool SetStateNotInTransition(int currentNameHash, ENEMY_STATE targetState)
     {
         if (enemy.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash

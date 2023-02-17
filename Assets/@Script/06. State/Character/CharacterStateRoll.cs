@@ -14,7 +14,7 @@ public class CharacterStateRoll : ICharacterState
     public CharacterStateRoll()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Roll;
-        animationNameHash = Constants.ANIMATION_NAME_ROLL;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_ROLL;
     }
 
     public void Enter(BaseCharacter character)
@@ -27,7 +27,7 @@ public class CharacterStateRoll : ICharacterState
         character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
         character.IsInvincible = true;
-        character.StatusData.CurrentSP -= Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL;
+        character.StatusData.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_ROLL;
         character.Animator.CrossFade(animationNameHash, 0.1f);
     }
 

@@ -69,9 +69,9 @@ public class StatusData
         AttackPower = (strength * 2) + equipAttackPower;
         DefensivePower = (strength) + equipDefensePower;
         CriticalChance = (luck) + equipCriticalChance;
-        CriticalDamage = Constants.CHARACTER_STAT_CRITICAL_DAMAGE_DEFAULT + (luck) + equipCriticalDamage;
-        AttackSpeed = Constants.CHARACTER_STAT_ATTACK_SPEED_DEFAULT + (dexterity * 0.01f) + equipAttackSpeed;
-        MoveSpeed = Constants.CHARACTER_STAT_MOVE_SPEED_DEFAULT + (dexterity * 0.02f) + equipMoveSpeed;
+        CriticalDamage = Constants.PLAYER_STAT_CRITICAL_DAMAGE_DEFAULT + (luck) + equipCriticalDamage;
+        AttackSpeed = Constants.PLAYER_STAT_ATTACK_SPEED_DEFAULT + (dexterity * 0.01f) + equipAttackSpeed;
+        MoveSpeed = Constants.PLAYER_STAT_MOVE_SPEED_DEFAULT + (dexterity * 0.02f) + equipMoveSpeed;
     }
 
     public void LevelUp()
@@ -298,11 +298,11 @@ public class StatusData
         {
             attackSpeed = value;
 
-            if (attackSpeed < Constants.CHARACTER_STAT_ATTACK_SPEED_MIN)
-                attackSpeed = Constants.CHARACTER_STAT_ATTACK_SPEED_MIN;
+            if (attackSpeed < Constants.PLAYER_STAT_ATTACK_SPEED_MIN)
+                attackSpeed = Constants.PLAYER_STAT_ATTACK_SPEED_MIN;
 
-            if (attackSpeed > Constants.CHARACTER_STAT_ATTACK_SPEED_MAX)
-                attackSpeed = Constants.CHARACTER_STAT_ATTACK_SPEED_MAX;
+            if (attackSpeed > Constants.PLAYER_STAT_ATTACK_SPEED_MAX)
+                attackSpeed = Constants.PLAYER_STAT_ATTACK_SPEED_MAX;
 
             OnCharacterStatusChanged?.Invoke(this);
         }
@@ -314,11 +314,11 @@ public class StatusData
         {
             moveSpeed = value;
 
-            if (moveSpeed < Constants.CHARACTER_STAT_MOVE_SPEED_MIN)
-                moveSpeed = Constants.CHARACTER_STAT_MOVE_SPEED_MIN;
+            if (moveSpeed < Constants.PLAYER_STAT_MOVE_SPEED_MIN)
+                moveSpeed = Constants.PLAYER_STAT_MOVE_SPEED_MIN;
 
-            if (moveSpeed > Constants.CHARACTER_STAT_MOVE_SPEED_MAX)
-                moveSpeed = Constants.CHARACTER_STAT_MOVE_SPEED_MAX;
+            if (moveSpeed > Constants.PLAYER_STAT_MOVE_SPEED_MAX)
+                moveSpeed = Constants.PLAYER_STAT_MOVE_SPEED_MAX;
 
             OnCharacterStatusChanged?.Invoke(this);
         }
@@ -329,11 +329,11 @@ public class StatusData
         set
         {
             criticalChance = value;
-            if (criticalChance < Constants.CHARACTER_STAT_CRITICAL_CHANCE_MIN)
-                criticalChance = Constants.CHARACTER_STAT_CRITICAL_CHANCE_MIN;
+            if (criticalChance < Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN)
+                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN;
 
-            if (criticalChance > Constants.CHARACTER_STAT_CRITICAL_CHANCE_MAX)
-                criticalChance = Constants.CHARACTER_STAT_CRITICAL_CHANCE_MAX;
+            if (criticalChance > Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX)
+                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX;
             
             OnCharacterStatusChanged?.Invoke(this);
         }
@@ -344,8 +344,8 @@ public class StatusData
         set
         {
             criticalDamage = value;
-            if (criticalDamage < Constants.CHARACTER_STAT_CRITICAL_DAMAGE_MIN)
-                criticalDamage = Constants.CHARACTER_STAT_CRITICAL_DAMAGE_MIN;
+            if (criticalDamage < Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN)
+                criticalDamage = Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN;
 
             OnCharacterStatusChanged?.Invoke(this);
         }

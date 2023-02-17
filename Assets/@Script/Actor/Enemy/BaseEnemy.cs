@@ -7,16 +7,16 @@ using BehaviourTreePackage;
 
 public abstract class BaseEnemy : BaseActor
 {
-    public event UnityAction<BaseEnemy> OnEnemyBirth;
+    public event UnityAction<BaseEnemy> OnEnemySpawn;
     public event UnityAction<BaseEnemy> OnEnemyDie;
 
     [Header("Base Enemy")]
-    [SerializeField] protected bool isSpawn;
     [SerializeField] protected EnemyData enemyData;
     protected EnemyStateController state;
+    private Vector3 spawnPosition;
 
     [Header("Skills")]
-    [SerializeField] protected EnemySkill selectSkill;
+    [SerializeField] protected EnemySkill currentSkill;
     protected Dictionary<int, EnemySkill> skillDictionary;
 
     protected NavMeshAgent navMeshAgent;
@@ -32,26 +32,38 @@ public abstract class BaseEnemy : BaseActor
         base.Awake();
         TryGetComponent(out rigidBody);
         TryGetComponent(out navMeshAgent);
-        navMeshAgent.speed = enemyData.MoveSpeed;
     }
 
     public virtual void OnEnable()
     {
-        Birth();
+        Spawn();
     }
 
     public virtual void OnDisable()
     {
-        targetTransform = null;
+        Despawn();
     }
 
-    public virtual void Birth()
+    public virtual void Spawn()
     {
-        OnEnemyBirth?.Invoke(this);
+        OnEnemySpawn?.Invoke(this);
+
+        navMeshAgent.speed = enemyData.MoveSpeed;
+        navMeshAgent.stoppingDistance = enemyData.StopDistance;
+        spawnPosition = transform.position;
+
         isInvincible = false;
         IsDie = false;
         enemyData.CurrentHP = enemyData.MaxHP;
         gameObject.layer = Constants.LAYER_ENEMY;
+
+        UpdateTargetInformation();
+        state?.SetState(ENEMY_STATE.Spawn);
+    }
+
+    public virtual void Despawn()
+    {
+        targetTransform = null;
     }
 
     public virtual void OnDie()
@@ -66,17 +78,54 @@ public abstract class BaseEnemy : BaseActor
     {
         if (targetTransform != null)
         {
-            targetDistance = (targetTransform.position - transform.position).magnitude;
-            targetDirection = (targetTransform.position - transform.position).normalized;
+            targetDistance = Vector3.Distance(targetTransform.position, transform.position);
+            targetDirection = Vector3.Normalize(targetTransform.position - transform.position);
             return true;
         }
         else
             return false;
     }
 
+    public bool IsReadyAnySkill()
+    {
+        foreach (var skill in skillDictionary.Values)
+        {
+            if (skill.IsReady(targetDistance))
+            {
+                currentSkill = skill;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool IsTargetInChaseDistance()
+    {
+        if (targetTransform != null
+            && targetDistance <= enemyData.ChaseDistance)
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool IsTargetInStopDistance()
+    {
+        if (targetTransform != null
+            && targetDistance <= enemyData.StopDistance)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsTargetInSight()
+    {
+        return true;
+    }
+
     public void LookTarget()
     {
-        targetDirection = (targetTransform.position - transform.position).normalized;
+        targetDirection = Vector3.Normalize(targetTransform.position - transform.position);
         transform.rotation
                 = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 5f * Time.deltaTime);
     }
@@ -88,11 +137,12 @@ public abstract class BaseEnemy : BaseActor
         if (damage < 0)
             damage = 0;
 
-        damage += ((enemyData.AttackPower / 8f - enemyData.AttackPower / 16f) + 1f);
+        damage += ((enemyData.AttackPower * 0.125f - enemyData.AttackPower * 0.0625f) + 1f);
         damage *= ratio;
 
         character.StatusData.CurrentHP -= damage;
     }
+
     public IEnumerator WaitForDisapear(float time)
     {
         float disapearTime = 0f;
@@ -108,20 +158,12 @@ public abstract class BaseEnemy : BaseActor
         }
     }
 
-    public void TrySwitchState(ENEMY_STATE targetState)
-    {
-        state.TryStateSwitchingByWeight(targetState);
-    }
-    public void SwitchState(ENEMY_STATE targetState)
-    {
-        state.SetState(targetState);
-    }
-
     #region Property
     public EnemyData EnemyData { get { return enemyData; } }
     public EnemyStateController State { get { return state; } }
+    public Vector3 SpawnPosition { get { return spawnPosition; } }
     public Dictionary<int, EnemySkill> SkillDictionary { get { return skillDictionary; } }
-    public EnemySkill SelectSkill { get { return selectSkill; } set { selectSkill = value; } }
+    public EnemySkill CurrentSkill { get { return currentSkill; } set { currentSkill = value; } }
     public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }
 
     // Target

@@ -16,7 +16,7 @@ public class InventoryData
 
     public void Initialize()
     {
-        money = Constants.CHARACTER_DATA_DEFAULT_MONEY;
+        money = Constants.CHARACTER_DATA_DEFAULT_STONE;
         inventoryItems = new ItemData[Constants.MAX_INVENTORY_SLOT_NUMBER];
 
         quickSlotItemIDs = new int[Constants.MAX_QUICK_SLOT_NUMBER];

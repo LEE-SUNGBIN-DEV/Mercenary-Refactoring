@@ -11,7 +11,7 @@ public class CharacterStateHeavyAttack04 : ICharacterState
     public CharacterStateHeavyAttack04()
     {
         stateWeight = (int)CHARACTER_STATE_WEIGHT.Heavy_Attack_04;
-        animationNameHash = Constants.ANIMATION_NAME_HEAVY_ATTACK_04;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_HEAVY_ATTACK_04;
         mouseLeftDown = false;
     }
 
@@ -24,13 +24,13 @@ public class CharacterStateHeavyAttack04 : ICharacterState
 
     public void Update(BaseCharacter character)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_ROLL))
+        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
             character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.CHARACTER_STAMINA_CONSUMPTION_SKILL_COUNTER))
+        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
             character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Skill);
             return;
