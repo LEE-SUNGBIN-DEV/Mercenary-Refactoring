@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateHeavyHit : ICharacterState
+public class CharacterStateHeavyHit : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
@@ -10,7 +10,7 @@ public class CharacterStateHeavyHit : ICharacterState
 
     public CharacterStateHeavyHit()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.HeavyHit;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_HEAVY;
         animationNameHash = Constants.ANIMATION_NAME_HASH_HEAVY_HIT;
     }
 
@@ -23,7 +23,7 @@ public class CharacterStateHeavyHit : ICharacterState
     public void Update(BaseCharacter character)
     {
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Heavy_Hit_Loop, 1.0f))
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_HIT_HEAVY_LOOP, 1.0f))
         {
             return;
         }

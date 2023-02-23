@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateStandRoll : ICharacterState
+public class CharacterStateStandRoll : IActionState<BaseCharacter>
 {
     public int stateWeight;
     private int animationNameHash;
@@ -13,7 +13,7 @@ public class CharacterStateStandRoll : ICharacterState
 
     public CharacterStateStandRoll()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.StandRoll;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_STAND_ROLL;
         animationNameHash = Constants.ANIMATION_NAME_HASH_STAND_ROLL;
     }
 
@@ -33,7 +33,7 @@ public class CharacterStateStandRoll : ICharacterState
     public void Update(BaseCharacter character)
     {
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 0.9f))
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }
 

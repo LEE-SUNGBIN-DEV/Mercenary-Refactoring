@@ -8,10 +8,10 @@ public abstract class BaseActor : MonoBehaviour
     [SerializeField] protected SkinnedMeshRenderer meshRenderer;
     [SerializeField] protected MaterialContainer[] materialContainers;
     [SerializeField] protected ObjectPooler objectPooler = new ObjectPooler();
-
-    [SerializeField] protected AbnormalStateController abnormalStateController;
-    [SerializeField] protected bool isDie;
+    
+    [SerializeField] protected BuffController buffController;
     [SerializeField] protected bool isInvincible;
+    [SerializeField] protected bool isDie;
     protected Dictionary<string, Material> materialDictionary;
     protected Animator animator;
 
@@ -28,7 +28,7 @@ public abstract class BaseActor : MonoBehaviour
             }
         }
         objectPooler.Initialize(transform);
-        abnormalStateController = new AbnormalStateController(this);
+        buffController = new BuffController(this);
     }
 
     public void SetMaterial(string key)
@@ -39,21 +39,21 @@ public abstract class BaseActor : MonoBehaviour
         }
     }
 
-    public void AddAbnormalState(ABNORMAL_TYPE targetState, float duration)
+    public void AddBuff(BUFF targetState, float duration)
     {
-        abnormalStateController.AddState(targetState, duration);
+        buffController.AddBuff(targetState, duration);
     }
-    public void SubAbnormalState(ABNORMAL_TYPE targetState)
+    public void SubBuff(BUFF targetState)
     {
-        abnormalStateController.SubtractState(targetState);
+        buffController.SubBuff(targetState);
     }
 
     #region Property
     public Animator Animator { get { return animator; } }
     public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }
     public ObjectPooler ObjectPooler { get { return objectPooler; } }
-    public bool IsDie { get { return isDie; } set { isDie = value; } }
     public bool IsInvincible { get { return isInvincible; } set { isInvincible = value; } }
-    public AbnormalStateController AbnormalStateController { get { return abnormalStateController; } }
+    public bool IsDie { get { return isDie; } set { isDie = value; } }
+    public BuffController BuffController { get { return buffController; } }
     #endregion
 }

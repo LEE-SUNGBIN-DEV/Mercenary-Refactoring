@@ -59,7 +59,7 @@ public class BlackDragonDoubleAttack : EnemySkill
                 {
                     owner.SetMaterial("Default");
                     owner.MeshRenderer.material.color = Color.white;
-                    rightClaw.SetCombatController(COMBAT_TYPE.Heavy_Attack, 1.2f, ABNORMAL_TYPE.Stun, 4f);
+                    rightClaw.SetCombatController(COMBAT_TYPE.Heavy_Attack, 1.2f, BUFF.Stun, 4f);
                     rightClaw.OnEnableCollider();
                     break;
                 }

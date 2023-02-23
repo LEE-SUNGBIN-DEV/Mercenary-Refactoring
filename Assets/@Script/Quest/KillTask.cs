@@ -23,10 +23,10 @@ public class KillTask : QuestTask
 
     public void Action(BaseEnemy enemy)
     {
-        if(enemy.EnemyData.EnemyID == targetID)
+        if(enemy.Status.EnemyID == targetID)
         {
             ++SuccessAmount;
-            Managers.UIManager.RequestNotice(enemy.EnemyData.EnemyName + " 처치: " + SuccessAmount + "/" + RequireAmount);
+            Managers.UIManager.RequestNotice(enemy.Status.EnemyName + " 처치: " + SuccessAmount + "/" + RequireAmount);
         }
     }
     #region Property

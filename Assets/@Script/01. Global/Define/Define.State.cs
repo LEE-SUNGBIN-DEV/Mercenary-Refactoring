@@ -1,126 +1,113 @@
-public enum CHARACTER_STATE
+public enum ACTION_STATE
 {
-    // Common Character
-    Idle = 0,
-    Walk = 1,
-    Run = 2,
+    // Player State
+    PLAYER_IDLE = 0,
+    PLAYER_WALK = 1,
+    PLAYER_RUN = 2,
 
-    Light_Attack_01 = 16,
-    Light_Attack_02 = 17,
-    Light_Attack_03 = 18,
-    Light_Attack_04 = 19,
+    PLAYER_ATTACK_LIGHT_01 = 16,
+    PLAYER_ATTACK_LIGHT_02 = 17,
+    PLAYER_ATTACK_LIGHT_03 = 18,
+    PLAYER_ATTACK_LIGHT_04 = 19,
 
-    Heavy_Attack_01 = 32,
-    Heavy_Attack_02 = 33,
-    Heavy_Attack_03 = 34,
-    Heavy_Attack_04 = 35,
+    PLAYER_ATTACK_HEAVY_01 = 32,
+    PLAYER_ATTACK_HEAVY_02 = 33,
+    PLAYER_ATTACK_HEAVY_03 = 34,
+    PLAYER_ATTACK_HEAVY_04 = 35,
 
-    Defense = 64,
-    Defense_Loop = 65,
-    Defense_End = 66,
-    Defense_Breaked = 67,
-    Parrying = 68,
-    Parrying_Attack = 69,
+    PLAYER_DEFENSE_START = 64,
+    PLAYER_DEFENSE_LOOP = 65,
+    PLAYER_DEFENSE_END = 66,
+    PLAYER_DEFENSE_BREAK = 67,
+    PLAYER_PARRYING = 68,
+    PLAYER_PARRYING_ATTACK = 69,
 
-    Skill = 128,
+    PLAYER_SKILL_COUNTER = 128,
 
-    Roll = 256,
+    PLAYER_ROLL = 256,
 
-    Light_Hit = 512,
-    Heavy_Hit = 513,
-    Heavy_Hit_Loop = 514,
-    Stand_Up = 515,
-    Stand_Roll = 516,
+    PLAYER_HIT_LIGHT = 512,
+    PLAYER_HIT_HEAVY = 513,
+    PLAYER_HIT_HEAVY_LOOP = 514,
+    PLAYER_STAND_UP = 515,
+    PLAYER_STAND_ROLL = 516,
 
-    Compete = 1024,
-    Spawn = 2048,
-    Die = 4096,
+    PLAYER_COMPETE = 1024,
+    PLAYER_SPAWN = 2048,
+    PLAYER_DIE = 4096,
 
-    // Lancer
-    // Berserker
+    // Enemy State
+    ENEMY_IDLE = 10000,
+    ENEMY_PATROL = 10001,
+    ENEMY_CHASE = 10002,
+
+    ENEMY_SKILL = 10016,
+
+    ENEMY_HIT_LIGHT = 10512,
+    ENEMY_HIT_HEAVY = 10513,
+    ENEMY_STAGGER = 10515,
+
+    ENEMY_COMPETE = 11024,
+    ENEMY_COMPETE_DEFEAT = 11025,
+
+    ENEMY_SPAWN = 12048,
+    ENEMY_DIE = 14096
 }
 
-public enum CHARACTER_STATE_WEIGHT
+public enum ACTION_STATE_WEIGHT
 {
-    // Common Character
-    Idle = 0,
-    Walk = 1,
-    Run = 2,
+    // Player
+    PLAYER_IDLE = 0,
+    PLAYER_WALK = 1,
+    PLAYER_RUN = 2,
 
-    Light_Attack_01 = 8,
-    Light_Attack_02 = 8,
-    Light_Attack_03 = 8,
-    Light_Attack_04 = 8,
+    PLAYER_ATTACK_LIGHT_01 = 8,
+    PLAYER_ATTACK_LIGHT_02 = 8,
+    PLAYER_ATTACK_LIGHT_03 = 8,
+    PLAYER_ATTACK_LIGHT_04 = 8,
 
-    Heavy_Attack_01 = 8,
-    Heavy_Attack_02 = 8,
-    Heavy_Attack_03 = 8,
-    Heavy_Attack_04 = 8,
+    PLAYER_ATTACK_HEAVY_01 = 8,
+    PLAYER_ATTACK_HEAVY_02 = 8,
+    PLAYER_ATTACK_HEAVY_03 = 8,
+    PLAYER_ATTACK_HEAVY_04 = 8,
 
-    Defense = 8,
-    Defense_Loop = 8,
-    Defense_End = 8,
-    Defense_Break = 8,
-    Parrying = 8,
-    Parrying_Attack = 8,
+    PLAYER_DEFENSE_START = 8,
+    PLAYER_DEFENSE_LOOP = 8,
+    PLAYER_DEFENSE_END = 8,
+    PLAYER_DEFENSE_BREAK = 8,
+    PLAYER_PARRYING = 8,
+    PLAYER_PARRYING_ATTACK = 8,
 
-    Counter = 32,
+    PLAYER_SKILL_COUNTER = 32,
 
-    Roll = 64,
+    PLAYER_ROLL = 64,
 
-    LightHit = 512,
-    HeavyHit = 513,
-    HeavyHitLoop = 514,
-    StandUp = 515,
-    StandRoll = 516,
+    PLAYER_HIT_LIGHT = 512,
+    PLAYER_HIT_HEAVY = 513,
+    PLAYER_HIT_HEAVY_LOOP = 514,
+    PLAYER_STAND_UP = 515,
+    PLAYER_STAND_ROLL = 516,
 
-    Compete = 1024,
-    Spawn = 2048,
-    Die = 4096,
+    PLAYER_COMPETE = 1024,
+    PLAYER_SPAWN = 2048,
+    PLAYER_DIE = 4096,
 
-    // Lancer
-    // Berserker
-}
+    // Enemy
+    ENEMY_IDLE = 0,
+    ENEMY_PATROL = 1,
+    ENEMY_CHASE = 2,
 
-public enum ENEMY_STATE
-{
-    Idle,
-    Patrol,
-    Chase,
+    ENEMY_SKILL = 8,
 
-    Skill,
+    ENEMY_HIT_LIGHT = 512,
+    ENEMY_HIT_HEAVY = 513,
+    ENEMY_STAGGER = 515,
 
-    Light_Hit,
-    Heavy_Hit,
-    Stagger,
+    ENEMY_COMPETE = 1024,
+    ENEMY_COMPETE_DEFEAT = 1025,
 
-    Compete,
-    Compete_Defeat,
-
-    Spawn,
-    Die
-}
-
-public enum ENEMY_STATE_WEIGHT
-{
-    Idle = 0,
-    Patrol = 1,
-    Chase = 2,
-
-    Skill = 8,
-
-    Light_Hit = 512,
-    Heavy_Hit = 513,
-    Stagger = 515,
-
-    Compete = 1024,
-    Compete_Defeat = 1025,
-
-    Spawn = 2048,
-    Die = 4096,
-
-    // Lancer
-    // Berserker
+    ENEMY_SPAWN = 2048,
+    ENEMY_DIE = 4096,
 }
 
 public enum INPUT_STATE

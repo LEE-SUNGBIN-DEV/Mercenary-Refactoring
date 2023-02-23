@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateLightHit : ICharacterState
+public class CharacterStateLightHit : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
 
     public CharacterStateLightHit()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.LightHit;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_LIGHT;
         animationNameHash = Constants.ANIMATION_NAME_HASH_LIGHT_HIT;
     }
 
@@ -21,7 +21,7 @@ public class CharacterStateLightHit : ICharacterState
     public void Update(BaseCharacter character)
     {
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 0.9f))
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }
 

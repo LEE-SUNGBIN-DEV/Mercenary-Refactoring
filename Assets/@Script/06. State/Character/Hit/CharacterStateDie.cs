@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateDie : ICharacterState
+public class CharacterStateDie : IActionState<BaseCharacter>
 {
     private int stateWeight;
 
     public CharacterStateDie()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Die;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_DIE;
     }
 
     public void Enter(BaseCharacter character)

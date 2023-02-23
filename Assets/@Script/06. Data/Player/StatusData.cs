@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Newtonsoft.Json;
 
 [System.Serializable]
 public class StatusData
@@ -9,7 +10,7 @@ public class StatusData
     public event UnityAction<StatusData> OnCharacterStatusChanged;
     public event UnityAction<StatusData> OnDie;
 
-    [Header("Stats")]
+    [Header("Stat")]
     [SerializeField] private string characterClass;
     [SerializeField] private int level;
     [SerializeField] private int statPoint;
@@ -18,21 +19,22 @@ public class StatusData
     [SerializeField] private int dexterity;
     [SerializeField] private int luck;
 
-    [Header("Final Status")]
-    [SerializeField] private float maxExp;
+    [Header("Status")]
+    [SerializeField] private float currentHP;
+    [SerializeField] private float currentSP;
     [SerializeField] private float currentExp;
     [SerializeField] private float maxHP;
-    [SerializeField] private float currentHP;
     [SerializeField] private float maxSP;
-    [SerializeField] private float currentSP;
+    [SerializeField] private float maxExp;
     [SerializeField] private float attackPower;
     [SerializeField] private float defensivePower;
     [SerializeField] private float criticalChance;
     [SerializeField] private float criticalDamage;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float moveSpeed;
+    [JsonIgnore][SerializeField] private int hitLevel; 
 
-    [Header("Equipment Effect")]
+    [Header("Equipment Status")]
     private float equipAttackPower;
     private float equipDefensePower;
     private float equipMaxHP;
@@ -183,14 +185,21 @@ public class StatusData
     #endregion
 
     #region Status Property
-    public float MaxExp
+
+    public float CurrentHP
     {
-        get { return maxExp; }
+        get { return currentHP; }
         set
         {
-            maxExp = value;
-            if (maxExp < 1)
-                maxExp = 1;
+            currentHP = value;
+            if (currentHP > MaxHP)
+                currentHP = MaxHP;
+
+            if (currentHP < 0)
+            {
+                currentHP = 0;
+                OnDie?.Invoke(this);
+            }
 
             OnCharacterStatusChanged?.Invoke(this);
         }
@@ -222,20 +231,14 @@ public class StatusData
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
-    public float CurrentHP
+    public float MaxExp
     {
-        get { return currentHP; }
+        get { return maxExp; }
         set
         {
-            currentHP = value;
-            if (currentHP > MaxHP)
-                currentHP = MaxHP;
-
-            if (currentHP < 0)
-            {
-                currentHP = 0;
-                OnDie?.Invoke(this);
-            }
+            maxExp = value;
+            if (maxExp < 0)
+                maxExp = 0;
 
             OnCharacterStatusChanged?.Invoke(this);
         }
@@ -291,6 +294,34 @@ public class StatusData
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
+
+    public float CriticalChance
+    {
+        get { return criticalChance; }
+        set
+        {
+            criticalChance = value;
+            if (criticalChance < Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN)
+                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN;
+
+            if (criticalChance > Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX)
+                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX;
+
+            OnCharacterStatusChanged?.Invoke(this);
+        }
+    }
+    public float CriticalDamage
+    {
+        get { return criticalDamage; }
+        set
+        {
+            criticalDamage = value;
+            if (criticalDamage < Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN)
+                criticalDamage = Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN;
+
+            OnCharacterStatusChanged?.Invoke(this);
+        }
+    }
     public float AttackSpeed
     {
         get { return attackSpeed; }
@@ -323,48 +354,26 @@ public class StatusData
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
-    public float CriticalChance
+    public int HitLevel
     {
-        get { return criticalChance; }
+        get { return hitLevel; }
         set
         {
-            criticalChance = value;
-            if (criticalChance < Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN)
-                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN;
-
-            if (criticalChance > Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX)
-                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX;
-            
-            OnCharacterStatusChanged?.Invoke(this);
-        }
-    }
-    public float CriticalDamage
-    {
-        get { return criticalDamage; }
-        set
-        {
-            criticalDamage = value;
-            if (criticalDamage < Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN)
-                criticalDamage = Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN;
+            hitLevel = value;
+            if (hitLevel < 0)
+                hitLevel = 0;
 
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
-    public float EquipAttackPower
-    { get { return equipAttackPower; } set { equipAttackPower = value; UpdateStatus(); } }
-    public float EquipDefensePower
-    { get { return equipDefensePower; } set { equipDefensePower = value; UpdateStatus(); } }
-    public float EquipMaxHP
-    { get { return equipMaxHP; } set { equipMaxHP = value; UpdateStatus(); } }
-    public float EquipMaxSP
-    { get { return equipMaxSP; } set { equipMaxSP = value; UpdateStatus(); } }
-    public float EquipCriticalChance
-    { get { return equipCriticalChance; } set { equipCriticalChance = value; UpdateStatus(); } }
-    public float EquipCriticalDamage
-    { get { return equipCriticalDamage; } set { equipCriticalDamage = value; UpdateStatus(); } }
-    public float EquipAttackSpeed
-    { get { return equipAttackSpeed; } set { equipAttackSpeed = value; UpdateStatus(); } }
-    public float EquipMoveSpeed
-    { get { return equipMoveSpeed; } set { equipMoveSpeed = value; UpdateStatus(); } }
+
+    public float EquipAttackPower { get { return equipAttackPower; } set { equipAttackPower = value; UpdateStatus(); } }
+    public float EquipDefensePower { get { return equipDefensePower; } set { equipDefensePower = value; UpdateStatus(); } }
+    public float EquipMaxHP { get { return equipMaxHP; } set { equipMaxHP = value; UpdateStatus(); } }
+    public float EquipMaxSP { get { return equipMaxSP; } set { equipMaxSP = value; UpdateStatus(); } }
+    public float EquipCriticalChance { get { return equipCriticalChance; } set { equipCriticalChance = value; UpdateStatus(); } }
+    public float EquipCriticalDamage { get { return equipCriticalDamage; } set { equipCriticalDamage = value; UpdateStatus(); } }
+    public float EquipAttackSpeed { get { return equipAttackSpeed; } set { equipAttackSpeed = value; UpdateStatus(); } }
+    public float EquipMoveSpeed { get { return equipMoveSpeed; } set { equipMoveSpeed = value; UpdateStatus(); } }
     #endregion
 }

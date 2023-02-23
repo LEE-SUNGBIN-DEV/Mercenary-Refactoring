@@ -28,10 +28,10 @@ public abstract class EnemyCombatController : BaseCombatController
             owner.DamageProcess(character, damageRatio);
 
             // 04. CC Process
-            switch (abnormalType)
+            switch (debuffType)
             {
-                case ABNORMAL_TYPE.Stun:
-                    character.OnStun(abnormalStateDuration);
+                case BUFF.Stun:
+                    character.OnStun(debuffDuration);
                     break;
 
                 default:
@@ -44,12 +44,12 @@ public abstract class EnemyCombatController : BaseCombatController
                 case COMBAT_TYPE.Normal_Attack:
                     break;
                 case COMBAT_TYPE.Light_Attack:
-                    if (character is ILightHitable lightHitableObject)
-                        lightHitableObject.OnLightHit();
+                    if (character.Status.HitLevel < (int)COMBAT_TYPE.Light_Attack)
+                        character.OnLightHit();
                     break;
                 case COMBAT_TYPE.Heavy_Attack:
-                    if (character is IHeavyHitable heavyHitableObject)
-                        heavyHitableObject.OnHeavyHit();
+                    if (character.Status.HitLevel < (int)COMBAT_TYPE.Heavy_Attack)
+                        character.OnHeavyHit();
                     break;
             }
         }

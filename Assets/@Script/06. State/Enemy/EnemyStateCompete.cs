@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateCompete : IEnemyState
+public class EnemyStateCompete : IActionState<BaseEnemy>
 {
     private int stateWeight;
 
     public EnemyStateCompete()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.Compete;
+        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_COMPETE;
     }
 
     public void Enter(BaseEnemy enemy)

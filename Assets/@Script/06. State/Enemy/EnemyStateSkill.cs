@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateSkill : IEnemyState
+public class EnemyStateSkill : IActionState<BaseEnemy>
 {
     private int stateWeight;
     private bool isDone;
@@ -11,7 +11,7 @@ public class EnemyStateSkill : IEnemyState
 
     public EnemyStateSkill()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.Skill;
+        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_SKILL;
         isDone = false;
         rotationTime = 0.5f;
         timer = 0f;
@@ -21,7 +21,7 @@ public class EnemyStateSkill : IEnemyState
     {
         isDone = false;
         timer = 0f;
-        enemy.CurrentSkill.OnSKillEnd += IsDone;
+        enemy.CurrentSkill.OnEndSkill += IsDone;
         enemy.CurrentSkill.ActiveSkill();
     }
 
@@ -35,14 +35,14 @@ public class EnemyStateSkill : IEnemyState
 
         if(isDone)
         {
-            enemy.State.SetState(ENEMY_STATE.Chase);
+            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE);
             return;
         }
     }
 
     public void Exit(BaseEnemy enemy)
     {
-        enemy.CurrentSkill.OnSKillEnd -= IsDone;
+        enemy.CurrentSkill.OnEndSkill -= IsDone;
     }
 
     public void IsDone(bool isSkillDone)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateStagger : IEnemyState
+public class EnemyStateStagger : IActionState<BaseEnemy>
 {
     private int stateWeight;
     private float staggerTime;
@@ -10,7 +10,7 @@ public class EnemyStateStagger : IEnemyState
 
     public EnemyStateStagger()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.Stagger;
+        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_STAGGER;
         staggerTime = 5f;
         cumulativeTime = 0f;
     }

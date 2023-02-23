@@ -25,7 +25,7 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
         {
             if(character.IsInvincible == false)
             {
-                character.StatusData.CurrentHP -= (character.StatusData.MaxHP * damageRatio * 0.01f);
+                character.Status.CurrentHP -= (character.Status.MaxHP * damageRatio * 0.01f);
             }
         }
     }

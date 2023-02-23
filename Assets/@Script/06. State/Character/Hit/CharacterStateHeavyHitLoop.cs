@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateHeavyHitLoop : ICharacterState
+public class CharacterStateHeavyHitLoop : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
@@ -11,7 +11,7 @@ public class CharacterStateHeavyHitLoop : ICharacterState
 
     public CharacterStateHeavyHitLoop()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.HeavyHitLoop;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_HEAVY_LOOP;
         animationNameHash = Constants.ANIMATION_NAME_HASH_HEAVY_HIT_Loop;
         duration = Constants.TIME_CHARACTER_STAND_UP;
         time = 0f;
@@ -29,14 +29,14 @@ public class CharacterStateHeavyHitLoop : ICharacterState
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                character.State.SetState(CHARACTER_STATE.Stand_Roll);
+                character.State.SetState(ACTION_STATE.PLAYER_STAND_ROLL);
                 return;
             }
         }
 
         else
         {
-            character.State.SetState(CHARACTER_STATE.Stand_Up);
+            character.State.SetState(ACTION_STATE.PLAYER_STAND_UP);
             return;
         }
 

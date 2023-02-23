@@ -131,7 +131,7 @@ public class CompeteManager : MonoBehaviour
     {
         isSuccess = false;
         enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE_SUCCESS);
-        character.State.SetState(CHARACTER_STATE.Heavy_Hit);
+        character.State.SetState(ACTION_STATE.PLAYER_HIT_HEAVY);
         EndCompete();
     }
 
@@ -157,7 +157,7 @@ public class CompeteManager : MonoBehaviour
 
     public void OnEnemyFail()
     {
-        enemy.State.SetState(ENEMY_STATE.Stagger);
+        enemy.State.SetState(ACTION_STATE.ENEMY_STAGGER);
         character = null;
         enemy = null;
     }

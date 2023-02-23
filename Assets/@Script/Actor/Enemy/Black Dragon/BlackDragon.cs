@@ -5,55 +5,11 @@ using UnityEngine.AI;
 
 public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
 {
-    public enum SKILL
-    {
-        RightClaw,
-        LeftClaw,
-        DoubleClaw,
-        LandBreath,
-        FireBall,
-        FlyBreath,
-        Storm,
-
-        SIZE
-    }
-
-    [Header("Skills")]
-    private BlackDragonRightClaw rightClaw;
-    private BlackDragonLeftClaw leftClaw;
-    private BlackDragonDoubleAttack doubleClaw;
-    private BlackDragonLandBreath landBreath;
-    private BlackDragonFireBall fireBall;
-    private BlackDragonFlyBreath flyBreath;
-    private BlackDragonStorm storm;
-
     public override void Awake()
     {
         base.Awake();
 
-        rightClaw = GetComponentInChildren<BlackDragonRightClaw>(true);
-        leftClaw = GetComponentInChildren<BlackDragonLeftClaw>(true);
-        doubleClaw = GetComponentInChildren<BlackDragonDoubleAttack>(true);
-        landBreath = GetComponentInChildren<BlackDragonLandBreath>(true);
-        fireBall = GetComponentInChildren<BlackDragonFireBall>(true);
-        flyBreath = GetComponentInChildren<BlackDragonFlyBreath>(true);
-        storm = GetComponentInChildren<BlackDragonStorm>(true);
-
-        skillDictionary = new Dictionary<int, EnemySkill>()
-        {
-            {(int)SKILL.RightClaw, rightClaw },
-            {(int)SKILL.LeftClaw, leftClaw },
-            {(int)SKILL.DoubleClaw, doubleClaw },
-            {(int)SKILL.LandBreath, landBreath },
-            {(int)SKILL.FireBall, fireBall },
-            {(int)SKILL.FlyBreath, flyBreath },
-            {(int)SKILL.Storm, storm }
-        };
-
-        foreach(var skill in skillDictionary.Values)
-            skill.Initialize(this);
-
-        state = new EnemyStateController(this);
+        state = new EnemyFSM(this);
     }
 
     public override void OnEnable()
@@ -61,15 +17,15 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         base.OnEnable();
     }
 
-    public void Update()
+    public override void Update()
     {
-        state.Update();
+        base.Update();
     }
 
     public override void Spawn()
     {
         base.Spawn();
-        state.TryStateSwitchingByWeight(ENEMY_STATE.Spawn);
+        state.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_SPAWN);
     }
 
     public override void OnDie()
@@ -77,7 +33,15 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         base.OnDie();
         StartCoroutine(WaitForDisapear(10f));
     }
-       
-    public void OnStagger() { state.TryStateSwitchingByWeight(ENEMY_STATE.Stagger); }
-    public void OnCompete() { state.TryStateSwitchingByWeight(ENEMY_STATE.Compete); }
+
+    public override void OnLightHit()
+    {
+    }
+
+    public override void OnHeavyHit()
+    {
+    }
+
+    public void OnStagger() { state.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_STAGGER); }
+    public void OnCompete() { state.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_COMPETE); }
 }

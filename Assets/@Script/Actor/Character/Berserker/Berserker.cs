@@ -21,14 +21,14 @@ public class Berserker : BaseCharacter
     protected override void Start()
     {
         base.Start();
-        state.SetState(CHARACTER_STATE.Idle);
+        state.SetState(ACTION_STATE.PLAYER_IDLE);
     }
 
     protected override void Update()
     {
         base.Update();
         Managers.InputManager?.UpdateUIInput();
-        abnormalStateController.UpdateState();
+        buffController.UpdateBuff();
         state?.Update();
     }
 

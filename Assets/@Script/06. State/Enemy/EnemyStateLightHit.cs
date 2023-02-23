@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateLightHit : IEnemyState
+public class EnemyStateLightHit : IActionState<BaseEnemy>
 {
     private int stateWeight;
 
     public EnemyStateLightHit()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.Light_Hit;
+        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_HIT_LIGHT;
     }
 
     public void Enter(BaseEnemy enemy)

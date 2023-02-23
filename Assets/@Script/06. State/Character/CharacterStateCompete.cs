@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateCompete : ICharacterState
+public class CharacterStateCompete : IActionState<BaseCharacter>
 {
     private int stateWeight;
 
     public CharacterStateCompete()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Compete;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_COMPETE;
     }
 
     public void Enter(BaseCharacter character)
@@ -24,7 +24,7 @@ public class CharacterStateCompete : ICharacterState
         character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
 
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
-            character.State.SetState(CHARACTER_STATE.Walk);
+            character.State.SetState(ACTION_STATE.PLAYER_WALK);
     }
 
     public void Exit(BaseCharacter character)

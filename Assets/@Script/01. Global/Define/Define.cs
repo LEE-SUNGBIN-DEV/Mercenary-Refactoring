@@ -45,34 +45,34 @@ public struct CombatInformation
 {
     public COMBAT_TYPE hitType;
     public float damageRatio;
-    public ABNORMAL_TYPE abnormalType;
-    public float abnormalDuration;
+    public BUFF debuffType;
+    public float debuffDuration;
     public Location effectLocation;
 
-    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, ABNORMAL_TYPE abnormalType, float abnormalDuration)
+    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, BUFF abnormalType, float abnormalDuration)
     {
         this.hitType = hitType;
         this.damageRatio = damageRatio;
-        this.abnormalType = abnormalType;
-        this.abnormalDuration = abnormalDuration;
+        this.debuffType = abnormalType;
+        this.debuffDuration = abnormalDuration;
         this.effectLocation = new Location(Vector3.zero, Vector3.zero);
     }
 
-    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, ABNORMAL_TYPE abnormalType, float abnormalDuration, Vector3 effectPosition, Vector3 effectRotation)
+    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, BUFF abnormalType, float abnormalDuration, Vector3 effectPosition, Vector3 effectRotation)
     {
         this.hitType = hitType;
         this.damageRatio = damageRatio;
-        this.abnormalType = abnormalType;
-        this.abnormalDuration = abnormalDuration;
+        this.debuffType = abnormalType;
+        this.debuffDuration = abnormalDuration;
         this.effectLocation = new Location(effectPosition, effectRotation);
     }
 
-    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, ABNORMAL_TYPE abnormalType, float abnormalDuration, Location effectLocation)
+    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, BUFF abnormalType, float abnormalDuration, Location effectLocation)
     {
         this.hitType = hitType;
         this.damageRatio = damageRatio;
-        this.abnormalType = abnormalType;
-        this.abnormalDuration = abnormalDuration;
+        this.debuffType = abnormalType;
+        this.debuffDuration = abnormalDuration;
         this.effectLocation = effectLocation;
     }
 

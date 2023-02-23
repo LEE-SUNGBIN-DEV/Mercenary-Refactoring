@@ -1,16 +1,23 @@
 public enum COMBAT_TYPE
 {
     // Attack
-    Normal_Attack = 1,
-    Light_Attack = 2,
-    Heavy_Attack = 4,
+    Normal_Attack = 0,
+    Light_Attack = 1,
+    Heavy_Attack = 2,
 
     // Defense
     Defense = 32,
     Parrying = 64,
 }
 
-public enum ABNORMAL_TYPE
+public enum BUFF_TYPE
+{
+    None,
+    Buff,
+    DeBuff
+}
+
+public enum BUFF
 {
     None = 0,
     Stun = 1,
