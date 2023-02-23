@@ -15,14 +15,14 @@ public class Lancer : BaseCharacter
         weapon.SetWeapon(this);
         shield.SetShield(this);
 
-        abnormalStateController = new AbnormalStateController(this);
+        buffController = new BuffController(this);
         state = new LancerStateController(this);
     }
 
     protected override void Start()
     {
         base.Start();
-        State.SetState(CHARACTER_STATE.Walk);
+        State.SetState(ACTION_STATE.PLAYER_WALK);
     }
 
     protected override void Update()
@@ -33,21 +33,21 @@ public class Lancer : BaseCharacter
         state?.Update();
     }
 
-    public CHARACTER_STATE NextState()
+    public ACTION_STATE NextState()
     {
-        CHARACTER_STATE nextState = CHARACTER_STATE.Walk;
+        ACTION_STATE nextState = ACTION_STATE.PLAYER_WALK;
 
         if (Managers.InputManager.MouseLeftDown)
-            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Light_Attack_01);
+            nextState = state.CompareStateWeight(nextState, ACTION_STATE.PLAYER_ATTACK_LIGHT_01);
 
         if (Managers.InputManager.MouseRightDown || Managers.InputManager.MouseRightPress)
-            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Defense);
+            nextState = state.CompareStateWeight(nextState, ACTION_STATE.PLAYER_DEFENSE_START);
 
-        if (Managers.InputManager.IsSpaceKeyDown && StatusData.CurrentSP >= Constants.PLAYER_STAMINA_CONSUMPTION_ROLL)
-            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Roll);
+        if (Managers.InputManager.IsSpaceKeyDown && Status.CurrentSP >= Constants.PLAYER_STAMINA_CONSUMPTION_ROLL)
+            nextState = state.CompareStateWeight(nextState, ACTION_STATE.PLAYER_ROLL);
 
-        if (Managers.InputManager.IsRKeyDown && StatusData.CurrentSP >= Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER)
-            nextState = state.CompareStateWeight(nextState, CHARACTER_STATE.Skill);
+        if (Managers.InputManager.IsRKeyDown && Status.CurrentSP >= Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER)
+            nextState = state.CompareStateWeight(nextState, ACTION_STATE.PLAYER_SKILL_COUNTER);
 
         return nextState;
     }

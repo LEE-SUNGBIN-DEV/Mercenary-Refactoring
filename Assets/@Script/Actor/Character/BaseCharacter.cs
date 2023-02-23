@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightHitable, IHeavyHitable
+public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
 {
     [Header("Base Character")]
     [SerializeField] protected CharacterData characterData;
@@ -13,7 +13,7 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
 
     protected PlayerCamera playerCamera;
     protected CharacterController characterController;
-    protected CharacterStateController state;
+    protected CharacterFSM state;
 
     protected PlayerAttackController weapon;
     protected PlayerDefenseController shield;
@@ -29,13 +29,13 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
         characterData = Managers.DataManager.SelectCharacterData;
         Managers.DataManager.SavePlayerData();
 #endif
-        StatusData.OnCharacterStatusChanged -= AdjustAttackSpeed;
-        StatusData.OnCharacterStatusChanged += AdjustAttackSpeed;
+        Status.OnCharacterStatusChanged -= AdjustAttackSpeed;
+        Status.OnCharacterStatusChanged += AdjustAttackSpeed;
 
-        StatusData.OnDie -= OnDie;
-        StatusData.OnDie += OnDie;
+        Status.OnDie -= OnDie;
+        Status.OnDie += OnDie;
 
-        AdjustAttackSpeed(StatusData);
+        AdjustAttackSpeed(Status);
     }
     protected virtual void OnEnable()
     {
@@ -57,16 +57,17 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
 
     }
 
-    public virtual void OnLightHit() { state.TryStateSwitchingByWeight(CHARACTER_STATE.Light_Hit); }
-    public virtual void OnHeavyHit() { state.TryStateSwitchingByWeight(CHARACTER_STATE.Heavy_Hit); }
-    public virtual void OnStun(float duration) { AddAbnormalState(ABNORMAL_TYPE.Stun, duration); }
-    public virtual void OnCompete() { state.TryStateSwitchingByWeight(CHARACTER_STATE.Compete); }
+    public virtual void OnHit() { state.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_LIGHT); }
+    public virtual void OnLightHit() { state.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_LIGHT); }
+    public virtual void OnHeavyHit() { state.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_HEAVY); }
+    public virtual void OnStun(float duration) { AddBuff(BUFF.Stun, duration); }
+    public virtual void OnCompete() { state.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_COMPETE); }
     public virtual void OnDie(StatusData characterStats) { }
 
     public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)
     {
         // Basic Damage Process
-        float damage = (characterData.StatusData.AttackPower - enemy.EnemyData.DefensivePower * 0.5f) * 0.5f;
+        float damage = (characterData.StatusData.AttackPower - enemy.Status.DefensivePower * 0.5f) * 0.5f;
         if (damage < 0) damage = 0;
 
         damage += ((characterData.StatusData.AttackPower / 8f - characterData.StatusData.AttackPower / 16f) + 1f);
@@ -93,7 +94,7 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
         float damageRange = Random.Range(0.9f, 1.1f);
         damage *= damageRange;
 
-        enemy.EnemyData.CurrentHP -= damage;
+        enemy.Status.CurrentHP -= damage;
 
         if(Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.Prefab_Floating_Damage_Text).TryGetComponent(out FloatingDamageText floatingDamageText))
             floatingDamageText.SetDamageText(isCritical, damage, hitPoint);
@@ -116,12 +117,12 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable, ILightH
 
     #region Property
     public CharacterData CharacterData { get { return characterData; } }
-    public StatusData StatusData { get { return characterData?.StatusData; } }
+    public StatusData Status { get { return characterData?.StatusData; } }
     public InventoryData InventoryData { get { return characterData?.InventoryData; } }
     public EquipmentSlotData EquipmentSlotData { get { return characterData?.EquipmentSlotData; } }
     public CharacterQuestData QuestData { get { return characterData?.QuestData; } }
 
-    public CharacterStateController State { get { return state; } }
+    public CharacterFSM State { get { return state; } }
 
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }

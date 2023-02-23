@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateDefense : ICharacterState
+public class CharacterStateDefense : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
 
     public CharacterStateDefense()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Defense;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_DEFENSE_START;
         animationNameHash = Constants.ANIMATION_NAME_HASH_DEFENSE;
     }
 
@@ -22,13 +22,13 @@ public class CharacterStateDefense : ICharacterState
 
     public void Update(BaseCharacter character)
     {
-        if(Input.GetMouseButton(1) && character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Defense_Loop, 1.0f))
+        if(Input.GetMouseButton(1) && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_DEFENSE_LOOP, 1.0f))
         {
             return;
         }
 
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Defense_End, 1.0f))
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_DEFENSE_END, 1.0f))
         {
             return;
         }

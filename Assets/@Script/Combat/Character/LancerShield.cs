@@ -9,8 +9,8 @@ public class LancerShield : PlayerDefenseController
         base.SetShield(character);
         defenseDictionary = new Dictionary<DEFENSE_TYPE, CombatInformation>()
         {
-            {DEFENSE_TYPE.Defense, new CombatInformation(COMBAT_TYPE.Defense, 0f, ABNORMAL_TYPE.None, 0f) },
-            {DEFENSE_TYPE.Parrying, new CombatInformation(COMBAT_TYPE.Parrying, 0f, ABNORMAL_TYPE.None, 0f) },
+            {DEFENSE_TYPE.Defense, new CombatInformation(COMBAT_TYPE.Defense, 0f, BUFF.None, 0f) },
+            {DEFENSE_TYPE.Parrying, new CombatInformation(COMBAT_TYPE.Parrying, 0f, BUFF.None, 0f) },
         };
     }
 

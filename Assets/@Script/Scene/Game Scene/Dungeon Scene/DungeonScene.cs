@@ -41,8 +41,8 @@ public class DungeonScene : BaseGameScene
 
     public void StartBossBattle()
     {
-        boss.EnemyData.OnChanageEnemyData -= UpdateBossHPBar;
-        boss.EnemyData.OnChanageEnemyData += UpdateBossHPBar;
+        boss.Status.OnChanageEnemyData -= UpdateBossHPBar;
+        boss.Status.OnChanageEnemyData += UpdateBossHPBar;
 
         boss.OnEnemyDie -= ClearBossBattle;
         boss.OnEnemyDie += ClearBossBattle;
@@ -54,7 +54,7 @@ public class DungeonScene : BaseGameScene
 
     public void ClearBossBattle(BaseEnemy enemy)
     {
-        boss.EnemyData.OnChanageEnemyData -= UpdateBossHPBar;
+        boss.Status.OnChanageEnemyData -= UpdateBossHPBar;
         boss.OnEnemyDie -= ClearBossBattle;
 
         bossRoomGate.OpenGate();

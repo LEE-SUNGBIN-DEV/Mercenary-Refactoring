@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateSkillCounter : ICharacterState
+public class CharacterStateSkillCounter : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
@@ -13,7 +13,7 @@ public class CharacterStateSkillCounter : ICharacterState
 
     public CharacterStateSkillCounter()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Counter;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_SKILL_COUNTER;
         animationNameHash = Constants.ANIMATION_NAME_HASH_SKILL_COUNTER;
     }
 
@@ -26,20 +26,20 @@ public class CharacterStateSkillCounter : ICharacterState
         moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
         character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
-        character.StatusData.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER;
+        character.Status.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER;
         character.Animator.CrossFade(animationNameHash, 0.1f);
     }
 
     public void Update(BaseCharacter character)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
+        if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ROLL);
             return;
         }
 
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 0.9f))
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }
 

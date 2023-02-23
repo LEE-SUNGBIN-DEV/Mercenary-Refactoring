@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateSpawn : IEnemyState
+public class EnemyStateSpawn : IActionState<BaseEnemy>
 {
     private int stateWeight;
     private int animationNameHash;
 
     public EnemyStateSpawn()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.Spawn;
+        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_SPAWN;
         animationNameHash = Constants.ANIMATION_NAME_HASH_SPAWN;
     }
 
@@ -21,7 +21,7 @@ public class EnemyStateSpawn : IEnemyState
 
     public void Update(BaseEnemy enemy)
     {
-        if (enemy.State.SetStateByUpperAnimationTime(animationNameHash, ENEMY_STATE.Idle, 1.0f))
+        if (enemy.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.ENEMY_IDLE, 1.0f))
         {
             return;
         }

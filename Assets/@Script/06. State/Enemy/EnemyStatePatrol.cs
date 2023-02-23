@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyStatePatrol : IEnemyState
+public class EnemyStatePatrol : IActionState<BaseEnemy>
 {
     private int stateWeight;
     private int walkAnimationNameHash;
@@ -11,7 +11,7 @@ public class EnemyStatePatrol : IEnemyState
 
     public EnemyStatePatrol()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.Patrol;
+        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_PATROL;
         walkAnimationNameHash = Constants.ANIMATION_NAME_HASH_WALK;
     }
 
@@ -31,19 +31,19 @@ public class EnemyStatePatrol : IEnemyState
 
     public void Update(BaseEnemy enemy)
     {
-        enemy.NavMeshAgent.speed = enemy.EnemyData.MoveSpeed;
+        enemy.NavMeshAgent.speed = enemy.Status.MoveSpeed;
 
         // Patrol -> Chase
         if (enemy.IsTargetInChaseDistance() && enemy.IsTargetInSight())
         {
-            enemy.State.TryStateSwitchingByWeight(ENEMY_STATE.Chase);
+            enemy.State.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_CHASE);
             return;
         }
 
         // Patrol -> Idle
         if (enemy.NavMeshAgent.remainingDistance <= enemy.NavMeshAgent.stoppingDistance)
         {
-            enemy.State.SetState(ENEMY_STATE.Idle);
+            enemy.State.SetState(ACTION_STATE.ENEMY_IDLE);
         }
     }
 

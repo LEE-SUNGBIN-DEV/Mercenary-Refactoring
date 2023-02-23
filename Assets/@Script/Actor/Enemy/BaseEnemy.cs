@@ -11,13 +11,13 @@ public abstract class BaseEnemy : BaseActor
     public event UnityAction<BaseEnemy> OnEnemyDie;
 
     [Header("Base Enemy")]
-    [SerializeField] protected EnemyData enemyData;
-    protected EnemyStateController state;
-    private Vector3 spawnPosition;
+    [SerializeField] protected EnemyData status;
+    protected EnemyFSM state;
+    protected Vector3 spawnPosition;
 
-    [Header("Skills")]
+    [Header("Skill")]
+    protected EnemySkill[] skillArray;
     [SerializeField] protected EnemySkill currentSkill;
-    protected Dictionary<int, EnemySkill> skillDictionary;
 
     protected NavMeshAgent navMeshAgent;
     protected Rigidbody rigidBody;
@@ -32,6 +32,13 @@ public abstract class BaseEnemy : BaseActor
         base.Awake();
         TryGetComponent(out rigidBody);
         TryGetComponent(out navMeshAgent);
+        state = new EnemyFSM(this);
+        skillArray = GetComponents<EnemySkill>();
+
+        for (int i = 0; i < skillArray.Length; ++i)
+        {
+            skillArray[i].Initialize(this);
+        }
     }
 
     public virtual void OnEnable()
@@ -44,21 +51,27 @@ public abstract class BaseEnemy : BaseActor
         Despawn();
     }
 
+    public virtual void Update()
+    {
+        UpdateTargetInformation();
+        state.Update();
+    }
+
     public virtual void Spawn()
     {
         OnEnemySpawn?.Invoke(this);
 
-        navMeshAgent.speed = enemyData.MoveSpeed;
-        navMeshAgent.stoppingDistance = enemyData.StopDistance;
+        navMeshAgent.speed = status.MoveSpeed;
+        navMeshAgent.stoppingDistance = status.StopDistance;
         spawnPosition = transform.position;
 
         isInvincible = false;
         IsDie = false;
-        enemyData.CurrentHP = enemyData.MaxHP;
+        status.CurrentHP = status.MaxHP;
         gameObject.layer = Constants.LAYER_ENEMY;
 
         UpdateTargetInformation();
-        state?.SetState(ENEMY_STATE.Spawn);
+        state?.SetState(ACTION_STATE.ENEMY_SPAWN);
     }
 
     public virtual void Despawn()
@@ -66,6 +79,8 @@ public abstract class BaseEnemy : BaseActor
         targetTransform = null;
     }
 
+    public abstract void OnLightHit();
+    public abstract void OnHeavyHit();
     public virtual void OnDie()
     {
         if (isDie)
@@ -88,11 +103,11 @@ public abstract class BaseEnemy : BaseActor
 
     public bool IsReadyAnySkill()
     {
-        foreach (var skill in skillDictionary.Values)
+        for(int i=0; i<skillArray.Length; ++i)
         {
-            if (skill.IsReady(targetDistance))
+            if (skillArray[i].IsReady(targetDistance))
             {
-                currentSkill = skill;
+                currentSkill = skillArray[i];
                 return true;
             }
         }
@@ -102,7 +117,7 @@ public abstract class BaseEnemy : BaseActor
     public bool IsTargetInChaseDistance()
     {
         if (targetTransform != null
-            && targetDistance <= enemyData.ChaseDistance)
+            && targetDistance <= status.ChaseDistance)
         {
             return true;
         }
@@ -111,7 +126,7 @@ public abstract class BaseEnemy : BaseActor
     public bool IsTargetInStopDistance()
     {
         if (targetTransform != null
-            && targetDistance <= enemyData.StopDistance)
+            && targetDistance <= status.StopDistance)
         {
             return true;
         }
@@ -132,15 +147,15 @@ public abstract class BaseEnemy : BaseActor
 
     public void DamageProcess(BaseCharacter character, float ratio)
     {
-        float damage = (enemyData.AttackPower - character.StatusData.DefensivePower * 0.5f) * 0.5f;
+        float damage = (status.AttackPower - character.Status.DefensivePower * 0.5f) * 0.5f;
 
         if (damage < 0)
             damage = 0;
 
-        damage += ((enemyData.AttackPower * 0.125f - enemyData.AttackPower * 0.0625f) + 1f);
+        damage += ((status.AttackPower * 0.125f - status.AttackPower * 0.0625f) + 1f);
         damage *= ratio;
 
-        character.StatusData.CurrentHP -= damage;
+        character.Status.CurrentHP -= damage;
     }
 
     public IEnumerator WaitForDisapear(float time)
@@ -159,12 +174,11 @@ public abstract class BaseEnemy : BaseActor
     }
 
     #region Property
-    public EnemyData EnemyData { get { return enemyData; } }
-    public EnemyStateController State { get { return state; } }
+    public EnemyData Status { get { return status; } }
     public Vector3 SpawnPosition { get { return spawnPosition; } }
-    public Dictionary<int, EnemySkill> SkillDictionary { get { return skillDictionary; } }
     public EnemySkill CurrentSkill { get { return currentSkill; } set { currentSkill = value; } }
     public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }
+    public EnemyFSM State { get { return state; } }
 
     // Target
     public Transform TargetTransform { get { return targetTransform; } set { targetTransform = value; } }

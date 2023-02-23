@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateLightAttack01 : ICharacterState
+public class CharacterStateLightAttack01 : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
@@ -11,7 +11,7 @@ public class CharacterStateLightAttack01 : ICharacterState
 
     public CharacterStateLightAttack01()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Light_Attack_01;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_LIGHT_01;
         animationNameHash = Constants.ANIMATION_NAME_HASH_LIGHT_ATTACK_01;
         mouseLeftDown = false;
         mouseRightDown = false;
@@ -27,15 +27,15 @@ public class CharacterStateLightAttack01 : ICharacterState
 
     public void Update(BaseCharacter character)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
+        if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ROLL);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
+        if (Input.GetKeyDown(KeyCode.R) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Skill);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_SKILL_COUNTER);
             return;
         }
 
@@ -46,19 +46,19 @@ public class CharacterStateLightAttack01 : ICharacterState
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
         // Move State -> Smash Attack 1
-        if (mouseRightDown && character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Heavy_Attack_01, 0.75f))
+        if (mouseRightDown && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_ATTACK_HEAVY_01, 0.75f))
         {
             return;
         }
 
         // Move State -> Light Attack 2
-        if (mouseLeftDown && character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Light_Attack_02, 0.75f))
+        if (mouseLeftDown && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_ATTACK_LIGHT_02, 0.75f))
         {
             return;
         }
 
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 0.9f))
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }
 

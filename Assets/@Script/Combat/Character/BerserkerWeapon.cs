@@ -13,32 +13,32 @@ public class BerserkerWeapon : PlayerAttackController
         {
             // Combo Attack
             {BERSERKER_ATTACK_TYPE.Light_Attack_01,
-                new CombatInformation(COMBAT_TYPE.Light_Attack, 1f, ABNORMAL_TYPE.None, 0f) },
+                new CombatInformation(COMBAT_TYPE.Light_Attack, 1f, BUFF.None, 0f) },
             {BERSERKER_ATTACK_TYPE.Light_Attack_02,
-                new CombatInformation(COMBAT_TYPE.Light_Attack, 1.03f, ABNORMAL_TYPE.None, 0f) },
+                new CombatInformation(COMBAT_TYPE.Light_Attack, 1.03f, BUFF.None, 0f) },
             {BERSERKER_ATTACK_TYPE.Light_Attack_03,
-                new CombatInformation(COMBAT_TYPE.Light_Attack, 1.06f, ABNORMAL_TYPE.None, 0f) },
+                new CombatInformation(COMBAT_TYPE.Light_Attack, 1.06f, BUFF.None, 0f) },
             {BERSERKER_ATTACK_TYPE.Light_Attack_04,
-                new CombatInformation(COMBAT_TYPE.Light_Attack, 1.09f, ABNORMAL_TYPE.None, 0f) },
+                new CombatInformation(COMBAT_TYPE.Light_Attack, 1.09f, BUFF.None, 0f) },
 
             // Smash Attack
             {BERSERKER_ATTACK_TYPE.Heavy_Attack_01,
-                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f, -194.508f)) },
+                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, BUFF.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f, -194.508f)) },
             {BERSERKER_ATTACK_TYPE.Heavy_Attack_02,
-                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.8f, ABNORMAL_TYPE.None, 0f, new Vector3(-0.147f, 1.110f, 1.349f), new Vector3(19.841f, 9.495f, -53.357f)) },
+                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.8f, BUFF.None, 0f, new Vector3(-0.147f, 1.110f, 1.349f), new Vector3(19.841f, 9.495f, -53.357f)) },
             {BERSERKER_ATTACK_TYPE.Heavy_Attack_03_1,
-                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0.312f, 1.192f, 0.016f), new Vector3(46.793f, -180f, 49.641f)) },
+                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, BUFF.None, 0f, new Vector3(0.312f, 1.192f, 0.016f), new Vector3(46.793f, -180f, 49.641f)) },
             {BERSERKER_ATTACK_TYPE.Heavy_Attack_03_2,
-                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0.3f, 1.504f, 0.903f), new Vector3(43.677f, 218.04f, 139.807f)) },
+                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, BUFF.None, 0f, new Vector3(0.3f, 1.504f, 0.903f), new Vector3(43.677f, 218.04f, 139.807f)) },
             {BERSERKER_ATTACK_TYPE.Heavy_Attack_04_1,
-                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(-0.169f, 2.175f, 1.869f), new Vector3(107.975f, -111.439f, -215.095f)) },
+                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, BUFF.None, 0f, new Vector3(-0.169f, 2.175f, 1.869f), new Vector3(107.975f, -111.439f, -215.095f)) },
             {BERSERKER_ATTACK_TYPE.Heavy_Attack_04_2,
-                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 2.6f, ABNORMAL_TYPE.None, 0f, new Vector3(0.021f, 1.940f, 1.4f), new Vector3(128.932f, -3.225f, -281.598f)) },
+                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 2.6f, BUFF.None, 0f, new Vector3(0.021f, 1.940f, 1.4f), new Vector3(128.932f, -3.225f, -281.598f)) },
 
             {BERSERKER_ATTACK_TYPE.Parrying_Attack,
-                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+                new CombatInformation(COMBAT_TYPE.Heavy_Attack, 1.5f, BUFF.None, 0f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
             {BERSERKER_ATTACK_TYPE.Skill_Counter,
-                new CombatInformation(COMBAT_TYPE.Light_Attack, 1.5f, ABNORMAL_TYPE.None, 0f, new Vector3(-0.433f, 1.757f, 3.043f), new Vector3(29.494f, -176.467f, -82.104f)) },
+                new CombatInformation(COMBAT_TYPE.Light_Attack, 1.5f, BUFF.None, 0f, new Vector3(-0.433f, 1.757f, 3.043f), new Vector3(29.494f, -176.467f, -82.104f)) },
         };
 
         owner.ObjectPooler.RegisterObject(Constants.VFX_Berserker_Combo_Attack, 3);

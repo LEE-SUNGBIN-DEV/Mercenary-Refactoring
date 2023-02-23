@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateRun : ICharacterState
+public class CharacterStateRun : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
@@ -14,7 +14,7 @@ public class CharacterStateRun : ICharacterState
 
     public CharacterStateRun()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Run;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_RUN;
         animationNameHash = Constants.ANIMATION_NAME_HASH_RUN;
     }
 
@@ -25,27 +25,27 @@ public class CharacterStateRun : ICharacterState
 
     public void Update(BaseCharacter character)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
+        if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ROLL);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
+        if (Input.GetKeyDown(KeyCode.R) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Skill);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_SKILL_COUNTER);
             return;
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Light_Attack_01);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ATTACK_LIGHT_01);
             return;
         }
 
         if (Input.GetMouseButtonDown(1) || Input.GetMouseButton(1))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Defense);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_DEFENSE_START);
             return;
         }
 
@@ -70,21 +70,21 @@ public class CharacterStateRun : ICharacterState
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     character.CharacterData.StatusData.CurrentSP -= (Constants.PLAYER_STAMINA_CONSUMPTION_RUN * Time.deltaTime);
-                    runSpeed = character.StatusData.MoveSpeed * 2;
+                    runSpeed = character.Status.MoveSpeed * 2;
                     // Look Direction
                     character.transform.rotation = Quaternion.Lerp(character.transform.rotation, Quaternion.LookRotation(moveDirection), 10f * Time.deltaTime);
                     character.CharacterController.SimpleMove(runSpeed * moveDirection);
                 }
                 else
                 {
-                    character.State.SetState(CHARACTER_STATE.Walk);
+                    character.State.SetState(ACTION_STATE.PLAYER_WALK);
                     return;
                 }
             }
             // Idle
             else
             {
-                character.State.SetState(CHARACTER_STATE.Idle);
+                character.State.SetState(ACTION_STATE.PLAYER_IDLE);
                 return;
             }
         }

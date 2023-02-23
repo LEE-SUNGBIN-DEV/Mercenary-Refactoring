@@ -3,30 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum SKELETON_KNIGHT_SKILL
-{
-    VERTICAL_SLASH,
-    HORIZONTAL_SLASH,
-
-    SIZE
-}
 public class SkeletonKnight : BaseEnemy, ICompetable
 {
-    private SkeletonKnightVerticalSlash verticalSlash;
-    private SkeletonKnightHorizontalSlash horizontalSlash;
-
     public override void Awake()
     {
         base.Awake();
-
-        verticalSlash = GetComponent<SkeletonKnightVerticalSlash>();
-        horizontalSlash = GetComponent<SkeletonKnightHorizontalSlash>();
-
-        skillDictionary = new Dictionary<int, EnemySkill>()
-        {
-            {0, verticalSlash},
-            {1, horizontalSlash}
-        };
     }
 
     public override void OnEnable()
@@ -39,18 +20,18 @@ public class SkeletonKnight : BaseEnemy, ICompetable
         base.OnDisable();
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
     }
 
     #region Override Function
-    public virtual void OnLightHit()
+    public override void OnLightHit()
     {
     }
 
-    public virtual void OnHeavyHit()
+    public override void OnHeavyHit()
     {
-        Animator.SetTrigger("doHeavyHit");
     }
 
     public virtual void OnStun(float duration)
@@ -83,7 +64,6 @@ public class SkeletonKnight : BaseEnemy, ICompetable
             return;
 
         // Initialize Previous State
-        verticalSlash.OffVerticalSlashCollider();
 
         // Compete State
         IsCompete = true;
@@ -97,7 +77,7 @@ public class SkeletonKnight : BaseEnemy, ICompetable
         Animator.SetTrigger("doCompeteAttack");
 
         yield return new WaitForSeconds(Constants.TIME_COMPETE_ATTACK);
-        enemyData.CurrentHP -= (enemyData.MaxHP * 0.1f);
+        status.CurrentHP -= (status.MaxHP * 0.1f);
         IsCompete = false;
         Stagger();
     }

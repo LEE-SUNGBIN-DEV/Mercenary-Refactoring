@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateDefenseEnd : ICharacterState
+public class CharacterStateDefenseEnd : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
 
     public CharacterStateDefenseEnd()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Defense_End;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_DEFENSE_END;
         animationNameHash = Constants.ANIMATION_NAME_HASH_DEFENSE_END;
     }
 
@@ -22,7 +22,7 @@ public class CharacterStateDefenseEnd : ICharacterState
     public void Update(BaseCharacter character)
     {
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 0.9f))
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
         {
             return;
         }

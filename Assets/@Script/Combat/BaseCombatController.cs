@@ -8,8 +8,8 @@ public abstract class BaseCombatController : MonoBehaviour
     [Header("Base Combat Controller")]
     [SerializeField] protected COMBAT_TYPE combatType;
     [SerializeField] protected float damageRatio;
-    [SerializeField] protected ABNORMAL_TYPE abnormalType;
-    [SerializeField] protected float abnormalStateDuration;
+    [SerializeField] protected BUFF debuffType;
+    [SerializeField] protected float debuffDuration;
     [SerializeField] protected Collider combatCollider;
     protected Dictionary<BaseActor, bool> hitDictionary = new Dictionary<BaseActor, bool>();
 
@@ -20,24 +20,24 @@ public abstract class BaseCombatController : MonoBehaviour
             combatCollider.enabled = false;
     }
 
-    public void SetCombatController(COMBAT_TYPE combatType, float damageRatio, ABNORMAL_TYPE abnormalType = ABNORMAL_TYPE.None, float abnormalStateDuration = 0f)
+    public void SetCombatController(COMBAT_TYPE combatType, float damageRatio, BUFF debuffType = BUFF.None, float debuffDuration = 0f)
     {
         this.combatType = combatType;
         this.damageRatio = damageRatio;
-        this.abnormalType = abnormalType;
-        this.abnormalStateDuration = abnormalStateDuration;
+        this.debuffType = debuffType;
+        this.debuffDuration = debuffDuration;
     }
 
     public void SetCombatInformation(CombatInformation combatInformation)
     {
         this.combatType = combatInformation.hitType;
         this.damageRatio = combatInformation.damageRatio;
-        this.abnormalType = combatInformation.abnormalType;
-        this.abnormalStateDuration = combatInformation.abnormalDuration;
+        this.debuffType = combatInformation.debuffType;
+        this.debuffDuration = combatInformation.debuffDuration;
     }
 
     public COMBAT_TYPE CombatType { get { return combatType; } }
-    public ABNORMAL_TYPE AbnormalType { get { return abnormalType; } }
+    public BUFF DebuffType { get { return debuffType; } }
     public float DamageRatio { get { return damageRatio; } }
     public Collider CombatCollider { get { return combatCollider; } }
 }

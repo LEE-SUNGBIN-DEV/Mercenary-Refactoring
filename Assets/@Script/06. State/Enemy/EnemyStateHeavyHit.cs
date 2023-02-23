@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateHeavyHit : IEnemyState
+public class EnemyStateHeavyHit : IActionState<BaseEnemy>
 {
     private int stateWeight;
 
     public EnemyStateHeavyHit()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.Heavy_Hit;
+        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_HIT_HEAVY;
     }
 
     public void Enter(BaseEnemy enemy)

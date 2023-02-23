@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateIdle : IEnemyState
+public class EnemyStateIdle : IActionState<BaseEnemy>
 {
     private int stateWeight;
     private float idleTime;
@@ -11,7 +11,7 @@ public class EnemyStateIdle : IEnemyState
 
     public EnemyStateIdle()
     {
-        stateWeight = (int)ENEMY_STATE_WEIGHT.Idle;
+        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_IDLE;
         idleAnimationNameHash = Constants.ANIMATION_NAME_HASH_IDLE;
     }
 
@@ -30,7 +30,7 @@ public class EnemyStateIdle : IEnemyState
         // Idle -> Chase
         if (enemy.IsTargetInChaseDistance() && enemy.IsTargetInSight())
         {
-            enemy.State.TryStateSwitchingByWeight(ENEMY_STATE.Chase);
+            enemy.State.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_CHASE);
             return;
         }
 
@@ -39,7 +39,7 @@ public class EnemyStateIdle : IEnemyState
         idleTime += Time.deltaTime;
         if(idleTime >= patrolInterval)
         {
-            enemy.State.TryStateSwitchingByWeight(ENEMY_STATE.Patrol);
+            enemy.State.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_PATROL);
             return;
         }
     }

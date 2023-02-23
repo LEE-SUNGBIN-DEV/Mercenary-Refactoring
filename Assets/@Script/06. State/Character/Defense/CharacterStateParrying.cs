@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateParrying : ICharacterState
+public class CharacterStateParrying : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
@@ -10,7 +10,7 @@ public class CharacterStateParrying : ICharacterState
 
     public CharacterStateParrying()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Parrying;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_PARRYING;
         animationNameHash = Constants.ANIMATION_NAME_HASH_PARRYING;
         mouseRightDown = false;
     }
@@ -28,13 +28,13 @@ public class CharacterStateParrying : ICharacterState
             mouseRightDown = Input.GetMouseButtonDown(1);
 
         // Move State -> Parrying Attack
-        if (mouseRightDown && character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Parrying_Attack, 0.9f))
+        if (mouseRightDown && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_PARRYING_ATTACK, 0.9f))
         {
             return;
         }
 
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 1f))
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 1f))
         {
             return;
         }

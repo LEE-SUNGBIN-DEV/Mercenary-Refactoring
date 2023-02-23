@@ -22,11 +22,12 @@ public class EnemyData
     [SerializeField] private float criticalDamage;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float moveSpeed;
+    [JsonIgnore][SerializeField] private int hitLevel;
 
     [SerializeField] private float stopDistance;
     [SerializeField] private float chaseDistance;
 
-    [Header("Reward")]
+    [Header("Reward Info")]
     [SerializeField] private float expReward;
     [SerializeField] private float stoneReward;
 
@@ -36,16 +37,16 @@ public class EnemyData
     }
 
     #region Status Property
-    public uint EnemyID { get { return enemyID; } }
-    public string EnemyName { get { return enemyName; } }
+    public uint EnemyID { get { return enemyID; } private set { enemyID = value; } }
+    public string EnemyName { get { return enemyName; } private set { enemyName = value; } }
     public float MaxHP
     {
         get { return maxHP; }
         set
         {
             maxHP = value;
-            if (maxHP <= 0)
-                maxHP = 1;
+            if (maxHP < 0)
+                maxHP = 0;
 
             OnChanageEnemyData?.Invoke(this);
         }
@@ -89,6 +90,34 @@ public class EnemyData
             OnChanageEnemyData?.Invoke(this);
         }
     }
+
+    public float CriticalChance
+    {
+        get { return criticalChance; }
+        set
+        {
+            criticalChance = value;
+            if (criticalChance < Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN)
+                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN;
+
+            if (criticalChance > Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX)
+                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX;
+
+            OnChanageEnemyData?.Invoke(this);
+        }
+    }
+    public float CriticalDamage
+    {
+        get { return criticalDamage; }
+        set
+        {
+            criticalDamage = value;
+            if (criticalDamage < Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN)
+                criticalDamage = Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN;
+
+            OnChanageEnemyData?.Invoke(this);
+        }
+    }
     public float AttackSpeed
     {
         get { return attackSpeed; }
@@ -121,29 +150,15 @@ public class EnemyData
             OnChanageEnemyData?.Invoke(this);
         }
     }
-    public float CriticalChance
+
+    public int HitLevel
     {
-        get { return criticalChance; }
+        get { return hitLevel; }
         set
         {
-            criticalChance = value;
-            if (criticalChance < Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN)
-                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MIN;
-
-            if (criticalChance > Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX)
-                criticalChance = Constants.PLAYER_STAT_CRITICAL_CHANCE_MAX;
-
-            OnChanageEnemyData?.Invoke(this);
-        }
-    }
-    public float CriticalDamage
-    {
-        get { return criticalDamage; }
-        set
-        {
-            criticalDamage = value;
-            if (criticalDamage < Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN)
-                criticalDamage = Constants.PLAYER_STAT_CRITICAL_DAMAGE_MIN;
+            hitLevel = value;
+            if (hitLevel < 0)
+                hitLevel = 0;
 
             OnChanageEnemyData?.Invoke(this);
         }
@@ -157,6 +172,8 @@ public class EnemyData
             stopDistance = value;
             if (stopDistance < 0)
                 stopDistance = 0;
+
+            OnChanageEnemyData?.Invoke(this);
         }
     }
     public float ChaseDistance
@@ -167,8 +184,12 @@ public class EnemyData
             chaseDistance = value;
             if (chaseDistance < 0)
                 chaseDistance = 0;
+
+            OnChanageEnemyData?.Invoke(this);
         }
     }
+
+    // Reward
     public float ExpReward
     {
         get { return expReward; }
@@ -177,6 +198,8 @@ public class EnemyData
             expReward = value;
             if (expReward < 0)
                 expReward = 0;
+
+            OnChanageEnemyData?.Invoke(this);
         }
     }
     public float StoneReward
@@ -187,6 +210,8 @@ public class EnemyData
             stoneReward = value;
             if (stoneReward < 0)
                 stoneReward = 0;
+
+            OnChanageEnemyData?.Invoke(this);
         }
     }
     #endregion

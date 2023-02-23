@@ -5,10 +5,11 @@ using UnityEngine.Events;
 
 public abstract class EnemySkill : MonoBehaviour
 {
-    public event UnityAction<bool> OnSKillEnd;
+    public event UnityAction<bool> OnEndSkill;
 
     [Header("Enemy Skill")]
     [SerializeField] protected BaseEnemy owner;
+    [SerializeField] protected string skillName;
     [SerializeField] protected float cooldown;
     [SerializeField] protected float maxRange;
     protected bool isReady;
@@ -38,6 +39,11 @@ public abstract class EnemySkill : MonoBehaviour
         isReady = false;
         yield return new WaitForSeconds(cooldown);
         isReady = true;
+    }
+
+    public virtual void EndSkill()
+    {
+        OnEndSkill?.Invoke(true);
     }
 
     #region Property

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateIdle : ICharacterState
+public class CharacterStateIdle : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
@@ -10,7 +10,7 @@ public class CharacterStateIdle : ICharacterState
 
     public CharacterStateIdle()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Idle;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_IDLE;
         animationNameHash = Constants.ANIMATION_NAME_HASH_IDLE;
         moveInput = Vector3.zero;
     }
@@ -23,27 +23,27 @@ public class CharacterStateIdle : ICharacterState
 
     public void Update(BaseCharacter character)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
+        if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Roll);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ROLL);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
+        if (Input.GetKeyDown(KeyCode.R) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Skill);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_SKILL_COUNTER);
             return;
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Light_Attack_01);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ATTACK_LIGHT_01);
             return;
         }
 
         if (Input.GetMouseButtonDown(1) || Input.GetMouseButton(1))
         {
-            character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Defense);
+            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_DEFENSE_START);
             return;
         }
 
@@ -57,13 +57,13 @@ public class CharacterStateIdle : ICharacterState
                 // Run
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Run);
+                    character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_RUN);
                     return;
                 }
                 // Walk
                 else
                 {
-                    character.State.TryStateSwitchingByWeight(CHARACTER_STATE.Walk);
+                    character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_WALK);
                     return;
                 }
             }

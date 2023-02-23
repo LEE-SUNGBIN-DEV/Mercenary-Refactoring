@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateRoll : ICharacterState
+public class CharacterStateRoll : IActionState<BaseCharacter>
 {
     private int stateWeight;
     private int animationNameHash;
@@ -13,7 +13,7 @@ public class CharacterStateRoll : ICharacterState
 
     public CharacterStateRoll()
     {
-        stateWeight = (int)CHARACTER_STATE_WEIGHT.Roll;
+        stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ROLL;
         animationNameHash = Constants.ANIMATION_NAME_HASH_ROLL;
     }
 
@@ -27,7 +27,7 @@ public class CharacterStateRoll : ICharacterState
         character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
         character.IsInvincible = true;
-        character.StatusData.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_ROLL;
+        character.Status.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_ROLL;
         character.Animator.CrossFade(animationNameHash, 0.1f);
     }
 
@@ -35,7 +35,7 @@ public class CharacterStateRoll : ICharacterState
     {
 
         // !! When Animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, CHARACTER_STATE.Idle, 0.9f))
+        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }
 
