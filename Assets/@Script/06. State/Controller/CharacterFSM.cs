@@ -35,6 +35,8 @@ public class CharacterFSM : BaseFSM<BaseCharacter>
         stateDictionary.Add(ACTION_STATE.PLAYER_STAND_UP, new CharacterStateStandRoll());
         stateDictionary.Add(ACTION_STATE.PLAYER_STAND_ROLL, new CharacterStateStandRoll());
 
+        stateDictionary.Add(ACTION_STATE.PLAYER_STUN, new CharacterStateStun());
+
         stateDictionary.Add(ACTION_STATE.PLAYER_COMPETE, new CharacterStateCompete());
         stateDictionary.Add(ACTION_STATE.PLAYER_DIE, new CharacterStateDie());
 

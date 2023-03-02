@@ -18,8 +18,8 @@ public static partial class Functions
     }
     public static BaseCharacter CreateCharacterWithCamera(Vector3 position)
     {
-        GameObject cameraObject = Managers.ResourceManager.InstantiatePrefabSync("Prefab_Player_Camera");
-        BaseCharacter character = Managers.ResourceManager.InstantiatePrefabSync("Prefab_" + Managers.DataManager.SelectCharacterData.StatusData.CharacterClass).GetComponent<BaseCharacter>();
+        GameObject cameraObject = Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_Player_Camera);
+        BaseCharacter character = Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_Player_Character).GetComponent<BaseCharacter>();
 
         SetCharacterPosition(character, position);
         cameraObject.transform.position = position;

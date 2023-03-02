@@ -1,7 +1,7 @@
 public enum CURSOR_MODE
 {
-    Lock,
-    Unlock
+    LOCK,
+    UNLOCK
 }
 
 public enum PHYSICS_LAYER

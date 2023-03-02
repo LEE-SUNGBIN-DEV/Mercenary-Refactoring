@@ -11,9 +11,10 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
     [SerializeField] protected CharacterData characterData;
     [SerializeField] protected Vector3 cameraOffset;
 
-    protected PlayerCamera playerCamera;
     protected CharacterController characterController;
+    protected PlayerCamera playerCamera;
     protected CharacterFSM state;
+    protected StatusEffectController<BaseCharacter> statusEffectController;
 
     protected PlayerAttackController weapon;
     protected PlayerDefenseController shield;
@@ -23,6 +24,7 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
     {
         base.Awake();
         TryGetComponent(out characterController);
+        state = new CharacterFSM(this);
 
 #if EDITOR_TEST
 #else
@@ -57,11 +59,13 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
 
     }
 
-    public virtual void OnHit() { state.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_LIGHT); }
-    public virtual void OnLightHit() { state.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_LIGHT); }
-    public virtual void OnHeavyHit() { state.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_HEAVY); }
-    public virtual void OnStun(float duration) { AddBuff(BUFF.Stun, duration); }
-    public virtual void OnCompete() { state.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_COMPETE); }
+    public virtual void OnHit() { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_LIGHT); }
+    public virtual void OnLightHit() { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_LIGHT); }
+    public virtual void OnHeavyHit() { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_HEAVY); }
+
+    public virtual void OnStun(float duration) { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_STUN, duration); }
+
+    public virtual void OnCompete() { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_COMPETE); }
     public virtual void OnDie(StatusData characterStats) { }
 
     public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)
@@ -122,10 +126,11 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
     public EquipmentSlotData EquipmentSlotData { get { return characterData?.EquipmentSlotData; } }
     public CharacterQuestData QuestData { get { return characterData?.QuestData; } }
 
-    public CharacterFSM State { get { return state; } }
-
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
     public CharacterController CharacterController { get { return characterController; } }
+
+    public CharacterFSM State { get { return state; } }
+    public StatusEffectController<BaseCharacter> StatusEffectController { get { return statusEffectController; } }
 
     public PlayerAttackController Weapon { get { return weapon; } }
     public PlayerDefenseController Shield { get { return shield; } }

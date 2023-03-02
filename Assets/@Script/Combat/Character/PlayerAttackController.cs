@@ -47,27 +47,23 @@ public abstract class PlayerAttackController : BaseCombatController
                 // 05. Hit Process
                 switch (combatType)
                 {
-                    case COMBAT_TYPE.Normal_Attack:
+                    case COMBAT_TYPE.ATTACK_NORMAL:
                         break;
-                    case COMBAT_TYPE.Light_Attack:
-                        if (hitbox.Owner.Status.HitLevel < (int)COMBAT_TYPE.Light_Attack)
+                    case COMBAT_TYPE.ATTACK_LIGHT:
+                        if (hitbox.Owner.Status.HitLevel < (int)COMBAT_TYPE.ATTACK_LIGHT)
                             hitbox.Owner.OnLightHit();
                         break;
 
-                    case COMBAT_TYPE.Heavy_Attack:
-                        if (hitbox.Owner.Status.HitLevel < (int)COMBAT_TYPE.Heavy_Attack)
+                    case COMBAT_TYPE.ATTACK_HEAVY:
+                        if (hitbox.Owner.Status.HitLevel < (int)COMBAT_TYPE.ATTACK_HEAVY)
                             hitbox.Owner.OnHeavyHit();
                         break;
-                }
-
-                // 06. CC Process
-                switch (debuffType)
-                {
-                    case BUFF.None:
-                        break;
-                    case BUFF.Stun:
+                    case COMBAT_TYPE.ATTACK_STUN:
                         if (hitbox.Owner is IStunable stunableObject)
-                            stunableObject.OnStun(debuffDuration);
+                            stunableObject.OnStun(crowdControlDuration);
+                        break;
+
+                        default:
                         break;
                 }
             }

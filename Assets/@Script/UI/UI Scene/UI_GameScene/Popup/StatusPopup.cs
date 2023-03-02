@@ -77,7 +77,6 @@ public class StatusPopup : UIPopup
 
     public void RefreshStatus(StatusData status)
     {
-        GetText((int)TEXT.ClassText).text = status.CharacterClass;
         GetText((int)TEXT.LevelText).text = status.Level.ToString();
 
         GetText((int)TEXT.StatPointText).text = status.StatPoint.ToString();

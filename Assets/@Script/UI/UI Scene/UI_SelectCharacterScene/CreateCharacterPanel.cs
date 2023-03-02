@@ -17,7 +17,6 @@ public class CreateCharacterPanel : UIPanel
     }
 
     private CharacterSlot selectSlot;
-    private CHARACTER_TYPE selectClass;
     private Animator animator;
     private bool isOpen;
 
@@ -27,9 +26,7 @@ public class CreateCharacterPanel : UIPanel
 
         BindButton(typeof(BUTTON));
 
-        selectClass = CHARACTER_TYPE.Null;
-
-        GetButton((int)BUTTON.LancerButton).onClick.AddListener(() => { OnClickCharacterButton(CHARACTER_TYPE.Lancer); });
+        GetButton((int)BUTTON.LancerButton).onClick.AddListener(() => { OnClickCharacterButton(); });
         GetButton((int)BUTTON.CreateButton).onClick.AddListener(() => { OnClickCreateButton(); });
         GetButton((int)BUTTON.CancelButton).onClick.AddListener(OnClickCancelButton);
 
@@ -73,7 +70,7 @@ public class CreateCharacterPanel : UIPanel
     public void OnClickCreateButton()
     {
         Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex] = new CharacterData();
-        Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex].Initialize(selectClass);
+        Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex].Initialize();
         Managers.DataManager.SavePlayerData();
 
         ClosePanel();
@@ -82,9 +79,8 @@ public class CreateCharacterPanel : UIPanel
     {
         ClosePanel();
     }
-    public void OnClickCharacterButton(CHARACTER_TYPE characterClass)
+    public void OnClickCharacterButton()
     {
-        selectClass = characterClass;
         GetButton((int)BUTTON.CreateButton).interactable = true;
     }
     #endregion

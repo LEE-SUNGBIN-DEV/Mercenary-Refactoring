@@ -11,7 +11,6 @@ public class StatusData
     public event UnityAction<StatusData> OnDie;
 
     [Header("Stat")]
-    [SerializeField] private string characterClass;
     [SerializeField] private int level;
     [SerializeField] private int statPoint;
     [SerializeField] private int strength;
@@ -44,9 +43,8 @@ public class StatusData
     private float equipAttackSpeed;
     private float equipMoveSpeed;
 
-    public void Initialize(CHARACTER_TYPE selectedClass)
+    public void Initialize()
     {
-        characterClass = System.Enum.GetName(typeof(CHARACTER_TYPE), selectedClass);
         level = Constants.CHARACTER_DATA_DEFALUT_LEVEL;
 
         maxExp = Managers.DataManager.LevelTable[level];
@@ -94,15 +92,6 @@ public class StatusData
     }
 
     #region Stat Property
-    public string CharacterClass
-    {
-        get { return characterClass; }
-        set
-        {
-            characterClass = value;
-            OnCharacterStatusChanged?.Invoke(this);
-        }
-    }
     public int Level
     {
         get { return level; }

@@ -7,15 +7,15 @@ public class LancerShield : PlayerDefenseController
     public override void SetShield(BaseCharacter character)
     {
         base.SetShield(character);
-        defenseDictionary = new Dictionary<DEFENSE_TYPE, CombatInformation>()
+        defenseDictionary = new Dictionary<COMBAT_TYPE, CombatInformation>()
         {
-            {DEFENSE_TYPE.Defense, new CombatInformation(COMBAT_TYPE.Defense, 0f, BUFF.None, 0f) },
-            {DEFENSE_TYPE.Parrying, new CombatInformation(COMBAT_TYPE.Parrying, 0f, BUFF.None, 0f) },
+            {COMBAT_TYPE.DEFENSE, new CombatInformation(COMBAT_TYPE.DEFENSE, 0f) },
+            {COMBAT_TYPE.PARRYING, new CombatInformation(COMBAT_TYPE.PARRYING, 0f) },
         };
     }
 
     #region Called by Owner's Animation Event
-    public override void OnEnableDefense(DEFENSE_TYPE defenseType)
+    public override void OnEnableDefense(COMBAT_TYPE defenseType)
     {
         SetCombatInformation(defenseDictionary[defenseType]);
         combatCollider.enabled = true;
@@ -23,8 +23,8 @@ public class LancerShield : PlayerDefenseController
         GameObject effectObject = null;
         switch (defenseType)
         {
-            case DEFENSE_TYPE.Defense:
-            case DEFENSE_TYPE.Parrying:
+            case COMBAT_TYPE.DEFENSE:
+            case COMBAT_TYPE.PARRYING:
 
             default:
                 break;

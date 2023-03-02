@@ -21,9 +21,9 @@ public class CharacterData
         questData = new CharacterQuestData();
     }
 
-    public void Initialize(CHARACTER_TYPE selectedClass)
+    public void Initialize()
     {
-        statusData.Initialize(selectedClass);
+        statusData.Initialize();
         locationData.Initialize();
         inventoryData.Initialize();
         equipmentSlotData.Initialize();

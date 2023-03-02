@@ -1,8 +1,8 @@
-public enum CHARACTER_TYPE
+public enum WEAPON_TYPE
 {
     Null,
-    Lancer,
-    Berserker,
-    Warrior,
+    Fist,
+    GREAT_SWORD,
+    SWORD_SHIELD,
 }
 

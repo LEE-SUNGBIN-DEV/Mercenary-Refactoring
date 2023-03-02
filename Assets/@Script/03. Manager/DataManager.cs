@@ -12,11 +12,16 @@ public class DataManager
     private Dictionary<int, float> levelTable = new Dictionary<int, float>();
     private Dictionary<int, BaseItem> itemDatabase = new Dictionary<int, BaseItem>();
     private Dictionary<uint, Quest> questDatabase = new Dictionary<uint, Quest>();
-    private Dictionary<uint, EnemyData> enemyDatabase = new Dictionary<uint, EnemyData>(); 
+    private Dictionary<uint, EnemyData> enemyDatabase = new Dictionary<uint, EnemyData>();
+    private Dictionary<BUFF_TYPE, BuffData> buffDatabase = new Dictionary<BUFF_TYPE, BuffData>();
+    private Dictionary<DEBUFF_TYPE, DebuffData> debuffDatabase = new Dictionary<DEBUFF_TYPE, DebuffData>();
 
     private string playerDataPath;
     private string levelTablePath;
     private string questTablePath;
+    private string enemyTablePath;
+    private string buffTablePath;
+    private string debuffTablePath;
 
     private string weaponTablePath;
     private string helmetTablePath;
@@ -33,7 +38,7 @@ public class DataManager
         playerDataPath = Application.dataPath + "Player_Data.json";
         levelTablePath = Application.dataPath + "/Table/Level_Table.json";
         questTablePath = Application.dataPath + "/Table/Quest_Table.json";
-        
+
         //
         weaponTablePath = Application.dataPath + "/Table/Weapon_Item_Table.json";
         helmetTablePath = Application.dataPath + "/Table/Helmet_Item_Table.json";
@@ -118,7 +123,7 @@ public class DataManager
             string jsonLevelData = File.ReadAllText(questTablePath);
             QuestTable questTable = JsonConvert.DeserializeObject<QuestTable>(jsonLevelData);
 
-            for(int i=0; i<questTable.questTable.Length; ++i)
+            for (int i = 0; i < questTable.questTable.Length; ++i)
             {
                 Quest quest = new Quest();
                 quest.Initialize(questTable.questTable[i]);
@@ -126,7 +131,7 @@ public class DataManager
             }
         }
     }
-    
+
     public void SavePlayerData()
     {
         string jsonPlayerData = JsonConvert.SerializeObject(playerData, Formatting.Indented);
@@ -139,14 +144,17 @@ public class DataManager
         SavePlayerData();
     }
 
-#region Property
+    #region Property
     public Dictionary<int, float> LevelTable { get { return levelTable; } }
     public Dictionary<int, BaseItem> ItemDatabase { get { return itemDatabase; } }
     public Dictionary<uint, Quest> QuestDatabase { get { return questDatabase; } }
+    public Dictionary<uint, EnemyData> EnemyDatabase { get { return enemyDatabase; } }
+    public Dictionary<BUFF_TYPE, BuffData> BuffDatabase { get { return buffDatabase; } }
+    public Dictionary<DEBUFF_TYPE, DebuffData> DebuffDatabase { get { return debuffDatabase; } }
     public PlayerData PlayerData { get { return playerData; } }
     public CharacterData SelectCharacterData
     {
         get { return playerData?.CharacterDatas[playerData.SelectCharacterIndex]; }
     }
-#endregion
+    #endregion
 }

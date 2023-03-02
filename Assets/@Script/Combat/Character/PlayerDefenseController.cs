@@ -6,7 +6,7 @@ public class PlayerDefenseController : BaseCombatController
 {
     [Header("Player Defense Controller")]
     protected BaseCharacter owner;
-    protected Dictionary<DEFENSE_TYPE, CombatInformation> defenseDictionary;
+    protected Dictionary<COMBAT_TYPE, CombatInformation> defenseDictionary;
 
     public virtual void SetShield(BaseCharacter character)
     {
@@ -21,14 +21,14 @@ public class PlayerDefenseController : BaseCombatController
 
         switch (combatType)
         {
-            case COMBAT_TYPE.Defense:
+            case COMBAT_TYPE.DEFENSE:
                 {
                     effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
                     owner.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_DEFENSE_BREAK);
                     break;
                 }
 
-            case COMBAT_TYPE.Parrying:
+            case COMBAT_TYPE.PARRYING:
                 {
                     if (enemyCombatController is EnemyCompeteAttack competeController && Managers.CompeteManager.TryCompete(this, competeController))
                         break;
@@ -45,7 +45,7 @@ public class PlayerDefenseController : BaseCombatController
         combatCollider.enabled = false;
     }
 
-    public virtual void OnEnableDefense(DEFENSE_TYPE defenseType)
+    public virtual void OnEnableDefense(COMBAT_TYPE defenseType)
     {
         Debug.Log("Virtual Function Called");
         combatCollider.enabled = true;

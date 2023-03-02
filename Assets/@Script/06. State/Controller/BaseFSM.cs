@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class BaseFSM<T> where T: BaseActor
 {
+    protected T actor;
     protected IActionState<T> prevState;
     protected IActionState<T> currentState;
     protected Dictionary<ACTION_STATE, IActionState<T>> stateDictionary;
-    protected T actor;
 
     public BaseFSM(T actor)
     {
@@ -20,20 +20,32 @@ public abstract class BaseFSM<T> where T: BaseActor
         currentState?.Update(actor);
     }
 
+    #region State Functions
     // 상태 전환
-    public virtual void SetState(ACTION_STATE targetState)
+    public virtual void SetState(ACTION_STATE targetState, float duration = 0f)
     {
         prevState = currentState;
         currentState?.Exit(actor);
         currentState = stateDictionary[targetState];
+        if(currentState is IDurationState lifetimeState)
+        {
+            lifetimeState.SetDuration(duration);
+        }
         currentState?.Enter(actor);
     }
 
-    // 상태 가중치에 따라 강제 전환이 필요한 경우
-    public virtual void TryStateSwitchingByWeight(ACTION_STATE targetState)
+    // 상태 가중치에 따라 전환이 필요한 경우
+    public virtual bool TryStateSwitchingByWeight(ACTION_STATE targetState, float duration = 0f)
     {
         if (stateDictionary[targetState].StateWeight > currentState?.StateWeight)
-            SetState(targetState);
+        {
+            SetState(targetState, duration);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public virtual ACTION_STATE CompareStateWeight(ACTION_STATE targetStateA, ACTION_STATE targetStateB)
@@ -41,15 +53,6 @@ public abstract class BaseFSM<T> where T: BaseActor
         return stateDictionary[targetStateA].StateWeight > stateDictionary[targetStateB].StateWeight ? targetStateA : targetStateB;
     }
 
-    public virtual bool IsCurrentState(ACTION_STATE targetState)
-    {
-        return currentState == stateDictionary[targetState];
-    }
-
-    public virtual bool IsPrevState(ACTION_STATE targetState)
-    {
-        return prevState == stateDictionary[targetState];
-    }
 
     // Transition 되는 동안 실행을 방지하면서 상태 전환이 필요한 경우
     public virtual bool SetStateNotInTransition(int currentNameHash, ACTION_STATE targetState)
@@ -98,8 +101,11 @@ public abstract class BaseFSM<T> where T: BaseActor
         }
         return false;
     }
+    #endregion
+
 
     #region Property
+    public BaseActor Actor { get { return actor; } }
     public Dictionary<ACTION_STATE, IActionState<T>> StateDictionary { get { return stateDictionary; } }
     public IActionState<T> PrevState { get { return prevState; } }
     public IActionState<T> CurrentState { get { return currentState; } }
