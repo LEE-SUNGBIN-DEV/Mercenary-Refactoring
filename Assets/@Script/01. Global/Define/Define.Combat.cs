@@ -1,65 +1,58 @@
 public enum COMBAT_TYPE
 {
     // Attack
-    Normal_Attack = 0,
-    Light_Attack = 1,
-    Heavy_Attack = 2,
+    ATTACK_NORMAL = 0,
+    ATTACK_LIGHT = 1,
+    ATTACK_HEAVY = 2,
+    ATTACK_STUN = 3,
 
     // Defense
-    Defense = 32,
-    Parrying = 64,
+    DEFENSE = 32,
+    PARRYING = 64,
 }
 
 public enum BUFF_TYPE
 {
-    None,
-    Buff,
-    DeBuff
+    NONE = 0,
+}
+public enum DEBUFF_TYPE
+{
+    NONE = 0,
+
+    BURN = 10,
 }
 
-public enum BUFF
+public enum GREAT_SWORD_ATTACK_TYPE
 {
-    None = 0,
-    Stun = 1,
+    ATTACK_LIGHT_01,
+    ATTACK_LIGHT_02,
+    ATTACK_LIGHT_03,
+    ATTACK_LIGHT_04,
+
+    ATTACK_HEAVY_01,
+    ATTACK_HEAVY_02,
+    ATTACK_HEAVY_03_1,
+    ATTACK_HEAVY_03_2,
+    ATTACK_HEAVY_04_1,
+    ATTACK_HEAVY_04_2,
+
+    PARRYING_ATTACK,
+    SKILL_COUNTER,
 }
 
-public enum DEFENSE_TYPE
+public enum LANCE_ATTACK_TYPE
 {
-    Defense,
-    Parrying,
-}
+    ATTACK_LIGHT_01,
+    ATTACK_LIGHT_02,
+    ATTACK_LIGHT_03,
+    ATTACK_LIGHT_04,
 
-public enum BERSERKER_ATTACK_TYPE
-{
-    Light_Attack_01,
-    Light_Attack_02,
-    Light_Attack_03,
-    Light_Attack_04,
+    ATTACK_HEAVY_01,
+    ATTACK_HEAVY_02,
+    ATTACK_HEAVY_03,
+    ATTACK_HEAVY_04_1,
+    ATTACK_HEAVY_04_2,
 
-    Heavy_Attack_01,
-    Heavy_Attack_02,
-    Heavy_Attack_03_1,
-    Heavy_Attack_03_2,
-    Heavy_Attack_04_1,
-    Heavy_Attack_04_2,
-
-    Parrying_Attack,
-    Skill_Counter,
-}
-
-public enum LANCER_ATTACK_TYPE
-{
-    Light_Attack_01,
-    Light_Attack_02,
-    Light_Attack_03,
-    Light_Attack_04,
-
-    Heavy_Attack_01,
-    Heavy_Attack_02,
-    Heavy_Attack_03,
-    Heavy_Attack_04_1,
-    Heavy_Attack_04_2,
-
-    Parrying_Attack,
-    Skill_Counter,
+    PARRYING_ATTACK,
+    SKILL_COUNTER,
 }

@@ -12,8 +12,9 @@ public abstract class BaseEnemy : BaseActor
 
     [Header("Base Enemy")]
     [SerializeField] protected EnemyData status;
-    protected EnemyFSM state;
     protected Vector3 spawnPosition;
+    protected EnemyFSM state;
+    protected StatusEffectController<BaseEnemy> statusEffectControler;
 
     [Header("Skill")]
     protected EnemySkill[] skillArray;
@@ -179,6 +180,7 @@ public abstract class BaseEnemy : BaseActor
     public EnemySkill CurrentSkill { get { return currentSkill; } set { currentSkill = value; } }
     public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }
     public EnemyFSM State { get { return state; } }
+    public StatusEffectController<BaseEnemy> StatusEffectControler { get { return statusEffectControler; } }
 
     // Target
     public Transform TargetTransform { get { return targetTransform; } set { targetTransform = value; } }

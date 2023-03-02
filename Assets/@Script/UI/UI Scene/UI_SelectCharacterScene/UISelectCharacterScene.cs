@@ -102,15 +102,16 @@ public class UISelectCharacterScene : UIBaseScene
 
             int index = i;
             // Exist CharacterData
-            if (characterDatas[i]?.StatusData?.CharacterClass != null)
+            if (characterDatas[i]?.StatusData != null)
             {
                 if (characterSlots[i].selectionCharacter == null)
                 {
-                    CreateCharacterObject(i, characterDatas[i].StatusData.CharacterClass, characterSlots[i].characterPoint);
+                    CreateCharacterObject(i, characterSlots[i].characterPoint);
                 }
-                characterSlots[i].slotText.text = characterDatas[i].StatusData.CharacterClass + "\n" + "Lv. " + characterDatas[i].StatusData.Level;
+                characterSlots[i].slotText.text = "Lv. " + characterDatas[i].StatusData.Level;
                 characterSlots[i].slotButton.onClick.AddListener(() => { OnClickCharacterSlot(index); });
             }
+
             // Don't Exist CharacterData
             else
             {
@@ -126,9 +127,9 @@ public class UISelectCharacterScene : UIBaseScene
         }
     }
 
-    public void CreateCharacterObject(int slotIndex, string className, Vector3 position)
+    public void CreateCharacterObject(int slotIndex, Vector3 position)
     {
-        characterSlots[slotIndex].selectionCharacter = Managers.ResourceManager.InstantiatePrefabSync("Prefab_" + className + "_Slot").GetComponent<SelectionCharacter>();
+        characterSlots[slotIndex].selectionCharacter = Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_Player_Character_Slot).GetComponent<SelectionCharacter>();
         characterSlots[slotIndex].selectionCharacter.transform.position = position;
     }
 

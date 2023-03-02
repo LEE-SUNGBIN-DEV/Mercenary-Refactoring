@@ -13,12 +13,12 @@ public class UIEventHandler : MonoBehaviour, IPointerClickHandler, IPointerDownH
     {
         switch (eventType)
         {
-            case UI_EVENT.Click:
+            case UI_EVENT.CLICK:
                 OnClickHandler -= action;
                 OnClickHandler += action;
                 break;
 
-            case UI_EVENT.Press:
+            case UI_EVENT.PRESS:
                 OnPressHandler -= action;
                 OnPressHandler += action;
                 break;
@@ -28,11 +28,11 @@ public class UIEventHandler : MonoBehaviour, IPointerClickHandler, IPointerDownH
     {
         switch (eventType)
         {
-            case UI_EVENT.Click:
+            case UI_EVENT.CLICK:
                 OnClickHandler -= action;
                 break;
 
-            case UI_EVENT.Press:
+            case UI_EVENT.PRESS:
                 OnPressHandler -= action;
                 break;
         }

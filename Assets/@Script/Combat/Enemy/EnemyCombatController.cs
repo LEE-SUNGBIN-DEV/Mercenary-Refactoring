@@ -14,9 +14,7 @@ public abstract class EnemyCombatController : BaseCombatController
         {
             // 01. Invincibility Process
             if (character.IsInvincible)
-            {
                 return;
-            }
 
             // 02. Prevent Duplicate Damage Process
             if (hitDictionary.ContainsKey(character))
@@ -27,29 +25,27 @@ public abstract class EnemyCombatController : BaseCombatController
             // 03. Damage Process
             owner.DamageProcess(character, damageRatio);
 
-            // 04. CC Process
-            switch (debuffType)
+            // 04. Hit Process
+            switch (combatType)
             {
-                case BUFF.Stun:
-                    character.OnStun(debuffDuration);
+                case COMBAT_TYPE.ATTACK_NORMAL:
+                    break;
+
+                case COMBAT_TYPE.ATTACK_LIGHT:
+                    if (character.Status.HitLevel < (int)COMBAT_TYPE.ATTACK_LIGHT)
+                        character.OnLightHit();
+                    break;
+
+                case COMBAT_TYPE.ATTACK_HEAVY:
+                    if (character.Status.HitLevel < (int)COMBAT_TYPE.ATTACK_HEAVY)
+                        character.OnHeavyHit();
+                    break;
+
+                case COMBAT_TYPE.ATTACK_STUN:
+                    character.OnStun(crowdControlDuration);
                     break;
 
                 default:
-                    break;
-            }
-
-            // 05. Hit Process
-            switch (combatType)
-            {
-                case COMBAT_TYPE.Normal_Attack:
-                    break;
-                case COMBAT_TYPE.Light_Attack:
-                    if (character.Status.HitLevel < (int)COMBAT_TYPE.Light_Attack)
-                        character.OnLightHit();
-                    break;
-                case COMBAT_TYPE.Heavy_Attack:
-                    if (character.Status.HitLevel < (int)COMBAT_TYPE.Heavy_Attack)
-                        character.OnHeavyHit();
                     break;
             }
         }

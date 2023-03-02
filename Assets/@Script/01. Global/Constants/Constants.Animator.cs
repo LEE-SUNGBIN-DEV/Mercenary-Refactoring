@@ -47,6 +47,7 @@ public static partial class Constants
     public static readonly int ANIMATION_NAME_HASH_STAND_UP = Animator.StringToHash("Stand_Up");
     public static readonly int ANIMATION_NAME_HASH_STAND_ROLL = Animator.StringToHash("Stand_Roll");
 
+    public static readonly int ANIMATION_NAME_HASH_STUN = Animator.StringToHash("Stun");
     // Enemy
 
     // Skill

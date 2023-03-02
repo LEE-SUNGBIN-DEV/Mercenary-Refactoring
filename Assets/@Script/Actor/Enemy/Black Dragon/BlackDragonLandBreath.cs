@@ -35,7 +35,7 @@ public class BlackDragonLandBreath : EnemySkill
         switch(skillState)
         {
             case SKILL_STATE.OnBreath:
-                breath.SetCombatController(COMBAT_TYPE.Light_Attack, 1f);
+                breath.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
                 breath.SetRayAttack(owner, 20f, 0.15f);
                 StartCoroutine(breath.RayCoroutine);
                 break;

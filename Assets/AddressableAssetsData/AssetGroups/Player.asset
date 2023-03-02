@@ -21,8 +21,12 @@ MonoBehaviour:
     m_Address: Prefab_Player_Camera
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 2caae8ca8451fa243848d9aac70d7793
-    m_Address: Prefab_Lancer_Slot
+  - m_GUID: 96c8afde74464c040a02e035794f0a07
+    m_Address: Prefab_Player_Character
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 83aa9eee5e50df94c956dbd5c50c1d7d
+    m_Address: Prefab_Player_Character_Slot
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

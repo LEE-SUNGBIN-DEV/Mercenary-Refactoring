@@ -7,6 +7,7 @@ public enum SCENE_LIST
     Loading,
 
     // Chapter 01
+    Fog_Canyon,
     Forestia,
     Starlight_Forest,
     Dragon_Temple

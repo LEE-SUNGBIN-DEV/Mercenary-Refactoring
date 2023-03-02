@@ -9,7 +9,6 @@ public abstract class BaseActor : MonoBehaviour
     [SerializeField] protected MaterialContainer[] materialContainers;
     [SerializeField] protected ObjectPooler objectPooler = new ObjectPooler();
     
-    [SerializeField] protected BuffController buffController;
     [SerializeField] protected bool isInvincible;
     [SerializeField] protected bool isDie;
     protected Dictionary<string, Material> materialDictionary;
@@ -28,7 +27,6 @@ public abstract class BaseActor : MonoBehaviour
             }
         }
         objectPooler.Initialize(transform);
-        buffController = new BuffController(this);
     }
 
     public void SetMaterial(string key)
@@ -39,21 +37,11 @@ public abstract class BaseActor : MonoBehaviour
         }
     }
 
-    public void AddBuff(BUFF targetState, float duration)
-    {
-        buffController.AddBuff(targetState, duration);
-    }
-    public void SubBuff(BUFF targetState)
-    {
-        buffController.SubBuff(targetState);
-    }
-
     #region Property
     public Animator Animator { get { return animator; } }
     public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }
     public ObjectPooler ObjectPooler { get { return objectPooler; } }
     public bool IsInvincible { get { return isInvincible; } set { isInvincible = value; } }
     public bool IsDie { get { return isDie; } set { isDie = value; } }
-    public BuffController BuffController { get { return buffController; } }
     #endregion
 }

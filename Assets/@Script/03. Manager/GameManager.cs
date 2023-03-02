@@ -20,7 +20,7 @@ public class GameManager
 
         // Ä¿¼­
         Managers.ResourceManager.LoadResourceAsync<Texture2D>("Sprite_Cursor_Basic", SetCursorTexture);
-        SetCursorMode(CURSOR_MODE.Unlock);
+        SetCursorMode(CURSOR_MODE.UNLOCK);
     }
 
     public void SaveAndQuit()
@@ -46,16 +46,16 @@ public class GameManager
     {
         switch(cursorMode)
         {
-            case CURSOR_MODE.Lock:
+            case CURSOR_MODE.LOCK:
                 {
-                    this.cursorMode = CURSOR_MODE.Lock;
+                    this.cursorMode = CURSOR_MODE.LOCK;
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                     break;
                 }
-            case CURSOR_MODE.Unlock:
+            case CURSOR_MODE.UNLOCK:
                 {
-                    this.cursorMode = CURSOR_MODE.Unlock;
+                    this.cursorMode = CURSOR_MODE.UNLOCK;
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                     break;
@@ -64,14 +64,14 @@ public class GameManager
     }
     public void ToggleCursorMode()
     {
-        if(cursorMode == CURSOR_MODE.Lock)
+        if(cursorMode == CURSOR_MODE.LOCK)
         {
-            SetCursorMode(CURSOR_MODE.Unlock);
+            SetCursorMode(CURSOR_MODE.UNLOCK);
         }
 
         else
         {
-            SetCursorMode(CURSOR_MODE.Lock);
+            SetCursorMode(CURSOR_MODE.LOCK);
         }
     }
     #endregion

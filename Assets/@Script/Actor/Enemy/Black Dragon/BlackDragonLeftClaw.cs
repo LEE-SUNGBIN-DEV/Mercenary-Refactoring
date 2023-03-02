@@ -33,7 +33,7 @@ public class BlackDragonLeftClaw : EnemySkill
         {
             case SKILL_STATE.OnLeftClaw:
                 {
-                    leftClaw.SetCombatController(COMBAT_TYPE.Light_Attack, 1f);
+                    leftClaw.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
                     leftClaw.OnEnableCollider();
                     return;
                 }
