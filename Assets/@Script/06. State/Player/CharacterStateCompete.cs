@@ -24,7 +24,7 @@ public class CharacterStateCompete : IActionState<BaseCharacter>
         character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
 
         if (character.Animator.GetNextAnimatorStateInfo(0).IsName(Constants.ANIMATOR_STATE_NAME_MOVE_BLEND_TREE))
-            character.State.SetState(ACTION_STATE.PLAYER_WALK);
+            character.State.SetState(ACTION_STATE.PLAYER_WALK, STATE_SWITCH_BY.FORCED);
     }
 
     public void Exit(BaseCharacter character)

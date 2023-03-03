@@ -34,7 +34,7 @@ public class CharacterStateSkillCounter : IActionState<BaseCharacter>
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
-            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ROLL);
+            character.State.SetState(ACTION_STATE.PLAYER_ROLL, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 

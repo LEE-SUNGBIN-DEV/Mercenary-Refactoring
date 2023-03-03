@@ -13,6 +13,8 @@ public class CharacterStateLightAttack04 : IActionState<BaseCharacter>
     {
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_LIGHT_04;
         animationNameHash = Constants.ANIMATION_NAME_HASH_LIGHT_ATTACK_04;
+        mouseLeftDown = false;
+        mouseRightDown = false;
     }
 
     public void Enter(BaseCharacter character)
@@ -27,13 +29,13 @@ public class CharacterStateLightAttack04 : IActionState<BaseCharacter>
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
-            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ROLL);
+            character.State.SetState(ACTION_STATE.PLAYER_ROLL, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
         if (Input.GetKeyDown(KeyCode.R) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
-            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_SKILL_COUNTER);
+            character.State.SetState(ACTION_STATE.PLAYER_SKILL_COUNTER, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
@@ -43,19 +45,19 @@ public class CharacterStateLightAttack04 : IActionState<BaseCharacter>
         if (!mouseLeftDown)
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
-        // Move State -> Smash Attack 4
+        // -> Smash Attack 4
         if (mouseRightDown && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_ATTACK_HEAVY_04, 0.55f))
         {
             return;
         }
 
-        // Move State -> Light Attack 1
+        // -> Light Attack 1
         if (mouseLeftDown && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_ATTACK_LIGHT_01, 0.55f))
         {
             return;
         }
 
-        // !! When animation is over
+        // -> Idle
         if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }

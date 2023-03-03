@@ -29,14 +29,14 @@ public class CharacterStateHeavyHitLoop : IActionState<BaseCharacter>
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                character.State.SetState(ACTION_STATE.PLAYER_STAND_ROLL);
+                character.State.SetState(ACTION_STATE.PLAYER_STAND_ROLL, STATE_SWITCH_BY.WEIGHT);
                 return;
             }
         }
 
         else
         {
-            character.State.SetState(ACTION_STATE.PLAYER_STAND_UP);
+            character.State.SetState(ACTION_STATE.PLAYER_STAND_UP, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 

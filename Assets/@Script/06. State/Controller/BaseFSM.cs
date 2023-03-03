@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum STATE_SWITCH_BY
+{
+    FORCED,
+    WEIGHT
+}
+
 public abstract class BaseFSM<T> where T: BaseActor
 {
     protected T actor;
@@ -21,31 +27,38 @@ public abstract class BaseFSM<T> where T: BaseActor
     }
 
     #region State Functions
-    // 상태 전환
-    public virtual void SetState(ACTION_STATE targetState, float duration = 0f)
+    private void SwitchState(ACTION_STATE targetState, float duration = 0f)
     {
         prevState = currentState;
         currentState?.Exit(actor);
         currentState = stateDictionary[targetState];
-        if(currentState is IDurationState lifetimeState)
+        if (currentState is IDurationState lifetimeState)
         {
             lifetimeState.SetDuration(duration);
         }
         currentState?.Enter(actor);
     }
 
-    // 상태 가중치에 따라 전환이 필요한 경우
-    public virtual bool TryStateSwitchingByWeight(ACTION_STATE targetState, float duration = 0f)
+    public virtual bool SetState(ACTION_STATE targetState, STATE_SWITCH_BY mode, float duration = 0f)
     {
-        if (stateDictionary[targetState].StateWeight > currentState?.StateWeight)
+        if (stateDictionary.ContainsKey(targetState))
         {
-            SetState(targetState, duration);
-            return true;
+            switch(mode)
+            {
+                case STATE_SWITCH_BY.WEIGHT:
+                    if (stateDictionary[targetState].StateWeight > currentState?.StateWeight)
+                    {
+                        SwitchState(targetState, duration);
+                        return true;
+                    }
+                    return false;
+
+                case STATE_SWITCH_BY.FORCED:
+                    SwitchState(targetState, duration);
+                    return true;
+            }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     public virtual ACTION_STATE CompareStateWeight(ACTION_STATE targetStateA, ACTION_STATE targetStateB)
@@ -53,15 +66,13 @@ public abstract class BaseFSM<T> where T: BaseActor
         return stateDictionary[targetStateA].StateWeight > stateDictionary[targetStateB].StateWeight ? targetStateA : targetStateB;
     }
 
-
     // Transition 되는 동안 실행을 방지하면서 상태 전환이 필요한 경우
     public virtual bool SetStateNotInTransition(int currentNameHash, ACTION_STATE targetState)
     {
         if (actor.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
             && !actor.Animator.IsInTransition(0))
         {
-            SetState(targetState);
-            return true;
+            return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }
         return false;
     }
@@ -73,8 +84,7 @@ public abstract class BaseFSM<T> where T: BaseActor
             && actor.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTime
             && !actor.Animator.IsInTransition(0))
         {
-            SetState(targetState);
-            return true;
+            return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }
         return false;
     }
@@ -84,8 +94,7 @@ public abstract class BaseFSM<T> where T: BaseActor
             && actor.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= normalizedTime
             && !actor.Animator.IsInTransition(0))
         {
-            SetState(targetState);
-            return true;
+            return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }
         return false;
     }
@@ -96,8 +105,7 @@ public abstract class BaseFSM<T> where T: BaseActor
             && actor.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= upperNormalizedTime
             && !actor.Animator.IsInTransition(0))
         {
-            SetState(targetState);
-            return true;
+            return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }
         return false;
     }
