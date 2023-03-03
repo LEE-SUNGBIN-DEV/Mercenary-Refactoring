@@ -35,7 +35,7 @@ public class EnemyStateSkill : IActionState<BaseEnemy>
 
         if(isDone)
         {
-            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE);
+            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE, STATE_SWITCH_BY.FORCED);
             return;
         }
     }

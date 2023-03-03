@@ -27,25 +27,25 @@ public class CharacterStateRun : IActionState<BaseCharacter>
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
-            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ROLL);
+            character.State.SetState(ACTION_STATE.PLAYER_ROLL, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
         if (Input.GetKeyDown(KeyCode.R) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
-            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_SKILL_COUNTER);
+            character.State.SetState(ACTION_STATE.PLAYER_SKILL_COUNTER, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
         {
-            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_ATTACK_LIGHT_01);
+            character.State.SetState(ACTION_STATE.PLAYER_ATTACK_LIGHT_01, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
         if (Input.GetMouseButtonDown(1) || Input.GetMouseButton(1))
         {
-            character.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_DEFENSE_START);
+            character.State.SetState(ACTION_STATE.PLAYER_DEFENSE_START, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
@@ -77,14 +77,14 @@ public class CharacterStateRun : IActionState<BaseCharacter>
                 }
                 else
                 {
-                    character.State.SetState(ACTION_STATE.PLAYER_WALK);
+                    character.State.SetState(ACTION_STATE.PLAYER_WALK, STATE_SWITCH_BY.FORCED);
                     return;
                 }
             }
             // Idle
             else
             {
-                character.State.SetState(ACTION_STATE.PLAYER_IDLE);
+                character.State.SetState(ACTION_STATE.PLAYER_IDLE, STATE_SWITCH_BY.FORCED);
                 return;
             }
         }

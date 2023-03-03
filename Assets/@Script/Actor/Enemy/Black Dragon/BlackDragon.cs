@@ -25,7 +25,7 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
     public override void Spawn()
     {
         base.Spawn();
-        state.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_SPAWN);
+        state.SetState(ACTION_STATE.ENEMY_SPAWN, STATE_SWITCH_BY.WEIGHT);
     }
 
     public override void OnDie()
@@ -42,6 +42,6 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
     {
     }
 
-    public void OnStagger() { state.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_STAGGER); }
-    public void OnCompete() { state.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_COMPETE); }
+    public void OnStagger() { state.SetState(ACTION_STATE.ENEMY_STAGGER, STATE_SWITCH_BY.WEIGHT); }
+    public void OnCompete() { state.SetState(ACTION_STATE.ENEMY_COMPETE, STATE_SWITCH_BY.WEIGHT); }
 }

@@ -36,14 +36,14 @@ public class EnemyStatePatrol : IActionState<BaseEnemy>
         // Patrol -> Chase
         if (enemy.IsTargetInChaseDistance() && enemy.IsTargetInSight())
         {
-            enemy.State.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_CHASE);
+            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
         // Patrol -> Idle
         if (enemy.NavMeshAgent.remainingDistance <= enemy.NavMeshAgent.stoppingDistance)
         {
-            enemy.State.SetState(ACTION_STATE.ENEMY_IDLE);
+            enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
         }
     }
 

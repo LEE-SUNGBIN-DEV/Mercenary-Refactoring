@@ -24,7 +24,7 @@ public class PlayerDefenseController : BaseCombatController
             case COMBAT_TYPE.DEFENSE:
                 {
                     effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
-                    owner.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_DEFENSE_BREAK);
+                    owner.State.SetState(ACTION_STATE.PLAYER_DEFENSE_BREAK, STATE_SWITCH_BY.WEIGHT);
                     break;
                 }
 
@@ -34,7 +34,7 @@ public class PlayerDefenseController : BaseCombatController
                         break;
 
                     effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Parrying);
-                    owner.State.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_PARRYING);
+                    owner.State.SetState(ACTION_STATE.PLAYER_PARRYING, STATE_SWITCH_BY.WEIGHT);
                     break;
                 }
         }

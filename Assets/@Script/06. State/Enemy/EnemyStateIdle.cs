@@ -30,7 +30,7 @@ public class EnemyStateIdle : IActionState<BaseEnemy>
         // Idle -> Chase
         if (enemy.IsTargetInChaseDistance() && enemy.IsTargetInSight())
         {
-            enemy.State.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_CHASE);
+            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
@@ -39,7 +39,7 @@ public class EnemyStateIdle : IActionState<BaseEnemy>
         idleTime += Time.deltaTime;
         if(idleTime >= patrolInterval)
         {
-            enemy.State.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_PATROL);
+            enemy.State.SetState(ACTION_STATE.ENEMY_PATROL, STATE_SWITCH_BY.WEIGHT);
             return;
         }
     }

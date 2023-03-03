@@ -59,13 +59,13 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
 
     }
 
-    public virtual void OnHit() { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_LIGHT); }
-    public virtual void OnLightHit() { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_LIGHT); }
-    public virtual void OnHeavyHit() { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_HIT_HEAVY); }
+    public virtual void OnHit() { state?.SetState(ACTION_STATE.PLAYER_HIT_LIGHT, STATE_SWITCH_BY.WEIGHT); }
+    public virtual void OnLightHit() { state?.SetState(ACTION_STATE.PLAYER_HIT_LIGHT, STATE_SWITCH_BY.WEIGHT); }
+    public virtual void OnHeavyHit() { state?.SetState(ACTION_STATE.PLAYER_HIT_HEAVY, STATE_SWITCH_BY.WEIGHT); }
 
-    public virtual void OnStun(float duration) { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_STUN, duration); }
+    public virtual void OnStun(float duration) { state?.SetState(ACTION_STATE.PLAYER_STUN, STATE_SWITCH_BY.WEIGHT, duration); }
 
-    public virtual void OnCompete() { state?.TryStateSwitchingByWeight(ACTION_STATE.PLAYER_COMPETE); }
+    public virtual void OnCompete() { state?.SetState(ACTION_STATE.PLAYER_COMPETE, STATE_SWITCH_BY.WEIGHT); }
     public virtual void OnDie(StatusData characterStats) { }
 
     public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)

@@ -72,7 +72,7 @@ public abstract class BaseEnemy : BaseActor
         gameObject.layer = Constants.LAYER_ENEMY;
 
         UpdateTargetInformation();
-        state?.SetState(ACTION_STATE.ENEMY_SPAWN);
+        state?.SetState(ACTION_STATE.ENEMY_SPAWN, STATE_SWITCH_BY.FORCED);
     }
 
     public virtual void Despawn()
@@ -118,7 +118,7 @@ public abstract class BaseEnemy : BaseActor
     public bool IsTargetInChaseDistance()
     {
         if (targetTransform != null
-            && targetDistance <= status.ChaseDistance)
+            && targetDistance < status.ChaseDistance)
         {
             return true;
         }
@@ -127,7 +127,7 @@ public abstract class BaseEnemy : BaseActor
     public bool IsTargetInStopDistance()
     {
         if (targetTransform != null
-            && targetDistance <= status.StopDistance)
+            && targetDistance < status.StopDistance)
         {
             return true;
         }

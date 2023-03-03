@@ -19,7 +19,7 @@ public class PlayerCharacter : BaseCharacter
     protected override void Start()
     {
         base.Start();
-        state.SetState(ACTION_STATE.PLAYER_IDLE);
+        state.SetState(ACTION_STATE.PLAYER_IDLE, STATE_SWITCH_BY.FORCED);
     }
 
     protected override void Update()

@@ -8,6 +8,18 @@ public class StoneGolem : BaseEnemy, IStunable
     public override void Awake()
     {
         base.Awake();
+
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_SPAWN, new EnemyStateSpawn());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_PATROL, new EnemyStatePatrol());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE, new EnemyStateChase());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_WALK, new EnemyStateWalk());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_RUN, new EnemyStateRun());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_SKILL, new EnemyStateSkill());
+
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_LIGHT, new EnemyStateLightHit());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_HEAVY, new EnemyStateHeavyHit());
+
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_STUN, new EnemyStateStun());
     }
 
     public override void Update()
@@ -18,23 +30,23 @@ public class StoneGolem : BaseEnemy, IStunable
     #region Override Function   
     public override void OnLightHit()
     {
-        state?.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_HIT_LIGHT);
+        state?.SetState(ACTION_STATE.ENEMY_HIT_LIGHT, STATE_SWITCH_BY.WEIGHT);
     }
 
     public override void OnHeavyHit()
     {
-        state?.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_HIT_HEAVY);
+        state?.SetState(ACTION_STATE.ENEMY_HIT_HEAVY, STATE_SWITCH_BY.WEIGHT);
     }
 
     public virtual void OnStun(float duration)
     {
-        state?.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_STUN, duration);
+        state?.SetState(ACTION_STATE.ENEMY_STUN, STATE_SWITCH_BY.WEIGHT, duration);
     }
 
     public override void OnDie()
     {
         IsDie = true;
-        state?.TryStateSwitchingByWeight(ACTION_STATE.ENEMY_DIE);
+        state?.SetState(ACTION_STATE.ENEMY_DIE, STATE_SWITCH_BY.WEIGHT);
 
         StartCoroutine(WaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
     }

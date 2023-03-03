@@ -22,7 +22,7 @@ public class CharacterStateStun : IActionState<BaseCharacter>, IDurationState
     public void Update(BaseCharacter character)
     {
         if (duration <= 0f)
-            character.State.SetState(ACTION_STATE.PLAYER_IDLE);
+            character.State.SetState(ACTION_STATE.PLAYER_IDLE, STATE_SWITCH_BY.FORCED);
 
         duration -= Time.deltaTime;
     }
