@@ -10,9 +10,15 @@ public class EnemyProjectile : EnemyCombatController, IPoolObject
     private IEnumerator autoReturnCoroutine;
     private ObjectPooler objectPooler;
 
-    public void SetProjectile(BaseEnemy owner, float speed, Vector3 direction)
+    public void SetProjectile(BaseEnemy enemy, Vector3 direction)
     {
-        this.owner = owner;
+        this.enemy = enemy;
+        transform.forward = direction;
+        autoReturnCoroutine = CoAutoReturn();
+    }
+    public void SetProjectile(BaseEnemy enemy, float speed, Vector3 direction)
+    {
+        this.enemy = enemy;
         this.speed = speed;
         transform.forward = direction;
         autoReturnCoroutine = CoAutoReturn();
@@ -20,7 +26,7 @@ public class EnemyProjectile : EnemyCombatController, IPoolObject
 
     private void Update()
     {
-        if (owner == null) Destroy(gameObject);
+        if (enemy == null) Destroy(gameObject);
         transform.position += speed * Time.deltaTime * transform.forward;
     }
 

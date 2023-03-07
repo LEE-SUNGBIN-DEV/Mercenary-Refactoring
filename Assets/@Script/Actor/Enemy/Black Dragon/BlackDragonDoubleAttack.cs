@@ -4,69 +4,49 @@ using UnityEngine;
 
 public class BlackDragonDoubleAttack : EnemySkill
 {
-    public enum SKILL_STATE
-    {
-        OnLeftClaw,
-        OffLeftClaw,
-        OnCounterable,
-        OnRightClaw,
-        OffRightClaw
-    }
     [SerializeField] private EnemyMeleeAttack leftClaw;
     [SerializeField] private EnemyMeleeAttack rightClaw;
+    private AnimationInfo doubleClawAnimationInfo;
 
-    public override void Initialize(BaseEnemy owner)
+    public override void Initialize(BaseEnemy enemy)
     {
-        base.Initialize(owner);
+        base.Initialize(enemy);
+        skillName = "Skill_Double_Claw";
         cooldown = 16f;
-        maxRange = 8f;
+        minAttackDistance = 0f;
+        maxAttackDistance = 8f;
 
         leftClaw = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Left Claw Controller", true);
         rightClaw = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Right Claw Controller", true);
-        leftClaw.SetMeleeAttack(owner);
-        rightClaw.SetMeleeAttack(owner);
+        leftClaw.SetMeleeAttack(enemy);
+        rightClaw.SetMeleeAttack(enemy);
+
+        doubleClawAnimationInfo = new AnimationInfo(skillName, 8.417f, 202, 2f);
     }
 
-    public override void ActiveSkill()
+    public override IEnumerator StartSkill()
     {
-        base.ActiveSkill();
-        owner.Animator.SetTrigger("doDoubleClaw");
-    }
+        enemy.Animator.Play(doubleClawAnimationInfo.animationNameHash);
 
-    #region Animation Event Function
-    private void OnDoubleClaw(SKILL_STATE skillState)
-    {
-        switch(skillState)
-        {
-            case SKILL_STATE.OnLeftClaw:
-                {
-                    leftClaw.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
-                    leftClaw.OnEnableCollider();
-                    break;
-                }
-            case SKILL_STATE.OffLeftClaw:
-                {
-                    leftClaw.OnDisableCollider();
-                    break;
-                }
-            case SKILL_STATE.OnCounterable:
-                {
-                    owner.MeshRenderer.material.color = Color.blue;
-                    break;
-                }
-            case SKILL_STATE.OnRightClaw:
-                {
-                    owner.MeshRenderer.material.color = Color.white;
-                    rightClaw.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 1.2f, 4f);
-                    rightClaw.OnEnableCollider();
-                    break;
-                }
-            case SKILL_STATE.OffRightClaw:
-                {
-                    rightClaw.OnDisableCollider();
-                    break;
-                }
-        }
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 32));
+        leftClaw.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
+        leftClaw.OnEnableCollider();
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 40));
+        leftClaw.OnDisableCollider();
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 127));
+        enemy.MeshRenderer.material.color = Color.blue;
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 140));
+        enemy.MeshRenderer.material.color = Color.white;
+        rightClaw.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 1.2f, 4f);
+        rightClaw.OnEnableCollider();
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 142));
+        rightClaw.OnDisableCollider();
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, doubleClawAnimationInfo.maxFrame));
+        EndSkill();
     }
-    #endregion
 }

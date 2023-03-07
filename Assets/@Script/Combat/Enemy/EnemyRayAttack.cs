@@ -11,7 +11,7 @@ public class EnemyRayAttack : EnemyCombatController
 
     public void SetRayAttack(BaseEnemy owner, float rayDistance, float rayInterval)
     {
-        this.owner = owner;
+        this.enemy = owner;
         this.rayDistance = rayDistance;
         this.rayInterval = rayInterval;
         rayCoroutine = CoShootRay();

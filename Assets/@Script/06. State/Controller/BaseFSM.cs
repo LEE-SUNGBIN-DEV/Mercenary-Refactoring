@@ -78,32 +78,25 @@ public abstract class BaseFSM<T> where T: BaseActor
     }
 
     // !! 해당 Animation의 특정 구간을 만족하고, Transition 되는 동안 실행을 방지하면서 상태 전환이 필요한 경우
-    public virtual bool SetStateByUpperAnimationTime(int currentNameHash, ACTION_STATE targetState, float normalizedTime)
+    public virtual bool SetStateByAnimationTimeUpTo(int currentNameHash, ACTION_STATE targetState, float normalizedTime)
     {
-        if (actor.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
-            && actor.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTime
-            && !actor.Animator.IsInTransition(0))
+        if (actor.Animator.IsAnimationNormalizeTimeUpTo(currentNameHash, normalizedTime) && !actor.Animator.IsInTransition(0))
         {
             return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }
         return false;
     }
-    public virtual bool SetStateByLowerAnimationTime(int currentNameHash, ACTION_STATE targetState, float normalizedTime)
+    public virtual bool SetStateByAnimationTimeDownTo(int currentNameHash, ACTION_STATE targetState, float normalizedTime)
     {
-        if (actor.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
-            && actor.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= normalizedTime
-            && !actor.Animator.IsInTransition(0))
+        if (actor.Animator.IsAnimationNormalizeTimeDownTo(currentNameHash, normalizedTime) && !actor.Animator.IsInTransition(0))
         {
             return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }
         return false;
     }
-    public virtual bool SetStateByBetweenAnimationTime(int currentNameHash, ACTION_STATE targetState, float lowerNormalizedTime, float upperNormalizedTime)
+    public virtual bool SetStateByAnimationTimeBetweenTo(int currentNameHash, ACTION_STATE targetState, float lowerNormalizedTime, float upperNormalizedTime)
     {
-        if (actor.Animator.GetCurrentAnimatorStateInfo(0).shortNameHash == currentNameHash
-            && actor.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= lowerNormalizedTime
-            && actor.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= upperNormalizedTime
-            && !actor.Animator.IsInTransition(0))
+        if (actor.Animator.IsAnimationNormalizeTimeBetweenTo(currentNameHash, lowerNormalizedTime, upperNormalizedTime) && !actor.Animator.IsInTransition(0))
         {
             return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }

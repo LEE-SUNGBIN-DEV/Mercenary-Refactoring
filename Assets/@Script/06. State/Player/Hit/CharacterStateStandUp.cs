@@ -22,7 +22,7 @@ public class CharacterStateStandUp : IActionState<BaseCharacter>
     public void Update(BaseCharacter character)
     {
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 1.0f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_IDLE, 1.0f))
             return;
     }
 

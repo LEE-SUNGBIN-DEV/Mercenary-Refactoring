@@ -4,45 +4,43 @@ using UnityEngine;
 
 public class BlackDragonFlyBreath : EnemySkill
 {
-    public enum SKILL_STATE
-    {
-        OnBreath,
-        OffBreath,
-    }
     [SerializeField] private EnemyBreath breath;
 
-    public override void Initialize(BaseEnemy owner)
+    private AnimationInfo flyBreathStartAnimationInfo;
+    private AnimationInfo flyBreathAnimationInfo;
+    private AnimationInfo flyBreathEndAnimationInfo;
+
+    public override void Initialize(BaseEnemy enemy)
     {
-        base.Initialize(owner);
+        base.Initialize(enemy);
+        skillName = "Skill_Fly_Breath";
         cooldown = 45f;
-        maxRange = 15f;
+        minAttackDistance = 0f;
+        maxAttackDistance = 15f;
 
         breath = Functions.FindChild<EnemyBreath>(gameObject, "Breath Controller", true);
 
-        owner.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Breath, 15);
-        owner.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Flame_Area, 15);
+        enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Breath, 15);
+        enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Flame_Area, 15);
+
+        flyBreathStartAnimationInfo = new AnimationInfo("Skill_Fly_Breath_Start", 2.125f, 51, 1.2f);
+        flyBreathAnimationInfo = new AnimationInfo(skillName, 5.625f, 135, 1.2f);
+        flyBreathEndAnimationInfo = new AnimationInfo("Skill_Fly_Breath_End", 4.167f, 100, 1.5f);
     }
 
-    public override void ActiveSkill()
+    public override IEnumerator StartSkill()
     {
-        base.ActiveSkill();
-        Owner.Animator.SetTrigger("doFlyBreath");
-    }
+        enemy.Animator.Play(flyBreathStartAnimationInfo.animationNameHash);
 
-    #region Animation Event Function
-    private void OnFlyBreath(SKILL_STATE skillState)
-    {
-        switch (skillState)
-        {
-            case SKILL_STATE.OnBreath:
-                breath.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
-                breath.SetRayAttack(owner, 30f, 0.1f);
-                StartCoroutine(breath.RayCoroutine);
-                break;
-            case SKILL_STATE.OffBreath:
-                StopCoroutine(breath.RayCoroutine);
-                break;
-        }
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(flyBreathAnimationInfo, 55));
+        breath.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
+        breath.SetRayAttack(enemy, 30f, 0.1f);
+        StartCoroutine(breath.RayCoroutine);
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(flyBreathAnimationInfo, 103));
+        StopCoroutine(breath.RayCoroutine);
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(flyBreathEndAnimationInfo, flyBreathEndAnimationInfo.maxFrame));
+        EndSkill();
     }
-    #endregion
 }

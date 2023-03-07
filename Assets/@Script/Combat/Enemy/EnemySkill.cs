@@ -8,32 +8,50 @@ public abstract class EnemySkill : MonoBehaviour
     public event UnityAction<bool> OnEndSkill;
 
     [Header("Enemy Skill")]
-    [SerializeField] protected BaseEnemy owner;
+    [SerializeField] protected BaseEnemy enemy;
     [SerializeField] protected string skillName;
     [SerializeField] protected float cooldown;
-    [SerializeField] protected float maxRange;
-    protected bool isReady;
+    [SerializeField] protected float minAttackDistance;
+    [SerializeField] protected float maxAttackDistance;
+    [SerializeField] protected bool isReady;
+    protected IEnumerator cooldownCoroutine;
+    protected IEnumerator skillCoroutine;
 
-    // Initialize
     public virtual void Initialize()
     {
-        owner = GetComponentInParent<BaseEnemy>(true);
+        enemy = GetComponentInParent<BaseEnemy>(true);
         isReady = true;
+        cooldownCoroutine = WaitForCooldown();
+        skillCoroutine = StartSkill();
     }
-    public virtual void Initialize(BaseEnemy owner)
+
+    public virtual void Initialize(BaseEnemy enemy)
     {
-        this.owner = owner;
+        this.enemy = enemy;
         isReady = true;
+        cooldownCoroutine = WaitForCooldown();
+        skillCoroutine = StartSkill();
+    }
+
+    public void OnDisable()
+    {
+        if(skillCoroutine != null)
+            StopCoroutine(skillCoroutine);
     }
 
     public virtual void ActiveSkill()
     {
-        StartCoroutine(WaitForCooldown());
+        StartCoroutine(cooldownCoroutine);
+        StartCoroutine(skillCoroutine);
     }
+
+    public abstract IEnumerator StartSkill();
+
     public virtual bool IsReady(float targetDistance)
     {
-        return (isReady && (targetDistance <= maxRange));
+        return (isReady && (targetDistance >= minAttackDistance) && (targetDistance <= maxAttackDistance));
     }
+
     public IEnumerator WaitForCooldown()
     {
         isReady = false;
@@ -47,6 +65,6 @@ public abstract class EnemySkill : MonoBehaviour
     }
 
     #region Property
-    public BaseEnemy Owner { get { return owner; } set { owner = value; } }
+    public BaseEnemy Enemy { get { return enemy; } }
     #endregion
 }

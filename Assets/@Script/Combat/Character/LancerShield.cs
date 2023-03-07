@@ -7,10 +7,10 @@ public class LancerShield : PlayerDefenseController
     public override void SetShield(BaseCharacter character)
     {
         base.SetShield(character);
-        defenseDictionary = new Dictionary<COMBAT_TYPE, CombatInformation>()
+        defenseDictionary = new Dictionary<COMBAT_TYPE, CombatInfo>()
         {
-            {COMBAT_TYPE.DEFENSE, new CombatInformation(COMBAT_TYPE.DEFENSE, 0f) },
-            {COMBAT_TYPE.PARRYING, new CombatInformation(COMBAT_TYPE.PARRYING, 0f) },
+            {COMBAT_TYPE.DEFENSE, new CombatInfo(COMBAT_TYPE.DEFENSE, 0f) },
+            {COMBAT_TYPE.PARRYING, new CombatInfo(COMBAT_TYPE.PARRYING, 0f) },
         };
     }
 
@@ -32,8 +32,8 @@ public class LancerShield : PlayerDefenseController
 
         if (effectObject != null)
         {
-            effectObject.transform.SetPositionAndRotation(owner.transform.position + defenseDictionary[defenseType].effectLocation.position,
-                Quaternion.Euler(owner.transform.rotation.eulerAngles + defenseDictionary[defenseType].effectLocation.rotation));
+            effectObject.transform.SetPositionAndRotation(character.transform.position + defenseDictionary[defenseType].effectLocation.position,
+                Quaternion.Euler(character.transform.rotation.eulerAngles + defenseDictionary[defenseType].effectLocation.rotation));
         }
     }
     public override void OnDisableDefense()

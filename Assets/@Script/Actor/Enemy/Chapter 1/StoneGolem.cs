@@ -11,9 +11,9 @@ public class StoneGolem : BaseEnemy, IStunable
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_SPAWN, new EnemyStateSpawn());
         state.StateDictionary.Add(ACTION_STATE.ENEMY_PATROL, new EnemyStatePatrol());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE, new EnemyStateChase());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_WALK, new EnemyStateWalk());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_RUN, new EnemyStateRun());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE, new EnemyStateChaseWait());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_WALK, new EnemyStateChaseWalk());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_RUN, new EnemyStateChaseRun());
         state.StateDictionary.Add(ACTION_STATE.ENEMY_SKILL, new EnemyStateSkill());
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_LIGHT, new EnemyStateLightHit());

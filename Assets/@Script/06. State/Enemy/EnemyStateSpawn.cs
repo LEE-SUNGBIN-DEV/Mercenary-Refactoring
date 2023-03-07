@@ -21,7 +21,7 @@ public class EnemyStateSpawn : IActionState<BaseEnemy>
 
     public void Update(BaseEnemy enemy)
     {
-        if (enemy.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.ENEMY_IDLE, 1.0f))
+        if (enemy.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.ENEMY_IDLE, 1.0f))
         {
             return;
         }

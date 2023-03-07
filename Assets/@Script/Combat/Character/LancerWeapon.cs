@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class LancerWeapon : PlayerAttackController
 {
-    private Dictionary<LANCE_ATTACK_TYPE, CombatInformation> combatDictionary;
+    private Dictionary<LANCE_ATTACK_TYPE, CombatInfo> combatDictionary;
 
     public override void SetWeapon(BaseCharacter character)
     {
         base.SetWeapon(character);
-        combatDictionary = new Dictionary<LANCE_ATTACK_TYPE, CombatInformation>()
+        combatDictionary = new Dictionary<LANCE_ATTACK_TYPE, CombatInfo>()
         {
             // Combo Attack
-            {LANCE_ATTACK_TYPE.ATTACK_LIGHT_01, new CombatInformation(COMBAT_TYPE.ATTACK_LIGHT, 1f, new Vector3(0,0,0), new Vector3(-185.053f, 346.911f, 42.899f)) },
-            {LANCE_ATTACK_TYPE.ATTACK_LIGHT_02, new CombatInformation(COMBAT_TYPE.ATTACK_LIGHT, 1.03f, new Vector3(0,0,0), new Vector3(168.597f, 359.226f, 118.723f)) },
-            {LANCE_ATTACK_TYPE.ATTACK_LIGHT_03, new CombatInformation(COMBAT_TYPE.ATTACK_LIGHT, 1.06f, new Vector3(0,0,0), new Vector3(55.857f, 210.166f, 147.803f)) },
-            {LANCE_ATTACK_TYPE.ATTACK_LIGHT_04, new CombatInformation(COMBAT_TYPE.ATTACK_LIGHT, 1.09f, new Vector3(0,0,0), new Vector3(194.172f, -19.111f, 108.139f)) },
+            {LANCE_ATTACK_TYPE.ATTACK_LIGHT_01, new CombatInfo(COMBAT_TYPE.ATTACK_LIGHT, 1f, new Vector3(0,0,0), new Vector3(-185.053f, 346.911f, 42.899f)) },
+            {LANCE_ATTACK_TYPE.ATTACK_LIGHT_02, new CombatInfo(COMBAT_TYPE.ATTACK_LIGHT, 1.03f, new Vector3(0,0,0), new Vector3(168.597f, 359.226f, 118.723f)) },
+            {LANCE_ATTACK_TYPE.ATTACK_LIGHT_03, new CombatInfo(COMBAT_TYPE.ATTACK_LIGHT, 1.06f, new Vector3(0,0,0), new Vector3(55.857f, 210.166f, 147.803f)) },
+            {LANCE_ATTACK_TYPE.ATTACK_LIGHT_04, new CombatInfo(COMBAT_TYPE.ATTACK_LIGHT, 1.09f, new Vector3(0,0,0), new Vector3(194.172f, -19.111f, 108.139f)) },
 
             // Smash Attack
-            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_01, new CombatInformation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_02, new CombatInformation(COMBAT_TYPE.ATTACK_HEAVY, 1.8f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_03, new CombatInformation(COMBAT_TYPE.ATTACK_HEAVY, 2.16f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_04_1, new CombatInformation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_04_2, new CombatInformation(COMBAT_TYPE.ATTACK_HEAVY, 2.6f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_01, new CombatInfo(COMBAT_TYPE.ATTACK_HEAVY, 1.5f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_02, new CombatInfo(COMBAT_TYPE.ATTACK_HEAVY, 1.8f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_03, new CombatInfo(COMBAT_TYPE.ATTACK_HEAVY, 2.16f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_04_1, new CombatInfo(COMBAT_TYPE.ATTACK_HEAVY, 1.5f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCE_ATTACK_TYPE.ATTACK_HEAVY_04_2, new CombatInfo(COMBAT_TYPE.ATTACK_HEAVY, 2.6f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
 
-            {LANCE_ATTACK_TYPE.PARRYING_ATTACK, new CombatInformation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
-            {LANCE_ATTACK_TYPE.SKILL_COUNTER, new CombatInformation(COMBAT_TYPE.ATTACK_LIGHT, 1.5f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCE_ATTACK_TYPE.PARRYING_ATTACK, new CombatInfo(COMBAT_TYPE.ATTACK_HEAVY, 1.5f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
+            {LANCE_ATTACK_TYPE.SKILL_COUNTER, new CombatInfo(COMBAT_TYPE.ATTACK_LIGHT, 1.5f, new Vector3(0f, 1.288f, 1.12f), new Vector3(183.757f, -24.78f ,-194.508f)) },
         };
     }
 
@@ -51,8 +51,8 @@ public class LancerWeapon : PlayerAttackController
 
         if (effectObject != null)
         {
-            effectObject.transform.SetPositionAndRotation(owner.transform.position + combatDictionary[attackType].effectLocation.position,
-                Quaternion.Euler(owner.transform.rotation.eulerAngles + combatDictionary[attackType].effectLocation.rotation));
+            effectObject.transform.SetPositionAndRotation(character.transform.position + combatDictionary[attackType].effectLocation.position,
+                Quaternion.Euler(character.transform.rotation.eulerAngles + combatDictionary[attackType].effectLocation.rotation));
         }
     }
     public virtual void OnDisableAttack()

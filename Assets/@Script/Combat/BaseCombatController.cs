@@ -26,7 +26,7 @@ public abstract class BaseCombatController : MonoBehaviour
         this.crowdControlDuration = crowdControlDuration;
     }
 
-    public void SetCombatInformation(CombatInformation combatInformation)
+    public void SetCombatInformation(CombatInfo combatInformation)
     {
         this.combatType = combatInformation.combatType;
         this.damageRatio = combatInformation.damageRatio;

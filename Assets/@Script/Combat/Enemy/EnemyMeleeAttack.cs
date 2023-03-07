@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemyMeleeAttack : EnemyCombatController
 {
-    public void SetMeleeAttack(BaseEnemy owner)
+    public void SetMeleeAttack(BaseEnemy enemy)
     {
-        this.owner = owner;
+        this.enemy = enemy;
     }
 
     protected virtual void OnTriggerEnter(Collider other)

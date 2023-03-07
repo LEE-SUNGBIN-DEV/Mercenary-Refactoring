@@ -4,45 +4,38 @@ using UnityEngine;
 
 public class BlackDragonLandBreath : EnemySkill
 {
-    public enum SKILL_STATE
-    {
-        OnBreath,
-        OffBreath,
-    }
     [SerializeField] private EnemyBreath breath;
+    private AnimationInfo landBreathAnimationInfo;
 
-    public override void Initialize(BaseEnemy owner)
+    public override void Initialize(BaseEnemy enemy)
     {
-        base.Initialize(owner);
+        base.Initialize(enemy);
+        skillName = "Skill_Land_Breath";
         cooldown = 30f;
-        maxRange = 15f;
+        minAttackDistance = 0f;
+        maxAttackDistance = 15f;
 
         breath = Functions.FindChild<EnemyBreath>(gameObject, "Breath Controller", true);
 
-        owner.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Breath, 15);
-        owner.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Flame_Area, 15);
+        enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Breath, 15);
+        enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Flame_Area, 15);
+
+        landBreathAnimationInfo = new AnimationInfo(skillName, 5.542f, 133, 1f);
     }
 
-    public override void ActiveSkill()
+    public override IEnumerator StartSkill()
     {
-        base.ActiveSkill();
-        Owner.Animator.SetTrigger("doLandBreath");
-    }
+        enemy.Animator.Play(landBreathAnimationInfo.animationNameHash);
 
-    #region Animation Event Function
-    private void OnLandBreath(SKILL_STATE skillState)
-    {
-        switch(skillState)
-        {
-            case SKILL_STATE.OnBreath:
-                breath.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
-                breath.SetRayAttack(owner, 20f, 0.15f);
-                StartCoroutine(breath.RayCoroutine);
-                break;
-            case SKILL_STATE.OffBreath:
-                StopCoroutine(breath.RayCoroutine);
-                break;
-        }
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(landBreathAnimationInfo, 23));
+        breath.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
+        breath.SetRayAttack(enemy, 20f, 0.15f);
+        StartCoroutine(breath.RayCoroutine);
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(landBreathAnimationInfo, 72));
+        StopCoroutine(breath.RayCoroutine);
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(landBreathAnimationInfo, landBreathAnimationInfo.maxFrame));
+        EndSkill();
     }
-    #endregion
 }

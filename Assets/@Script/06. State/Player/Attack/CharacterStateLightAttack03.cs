@@ -46,19 +46,19 @@ public class CharacterStateLightAttack03 : IActionState<BaseCharacter>
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
         // -> Smash Attack 3
-        if (mouseRightDown && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_ATTACK_HEAVY_03, 0.4f))
+        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_ATTACK_HEAVY_03, 0.4f))
         {
             return;
         }
 
         // -> Light Attack 4
-        if (mouseLeftDown && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_ATTACK_LIGHT_04, 0.4f))
+        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_ATTACK_LIGHT_04, 0.4f))
         {
             return;
         }
 
         // -> Idle
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }
 

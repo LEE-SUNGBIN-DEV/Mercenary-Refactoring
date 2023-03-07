@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class EnemyCombatController : BaseCombatController
 {
     [Header("Enemy Combat Controller")]
-    [SerializeField] protected BaseEnemy owner;
+    [SerializeField] protected BaseEnemy enemy;
 
     protected virtual void ExecuteAttackProcess(Collider other)
     {
@@ -23,7 +23,7 @@ public abstract class EnemyCombatController : BaseCombatController
             hitDictionary.Add(character, true);
 
             // 03. Damage Process
-            owner.DamageProcess(character, damageRatio);
+            enemy.DamageProcess(character, damageRatio);
 
             // 04. Hit Process
             switch (combatType)
@@ -70,6 +70,6 @@ public abstract class EnemyCombatController : BaseCombatController
     }
 
     #region Property
-    public BaseEnemy Owner { get { return owner; } set { owner = value; } }
+    public BaseEnemy Enemy { get { return enemy; } set { enemy = value; } }
     #endregion
 }

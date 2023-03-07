@@ -5,12 +5,12 @@ using UnityEngine;
 public abstract class PlayerAttackController : BaseCombatController
 {
     [Header("Player Attack")]
-    protected BaseCharacter owner;
+    protected BaseCharacter character;
 
     public virtual void SetWeapon(BaseCharacter character)
     {
-        owner = character;
-        owner.ObjectPooler.RegisterObject(Constants.VFX_Player_Attack, 12);
+        this.character = character;
+        this.character.ObjectPooler.RegisterObject(Constants.VFX_Player_Attack, 12);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -38,11 +38,11 @@ public abstract class PlayerAttackController : BaseCombatController
                 hitDictionary.Add(hitbox.Owner, true);
 
                 // 03. Hitting Effect Process
-                GameObject effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Attack);
+                GameObject effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Attack);
                 effect.transform.position = hitPoint;
 
                 // 04. Damage Process
-                owner.DamageProcess(hitbox.Owner, damageRatio, hitPoint);
+                character.DamageProcess(hitbox.Owner, damageRatio, hitPoint);
 
                 // 05. Hit Process
                 switch (combatType)
@@ -70,5 +70,5 @@ public abstract class PlayerAttackController : BaseCombatController
         }
     }
 
-    public BaseCharacter Owner { get { return owner; } }
+    public BaseCharacter Character { get { return character; } }
 }
