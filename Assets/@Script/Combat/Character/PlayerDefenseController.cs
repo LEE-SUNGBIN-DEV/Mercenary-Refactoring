@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerDefenseController : BaseCombatController
 {
     [Header("Player Defense Controller")]
-    protected BaseCharacter owner;
-    protected Dictionary<COMBAT_TYPE, CombatInformation> defenseDictionary;
+    protected BaseCharacter character;
+    protected Dictionary<COMBAT_TYPE, CombatInfo> defenseDictionary;
 
     public virtual void SetShield(BaseCharacter character)
     {
-        owner = character;
-        owner.ObjectPooler.RegisterObject(Constants.VFX_Player_Defense, 5);
-        owner.ObjectPooler.RegisterObject(Constants.VFX_Player_Parrying, 5);
+        this.character = character;
+        this.character.ObjectPooler.RegisterObject(Constants.VFX_Player_Defense, 5);
+        this.character.ObjectPooler.RegisterObject(Constants.VFX_Player_Parrying, 5);
     }
 
     public virtual void ExecuteDefenseProcess(EnemyCombatController enemyCombatController, Vector3 hitPoint)
@@ -23,8 +23,8 @@ public class PlayerDefenseController : BaseCombatController
         {
             case COMBAT_TYPE.DEFENSE:
                 {
-                    effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
-                    owner.State.SetState(ACTION_STATE.PLAYER_DEFENSE_BREAK, STATE_SWITCH_BY.WEIGHT);
+                    effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
+                    character.State.SetState(ACTION_STATE.PLAYER_DEFENSE_BREAK, STATE_SWITCH_BY.WEIGHT);
                     break;
                 }
 
@@ -33,8 +33,8 @@ public class PlayerDefenseController : BaseCombatController
                     if (enemyCombatController is EnemyCompeteAttack competeController && Managers.CompeteManager.TryCompete(this, competeController))
                         break;
 
-                    effect = owner.ObjectPooler.RequestObject(Constants.VFX_Player_Parrying);
-                    owner.State.SetState(ACTION_STATE.PLAYER_PARRYING, STATE_SWITCH_BY.WEIGHT);
+                    effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Parrying);
+                    character.State.SetState(ACTION_STATE.PLAYER_PARRYING, STATE_SWITCH_BY.WEIGHT);
                     break;
                 }
         }
@@ -57,5 +57,5 @@ public class PlayerDefenseController : BaseCombatController
         hitDictionary.Clear();
     }
 
-    public BaseCharacter Owner { get { return owner; } }
+    public BaseCharacter Character { get { return character; } }
 }

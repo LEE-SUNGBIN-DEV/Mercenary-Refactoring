@@ -4,45 +4,35 @@ using UnityEngine;
 
 public class BlackDragonRightClaw : EnemySkill
 {
-    public enum SKILL_STATE
-    {
-        OnRightClaw,
-        OffRightClaw
-    }
     [SerializeField] private EnemyCompeteAttack rightClaw;
+    private AnimationInfo rightClawAnimationInfo;
 
-    public override void Initialize(BaseEnemy owner)
+    public override void Initialize(BaseEnemy enemy)
     {
-        base.Initialize(owner);
+        base.Initialize(enemy);
+        skillName = "Skill_Right_Claw";
         cooldown = 8f;
-        maxRange = 8f;
+        minAttackDistance = 0f;
+        maxAttackDistance = 8f;
+
         rightClaw = Functions.FindChild<EnemyCompeteAttack>(gameObject, "Compete Controller", true);
-        rightClaw.SetCompeteAttack(owner);
+        rightClaw.SetCompeteAttack(enemy);
+
+        rightClawAnimationInfo = new AnimationInfo(skillName, 4.250f, 102, 1.8f);
     }
 
-    public override void ActiveSkill()
+    public override IEnumerator StartSkill()
     {
-        base.ActiveSkill();
-        Owner.Animator.SetTrigger("doRightClaw");
-    }
+        enemy.Animator.Play(rightClawAnimationInfo.animationNameHash);
 
-    #region Animation Event Function
-    private void OnRightClaw(SKILL_STATE skillState)
-    {
-        switch(skillState)
-        {
-            case SKILL_STATE.OnRightClaw:
-                {
-                    rightClaw.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 2f, 3f);
-                    rightClaw.OnEnableCollider();
-                    return;
-                }
-            case SKILL_STATE.OffRightClaw:
-                {
-                    rightClaw.OnDisableCollider();
-                    return;
-                }
-        }
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(rightClawAnimationInfo, 40));
+        rightClaw.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 2f, 3f);
+        rightClaw.OnEnableCollider();
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(rightClawAnimationInfo, 42));
+        rightClaw.OnDisableCollider();
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(rightClawAnimationInfo, rightClawAnimationInfo.maxFrame));
+        EndSkill();
     }
-    #endregion
 }

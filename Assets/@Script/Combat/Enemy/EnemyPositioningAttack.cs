@@ -15,7 +15,7 @@ public class EnemyPositioningAttack : EnemyCombatController, IPoolObject
 
     public void SetPositioningAttack(BaseEnemy owner, Vector3 targetPosition, float delayTime, float attackTime)
     {
-        this.owner = owner;
+        this.enemy = owner;
         this.delayTime = delayTime;
         this.attackTime = attackTime;
         this.targetPosition = targetPosition;

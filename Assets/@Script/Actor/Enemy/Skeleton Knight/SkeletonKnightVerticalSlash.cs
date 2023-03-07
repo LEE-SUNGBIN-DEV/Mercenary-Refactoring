@@ -4,33 +4,35 @@ using UnityEngine;
 
 public class SkeletonKnightVerticalSlash : EnemySkill
 {
-    [SerializeField] private Collider attackCollider;
+    [SerializeField] private EnemyMeleeAttack sword;
+    private AnimationInfo verticalSlashAnimationInfo;
 
-    private void Awake()
+    public override void Initialize(BaseEnemy enemy)
     {
-        isReady = true;
+        base.Initialize(enemy);
+        skillName = "Skill_Vertical_Slash";
+        cooldown = 7;
+        minAttackDistance = 0f;
+        maxAttackDistance = 4f;
+
+        sword = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Sword", true);
+        sword.SetMeleeAttack(enemy);
+
+        verticalSlashAnimationInfo = new AnimationInfo(skillName, 8.417f, 202, 2f);
     }
 
-    public override void ActiveSkill()
+    public override IEnumerator StartSkill()
     {
-        base.ActiveSkill();
-        Owner.Animator.SetTrigger("doAttack1");
-    }
+        enemy.Animator.Play(verticalSlashAnimationInfo.animationNameHash);
 
-    #region Animation Event Function
-    public void OnVerticalSlashCollider()
-    {
-        if (attackCollider != null)
-        {
-            attackCollider.enabled = true;
-        }
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(verticalSlashAnimationInfo, 32));
+        sword.SetCombatController(COMBAT_TYPE.ATTACK_HEAVY, 1.2f);
+        sword.OnEnableCollider();
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(verticalSlashAnimationInfo, 40));
+        sword.OnDisableCollider();
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(verticalSlashAnimationInfo, verticalSlashAnimationInfo.maxFrame));
+        EndSkill();
     }
-    public void OffVerticalSlashCollider()
-    {
-        if (attackCollider != null)
-        {
-            attackCollider.enabled = false;
-        }
-    }
-    #endregion
 }

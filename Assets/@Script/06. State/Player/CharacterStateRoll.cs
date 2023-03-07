@@ -35,7 +35,7 @@ public class CharacterStateRoll : IActionState<BaseCharacter>
     {
 
         // !! When Animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }
 

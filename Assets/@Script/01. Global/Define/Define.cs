@@ -41,14 +41,32 @@ public struct Location
     }
 }
 
-public struct CombatInformation
+public struct AnimationInfo
+{
+    public string animationName;
+    public int animationNameHash;
+    public float animationLength;
+    public float animationSpeed;
+    public int maxFrame;
+
+    public AnimationInfo(string name, float length, int maxFrame, float speed = 1f)
+    {
+        animationName = name;
+        animationNameHash = Animator.StringToHash(name);
+        animationLength = length;
+        animationSpeed = speed;
+        this.maxFrame = maxFrame;
+    }
+}
+
+public struct CombatInfo
 {
     public COMBAT_TYPE combatType;
     public float damageRatio;
     public float crowdControlDuration;
     public Location effectLocation;
 
-    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, float crowdControlDuration = 0f)
+    public CombatInfo(COMBAT_TYPE hitType, float damageRatio, float crowdControlDuration = 0f)
     {
         this.combatType = hitType;
         this.damageRatio = damageRatio;
@@ -56,7 +74,7 @@ public struct CombatInformation
         this.effectLocation = new Location(Vector3.zero, Vector3.zero);
     }
 
-    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, Vector3 effectPosition, Vector3 effectRotation, float crowdControlDuration = 0f)
+    public CombatInfo(COMBAT_TYPE hitType, float damageRatio, Vector3 effectPosition, Vector3 effectRotation, float crowdControlDuration = 0f)
     {
         this.combatType = hitType;
         this.damageRatio = damageRatio;
@@ -64,7 +82,7 @@ public struct CombatInformation
         this.effectLocation = new Location(effectPosition, effectRotation);
     }
 
-    public CombatInformation(COMBAT_TYPE hitType, float damageRatio, Location effectLocation, float crowdControlDuration = 0f)
+    public CombatInfo(COMBAT_TYPE hitType, float damageRatio, Location effectLocation, float crowdControlDuration = 0f)
     {
         this.combatType = hitType;
         this.damageRatio = damageRatio;

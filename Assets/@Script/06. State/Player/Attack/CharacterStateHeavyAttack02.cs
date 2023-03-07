@@ -40,13 +40,13 @@ public class CharacterStateHeavyAttack02 : IActionState<BaseCharacter>
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
         // -> Light Attack 1
-        if (mouseLeftDown && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_ATTACK_LIGHT_01, 0.8f))
+        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_ATTACK_LIGHT_01, 0.8f))
         {
             return;
         }
 
         // -> Idle
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }
 

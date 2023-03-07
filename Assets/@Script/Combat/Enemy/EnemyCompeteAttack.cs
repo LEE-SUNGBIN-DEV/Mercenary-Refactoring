@@ -11,7 +11,7 @@ public class EnemyCompeteAttack : EnemyCombatController
 
     public void SetCompeteAttack(BaseEnemy owner)
     {
-        this.owner = owner;
+        this.enemy = owner;
         competePoint = Functions.FindChild<Transform>(owner.gameObject, "@Compete_Point", true);
         cameraPoint = Functions.FindChild<Transform>(owner.gameObject, "@Camera_Point", true);
     }

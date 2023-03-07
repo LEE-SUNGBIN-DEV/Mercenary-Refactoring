@@ -28,13 +28,13 @@ public class CharacterStateParrying : IActionState<BaseCharacter>
             mouseRightDown = Input.GetMouseButtonDown(1);
 
         // Move State -> Parrying Attack
-        if (mouseRightDown && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_PARRYING_ATTACK, 0.9f))
+        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_PARRYING_ATTACK, 0.9f))
         {
             return;
         }
 
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_IDLE, 1f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_IDLE, 1f))
         {
             return;
         }

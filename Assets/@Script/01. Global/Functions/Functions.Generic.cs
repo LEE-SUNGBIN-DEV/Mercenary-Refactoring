@@ -12,6 +12,7 @@ public static partial class Functions
 
         return resultColor;
     }
+
     #region Async Operation
     public static IEnumerator WaitAsyncOperation(System.Func<bool> isLoaded, UnityAction callback = null)
     {

@@ -4,29 +4,42 @@ using UnityEngine;
 
 public class BlackDragonStorm : EnemySkill
 {
-    public enum SKILL_STATE
-    {
-        OnStorm,
-        OnStrike,
-        OffStorm
-    }
     [SerializeField] private int amount;
     [SerializeField] private float interval;
+    private AnimationInfo stormStartAnimationInfo;
+    private AnimationInfo stormAnimationInfo;
+    private AnimationInfo stormEndAnimationInfo;
 
     public override void Initialize(BaseEnemy owner)
     {
         base.Initialize(owner);
+        skillName = "Skill_Storm";
         cooldown = 30f;
-        maxRange = 15f;
+        minAttackDistance = 0f;
+        maxAttackDistance = 15f;
 
         owner.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Storm_Field, 1);
         owner.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Lightning_Strike, amount);
+
+        stormStartAnimationInfo = new AnimationInfo("Skill_Storm_Start", 2.125f, 51, 1f);
+        stormAnimationInfo = new AnimationInfo(skillName, 5.000f, 120, 1f);
+        stormEndAnimationInfo = new AnimationInfo("Skill_Storm_End", 4.167f, 100, 1.5f);
     }
 
-    public override void ActiveSkill()
+    public override IEnumerator StartSkill()
     {
-        base.ActiveSkill();
-        Owner.Animator.SetTrigger("doStorm");
+        enemy.Animator.Play(stormStartAnimationInfo.animationNameHash);
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(stormStartAnimationInfo, 0));
+        GameObject stormField = enemy.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Storm_Field);
+        if (stormField != null)
+            stormField.transform.position = enemy.transform.position;
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(stormAnimationInfo, 0));
+        StartCoroutine(GenerateLightningStrike());
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(stormEndAnimationInfo, stormEndAnimationInfo.maxFrame));
+        EndSkill();
     }
 
     public IEnumerator GenerateLightningStrike()
@@ -36,33 +49,14 @@ public class BlackDragonStorm : EnemySkill
         for (int i = 0; i < amount; ++i)
         {
             Vector3 generateCoordinate = Functions.GetRandomCircleCoordinate(12f);
-            if (owner.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Lightning_Strike).TryGetComponent(out EnemyPositioningAttack lightningStrike))
+            if (enemy.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Lightning_Strike).TryGetComponent(out EnemyPositioningAttack lightningStrike))
             {
                 lightningStrike.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 1.3f, 1.5f);
-                lightningStrike.SetPositioningAttack(owner, owner.transform.position + generateCoordinate, 1f, 0.2f);
+                lightningStrike.SetPositioningAttack(enemy, enemy.transform.position + generateCoordinate, 1f, 0.2f);
                 lightningStrike.OnAttack();
             }
 
             yield return waitTime;
         }
     }
-
-    #region Animation Event Function
-    private void OnStorm(SKILL_STATE skillState)
-    {
-        switch(skillState)
-        {
-            case SKILL_STATE.OnStorm:
-                GameObject stormField = owner.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Storm_Field);
-                if (stormField != null)
-                    stormField.transform.position = owner.transform.position;
-                break;
-            case SKILL_STATE.OnStrike:
-                StartCoroutine(GenerateLightningStrike());
-                break;
-            case SKILL_STATE.OffStorm:
-                break;
-        }
-    }
-    #endregion
 }

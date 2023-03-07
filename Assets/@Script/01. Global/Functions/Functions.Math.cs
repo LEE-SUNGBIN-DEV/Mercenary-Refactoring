@@ -4,6 +4,19 @@ using UnityEngine;
 
 public static partial class Functions
 {
+    public static float GetAnimationNormalizedTimeByFrame(int maxFrame, int targetFrame)
+    {
+        return targetFrame / (float)maxFrame;
+    }
+    public static float GetAnimationTimeByFrame(float length, int maxFrame, int targetFrame, float speed = 1f)
+    {
+        return GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame) * length / speed;
+    }
+    public static float GetAnimationTimeByFrame(AnimationInfo animationInfo, int targetFrame)
+    {
+        return GetAnimationNormalizedTimeByFrame(animationInfo.maxFrame, targetFrame) * animationInfo.animationLength / animationInfo.animationSpeed;
+    }
+
     public static Vector3 GetRandomRectCoordinate(float halfWidth, float halfDepth)
     {
         float pointX = Random.Range(-halfWidth, halfWidth);

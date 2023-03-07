@@ -40,8 +40,8 @@ public class CompeteManager : MonoBehaviour
 
     public bool TryCompete(PlayerDefenseController defenseController, EnemyCompeteAttack competeController)
     {
-        character = defenseController.Owner;
-        enemy = competeController.Owner;
+        character = defenseController.Character;
+        enemy = competeController.Enemy;
         competableCharacter = character as ICompetable;
         competableEnemy = enemy as ICompetable;
 

@@ -23,7 +23,7 @@ public class CharacterStateHeavyHit : IActionState<BaseCharacter>
     public void Update(BaseCharacter character)
     {
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_HIT_HEAVY_LOOP, 1.0f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HIT_HEAVY_LOOP, 1.0f))
         {
             return;
         }

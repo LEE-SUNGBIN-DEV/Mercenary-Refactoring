@@ -22,13 +22,13 @@ public class CharacterStateDefense : IActionState<BaseCharacter>
 
     public void Update(BaseCharacter character)
     {
-        if(Input.GetMouseButton(1) && character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_DEFENSE_LOOP, 1.0f))
+        if(Input.GetMouseButton(1) && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_DEFENSE_LOOP, 1.0f))
         {
             return;
         }
 
         // !! When animation is over
-        if (character.State.SetStateByUpperAnimationTime(animationNameHash, ACTION_STATE.PLAYER_DEFENSE_END, 1.0f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_DEFENSE_END, 1.0f))
         {
             return;
         }
