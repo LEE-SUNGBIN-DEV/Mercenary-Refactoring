@@ -21,6 +21,7 @@ public class EnemyStateSkill : IActionState<BaseEnemy>
     {
         isDone = false;
         timer = 0f;
+        enemy.CurrentSkill.OnEndSkill -= IsDone;
         enemy.CurrentSkill.OnEndSkill += IsDone;
         enemy.CurrentSkill.ActiveSkill();
     }
@@ -35,7 +36,7 @@ public class EnemyStateSkill : IActionState<BaseEnemy>
 
         if(isDone)
         {
-            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE, STATE_SWITCH_BY.FORCED);
+            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WAIT, STATE_SWITCH_BY.FORCED);
             return;
         }
     }
@@ -43,6 +44,7 @@ public class EnemyStateSkill : IActionState<BaseEnemy>
     public void Exit(BaseEnemy enemy)
     {
         enemy.CurrentSkill.OnEndSkill -= IsDone;
+        enemy.CurrentSkill.StopSkillCoroutine();
     }
 
     public void IsDone(bool isSkillDone)

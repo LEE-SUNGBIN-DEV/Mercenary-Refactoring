@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class StoneGolem : BaseEnemy, IStunable
+public class SmallStoneGolem : BaseEnemy, IStunable
 {
     public override void Awake()
     {
@@ -11,9 +11,9 @@ public class StoneGolem : BaseEnemy, IStunable
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_SPAWN, new EnemyStateSpawn());
         state.StateDictionary.Add(ACTION_STATE.ENEMY_PATROL, new EnemyStatePatrol());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE, new EnemyStateChaseWait());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_WALK, new EnemyStateChaseWalk());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_RUN, new EnemyStateChaseRun());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE_WAIT, new EnemyStateChaseWait());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE_WALK, new EnemyStateChaseWalk());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE_RUN, new EnemyStateChaseRun());
         state.StateDictionary.Add(ACTION_STATE.ENEMY_SKILL, new EnemyStateSkill());
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_LIGHT, new EnemyStateLightHit());

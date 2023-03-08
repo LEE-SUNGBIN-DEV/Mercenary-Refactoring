@@ -11,19 +11,16 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
     [SerializeField] protected CharacterData characterData;
     [SerializeField] protected Vector3 cameraOffset;
 
-    protected CharacterController characterController;
     protected PlayerCamera playerCamera;
     protected CharacterFSM state;
     protected StatusEffectController<BaseCharacter> statusEffectController;
 
     protected PlayerAttackController weapon;
     protected PlayerDefenseController shield;
-    protected bool isGround;
 
     public override void Awake()
     {
         base.Awake();
-        TryGetComponent(out characterController);
         state = new CharacterFSM(this);
 
 #if EDITOR_TEST
@@ -127,29 +124,11 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
     public CharacterQuestData QuestData { get { return characterData?.QuestData; } }
 
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
-    public CharacterController CharacterController { get { return characterController; } }
 
     public CharacterFSM State { get { return state; } }
     public StatusEffectController<BaseCharacter> StatusEffectController { get { return statusEffectController; } }
 
     public PlayerAttackController Weapon { get { return weapon; } }
     public PlayerDefenseController Shield { get { return shield; } }
-
-    public bool IsGround
-    {
-        get
-        {
-            if (characterController.isGrounded)
-                isGround = true;
-
-            else
-            {
-                var ray = new Ray(transform.position, Vector3.down);
-                var rayDistance = 0.5f;
-                isGround = Physics.Raycast(ray, rayDistance, LayerMask.GetMask("Terrain"));
-            }
-            return isGround;
-        }
-    }
     #endregion
 }

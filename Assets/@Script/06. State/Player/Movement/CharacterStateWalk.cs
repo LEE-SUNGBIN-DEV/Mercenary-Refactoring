@@ -64,7 +64,7 @@ public class CharacterStateWalk : IActionState<BaseCharacter>
 
             moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
 
-            if (moveDirection.magnitude > 0f)
+            if (moveDirection.sqrMagnitude > 0f)
             {
                 // Run
                 if (Input.GetKey(KeyCode.LeftShift))

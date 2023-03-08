@@ -25,6 +25,7 @@ public class EnemyData
     [JsonIgnore][SerializeField] private int hitLevel;
 
     [SerializeField] private float stopDistance;
+    [SerializeField] private float detectionDistance;
     [SerializeField] private float chaseDistance;
 
     [Header("Reward Info")]
@@ -176,6 +177,20 @@ public class EnemyData
             OnChanageEnemyData?.Invoke(this);
         }
     }
+
+    public float DetectionDistance
+    {
+        get { return detectionDistance; }
+        set
+        {
+            detectionDistance = value;
+            if (detectionDistance < 0)
+                detectionDistance = 0;
+
+            OnChanageEnemyData?.Invoke(this);
+        }
+    }
+
     public float ChaseDistance
     {
         get { return chaseDistance; }

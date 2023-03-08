@@ -34,9 +34,9 @@ public class EnemyStatePatrol : IActionState<BaseEnemy>
         enemy.NavMeshAgent.speed = enemy.Status.MoveSpeed;
 
         // Patrol -> Chase
-        if (enemy.IsTargetInChaseDistance() && enemy.IsTargetInSight())
+        if (enemy.IsTargetInDetectionDistance() && enemy.IsTargetInSight())
         {
-            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE, STATE_SWITCH_BY.WEIGHT);
+            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WAIT, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 

@@ -13,15 +13,16 @@ public abstract class BaseEnemy : BaseActor
     [Header("Base Enemy")]
     [SerializeField] protected EnemyData status;
     protected Vector3 spawnPosition;
-    protected EnemyFSM state;
-    protected StatusEffectController<BaseEnemy> statusEffectControler;
+
+    [Header("State")]
+    [SerializeField] protected EnemyFSM state;
+    [SerializeField] protected StatusEffectController<BaseEnemy> statusEffectControler;
 
     [Header("Skill")]
-    protected EnemySkill[] skillArray;
+    [SerializeField] protected EnemySkill[] skillArray;
     [SerializeField] protected EnemySkill currentSkill;
 
     protected NavMeshAgent navMeshAgent;
-    protected Rigidbody rigidBody;
 
     [Header("Target")]
     [SerializeField] protected Transform targetTransform;
@@ -31,8 +32,8 @@ public abstract class BaseEnemy : BaseActor
     public override void Awake()
     {
         base.Awake();
-        TryGetComponent(out rigidBody);
         TryGetComponent(out navMeshAgent);
+
         state = new EnemyFSM(this);
         skillArray = GetComponents<EnemySkill>();
 
@@ -62,8 +63,15 @@ public abstract class BaseEnemy : BaseActor
     {
         OnEnemySpawn?.Invoke(this);
 
-        navMeshAgent.speed = status.MoveSpeed;
-        navMeshAgent.stoppingDistance = status.StopDistance;
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.isStopped = true;
+            navMeshAgent.updatePosition = false;
+            navMeshAgent.updateRotation = false;
+            navMeshAgent.speed = status.MoveSpeed;
+            navMeshAgent.stoppingDistance = status.StopDistance;
+            navMeshAgent.velocity = Vector3.zero;
+        }
         spawnPosition = transform.position;
 
         isInvincible = false;
@@ -80,14 +88,24 @@ public abstract class BaseEnemy : BaseActor
         targetTransform = null;
     }
 
-    public abstract void OnLightHit();
-    public abstract void OnHeavyHit();
-    public virtual void OnDie()
+    public void StartMoveTo(Vector3 destination, float speedRatio = 1f)
     {
-        if (isDie)
-            return;
+        navMeshAgent.SetDestination(destination);
+        targetDirection = Vector3.Normalize(navMeshAgent.steeringTarget - transform.position);
+        targetDirection.y = 0f;
 
-        OnEnemyDie?.Invoke(this);
+        // Rotation
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 10f * Time.deltaTime);
+
+        // Move
+        characterController.SimpleMove(speedRatio * status.MoveSpeed * targetDirection);
+    }
+
+    public void LookTarget()
+    {
+        targetDirection = Vector3.Normalize(targetTransform.position - transform.position);
+        transform.rotation
+                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 5f * Time.deltaTime);
     }
 
     public bool UpdateTargetInformation()
@@ -104,7 +122,7 @@ public abstract class BaseEnemy : BaseActor
 
     public bool IsReadyAnySkill()
     {
-        for(int i=0; i<skillArray.Length; ++i)
+        for (int i = 0; i < skillArray.Length; ++i)
         {
             if (skillArray[i].IsReady(targetDistance))
             {
@@ -112,22 +130,30 @@ public abstract class BaseEnemy : BaseActor
                 return true;
             }
         }
+        currentSkill = null;
         return false;
     }
 
-    public bool IsTargetInChaseDistance()
+    public bool IsTargetInStopDistance()
     {
-        if (targetTransform != null
-            && targetDistance < status.ChaseDistance)
+        if (targetTransform != null && targetDistance < status.StopDistance)
         {
             return true;
         }
         return false;
     }
-    public bool IsTargetInStopDistance()
+    public bool IsTargetInDetectionDistance()
     {
-        if (targetTransform != null
-            && targetDistance < status.StopDistance)
+        if (targetTransform != null && targetDistance < status.DetectionDistance)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool IsTargetInChaseDistance()
+    {
+        if (targetTransform != null && targetDistance < status.ChaseDistance)
         {
             return true;
         }
@@ -137,13 +163,6 @@ public abstract class BaseEnemy : BaseActor
     public bool IsTargetInSight()
     {
         return true;
-    }
-
-    public void LookTarget()
-    {
-        targetDirection = Vector3.Normalize(targetTransform.position - transform.position);
-        transform.rotation
-                = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(targetDirection), 5f * Time.deltaTime);
     }
 
     public void DamageProcess(BaseCharacter character, float ratio)
@@ -174,6 +193,16 @@ public abstract class BaseEnemy : BaseActor
         }
     }
 
+    public abstract void OnLightHit();
+    public abstract void OnHeavyHit();
+    public virtual void OnDie()
+    {
+        if (isDie)
+            return;
+
+        OnEnemyDie?.Invoke(this);
+    }
+
     #region Property
     public EnemyData Status { get { return status; } }
     public Vector3 SpawnPosition { get { return spawnPosition; } }
@@ -182,7 +211,6 @@ public abstract class BaseEnemy : BaseActor
     public EnemyFSM State { get { return state; } }
     public StatusEffectController<BaseEnemy> StatusEffectControler { get { return statusEffectControler; } }
 
-    // Target
     public Transform TargetTransform { get { return targetTransform; } set { targetTransform = value; } }
     public Vector3 TargetDirection { get { return targetDirection; } }
     public float TargetDistance { get { return targetDistance; } }
