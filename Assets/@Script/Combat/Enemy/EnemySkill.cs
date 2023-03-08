@@ -21,26 +21,24 @@ public abstract class EnemySkill : MonoBehaviour
     {
         enemy = GetComponentInParent<BaseEnemy>(true);
         isReady = true;
-        cooldownCoroutine = WaitForCooldown();
-        skillCoroutine = StartSkill();
+        RegisterCoroutine();
     }
 
     public virtual void Initialize(BaseEnemy enemy)
     {
         this.enemy = enemy;
         isReady = true;
-        cooldownCoroutine = WaitForCooldown();
-        skillCoroutine = StartSkill();
+        RegisterCoroutine();
     }
 
     public void OnDisable()
     {
-        if(skillCoroutine != null)
-            StopCoroutine(skillCoroutine);
+        StopSkillCoroutine();
     }
 
     public virtual void ActiveSkill()
     {
+        RegisterCoroutine();
         StartCoroutine(cooldownCoroutine);
         StartCoroutine(skillCoroutine);
     }
@@ -62,6 +60,17 @@ public abstract class EnemySkill : MonoBehaviour
     public virtual void EndSkill()
     {
         OnEndSkill?.Invoke(true);
+    }
+
+    public void RegisterCoroutine()
+    {
+        cooldownCoroutine = WaitForCooldown();
+        skillCoroutine = StartSkill();
+    }
+    public void StopSkillCoroutine()
+    {
+        if (skillCoroutine != null)
+            StopCoroutine(skillCoroutine);
     }
 
     #region Property

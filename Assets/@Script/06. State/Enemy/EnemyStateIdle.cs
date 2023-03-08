@@ -26,11 +26,11 @@ public class EnemyStateIdle : IActionState<BaseEnemy>
 
     public void Update(BaseEnemy enemy)
     {
-        // 추적 가능한 상태라면
+        // 탐지 가능한 상태라면
         // Idle -> Chase
-        if (enemy.IsTargetInChaseDistance() && enemy.IsTargetInSight())
+        if (enemy.IsTargetInDetectionDistance() && enemy.IsTargetInSight())
         {
-            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE, STATE_SWITCH_BY.WEIGHT);
+            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WAIT, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 

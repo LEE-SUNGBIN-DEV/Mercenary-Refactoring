@@ -10,15 +10,13 @@ public class EnemyStateChaseRun : IActionState<BaseEnemy>
 
     public EnemyStateChaseRun()
     {
-        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_RUN;
+        stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_CHASE_RUN;
         animationNameHash = Constants.ANIMATION_NAME_HASH_RUN;
     }
 
     public void Enter(BaseEnemy enemy)
     {
-        enemy.NavMeshAgent.speed = enemy.Status.MoveSpeed * 1.5f;
-        enemy.NavMeshAgent.isStopped = false;
-        enemy.NavMeshAgent.SetDestination(enemy.TargetTransform.position);
+        enemy.StartMoveTo(enemy.TargetTransform.position);
         enemy.Animator.CrossFade(animationNameHash, 0.1f);
 
         runDistance = enemy.Status.ChaseDistance * 0.5f;
@@ -40,23 +38,21 @@ public class EnemyStateChaseRun : IActionState<BaseEnemy>
                 // Run (Current)
                 if (enemy.TargetDistance > runDistance)
                 {
-                    enemy.NavMeshAgent.speed = enemy.Status.MoveSpeed * 1.5f;
-                    enemy.NavMeshAgent.isStopped = false;
-                    enemy.NavMeshAgent.SetDestination(enemy.TargetTransform.position);
+                    enemy.StartMoveTo(enemy.TargetTransform.position, 1.5f);
                     return;
                 }
 
                 // -> Walk
                 if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_WALK))
                 {
-                    enemy.State.SetState(ACTION_STATE.ENEMY_WALK, STATE_SWITCH_BY.FORCED);
+                    enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WALK, STATE_SWITCH_BY.FORCED);
                     return;
                 }
             }
-            // -> Chase Stop
+            // -> Wait
             else
             {
-                enemy.State.SetState(ACTION_STATE.ENEMY_CHASE, STATE_SWITCH_BY.FORCED);
+                enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WAIT, STATE_SWITCH_BY.FORCED);
                 return;
             }
         }

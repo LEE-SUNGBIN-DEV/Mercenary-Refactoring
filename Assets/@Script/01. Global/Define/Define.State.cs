@@ -41,9 +41,9 @@ public enum ACTION_STATE
     // Enemy State
     ENEMY_IDLE = 10000,
     ENEMY_PATROL = 10001,
-    ENEMY_CHASE = 10002,
-    ENEMY_WALK = 10003,
-    ENEMY_RUN = 10004,
+    ENEMY_CHASE_WAIT = 10002,
+    ENEMY_CHASE_WALK = 10003,
+    ENEMY_CHASE_RUN = 10004,
 
     ENEMY_SKILL = 10016,
 
@@ -103,9 +103,9 @@ public enum ACTION_STATE_WEIGHT
     // Enemy
     ENEMY_IDLE = 0,
     ENEMY_PATROL = 1,
-    ENEMY_CHASE = 2,
-    ENEMY_WALK = 3,
-    ENEMY_RUN = 4,
+    ENEMY_CHASE_WAIT = 2,
+    ENEMY_CHASE_WALK = 3,
+    ENEMY_CHASE_RUN = 4,
 
     ENEMY_SKILL = 8,
 
