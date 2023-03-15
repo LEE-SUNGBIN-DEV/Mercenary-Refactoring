@@ -2,27 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateParrying : IActionState<BaseCharacter>
+public class CharacterStateParrying : IActionState
 {
+    private BaseCharacter character;
     private int stateWeight;
     private int animationNameHash;
     private bool mouseRightDown;
 
-    public CharacterStateParrying()
+    public CharacterStateParrying(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_PARRYING;
         animationNameHash = Constants.ANIMATION_NAME_HASH_PARRYING;
         mouseRightDown = false;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         mouseRightDown = false;
         character.IsInvincible = true;
         character.Animator.Play(animationNameHash);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         if (!mouseRightDown)
             mouseRightDown = Input.GetMouseButtonDown(1);
@@ -39,7 +41,7 @@ public class CharacterStateParrying : IActionState<BaseCharacter>
             return;
         }
     }
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
         character.IsInvincible = false;
     }

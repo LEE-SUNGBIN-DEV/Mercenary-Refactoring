@@ -2,27 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateHeavyAttack01 : IActionState<BaseCharacter>
+public class CharacterStateHeavyAttack01 : IActionState
 {
+    private BaseCharacter character;
     private int stateWeight;
     private int animationNameHash;
     private bool mouseLeftDown;
 
-    public CharacterStateHeavyAttack01()
+    public CharacterStateHeavyAttack01(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_HEAVY_01;
         animationNameHash = Constants.ANIMATION_NAME_HASH_HEAVY_ATTACK_01;
         mouseLeftDown = false;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         mouseLeftDown = false;
         character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
         character.Animator.CrossFade(animationNameHash, 0.1f);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
@@ -50,7 +52,7 @@ public class CharacterStateHeavyAttack01 : IActionState<BaseCharacter>
             return;
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
     }
 

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateStandRoll : IActionState<BaseCharacter>
+public class CharacterStateStandRoll : IActionState
 {
+    private BaseCharacter character;
     public int stateWeight;
     private int animationNameHash;
     private Vector3 moveInput;
@@ -11,13 +12,14 @@ public class CharacterStateStandRoll : IActionState<BaseCharacter>
     private Vector3 horizontalDirection;
     private Vector3 moveDirection;
 
-    public CharacterStateStandRoll()
+    public CharacterStateStandRoll(BaseCharacter character)
     {
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_STAND_ROLL;
         animationNameHash = Constants.ANIMATION_NAME_HASH_STAND_ROLL;
+        this.character = character;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         // 키보드 입력 방향으로 회피
         moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
@@ -30,14 +32,14 @@ public class CharacterStateStandRoll : IActionState<BaseCharacter>
         character.Animator.Play(animationNameHash);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         // !! When animation is over
         if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_IDLE, 0.9f))
             return;
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
         character.IsInvincible = false;
     }

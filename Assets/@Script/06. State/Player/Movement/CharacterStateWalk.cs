@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateWalk : IActionState<BaseCharacter>
+public class CharacterStateWalk : IActionState
 {
+    private BaseCharacter character;
     private int stateWeight;
     private int animationNameHash;
     private float walkSpeed;
@@ -12,18 +13,19 @@ public class CharacterStateWalk : IActionState<BaseCharacter>
     private Vector3 horizontalDirection;
     private Vector3 moveDirection;
 
-    public CharacterStateWalk()
+    public CharacterStateWalk(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_WALK;
         animationNameHash = Constants.ANIMATION_NAME_HASH_WALK;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         character.Animator.CrossFade(animationNameHash, 0.2f);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
@@ -50,7 +52,7 @@ public class CharacterStateWalk : IActionState<BaseCharacter>
         }
 
         // Move
-        if (character.IsGround)
+        if (character.FallController.IsGround())
         {
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = 0;
@@ -96,7 +98,7 @@ public class CharacterStateWalk : IActionState<BaseCharacter>
         }
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
     }
 

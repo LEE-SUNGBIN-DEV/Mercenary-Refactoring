@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateCompete : IActionState<BaseEnemy>
+public class EnemyStateCompete : IActionState
 {
+    private BaseEnemy enemy;
     private int stateWeight;
 
-    public EnemyStateCompete()
+    public EnemyStateCompete(BaseEnemy enemy)
     {
+        this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_COMPETE;
     }
 
-    public void Enter(BaseEnemy enemy)
+    public void Enter()
     {
         // Set Compete State
         enemy.IsInvincible = true;
@@ -19,12 +21,12 @@ public class EnemyStateCompete : IActionState<BaseEnemy>
         enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
     }
 
-    public void Update(BaseEnemy enemy)
+    public void Update()
     {
         enemy.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
     }
 
-    public void Exit(BaseEnemy enemy)
+    public void Exit()
     {
         enemy.IsInvincible = false;
     }

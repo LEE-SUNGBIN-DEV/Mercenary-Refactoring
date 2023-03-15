@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateIdle : IActionState<BaseEnemy>
+public class EnemyStateIdle : IActionState
 {
+    private BaseEnemy enemy;
     private int stateWeight;
     private float idleTime;
     private float patrolInterval;
     private int idleAnimationNameHash;
 
-    public EnemyStateIdle()
+    public EnemyStateIdle(BaseEnemy enemy)
     {
+        this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_IDLE;
         idleAnimationNameHash = Constants.ANIMATION_NAME_HASH_IDLE;
     }
 
-    public void Enter(BaseEnemy enemy)
+    public void Enter()
     {
         idleTime = 0f;
         patrolInterval = Random.Range(Constants.TIME_ENEMY_MIN_PATROL, Constants.TIME_ENEMY_MAX_PATROL);
@@ -24,7 +26,7 @@ public class EnemyStateIdle : IActionState<BaseEnemy>
         enemy.Animator.CrossFade(idleAnimationNameHash, 0.2f);
     }
 
-    public void Update(BaseEnemy enemy)
+    public void Update()
     {
         // 탐지 가능한 상태라면
         // Idle -> Chase
@@ -44,7 +46,7 @@ public class EnemyStateIdle : IActionState<BaseEnemy>
         }
     }
 
-    public void Exit(BaseEnemy enemy)
+    public void Exit()
     {
     }
 

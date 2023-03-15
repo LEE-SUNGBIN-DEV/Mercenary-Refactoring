@@ -2,24 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateStun : IActionState<BaseCharacter>, IDurationState
+public class CharacterStateStun : IActionState, IDurationState
 {
+    private BaseCharacter character;
     private int stateWeight;
     private float duration;
     private int animationNameHash;
 
-    public CharacterStateStun()
+    public CharacterStateStun(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_STUN;
         animationNameHash = Constants.ANIMATION_NAME_HASH_STUN;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         character.Animator.Play(animationNameHash);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         if (duration <= 0f)
             character.State.SetState(ACTION_STATE.PLAYER_IDLE, STATE_SWITCH_BY.FORCED);
@@ -27,7 +29,7 @@ public class CharacterStateStun : IActionState<BaseCharacter>, IDurationState
         duration -= Time.deltaTime;
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
         duration = 0f;
     }

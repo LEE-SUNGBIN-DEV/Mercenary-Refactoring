@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateSkillCounter : IActionState<BaseCharacter>
+public class CharacterStateSkillCounter : IActionState
 {
+    private BaseCharacter character;
     private int stateWeight;
     private int animationNameHash;
     private Vector3 moveInput;
@@ -11,13 +12,14 @@ public class CharacterStateSkillCounter : IActionState<BaseCharacter>
     private Vector3 horizontalDirection;
     private Vector3 moveDirection;
 
-    public CharacterStateSkillCounter()
+    public CharacterStateSkillCounter(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_SKILL_COUNTER;
         animationNameHash = Constants.ANIMATION_NAME_HASH_SKILL_COUNTER;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         // 키보드 입력 방향으로 공격
         moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
@@ -30,7 +32,7 @@ public class CharacterStateSkillCounter : IActionState<BaseCharacter>
         character.Animator.CrossFade(animationNameHash, 0.1f);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
@@ -43,7 +45,7 @@ public class CharacterStateSkillCounter : IActionState<BaseCharacter>
             return;
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
     }
 

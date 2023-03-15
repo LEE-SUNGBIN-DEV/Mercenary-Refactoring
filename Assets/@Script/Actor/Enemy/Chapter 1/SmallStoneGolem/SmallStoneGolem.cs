@@ -9,17 +9,17 @@ public class SmallStoneGolem : BaseEnemy, IStunable
     {
         base.Awake();
 
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_SPAWN, new EnemyStateSpawn());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_PATROL, new EnemyStatePatrol());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE_WAIT, new EnemyStateChaseWait());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE_WALK, new EnemyStateChaseWalk());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE_RUN, new EnemyStateChaseRun());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_SKILL, new EnemyStateSkill());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_SPAWN, new EnemyStateSpawn(this));
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_PATROL, new EnemyStatePatrol(this));
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE_WAIT, new EnemyStateChaseWait(this));
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE_WALK, new EnemyStateChaseWalk(this));
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_CHASE_RUN, new EnemyStateChaseRun(this));
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_SKILL, new EnemyStateSkill(this));
 
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_LIGHT, new EnemyStateLightHit());
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_HEAVY, new EnemyStateHeavyHit());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_LIGHT, new EnemyStateLightHit(this));
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_HEAVY, new EnemyStateHeavyHit(this));
 
-        state.StateDictionary.Add(ACTION_STATE.ENEMY_STUN, new EnemyStateStun());
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_STUN, new EnemyStateStun(this));
     }
 
     public override void Update()
@@ -46,7 +46,7 @@ public class SmallStoneGolem : BaseEnemy, IStunable
     public override void OnDie()
     {
         IsDie = true;
-        state?.SetState(ACTION_STATE.ENEMY_DIE, STATE_SWITCH_BY.WEIGHT);
+        state?.SetState(ACTION_STATE.COMMON_DIE, STATE_SWITCH_BY.WEIGHT);
 
         StartCoroutine(WaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
     }

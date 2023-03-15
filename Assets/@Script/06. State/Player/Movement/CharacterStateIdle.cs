@@ -2,26 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateIdle : IActionState<BaseCharacter>
+public class CharacterStateIdle : IActionState
 {
+    private BaseCharacter character;
     private int stateWeight;
     private int animationNameHash;
     private Vector3 moveInput;
 
-    public CharacterStateIdle()
+    public CharacterStateIdle(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_IDLE;
         animationNameHash = Constants.ANIMATION_NAME_HASH_IDLE;
         moveInput = Vector3.zero;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         moveInput = Vector3.zero;
         character.Animator.CrossFade(animationNameHash, 0.2f);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
@@ -49,7 +51,7 @@ public class CharacterStateIdle : IActionState<BaseCharacter>
 
         moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
-        if(character.IsGround)
+        if(character.FallController.IsGround())
         {
             character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY);
             if (moveInput.sqrMagnitude > 0)
@@ -75,7 +77,7 @@ public class CharacterStateIdle : IActionState<BaseCharacter>
         }        
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
     }
 

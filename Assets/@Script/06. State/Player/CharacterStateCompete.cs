@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateCompete : IActionState<BaseCharacter>
+public class CharacterStateCompete : IActionState
 {
+    private BaseCharacter character;
     private int stateWeight;
 
-    public CharacterStateCompete()
+    public CharacterStateCompete(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_COMPETE;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         // Set Compete State
         character.IsInvincible = true;
@@ -19,7 +21,7 @@ public class CharacterStateCompete : IActionState<BaseCharacter>
         character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
 
@@ -27,7 +29,7 @@ public class CharacterStateCompete : IActionState<BaseCharacter>
             character.State.SetState(ACTION_STATE.PLAYER_WALK, STATE_SWITCH_BY.FORCED);
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
         character.IsInvincible = false;
     }

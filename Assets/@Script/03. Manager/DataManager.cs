@@ -36,7 +36,7 @@ public class DataManager
     public void Initialize()
     {
         playerDataPath = Application.dataPath + "Player_Data.json";
-        levelTablePath = Application.dataPath + "/Table/Level_Table.json";
+        levelTablePath = Application.dataPath + "/@Table/Level_Table.json";
         questTablePath = Application.dataPath + "/Table/Quest_Table.json";
 
         //

@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyStatePatrol : IActionState<BaseEnemy>
+public class EnemyStatePatrol : IActionState
 {
+    private BaseEnemy enemy;
     private int stateWeight;
     private int walkAnimationNameHash;
     private Vector3 destination;
 
-    public EnemyStatePatrol()
+    public EnemyStatePatrol(BaseEnemy enemy)
     {
+        this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_PATROL;
         walkAnimationNameHash = Constants.ANIMATION_NAME_HASH_WALK;
     }
 
-    public void Enter(BaseEnemy enemy)
+    public void Enter()
     {
         Vector3 patrolPoint = enemy.SpawnPosition + Random.insideUnitSphere * Constants.ENEMY_PATROL_RANGE;
         
@@ -29,7 +31,7 @@ public class EnemyStatePatrol : IActionState<BaseEnemy>
         enemy.Animator.CrossFade(walkAnimationNameHash, 0.2f);
     }
 
-    public void Update(BaseEnemy enemy)
+    public void Update()
     {
         enemy.NavMeshAgent.speed = enemy.Status.MoveSpeed;
 
@@ -47,7 +49,7 @@ public class EnemyStatePatrol : IActionState<BaseEnemy>
         }
     }
 
-    public void Exit(BaseEnemy enemy)
+    public void Exit()
     {
     }
 

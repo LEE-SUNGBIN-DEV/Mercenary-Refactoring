@@ -2,25 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateLightHit : IActionState<BaseEnemy>
+public class EnemyStateLightHit : IActionState
 {
+    private BaseEnemy enemy;
     private int stateWeight;
 
-    public EnemyStateLightHit()
+    public EnemyStateLightHit(BaseEnemy enemy)
     {
+        this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_HIT_LIGHT;
     }
 
-    public void Enter(BaseEnemy enemy)
+    public void Enter()
     {
         enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_LIGHT_HIT);
     }
 
-    public void Update(BaseEnemy enemy)
+    public void Update()
     {
     }
 
-    public void Exit(BaseEnemy enemy)
+    public void Exit()
     {
     }
 
