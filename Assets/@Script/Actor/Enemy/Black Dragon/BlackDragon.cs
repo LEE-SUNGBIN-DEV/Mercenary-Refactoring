@@ -9,7 +9,8 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
     {
         base.Awake();
 
-        state = new EnemyFSM(this);
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_STAGGER, new EnemyStateStagger(this));
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_COMPETE, new EnemyStateCompete(this));
     }
 
     public override void OnEnable()

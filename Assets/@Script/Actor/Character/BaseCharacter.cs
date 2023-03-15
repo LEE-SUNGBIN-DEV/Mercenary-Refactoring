@@ -12,7 +12,6 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
     [SerializeField] protected Vector3 cameraOffset;
 
     protected PlayerCamera playerCamera;
-    protected CharacterFSM state;
     protected StatusEffectController<BaseCharacter> statusEffectController;
 
     protected PlayerAttackController weapon;
@@ -21,7 +20,43 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
     public override void Awake()
     {
         base.Awake();
-        state = new CharacterFSM(this);
+
+        #region Add Character State
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_IDLE, new CharacterStateIdle(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_WALK, new CharacterStateWalk(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_RUN, new CharacterStateRun(this));
+
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_ATTACK_LIGHT_01, new CharacterStateLightAttack01(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_ATTACK_LIGHT_02, new CharacterStateLightAttack02(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_ATTACK_LIGHT_03, new CharacterStateLightAttack03(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_ATTACK_LIGHT_04, new CharacterStateLightAttack04(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_ATTACK_HEAVY_01, new CharacterStateHeavyAttack01(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_ATTACK_HEAVY_02, new CharacterStateHeavyAttack02(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_ATTACK_HEAVY_03, new CharacterStateHeavyAttack03(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_ATTACK_HEAVY_04, new CharacterStateHeavyAttack04(this));
+
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_DEFENSE_START, new CharacterStateDefense(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_DEFENSE_LOOP, new CharacterStateDefenseLoop(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_DEFENSE_END, new CharacterStateDefenseEnd(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_DEFENSE_BREAK, new CharacterStateDefenseBreak(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_PARRYING, new CharacterStateParrying(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_PARRYING_ATTACK, new CharacterStateParryingAttack(this));
+
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_SKILL_COUNTER, new CharacterStateSkillCounter(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_ROLL, new CharacterStateRoll(this));
+
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_HIT_LIGHT, new CharacterStateLightHit(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_HIT_HEAVY, new CharacterStateHeavyHit(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_HIT_HEAVY_LOOP, new CharacterStateHeavyHitLoop(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_STAND_UP, new CharacterStateStandRoll(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_STAND_ROLL, new CharacterStateStandRoll(this));
+
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_STUN, new CharacterStateStun(this));
+
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_COMPETE, new CharacterStateCompete(this));
+        state.StateDictionary.Add(ACTION_STATE.COMMON_DIE, new CharacterStateDie(this));
+        #endregion
+        state.SetState(ACTION_STATE.PLAYER_IDLE, STATE_SWITCH_BY.FORCED);
 
 #if EDITOR_TEST
 #else
@@ -36,10 +71,12 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
 
         AdjustAttackSpeed(Status);
     }
+
     protected virtual void OnEnable()
     {
         Rebirth();
     }
+
     protected virtual void Start()
     {
         playerCamera = Managers.GameManager.PlayerCamera;
@@ -125,7 +162,6 @@ public abstract class BaseCharacter : BaseActor, ICompetable, IStunable
 
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
 
-    public CharacterFSM State { get { return state; } }
     public StatusEffectController<BaseCharacter> StatusEffectController { get { return statusEffectController; } }
 
     public PlayerAttackController Weapon { get { return weapon; } }

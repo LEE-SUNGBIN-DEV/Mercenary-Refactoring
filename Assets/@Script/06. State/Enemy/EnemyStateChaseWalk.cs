@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateChaseWalk : IActionState<BaseEnemy>
+public class EnemyStateChaseWalk : IActionState
 {
+    private BaseEnemy enemy;
     private int stateWeight;
     private int animationNameHash;
     private float runDistance;
 
-    public EnemyStateChaseWalk()
+    public EnemyStateChaseWalk(BaseEnemy enemy)
     {
+        this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_CHASE_WALK;
         animationNameHash = Constants.ANIMATION_NAME_HASH_WALK;
     }
 
-    public void Enter(BaseEnemy enemy)
+    public void Enter()
     {
         enemy.StartMoveTo(enemy.TargetTransform.position);
         enemy.Animator.CrossFade(animationNameHash, 0.1f);
@@ -22,7 +24,7 @@ public class EnemyStateChaseWalk : IActionState<BaseEnemy>
         runDistance = enemy.Status.ChaseDistance * 0.5f;
     }
 
-    public void Update(BaseEnemy enemy)
+    public void Update()
     {
         if (enemy.IsTargetInChaseDistance())
         {
@@ -62,11 +64,11 @@ public class EnemyStateChaseWalk : IActionState<BaseEnemy>
         }
     }
 
-    public void Exit(BaseEnemy enemy)
+    public void Exit()
     {
     }
 
-    public void Stop(BaseEnemy enemy)
+    public void Stop()
     {
 
     }

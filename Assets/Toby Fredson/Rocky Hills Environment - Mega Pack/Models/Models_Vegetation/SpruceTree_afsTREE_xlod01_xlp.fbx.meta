@@ -1,0 +1,181 @@
+fileFormatVersion: 2
+guid: 3b69379deb4af404bb2f708a95e7a35b
+timeCreated: 1608310641
+licenseType: Store
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Trunk_xw06
+    4300002: Bounds
+    4300004: Leaves.009
+    4300006: Leaves.025
+    4300008: Leaves.049
+    4300010: Leaves.008
+    4300012: Leaves.020
+    4300014: Leaves.060
+    4300016: Branch_xw005_xt02_xp05
+    4300018: Leaves.027
+    4300020: Leaves.035
+    4300022: Leaves.018
+    4300024: Leaves.004
+    4300026: Branch.017_xw005_xt02_xp03
+    4300028: Leaves.028
+    4300030: Leaves.000
+    4300032: Leaves.003
+    4300034: Leaves.106
+    4300036: Leaves.104
+    4300038: Leaves.085
+    4300040: Branch.016_xw005_xt02_xp05
+    4300042: Leaves.041
+    4300044: Leaves.039
+    4300046: Leaves.005
+    4300048: Leaves.034
+    4300050: Branch.015_xw005_xt03_xp06
+    4300052: Leaves.045
+    4300054: Leaves.043
+    4300056: Leaves.038
+    4300058: Leaves.030
+    4300060: Leaves.001
+    4300062: Branch.014_xw005_xt03_xp07
+    4300064: Leaves.019
+    4300066: Leaves.121
+    4300068: Leaves.061
+    4300070: Leaves.047
+    4300072: Leaves.033
+    4300074: Branch.013_xw005_xt01_xp03
+    4300076: Leaves.014
+    4300078: Leaves.029
+    4300080: Leaves.062
+    4300082: Leaves.057
+    4300084: Leaves.053
+    4300086: Branch.012_xw005_xt03_xp03
+    4300088: Leaves.046
+    4300090: Leaves.016
+    4300092: Leaves.021
+    4300094: Leaves.013
+    4300096: Leaves.022
+    4300098: Branch.011_xw005_xt02_xp04
+    4300100: Leaves.050
+    4300102: Leaves.054
+    4300104: Leaves.032
+    4300106: Leaves.114
+    4300108: Leaves.017
+    4300110: Branch.010_xw005_xt02_xp03
+    4300112: Leaves.011
+    4300114: Leaves.024
+    4300116: Leaves.012
+    4300118: Leaves.119
+    4300120: Leaves.056
+    4300122: Branch.009_xw005_xt02_xp05
+    4300124: Leaves.122
+    4300126: Leaves.023
+    4300128: Leaves.026
+    4300130: Branch.008_xw005_xt02_xp02
+    4300132: Leaves.015
+    4300134: Leaves.037
+    4300136: Leaves.048
+    4300138: Branch.007_xw005_xt01_xp03
+    4300140: Leaves.010
+    4300142: Leaves.116
+    4300144: Leaves.063
+    4300146: Branch.006_xw005_xt01_xp02
+    4300148: Leaves.052
+    4300150: Leaves.055
+    4300152: Branch.005_xw005_xt01_xp02
+    4300154: Leaves.058
+    4300156: Leaves.051
+    4300158: Branch.001_xw005_xt02_xp05
+    4300160: Leaves.042
+    4300162: Leaves.040
+    4300164: Leaves.031
+    4300166: Leaves.044
+    4300168: Leaves.002
+    4300170: Branch.002_xw005_xt02_xp02
+    4300172: Leaves.059
+    4300174: Leaves.006
+    4300176: Branch.003_xw005_xt01_xp01
+    4300178: Leaves.115
+    4300180: Leaves.007
+    4300182: Branch.004_xw005_xt01_xp02
+    4300184: Leaves.120
+    4300186: Leaves.036
+    19300000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

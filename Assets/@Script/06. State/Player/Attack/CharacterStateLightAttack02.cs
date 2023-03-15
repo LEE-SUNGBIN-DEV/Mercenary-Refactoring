@@ -2,22 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateLightAttack02 : IActionState<BaseCharacter>
+public class CharacterStateLightAttack02 : IActionState
 {
+    private BaseCharacter character;
     private int stateWeight;
     private int animationNameHash;
     private bool mouseLeftDown;
     private bool mouseRightDown;
 
-    public CharacterStateLightAttack02()
+    public CharacterStateLightAttack02(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_LIGHT_02;
         animationNameHash = Constants.ANIMATION_NAME_HASH_LIGHT_ATTACK_02;
         mouseLeftDown = false;
         mouseRightDown = false;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         mouseLeftDown = false;
         mouseRightDown = false;
@@ -25,7 +27,7 @@ public class CharacterStateLightAttack02 : IActionState<BaseCharacter>
         character.Animator.CrossFade(animationNameHash, 0.1f);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
@@ -62,7 +64,7 @@ public class CharacterStateLightAttack02 : IActionState<BaseCharacter>
             return;
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
     }
 

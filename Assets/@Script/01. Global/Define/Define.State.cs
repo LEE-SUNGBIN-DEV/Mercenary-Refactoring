@@ -1,5 +1,9 @@
 public enum ACTION_STATE
 {
+    // Common State
+    COMMON_FALL = 20000,
+    COMMON_DIE = 24096,
+
     // Player State
     PLAYER_IDLE = 0,
     PLAYER_WALK = 1,
@@ -25,6 +29,7 @@ public enum ACTION_STATE
     PLAYER_SKILL_COUNTER = 128,
 
     PLAYER_ROLL = 256,
+    PLAYER_LANDING = 258,
 
     PLAYER_HIT_LIGHT = 512,
     PLAYER_HIT_HEAVY = 513,
@@ -36,7 +41,6 @@ public enum ACTION_STATE
 
     PLAYER_COMPETE = 1024,
     PLAYER_SPAWN = 2048,
-    PLAYER_DIE = 4096,
 
     // Enemy State
     ENEMY_IDLE = 10000,
@@ -57,7 +61,6 @@ public enum ACTION_STATE
     ENEMY_COMPETE_DEFEAT = 11025,
 
     ENEMY_SPAWN = 12048,
-    ENEMY_DIE = 14096
 }
 
 public enum ACTION_STATE_WEIGHT
@@ -87,6 +90,8 @@ public enum ACTION_STATE_WEIGHT
     PLAYER_SKILL_COUNTER = 32,
 
     PLAYER_ROLL = 64,
+    PLAYER_FALL = 65,
+    PLAYER_LANDING = 66,
 
     PLAYER_HIT_LIGHT = 512,
     PLAYER_HIT_HEAVY = 513,

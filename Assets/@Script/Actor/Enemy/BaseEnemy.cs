@@ -14,8 +14,7 @@ public abstract class BaseEnemy : BaseActor
     [SerializeField] protected EnemyData status;
     protected Vector3 spawnPosition;
 
-    [Header("State")]
-    [SerializeField] protected EnemyFSM state;
+    [Header("Status Effect")]
     [SerializeField] protected StatusEffectController<BaseEnemy> statusEffectControler;
 
     [Header("Skill")]
@@ -32,15 +31,18 @@ public abstract class BaseEnemy : BaseActor
     public override void Awake()
     {
         base.Awake();
-        TryGetComponent(out navMeshAgent);
 
-        state = new EnemyFSM(this);
+        TryGetComponent(out navMeshAgent);
         skillArray = GetComponents<EnemySkill>();
 
         for (int i = 0; i < skillArray.Length; ++i)
         {
             skillArray[i].Initialize(this);
         }
+
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_IDLE, new EnemyStateIdle(this));
+        state.StateDictionary.Add(ACTION_STATE.COMMON_DIE, new EnemyStateDie(this));
+        state.SetState(ACTION_STATE.PLAYER_IDLE, STATE_SWITCH_BY.FORCED);
     }
 
     public virtual void OnEnable()
@@ -208,7 +210,6 @@ public abstract class BaseEnemy : BaseActor
     public Vector3 SpawnPosition { get { return spawnPosition; } }
     public EnemySkill CurrentSkill { get { return currentSkill; } set { currentSkill = value; } }
     public NavMeshAgent NavMeshAgent { get { return navMeshAgent; } }
-    public EnemyFSM State { get { return state; } }
     public StatusEffectController<BaseEnemy> StatusEffectControler { get { return statusEffectControler; } }
 
     public Transform TargetTransform { get { return targetTransform; } set { targetTransform = value; } }

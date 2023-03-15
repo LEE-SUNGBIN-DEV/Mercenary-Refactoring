@@ -2,25 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateHeavyHit : IActionState<BaseCharacter>
+public class CharacterStateHeavyHit : IActionState
 {
+    private BaseCharacter character;
     private int stateWeight;
     private int animationNameHash;
     private Animator animator;
 
-    public CharacterStateHeavyHit()
+    public CharacterStateHeavyHit(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_HEAVY;
         animationNameHash = Constants.ANIMATION_NAME_HASH_HEAVY_HIT;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         animator = character.Animator;
         animator.Play(animationNameHash);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
         // !! When animation is over
         if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HIT_HEAVY_LOOP, 1.0f))
@@ -29,7 +31,7 @@ public class CharacterStateHeavyHit : IActionState<BaseCharacter>
         }
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
     }
 

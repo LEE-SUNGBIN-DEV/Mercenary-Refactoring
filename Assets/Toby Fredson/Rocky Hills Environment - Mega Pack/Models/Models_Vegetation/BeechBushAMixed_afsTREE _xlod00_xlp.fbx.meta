@@ -1,0 +1,401 @@
+fileFormatVersion: 2
+guid: 9116e2876ef3b3644a6712aa8d510819
+labels:
+- cave
+- cliff
+- cti
+- details
+- environment
+- flowers
+- grass
+- helpers
+- leaves
+- lod
+- nature
+- particles
+- pbr
+- rocks
+- rockyhills
+- stone
+- tress
+- wood
+timeCreated: 1544464247
+licenseType: Store
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: BeechBushAMixed_Branch.001_xw02_xp04
+    100004: BeechBushAMixed_Branch_xp08_xw005
+    100006: BeechBushAMixed_Leaf.011
+    100008: BeechBushAMixed_Leaf.019
+    100010: BeechBushAMixed_Leaf.021
+    100012: BeechBushAMixed_Leaf.024
+    100014: BeechBushAMixed_Leaf.026
+    100016: BeechBushAMixed_Leaf.027
+    100018: BeechBushAMixed_Leaf.028
+    100020: BeechBushAMixed_Leaf.029
+    100022: BeechBushAMixed_Leaf.030
+    100024: BeechBushAMixed_Leaf.031
+    100026: BeechBushAMixed_Leaf.032
+    100028: BeechBushAMixed_Leaf.033
+    100030: BeechBushAMixed_Leaf.034
+    100032: BeechBushAMixed_Leaf.035
+    100034: BeechBushAMixed_Leaf.036
+    100036: BeechBushAMixed_Leaf.037
+    100038: BeechBushAMixed_Leaf.038
+    100040: BeechBushAMixed_Leaf.039
+    100042: BeechBushAMixed_Leaf.040
+    100044: BeechBushAMixed_Leaf.041
+    100046: BeechBushAMixed_Leaf.042
+    100048: BeechBushAMixed_Leaf.043
+    100050: BeechBushAMixed_Trunk
+    100052: bounds.001
+    100054: BeechBushAMixed_Branch
+    100056: BeechBushAMixed_Branch.001
+    100058: BeechBushAMixed_Leaf.011_xt01_xlp02_xp01
+    100060: BeechBushAMixed_Leaf.019_xt01_xlp01_xp01
+    100062: BeechBushAMixed_Leaf.021_xt01_xlp01_xp01
+    100064: BeechBushAMixed_Leaf.024_xt04_xlp04_xp02
+    100066: BeechBushAMixed_Leaf.026_xt01_xlp02_xp03
+    100068: BeechBushAMixed_Leaf.027_xt01_xlp01_xp01
+    100070: BeechBushAMixed_Leaf.028_xt01_xlp02_xp01
+    100072: BeechBushAMixed_Leaf.029_xt01_xlp01_xp02
+    100074: BeechBushAMixed_Leaf.030_xt01_xlp01_xp01
+    100076: BeechBushAMixed_Leaf.031_xt01_xlp01_xp01
+    100078: BeechBushAMixed_Leaf.032_xt01_xlp02_xp00
+    100080: BeechBushAMixed_Leaf.033_xt01_xlp01_xp00
+    100082: BeechBushAMixed_Leaf.034_xt01_xlp01_xp02
+    100084: BeechBushAMixed_Leaf.035_xt02_xlp02_xp01
+    100086: BeechBushAMixed_Leaf.036_xt02_xlp01_xp01
+    100088: BeechBushAMixed_Leaf.037_xt02_xlp02_xp01
+    100090: BeechBushAMixed_Leaf.038_xt02_xlp01_xp00
+    100092: BeechBushAMixed_Leaf.039_xt01_xlp01_xp02
+    100094: BeechBushAMixed_Leaf.040_xt02_xlp02_xp01
+    100096: BeechBushAMixed_Leaf.041_xt01_xlp01_xp01
+    100098: BeechBushAMixed_Leaf.042_xt01_xlp01_xp01
+    100100: BeechBushAMixed_Leaf.043_xt01_xlp01_xp01
+    400000: //RootNode
+    400002: BeechBushAMixed_Branch.001_xw02_xp04
+    400004: BeechBushAMixed_Branch_xp08_xw005
+    400006: BeechBushAMixed_Leaf.011
+    400008: BeechBushAMixed_Leaf.019
+    400010: BeechBushAMixed_Leaf.021
+    400012: BeechBushAMixed_Leaf.024
+    400014: BeechBushAMixed_Leaf.026
+    400016: BeechBushAMixed_Leaf.027
+    400018: BeechBushAMixed_Leaf.028
+    400020: BeechBushAMixed_Leaf.029
+    400022: BeechBushAMixed_Leaf.030
+    400024: BeechBushAMixed_Leaf.031
+    400026: BeechBushAMixed_Leaf.032
+    400028: BeechBushAMixed_Leaf.033
+    400030: BeechBushAMixed_Leaf.034
+    400032: BeechBushAMixed_Leaf.035
+    400034: BeechBushAMixed_Leaf.036
+    400036: BeechBushAMixed_Leaf.037
+    400038: BeechBushAMixed_Leaf.038
+    400040: BeechBushAMixed_Leaf.039
+    400042: BeechBushAMixed_Leaf.040
+    400044: BeechBushAMixed_Leaf.041
+    400046: BeechBushAMixed_Leaf.042
+    400048: BeechBushAMixed_Leaf.043
+    400050: BeechBushAMixed_Trunk
+    400052: bounds.001
+    400054: BeechBushAMixed_Branch
+    400056: BeechBushAMixed_Branch.001
+    400058: BeechBushAMixed_Leaf.011_xt01_xlp02_xp01
+    400060: BeechBushAMixed_Leaf.019_xt01_xlp01_xp01
+    400062: BeechBushAMixed_Leaf.021_xt01_xlp01_xp01
+    400064: BeechBushAMixed_Leaf.024_xt04_xlp04_xp02
+    400066: BeechBushAMixed_Leaf.026_xt01_xlp02_xp03
+    400068: BeechBushAMixed_Leaf.027_xt01_xlp01_xp01
+    400070: BeechBushAMixed_Leaf.028_xt01_xlp02_xp01
+    400072: BeechBushAMixed_Leaf.029_xt01_xlp01_xp02
+    400074: BeechBushAMixed_Leaf.030_xt01_xlp01_xp01
+    400076: BeechBushAMixed_Leaf.031_xt01_xlp01_xp01
+    400078: BeechBushAMixed_Leaf.032_xt01_xlp02_xp00
+    400080: BeechBushAMixed_Leaf.033_xt01_xlp01_xp00
+    400082: BeechBushAMixed_Leaf.034_xt01_xlp01_xp02
+    400084: BeechBushAMixed_Leaf.035_xt02_xlp02_xp01
+    400086: BeechBushAMixed_Leaf.036_xt02_xlp01_xp01
+    400088: BeechBushAMixed_Leaf.037_xt02_xlp02_xp01
+    400090: BeechBushAMixed_Leaf.038_xt02_xlp01_xp00
+    400092: BeechBushAMixed_Leaf.039_xt01_xlp01_xp02
+    400094: BeechBushAMixed_Leaf.040_xt02_xlp02_xp01
+    400096: BeechBushAMixed_Leaf.041_xt01_xlp01_xp01
+    400098: BeechBushAMixed_Leaf.042_xt01_xlp01_xp01
+    400100: BeechBushAMixed_Leaf.043_xt01_xlp01_xp01
+    2300000: //RootNode
+    2300002: BeechBushAMixed_Branch.001_xw02_xp04
+    2300004: BeechBushAMixed_Branch_xp08_xw005
+    2300006: BeechBushAMixed_Leaf.011
+    2300008: BeechBushAMixed_Leaf.019
+    2300010: BeechBushAMixed_Leaf.021
+    2300012: BeechBushAMixed_Leaf.024
+    2300014: BeechBushAMixed_Leaf.026
+    2300016: BeechBushAMixed_Leaf.027
+    2300018: BeechBushAMixed_Leaf.028
+    2300020: BeechBushAMixed_Leaf.029
+    2300022: BeechBushAMixed_Leaf.030
+    2300024: BeechBushAMixed_Leaf.031
+    2300026: BeechBushAMixed_Leaf.032
+    2300028: BeechBushAMixed_Leaf.033
+    2300030: BeechBushAMixed_Leaf.034
+    2300032: BeechBushAMixed_Leaf.035
+    2300034: BeechBushAMixed_Leaf.036
+    2300036: BeechBushAMixed_Leaf.037
+    2300038: BeechBushAMixed_Leaf.038
+    2300040: BeechBushAMixed_Leaf.039
+    2300042: BeechBushAMixed_Leaf.040
+    2300044: BeechBushAMixed_Leaf.041
+    2300046: BeechBushAMixed_Leaf.042
+    2300048: BeechBushAMixed_Leaf.043
+    2300050: BeechBushAMixed_Trunk
+    2300052: bounds.001
+    2300054: BeechBushAMixed_Branch
+    2300056: BeechBushAMixed_Branch.001
+    2300058: BeechBushAMixed_Leaf.011_xt01_xlp02_xp01
+    2300060: BeechBushAMixed_Leaf.019_xt01_xlp01_xp01
+    2300062: BeechBushAMixed_Leaf.021_xt01_xlp01_xp01
+    2300064: BeechBushAMixed_Leaf.024_xt04_xlp04_xp02
+    2300066: BeechBushAMixed_Leaf.026_xt01_xlp02_xp03
+    2300068: BeechBushAMixed_Leaf.027_xt01_xlp01_xp01
+    2300070: BeechBushAMixed_Leaf.028_xt01_xlp02_xp01
+    2300072: BeechBushAMixed_Leaf.029_xt01_xlp01_xp02
+    2300074: BeechBushAMixed_Leaf.030_xt01_xlp01_xp01
+    2300076: BeechBushAMixed_Leaf.031_xt01_xlp01_xp01
+    2300078: BeechBushAMixed_Leaf.032_xt01_xlp02_xp00
+    2300080: BeechBushAMixed_Leaf.033_xt01_xlp01_xp00
+    2300082: BeechBushAMixed_Leaf.034_xt01_xlp01_xp02
+    2300084: BeechBushAMixed_Leaf.035_xt02_xlp02_xp01
+    2300086: BeechBushAMixed_Leaf.036_xt02_xlp01_xp01
+    2300088: BeechBushAMixed_Leaf.037_xt02_xlp02_xp01
+    2300090: BeechBushAMixed_Leaf.038_xt02_xlp01_xp00
+    2300092: BeechBushAMixed_Leaf.039_xt01_xlp01_xp02
+    2300094: BeechBushAMixed_Leaf.040_xt02_xlp02_xp01
+    2300096: BeechBushAMixed_Leaf.041_xt01_xlp01_xp01
+    2300098: BeechBushAMixed_Leaf.042_xt01_xlp01_xp01
+    2300100: BeechBushAMixed_Leaf.043_xt01_xlp01_xp01
+    3300000: //RootNode
+    3300002: BeechBushAMixed_Branch.001_xw02_xp04
+    3300004: BeechBushAMixed_Branch_xp08_xw005
+    3300006: BeechBushAMixed_Leaf.011
+    3300008: BeechBushAMixed_Leaf.019
+    3300010: BeechBushAMixed_Leaf.021
+    3300012: BeechBushAMixed_Leaf.024
+    3300014: BeechBushAMixed_Leaf.026
+    3300016: BeechBushAMixed_Leaf.027
+    3300018: BeechBushAMixed_Leaf.028
+    3300020: BeechBushAMixed_Leaf.029
+    3300022: BeechBushAMixed_Leaf.030
+    3300024: BeechBushAMixed_Leaf.031
+    3300026: BeechBushAMixed_Leaf.032
+    3300028: BeechBushAMixed_Leaf.033
+    3300030: BeechBushAMixed_Leaf.034
+    3300032: BeechBushAMixed_Leaf.035
+    3300034: BeechBushAMixed_Leaf.036
+    3300036: BeechBushAMixed_Leaf.037
+    3300038: BeechBushAMixed_Leaf.038
+    3300040: BeechBushAMixed_Leaf.039
+    3300042: BeechBushAMixed_Leaf.040
+    3300044: BeechBushAMixed_Leaf.041
+    3300046: BeechBushAMixed_Leaf.042
+    3300048: BeechBushAMixed_Leaf.043
+    3300050: BeechBushAMixed_Trunk
+    3300052: bounds.001
+    3300054: BeechBushAMixed_Branch
+    3300056: BeechBushAMixed_Branch.001
+    3300058: BeechBushAMixed_Leaf.011_xt01_xlp02_xp01
+    3300060: BeechBushAMixed_Leaf.019_xt01_xlp01_xp01
+    3300062: BeechBushAMixed_Leaf.021_xt01_xlp01_xp01
+    3300064: BeechBushAMixed_Leaf.024_xt04_xlp04_xp02
+    3300066: BeechBushAMixed_Leaf.026_xt01_xlp02_xp03
+    3300068: BeechBushAMixed_Leaf.027_xt01_xlp01_xp01
+    3300070: BeechBushAMixed_Leaf.028_xt01_xlp02_xp01
+    3300072: BeechBushAMixed_Leaf.029_xt01_xlp01_xp02
+    3300074: BeechBushAMixed_Leaf.030_xt01_xlp01_xp01
+    3300076: BeechBushAMixed_Leaf.031_xt01_xlp01_xp01
+    3300078: BeechBushAMixed_Leaf.032_xt01_xlp02_xp00
+    3300080: BeechBushAMixed_Leaf.033_xt01_xlp01_xp00
+    3300082: BeechBushAMixed_Leaf.034_xt01_xlp01_xp02
+    3300084: BeechBushAMixed_Leaf.035_xt02_xlp02_xp01
+    3300086: BeechBushAMixed_Leaf.036_xt02_xlp01_xp01
+    3300088: BeechBushAMixed_Leaf.037_xt02_xlp02_xp01
+    3300090: BeechBushAMixed_Leaf.038_xt02_xlp01_xp00
+    3300092: BeechBushAMixed_Leaf.039_xt01_xlp01_xp02
+    3300094: BeechBushAMixed_Leaf.040_xt02_xlp02_xp01
+    3300096: BeechBushAMixed_Leaf.041_xt01_xlp01_xp01
+    3300098: BeechBushAMixed_Leaf.042_xt01_xlp01_xp01
+    3300100: BeechBushAMixed_Leaf.043_xt01_xlp01_xp01
+    4300000: BeechBushAMixed_Trunk
+    4300002: BeechBushAMixed_Leaf.021
+    4300004: BeechBushAMixed_Leaf.024
+    4300006: BeechBushAMixed_Leaf.042
+    4300008: BeechBushAMixed_Leaf.027
+    4300010: BeechBushAMixed_Leaf.026
+    4300012: BeechBushAMixed_Leaf.031
+    4300014: BeechBushAMixed_Leaf.029
+    4300016: BeechBushAMixed_Leaf.028
+    4300018: BeechBushAMixed_Leaf.032
+    4300020: BeechBushAMixed_Leaf.019
+    4300022: BeechBushAMixed_Leaf.036
+    4300024: BeechBushAMixed_Branch.001_xw02_xp04
+    4300026: BeechBushAMixed_Leaf.033
+    4300028: BeechBushAMixed_Leaf.035
+    4300030: BeechBushAMixed_Leaf.037
+    4300032: BeechBushAMixed_Leaf.039
+    4300034: BeechBushAMixed_Leaf.038
+    4300036: BeechBushAMixed_Leaf.034
+    4300038: BeechBushAMixed_Branch_xp08_xw005
+    4300040: BeechBushAMixed_Leaf.040
+    4300042: BeechBushAMixed_Leaf.011
+    4300044: BeechBushAMixed_Leaf.041
+    4300046: BeechBushAMixed_Leaf.043
+    4300048: BeechBushAMixed_Leaf.030
+    4300050: bounds
+    4300052: bounds.001
+    4300054: BeechBushAMixed_Leaf.021_xt01_xlp01_xp01
+    4300056: BeechBushAMixed_Leaf.024_xt04_xlp04_xp02
+    4300058: BeechBushAMixed_Leaf.042_xt01_xlp01_xp01
+    4300060: BeechBushAMixed_Leaf.027_xt01_xlp01_xp01
+    4300062: BeechBushAMixed_Leaf.026_xt01_xlp02_xp03
+    4300064: BeechBushAMixed_Leaf.031_xt01_xlp01_xp01
+    4300066: BeechBushAMixed_Leaf.029_xt01_xlp01_xp02
+    4300068: BeechBushAMixed_Leaf.028_xt01_xlp02_xp01
+    4300070: BeechBushAMixed_Leaf.032_xt01_xlp02_xp00
+    4300072: BeechBushAMixed_Leaf.019_xt01_xlp01_xp01
+    4300074: BeechBushAMixed_Leaf.036_xt02_xlp01_xp01
+    4300076: BeechBushAMixed_Branch.001
+    4300078: BeechBushAMixed_Leaf.033_xt01_xlp01_xp00
+    4300080: BeechBushAMixed_Leaf.035_xt02_xlp02_xp01
+    4300082: BeechBushAMixed_Leaf.037_xt02_xlp02_xp01
+    4300084: BeechBushAMixed_Leaf.039_xt01_xlp01_xp02
+    4300086: BeechBushAMixed_Leaf.038_xt02_xlp01_xp00
+    4300088: BeechBushAMixed_Leaf.034_xt01_xlp01_xp02
+    4300090: BeechBushAMixed_Branch
+    4300092: BeechBushAMixed_Leaf.040_xt02_xlp02_xp01
+    4300094: BeechBushAMixed_Leaf.011_xt01_xlp02_xp01
+    4300096: BeechBushAMixed_Leaf.041_xt01_xlp01_xp01
+    4300098: BeechBushAMixed_Leaf.043_xt01_xlp01_xp01
+    4300100: BeechBushAMixed_Leaf.030_xt01_xlp01_xp01
+    4300102: BeechBushAMixed_Trunk_xt01_xlp01_xp01
+    4300104: BeechBushAMixed_Branch.001_xt01_xlp01_xp01
+    4300106: BeechBushAMixed_Branch_xt01_xlp01_xp01
+    4300108: BeechBushAFallTrunk
+    4300110: BeechBushAFall_Leaf.058_xt01_xlp01_xp01
+    4300112: BeechBushAFall_Leaf.045_xt01_xlp01_xp01
+    4300114: BeechBushAFall_Leaf.054_xt01_xlp01_xp01
+    4300116: BeechBushAFall_Leaf.050_xt01_xlp01_xp01
+    4300118: BeechBushAFall_Leaf.051_xt01_xlp01_xp01
+    4300120: BeechBushAFall_Leaf.053_xt01_xlp01_xp01
+    4300122: BeechBushAFall_Leaf.048_xt01_xlp01_xp01
+    4300124: BeechBushAFall_Leaf.049_xt01_xlp01_xp01
+    4300126: BeechBushAFall_Leaf.064_xt01_xlp01_xp01
+    4300128: BeechBushAFall_Leaf.047_xt01_xlp01_xp01
+    4300130: BeechBushAFall_Leaf.046_xt01_xlp01_xp01
+    4300132: BeechBushAFall_Branch_xt01_xlp01_xp01
+    4300134: BeechBushAFall_Leaf.044_xt01_xlp01_xp01
+    4300136: BeechBushAFall_Leaf.052_xt01_xlp01_xp01
+    4300138: BeechBushAFall_Leaf.062_xt01_xlp01_xp01
+    4300140: BeechBushAFall_Leaf.063_xt01_xlp01_xp01
+    4300142: BeechBushAFall_Leaf.065_xt01_xlp01_xp01
+    4300144: BeechBushAFall_Branch.001_xt01_xlp01_xp01
+    4300146: BeechBushAFall_Leaf.056_xt01_xlp01_xp01
+    4300148: BeechBushAFall_Leaf.061_xt01_xlp01_xp01
+    4300150: BeechBushAFall_Leaf.055_xt01_xlp01_xp01
+    4300152: BeechBushAFall_Leaf.059_xt01_xlp01_xp01
+    4300154: BeechBushAFall_Leaf.060_xt01_xlp01_xp01
+    4300156: BeechBushAFall_Leaf.057_xt01_xlp01_xp01
+    4300158: bounds.000
+    4300160: BeechBushAMixed_Leaf.011_xt01_xlp01_xp01
+    4300162: BeechBushAMixed_Leaf.040_xt01_xlp01_xp01
+    4300164: BeechBushAMixed_Leaf.034_xt01_xlp01_xp01
+    4300166: BeechBushAMixed_Leaf.038_xt01_xlp01_xp01
+    4300168: BeechBushAMixed_Leaf.039_xt01_xlp01_xp01
+    4300170: BeechBushAMixed_Leaf.037_xt01_xlp01_xp01
+    4300172: BeechBushAMixed_Leaf.035_xt01_xlp01_xp01
+    4300174: BeechBushAMixed_Leaf.033_xt01_xlp01_xp01
+    4300176: BeechBushAMixed_Leaf.036_xt01_xlp01_xp01
+    4300178: BeechBushAMixed_Leaf.032_xt01_xlp01_xp01
+    4300180: BeechBushAMixed_Leaf.028_xt01_xlp01_xp01
+    4300182: BeechBushAMixed_Leaf.029_xt01_xlp01_xp01
+    4300184: BeechBushAMixed_Leaf.026_xt01_xlp01_xp01
+    4300186: BeechBushAMixed_Leaf.024_xt01_xlp01_xp01
+    4300188: BeechBushAMixed_Leaf.024_xt01_xlp04_xp02
+    19300000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: models
+  assetBundleVariant: 

@@ -2,22 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateSkill : IActionState<BaseEnemy>
+public class EnemyStateSkill : IActionState
 {
+    private BaseEnemy enemy;
     private int stateWeight;
     private bool isDone;
     private float rotationTime;
     private float timer;
 
-    public EnemyStateSkill()
+    public EnemyStateSkill(BaseEnemy enemy)
     {
+        this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_SKILL;
         isDone = false;
         rotationTime = 0.5f;
         timer = 0f;
     }
 
-    public void Enter(BaseEnemy enemy)
+    public void Enter()
     {
         isDone = false;
         timer = 0f;
@@ -26,7 +28,7 @@ public class EnemyStateSkill : IActionState<BaseEnemy>
         enemy.CurrentSkill.ActiveSkill();
     }
 
-    public void Update(BaseEnemy enemy)
+    public void Update()
     {
         if(timer < rotationTime)
         {
@@ -41,7 +43,7 @@ public class EnemyStateSkill : IActionState<BaseEnemy>
         }
     }
 
-    public void Exit(BaseEnemy enemy)
+    public void Exit()
     {
         enemy.CurrentSkill.OnEndSkill -= IsDone;
         enemy.CurrentSkill.StopSkillCoroutine();

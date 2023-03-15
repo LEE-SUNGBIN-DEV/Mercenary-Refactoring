@@ -27,6 +27,7 @@ public class PlayerCharacter : BaseCharacter
         base.Update();
         Managers.InputManager?.UpdateUIInput();
         state?.Update();
+        fallController.Update();
     }
 
     #region Animation Event

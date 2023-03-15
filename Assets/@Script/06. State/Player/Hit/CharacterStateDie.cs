@@ -2,25 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStateDie : IActionState<BaseCharacter>
+public class CharacterStateDie : IActionState
 {
+    private BaseCharacter character;
     private int stateWeight;
 
-    public CharacterStateDie()
+    public CharacterStateDie(BaseCharacter character)
     {
+        this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_DIE;
     }
 
-    public void Enter(BaseCharacter character)
+    public void Enter()
     {
         character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_DIE);
     }
 
-    public void Update(BaseCharacter character)
+    public void Update()
     {
     }
 
-    public void Exit(BaseCharacter character)
+    public void Exit()
     {
     }
 

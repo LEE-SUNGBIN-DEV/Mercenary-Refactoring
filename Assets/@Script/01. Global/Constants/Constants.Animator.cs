@@ -40,6 +40,10 @@ public static partial class Constants
     // Roll
     public static readonly int ANIMATION_NAME_HASH_ROLL = Animator.StringToHash("Roll");
 
+    // Falling
+    public static readonly int ANIMATION_NAME_HASH_FALL = Animator.StringToHash("Fall");
+    public static readonly int ANIMATION_NAME_HASH_LANDING = Animator.StringToHash("Landing");
+
     // Hit
     public static readonly int ANIMATION_NAME_HASH_LIGHT_HIT = Animator.StringToHash("Light_Hit");
     public static readonly int ANIMATION_NAME_HASH_HEAVY_HIT = Animator.StringToHash("Heavy_Hit");
