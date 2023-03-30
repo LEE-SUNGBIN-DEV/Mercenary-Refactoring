@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class BaseCamera : MonoBehaviour
 {
-    [SerializeField] protected Camera thisCamera;
+    [SerializeField] protected Camera targetCamera;
     [SerializeField] protected Transform targetTransform;
-    protected Vector3 targetOffset;
+    [SerializeField] protected Vector3 cameraPositionOffset;
+    [SerializeField] protected Vector3 cameraRotationOffset;
     protected Vector3 originalPosition;
     protected IEnumerator shakeCoroutine;
     
     protected virtual void Awake()
     {
-        thisCamera = GetComponentInChildren<Camera>();
+        if(targetCamera == null)
+            targetCamera = GetComponentInChildren<Camera>();
     }
 
     public void SetCameraTransform(Transform targetTransform)
@@ -22,7 +24,7 @@ public class BaseCamera : MonoBehaviour
 
     public void ShakeCamera(float shakeTime, float shakeIntensity = 0.05f)
     {
-        originalPosition = thisCamera.transform.position;
+        originalPosition = targetCamera.transform.position;
         if (shakeCoroutine != null)
         {
             StopCoroutine(shakeCoroutine);
@@ -42,13 +44,13 @@ public class BaseCamera : MonoBehaviour
             transform.position = (Random.insideUnitSphere * shakeIntensity) + originalPosition;
             yield return null;
         }
-        thisCamera.transform.position = originalPosition;
+        targetCamera.transform.position = originalPosition;
     }
 
     #region Property
-    public Camera ThisCamera { get { return thisCamera; } }
+    public Camera TargetCamera { get { return targetCamera; } }
     public Transform TargetTransform { get { return targetTransform; } set { targetTransform = value; } }
-    public Vector3 TargetOffset { get { return targetOffset; } set { targetOffset = value; } }
+    public Vector3 CameraOffset { get { return cameraPositionOffset; } }
     public Vector3 OriginalPosition { get { return originalPosition; } set { originalPosition = value; } }
     #endregion
 }

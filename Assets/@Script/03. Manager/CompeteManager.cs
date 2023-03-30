@@ -13,7 +13,7 @@ public class CompeteManager : MonoBehaviour
 
     private IEnumerator competeControlFunction;
 
-    private BaseCharacter character;
+    private PlayerCharacter character;
     private BaseEnemy enemy;
     private ICompetable competableCharacter;
     private ICompetable competableEnemy;
@@ -38,9 +38,9 @@ public class CompeteManager : MonoBehaviour
         isSuccess = false;
     }
 
-    public bool TryCompete(PlayerDefenseController defenseController, EnemyCompeteAttack competeController)
+    public bool TryCompete(PlayerCombatController weaponController, EnemyCompeteAttack competeController)
     {
-        character = defenseController.Character;
+        character = weaponController.Character;
         enemy = competeController.Enemy;
         competableCharacter = character as ICompetable;
         competableEnemy = enemy as ICompetable;

@@ -12,9 +12,16 @@ public abstract class BaseCombatController : MonoBehaviour
     [SerializeField] protected Collider combatCollider;
     protected Dictionary<BaseActor, bool> hitDictionary = new Dictionary<BaseActor, bool>();
 
-    private void Awake()
+    public virtual void Awake()
     {
-        TryGetComponent(out combatCollider);
+        Initialize();
+    }
+
+    public virtual void Initialize()
+    {
+        if (combatCollider == null)
+            TryGetComponent(out combatCollider);
+
         if (combatCollider != null)
             combatCollider.enabled = false;
     }
@@ -26,7 +33,7 @@ public abstract class BaseCombatController : MonoBehaviour
         this.crowdControlDuration = crowdControlDuration;
     }
 
-    public void SetCombatInformation(CombatInfo combatInformation)
+    public void SetCombatInformation(CombatActionInfomation combatInformation)
     {
         this.combatType = combatInformation.combatType;
         this.damageRatio = combatInformation.damageRatio;
@@ -37,4 +44,5 @@ public abstract class BaseCombatController : MonoBehaviour
     public float DamageRatio { get { return damageRatio; } }
     public float CrowdControlDuration { get { return crowdControlDuration; } }
     public Collider CombatCollider { get { return combatCollider; } }
+    public Dictionary<BaseActor, bool> HitDictionary { get { return hitDictionary; } }
 }

@@ -5,9 +5,11 @@ using UnityEngine.AI;
 
 public class SmallStoneGolem : BaseEnemy, IStunable
 {
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
+
+        state.StateDictionary.Add(ACTION_STATE.COMMON_UPPER_EMPTY, new CommonStateUpperEmpty(this));
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_SPAWN, new EnemyStateSpawn(this));
         state.StateDictionary.Add(ACTION_STATE.ENEMY_PATROL, new EnemyStatePatrol(this));

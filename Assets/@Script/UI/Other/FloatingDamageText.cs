@@ -31,7 +31,7 @@ public class FloatingDamageText : MonoBehaviour, IPoolObject
 
     public void SetDamageText(bool isCritical, float damage, Vector3 worldPosition)
     {
-        transform.position = Managers.GameManager.PlayerCamera.ThisCamera.WorldToScreenPoint(worldPosition);
+        transform.position = Managers.GameManager.PlayerCamera.TargetCamera.WorldToScreenPoint(worldPosition);
 
         if (isCritical == true)
             textColor = Color.red;

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IInteractableObject
 {
-    public void Interact(BaseCharacter character);
+    public void Interact(PlayerCharacter character);
 }

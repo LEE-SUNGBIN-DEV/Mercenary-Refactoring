@@ -28,7 +28,7 @@ public abstract class BaseEnemy : BaseActor
     [SerializeField] protected Vector3 targetDirection;
     [SerializeField] protected float targetDistance;
     
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
 
@@ -42,7 +42,7 @@ public abstract class BaseEnemy : BaseActor
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_IDLE, new EnemyStateIdle(this));
         state.StateDictionary.Add(ACTION_STATE.COMMON_DIE, new EnemyStateDie(this));
-        state.SetState(ACTION_STATE.PLAYER_IDLE, STATE_SWITCH_BY.FORCED);
+        state.SetState(ACTION_STATE.PLAYER_HALBERD_IDLE, STATE_SWITCH_BY.FORCED);
     }
 
     public virtual void OnEnable()
@@ -167,7 +167,7 @@ public abstract class BaseEnemy : BaseActor
         return true;
     }
 
-    public void DamageProcess(BaseCharacter character, float ratio)
+    public void DamageProcess(PlayerCharacter character, float ratio)
     {
         float damage = (status.AttackPower - character.Status.DefensivePower * 0.5f) * 0.5f;
 

@@ -9,9 +9,9 @@ public static partial class Constants
     public static readonly string VFX_Player_Defense = "VFX_Player_Defense";
     public static readonly string VFX_Player_Attack = "VFX_Player_Attack";
 
-    public static readonly string VFX_Berserker_Combo_Attack = "VFX_Berserker_Combo_Attack";
-    public static readonly string VFX_Berserker_Smash_Attack = "VFX_Berserker_Smash_Attack";
-    public static readonly string VFX_Berserker_Stinger_Attack = "VFX_Berserker_Stinger_Attack";
+    public static readonly string VFX_Player_Combo_Attack = "VFX_Player_Combo_Attack";
+    public static readonly string VFX_Player_Smash_Attack = "VFX_Player_Smash_Attack";
+    public static readonly string VFX_Player_Stinger_Attack = "VFX_Player_Stinger_Attack";
 
     public static readonly string VFX_Enemy_Flame_Area = "VFX_Enemy_Flame_Area";
     public static readonly string VFX_Enemy_Breath = "VFX_Enemy_Breath";

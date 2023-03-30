@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WarpGate : MonoBehaviour, IInteractableObject
 {
-    public void Interact(BaseCharacter character)
+    public void Interact(PlayerCharacter character)
     {
 
     }

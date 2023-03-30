@@ -13,7 +13,7 @@ public class EnemyStateChaseRun : IActionState
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_CHASE_RUN;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_RUN;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_HALBERD_RUN;
     }
 
     public void Enter()
@@ -45,7 +45,7 @@ public class EnemyStateChaseRun : IActionState
                 }
 
                 // -> Walk
-                if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_WALK))
+                if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_HALBERD_WALK))
                 {
                     enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WALK, STATE_SWITCH_BY.FORCED);
                     return;

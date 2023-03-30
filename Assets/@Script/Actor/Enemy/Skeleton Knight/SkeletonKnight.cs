@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class SkeletonKnight : BaseEnemy, ICompetable
 {
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }

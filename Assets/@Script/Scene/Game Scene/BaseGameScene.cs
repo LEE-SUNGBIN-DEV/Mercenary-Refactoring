@@ -7,7 +7,7 @@ using UnityEngine;
 public class BaseGameScene : BaseScene
 {
     [SerializeField] protected UIGameScene gameSceneUI;
-    [SerializeField] protected BaseCharacter character;
+    [SerializeField] protected PlayerCharacter character;
     [SerializeField] protected List<NPC> npcList = new List<NPC>();
     [SerializeField] protected Vector3 spawnPosition;
 
@@ -52,5 +52,5 @@ public class BaseGameScene : BaseScene
     }
 
     public Vector3 SpawnPosition { get { return spawnPosition; } }
-    public BaseCharacter Character { get { return character; } }
+    public PlayerCharacter Character { get { return character; } }
 }
