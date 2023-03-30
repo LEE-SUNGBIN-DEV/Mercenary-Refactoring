@@ -14,7 +14,7 @@ public class EnemyStatePatrol : IActionState
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_PATROL;
-        walkAnimationNameHash = Constants.ANIMATION_NAME_HASH_WALK;
+        walkAnimationNameHash = Constants.ANIMATION_NAME_HASH_HALBERD_WALK;
     }
 
     public void Enter()

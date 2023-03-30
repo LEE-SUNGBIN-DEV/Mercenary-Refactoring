@@ -43,30 +43,30 @@ public static class ExtensionMethod
     #endregion
 
     #region Animator
-    public static bool IsAnimationFrameUpTo(this Animator animator, int nameHash, int maxFrame, int targetFrame)
+    public static bool IsAnimationFrameUpTo(this Animator animator, int nameHash, int maxFrame, int targetFrame, int targetLayer = 0)
     {
-        return (animator.GetCurrentAnimatorStateInfo(0).shortNameHash == nameHash
-            && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame));
+        return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame));
     }
-    public static bool IsAnimationFrameUpTo(this Animator animator, AnimationInfo animationInfo, int targetFrame)
+    public static bool IsAnimationFrameUpTo(this Animator animator, AnimationInfo animationInfo, int targetFrame, int targetLayer = 0)
     {
-        return IsAnimationFrameUpTo(animator, animationInfo.animationNameHash, animationInfo.maxFrame, targetFrame);
+        return IsAnimationFrameUpTo(animator, animationInfo.animationNameHash, animationInfo.maxFrame, targetFrame, targetLayer);
     }
-    public static bool IsAnimationNormalizeTimeUpTo(this Animator animator, int nameHash, float normalizedTime)
+    public static bool IsAnimationNormalizeTimeUpTo(this Animator animator, int nameHash, float normalizedTime, int targetLayer = 0)
     {
-        return (animator.GetCurrentAnimatorStateInfo(0).shortNameHash == nameHash
-            && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= normalizedTime);
+        return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= normalizedTime);
     }
-    public static bool IsAnimationNormalizeTimeDownTo(this Animator animator, int nameHash, float normalizedTime)
+    public static bool IsAnimationNormalizeTimeDownTo(this Animator animator, int nameHash, float normalizedTime, int targetLayer = 0)
     {
-        return (animator.GetCurrentAnimatorStateInfo(0).shortNameHash == nameHash
-            && animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= normalizedTime);
+        return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= normalizedTime);
     }
-    public static bool IsAnimationNormalizeTimeBetweenTo(this Animator animator, int nameHash, float minNormalizedTime, float maxNormalizedTime)
+    public static bool IsAnimationNormalizeTimeBetweenTo(this Animator animator, int nameHash, float minNormalizedTime, float maxNormalizedTime, int targetLayer = 0)
     {
-        return (animator.GetCurrentAnimatorStateInfo(0).shortNameHash == nameHash
-            && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= minNormalizedTime
-            && animator.GetCurrentAnimatorStateInfo(0).normalizedTime <= maxNormalizedTime);
+        return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= minNormalizedTime
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= maxNormalizedTime);
     }
     #endregion
 

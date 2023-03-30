@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
 {
-    public override void Awake()
+    protected override void Awake()
     {
         base.Awake();
 

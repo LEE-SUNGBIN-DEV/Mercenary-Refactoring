@@ -17,7 +17,7 @@ public abstract class BaseActor : MonoBehaviour
     [SerializeField] protected bool isInvincible;
     [SerializeField] protected bool isDie;
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
         TryGetComponent(out animator);
         TryGetComponent(out characterController);

@@ -54,15 +54,15 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 9dc4e23629a840d42a176a20a257c478
-    m_Address: VFX_Berserker_Combo_Attack
+    m_Address: VFX_Player_Combo_Attack
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 08e135e20124aaa4ea97e49d6a663b05
-    m_Address: VFX_Berserker_Smash_Attack
+    m_Address: VFX_Player_Smash_Attack
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 41e06dae592921744aab26653806f6ca
-    m_Address: VFX_Berserker_Stinger_Attack
+    m_Address: VFX_Player_Stinger_Attack
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

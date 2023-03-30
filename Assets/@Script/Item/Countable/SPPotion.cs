@@ -25,11 +25,11 @@ public class SPPotion : CountItem, IUsableItem, IShopableItem
         statusData.CurrentSP += recoveryAmount;
     }
 
-    public void BuyItem(BaseCharacter character)
+    public void BuyItem(PlayerCharacter character)
     {
     }
 
-    public void SellItem(BaseCharacter character)
+    public void SellItem(PlayerCharacter character)
     {
     }
 

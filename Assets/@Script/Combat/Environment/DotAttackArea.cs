@@ -21,7 +21,7 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
 
     public void ExecuteDotDamageProcess(Collider target)
     {
-        if (target.TryGetComponent(out BaseCharacter character))
+        if (target.TryGetComponent(out PlayerCharacter character))
         {
             if(character.IsInvincible == false)
             {

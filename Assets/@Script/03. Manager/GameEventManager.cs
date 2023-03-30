@@ -24,7 +24,7 @@ public struct GameEventMessage
 
 public class GameEventManager
 {
-    public event UnityAction<BaseCharacter> OnPlayerDie;
+    public event UnityAction<PlayerCharacter> OnPlayerDie;
     public event UnityAction<BaseEnemy> OnEnemyDie;
     public event UnityAction<BaseEnemy> OnKillEnemy;
 
@@ -49,7 +49,7 @@ public class GameEventManager
         switch (eventMessage.eventType)
         {
             case GAME_EVENT_TYPE.OnPlayerDie:
-                OnPlayerDie?.Invoke(eventMessage.sender as BaseCharacter);
+                OnPlayerDie?.Invoke(eventMessage.sender as PlayerCharacter);
                 break;
             case GAME_EVENT_TYPE.OnEnemyDie:
                 OnEnemyDie?.Invoke(eventMessage.sender as BaseEnemy);

@@ -13,9 +13,9 @@ public class PlayerCamera : BaseCamera
     private float mouseRotateX;         // 마우스 이동에 따른 X축 회전
     private float mouseRotateY;         // 마우스 이동에 따른 Y축 회전
 
-    private Vector3 normalizedDirection;
     private Vector3 finalDirection;
-    private float finalDistance;
+    private Vector3 cameraDirection;
+    private float cameraDistance;
 
     protected override void Awake()
     {
@@ -25,15 +25,20 @@ public class PlayerCamera : BaseCamera
 
     private void Start()
     {
+        transform.SetPositionAndRotation(targetTransform.position, targetTransform.rotation);
         mouseRotateX = transform.localRotation.eulerAngles.x;
         mouseRotateY = transform.localRotation.eulerAngles.y;
 
-        normalizedDirection = ThisCamera.transform.localPosition.normalized;
-        finalDistance = ThisCamera.transform.localPosition.magnitude;
+        targetCamera.transform.SetLocalPositionAndRotation(cameraPositionOffset, Quaternion.Euler(cameraRotationOffset));
+        cameraDirection = targetCamera.transform.localPosition.normalized;
+        cameraDistance = targetCamera.transform.localPosition.magnitude;
     }
 
     private void Update()
     {
+        if (targetTransform == null)
+            return;
+
         mouseRotateX += -(Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime); // 카메라 X축 회전은 마우스 Y 좌표에 의해 결정됨
         mouseRotateY += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;    // 카메라 Y축 회전은 마우스 X 좌표에 의해 결정됨
 
@@ -48,20 +53,20 @@ public class PlayerCamera : BaseCamera
         if (targetTransform == null)
             return;
 
-        transform.position = Vector3.MoveTowards(transform.position, targetTransform.position + TargetOffset, cameraSpeed * Time.deltaTime);
-        finalDirection = transform.TransformPoint(normalizedDirection * maxDistance);
+        transform.position = Vector3.MoveTowards(transform.position, targetTransform.position, cameraSpeed * Time.deltaTime);
+        finalDirection = targetCamera.transform.TransformPoint(cameraDirection * maxDistance);
 
-        if (Physics.Linecast(transform.position, finalDirection, out RaycastHit hitObject))
+        if (Physics.Linecast(targetCamera.transform.position, finalDirection, out RaycastHit hitObject))
         {
-            finalDistance = Mathf.Clamp(hitObject.distance, minDistance, maxDistance);
+            cameraDistance = Mathf.Clamp(hitObject.distance, minDistance, maxDistance);
         }
 
         else
         {
-            finalDistance = maxDistance;
+            cameraDistance = maxDistance;
         }
 
-        ThisCamera.transform.localPosition = Vector3.Lerp(ThisCamera.transform.localPosition, normalizedDirection * finalDistance, Time.deltaTime * smoothness);
+        targetCamera.transform.localPosition = Vector3.Lerp(targetCamera.transform.localPosition, cameraDirection * cameraDistance, Time.deltaTime * smoothness);
     }
 
     private void OnDestroy()

@@ -10,7 +10,7 @@ public abstract class EnemyCombatController : BaseCombatController
     protected virtual void ExecuteAttackProcess(Collider other)
     {
         // Hit With Character
-        if (other.TryGetComponent(out BaseCharacter character))
+        if (other.TryGetComponent(out PlayerCharacter character))
         {
             // 01. Invincibility Process
             if (character.IsInvincible)
@@ -51,8 +51,18 @@ public abstract class EnemyCombatController : BaseCombatController
         }
 
         // Hit With Shield
-        if (other.TryGetComponent(out PlayerDefenseController shield))
-            shield.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
+        if (other.TryGetComponent(out PlayerCombatController weapon))
+        {
+            switch(weapon.CombatType)
+            {
+                case COMBAT_TYPE.GUARDABLE:
+                case COMBAT_TYPE.PARRYABLE:
+                    weapon.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
+                    break;
+
+                default: break;
+            }
+        }
     }
 
     public virtual void OnEnableCollider()

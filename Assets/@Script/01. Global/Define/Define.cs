@@ -59,14 +59,22 @@ public struct AnimationInfo
     }
 }
 
-public struct CombatInfo
+
+public struct BasicStateInformation
+{
+    public ACTION_STATE idleState;
+    public ACTION_STATE walkState;
+    public ACTION_STATE runState;
+}
+
+public struct CombatActionInfomation
 {
     public COMBAT_TYPE combatType;
     public float damageRatio;
     public float crowdControlDuration;
     public Location effectLocation;
 
-    public CombatInfo(COMBAT_TYPE hitType, float damageRatio, float crowdControlDuration = 0f)
+    public CombatActionInfomation(COMBAT_TYPE hitType, float damageRatio, float crowdControlDuration = 0f)
     {
         this.combatType = hitType;
         this.damageRatio = damageRatio;
@@ -74,7 +82,7 @@ public struct CombatInfo
         this.effectLocation = new Location(Vector3.zero, Vector3.zero);
     }
 
-    public CombatInfo(COMBAT_TYPE hitType, float damageRatio, Vector3 effectPosition, Vector3 effectRotation, float crowdControlDuration = 0f)
+    public CombatActionInfomation(COMBAT_TYPE hitType, float damageRatio, Vector3 effectPosition, Vector3 effectRotation, float crowdControlDuration = 0f)
     {
         this.combatType = hitType;
         this.damageRatio = damageRatio;
@@ -82,7 +90,7 @@ public struct CombatInfo
         this.effectLocation = new Location(effectPosition, effectRotation);
     }
 
-    public CombatInfo(COMBAT_TYPE hitType, float damageRatio, Location effectLocation, float crowdControlDuration = 0f)
+    public CombatActionInfomation(COMBAT_TYPE hitType, float damageRatio, Location effectLocation, float crowdControlDuration = 0f)
     {
         this.combatType = hitType;
         this.damageRatio = damageRatio;

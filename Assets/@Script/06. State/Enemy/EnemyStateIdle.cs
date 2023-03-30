@@ -14,7 +14,7 @@ public class EnemyStateIdle : IActionState
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_IDLE;
-        idleAnimationNameHash = Constants.ANIMATION_NAME_HASH_IDLE;
+        idleAnimationNameHash = Constants.ANIMATION_NAME_HASH_HALBERD_IDLE;
     }
 
     public void Enter()
