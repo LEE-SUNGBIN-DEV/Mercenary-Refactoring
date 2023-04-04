@@ -175,7 +175,13 @@ namespace FIMSpace.AnimationTools
             {
                 GUILayout.FlexibleSpace();
                 GUI.backgroundColor = new Color(0.7f, 1f, 0.8f, 1f);
-                if (GUILayout.Button("+", GUILayout.Width(20))) { elements.Add(new T()); }
+
+                if (GUILayout.Button("+", GUILayout.Width(20)))
+                {
+                    elements.Add(new T());
+                    selection = elements.Count - 1;
+                }
+
                 GUI.backgroundColor = preC;
             }
 

@@ -2,13 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ACTOR_GROUND_STATE
+{
+    GROUND,
+    SLOPE,
+    AIR
+}
+
+
 public abstract class BaseActor : MonoBehaviour
 {
     [Header("Base Actor")]
     protected Animator animator;
     protected CharacterController characterController;
-    protected StateController state; 
-    protected FallController fallController;
+    protected StateController state;
     protected Dictionary<string, Material> materialDictionary;
     [SerializeField] protected SkinnedMeshRenderer meshRenderer;
     [SerializeField] protected MaterialContainer[] materialContainers;
@@ -17,12 +24,19 @@ public abstract class BaseActor : MonoBehaviour
     [SerializeField] protected bool isInvincible;
     [SerializeField] protected bool isDie;
 
+    protected float groundRayHeight;
+    protected float groundRayRadius;
+
     protected virtual void Awake()
     {
         TryGetComponent(out animator);
-        TryGetComponent(out characterController);
+        if(TryGetComponent(out characterController))
+        {
+            groundRayHeight = characterController.height * 0.5f;
+            groundRayRadius = characterController.radius;
+        }
+
         state = new StateController(animator);
-        fallController = new FallController(transform, characterController, state);
         meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>(true);
         objectPooler.Initialize(transform);
 
@@ -44,10 +58,39 @@ public abstract class BaseActor : MonoBehaviour
         }
     }
 
+    public void FallDamageProcess(float fallTime)
+    {
+        if (fallTime >= 2f)
+        {
+            Debug.Log("Fall Damaged: " + fallTime);
+        }
+    }
+
+    public ACTOR_GROUND_STATE GetGroundState()
+    {
+        if (Physics.Raycast(transform.position, -transform.up, out RaycastHit groundHit, groundRayHeight, LayerMask.GetMask("Terrain"))
+            || Physics.Raycast(transform.position, -transform.up + new Vector3(groundRayRadius, 0, 0), out groundHit, groundRayHeight, LayerMask.GetMask("Terrain"))
+            || Physics.Raycast(transform.position, -transform.up + new Vector3(-groundRayRadius, 0, 0), out groundHit, groundRayHeight, LayerMask.GetMask("Terrain"))
+            || Physics.Raycast(transform.position, -transform.up + new Vector3(0, 0, groundRayRadius), out groundHit, groundRayHeight, LayerMask.GetMask("Terrain"))
+            || Physics.Raycast(transform.position, -transform.up + new Vector3(0, 0, -groundRayRadius), out groundHit, groundRayHeight, LayerMask.GetMask("Terrain")))
+        {
+            float slopeAngle = Vector3.Angle(Vector3.up, groundHit.normal);
+            if (slopeAngle > characterController.slopeLimit)
+            {
+                Vector3 slideDirection = Vector3.ProjectOnPlane(Vector3.down, groundHit.normal).normalized;
+                characterController.SimpleMove(slideDirection * 10f);
+
+                return ACTOR_GROUND_STATE.SLOPE;
+            }
+
+            return ACTOR_GROUND_STATE.GROUND;
+        }
+        return ACTOR_GROUND_STATE.AIR;
+    }
+
     #region Property
     public CharacterController CharacterController { get { return characterController; } }
     public StateController State { get { return state; } }
-    public FallController FallController { get { return fallController; } }
     public Animator Animator { get { return animator; } }
     public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }
     public ObjectPooler ObjectPooler { get { return objectPooler; } }

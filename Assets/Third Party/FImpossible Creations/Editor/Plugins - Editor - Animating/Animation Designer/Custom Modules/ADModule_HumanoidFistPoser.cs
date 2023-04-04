@@ -111,7 +111,7 @@ namespace FIMSpace.AnimationTools.CustomModules
         }
 
 
-        public override void SceneView_DrawSceneHandles(ADClipSettings_CustomModules.CustomModuleSet set, float alphaAnimation = 1)
+        public override void SceneView_DrawSceneHandles(ADClipSettings_CustomModules.CustomModuleSet set, float alphaAnimation = 1, float progress = 0f)
         {
             base.SceneView_DrawSceneHandles(set, alphaAnimation);
 

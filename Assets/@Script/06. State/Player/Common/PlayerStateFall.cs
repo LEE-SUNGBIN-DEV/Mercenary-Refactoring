@@ -8,10 +8,7 @@ public class PlayerStateFall : IActionState
     private int stateWeight;
     private int animationNameHash;
 
-    private float slopeLimit;
-    private Vector3 slideDirection;
-    private RaycastHit slopeHit;
-    private float slideSpeed;
+    private float fallTime;
 
     public PlayerStateFall(PlayerCharacter character)
     {
@@ -19,27 +16,35 @@ public class PlayerStateFall : IActionState
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_FALL;
         animationNameHash = Constants.ANIMATION_NAME_HASH_FALL;
 
-        slideDirection = Vector3.zero;
-        slideSpeed = 3f;
+        fallTime = 0f;
     }
 
     public void Enter()
     {
-        slopeLimit = character.CharacterController.slopeLimit;
         character.Animator.Play(animationNameHash);
+        fallTime = 0f;
     }
 
     public void Update()
     {
+        switch (character.GetGroundState())
+        {
+            case ACTOR_GROUND_STATE.GROUND:
+                character.FallDamageProcess(fallTime);
+                character.State.SetState(ACTION_STATE.PLAYER_LANDING, STATE_SWITCH_BY.WEIGHT);
+                return;
 
-        // !! When Animation is over
-        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.9f))
-            return;
+            case ACTOR_GROUND_STATE.SLOPE:
+            case ACTOR_GROUND_STATE.AIR:
+                fallTime += Time.deltaTime;
+                return;
+        }
+
     }
 
     public void Exit()
     {
-        character.IsInvincible = false;
+        fallTime = 0f;
     }
 
     #region Property

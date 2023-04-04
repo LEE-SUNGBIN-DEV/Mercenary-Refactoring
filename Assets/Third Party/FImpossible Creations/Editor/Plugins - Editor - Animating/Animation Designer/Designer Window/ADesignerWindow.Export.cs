@@ -238,7 +238,7 @@ namespace FIMSpace.AnimationTools
 
                     for (int o = 0; o < origCurves.Length; o++)
                     {
-                        var origB = origCurves[o];
+                        EditorCurveBinding origB = origCurves[o];
 
                         bool contains = false;
                         for (int n = 0; n < newCurves.Length; n++)
@@ -259,6 +259,10 @@ namespace FIMSpace.AnimationTools
 
                     }
                 }
+
+
+                if (_anim_cModuleSet != null) _anim_cModuleSet.OnExportFinalizeModules(originalClip, newGeneratedClip, S, _anim_MainSet);
+
 
                 if (_anim_ikSet != null)
                     if (_anim_ikSet.LimbIKSetups != null)

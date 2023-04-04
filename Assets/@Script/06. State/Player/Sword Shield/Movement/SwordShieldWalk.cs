@@ -51,50 +51,49 @@ public class SwordShieldWalk : IActionState
             return;
         }
 
-        // Move
-        if (character.FallController.IsGround())
+        switch (character.GetGroundState())
         {
-            moveInput.x = Input.GetAxisRaw("Horizontal");
-            moveInput.y = 0;
-            moveInput.z = Input.GetAxisRaw("Vertical");
+            case ACTOR_GROUND_STATE.GROUND:
+                character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_WALK_AUTO_RECOVERY);
 
-            verticalDirection.x = character.PlayerCamera.transform.forward.x;
-            verticalDirection.z = character.PlayerCamera.transform.forward.z;
+                moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
-            horizontalDirection.x = character.PlayerCamera.transform.right.x;
-            horizontalDirection.z = character.PlayerCamera.transform.right.z;
+                verticalDirection.x = character.PlayerCamera.transform.forward.x;
+                verticalDirection.z = character.PlayerCamera.transform.forward.z;
 
-            moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
+                horizontalDirection.x = character.PlayerCamera.transform.right.x;
+                horizontalDirection.z = character.PlayerCamera.transform.right.z;
 
-            if (moveDirection.sqrMagnitude > 0f)
-            {
-                // Run
-                if (Input.GetKey(KeyCode.LeftShift))
+                moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
+
+                if (moveDirection.sqrMagnitude > 0f)
                 {
-                    character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_RUN, STATE_SWITCH_BY.WEIGHT);
-                    return;
+                    // Run
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_RUN, STATE_SWITCH_BY.WEIGHT);
+                    }
+                    else
+                    {
+                        walkSpeed = character.Status.MoveSpeed;
+                        // Look Direction
+                        character.transform.rotation = Quaternion.Lerp(character.transform.rotation, Quaternion.LookRotation(moveDirection), 10f * Time.deltaTime);
+                        character.CharacterController.SimpleMove(walkSpeed * moveDirection);
+                    }
                 }
+                // Idle
                 else
                 {
-                    character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_WALK_AUTO_RECOVERY);
-                    walkSpeed = character.Status.MoveSpeed;
-                    // Look Direction
-                    character.transform.rotation = Quaternion.Lerp(character.transform.rotation, Quaternion.LookRotation(moveDirection), 10f * Time.deltaTime);
-                    character.CharacterController.SimpleMove(walkSpeed * moveDirection);
-                    return;
+                    character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_IDLE, STATE_SWITCH_BY.FORCED);
                 }
-            }
-            // Idle
-            else
-            {
-                character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_IDLE, STATE_SWITCH_BY.FORCED);
                 return;
-            }
-        }
-        // Fall
-        else
-        {
-            return;
+
+            case ACTOR_GROUND_STATE.SLOPE:
+                return;
+
+            case ACTOR_GROUND_STATE.AIR: // -> Fall
+                character.State.SetState(ACTION_STATE.PLAYER_FALL, STATE_SWITCH_BY.WEIGHT);
+                return;
         }
     }
 

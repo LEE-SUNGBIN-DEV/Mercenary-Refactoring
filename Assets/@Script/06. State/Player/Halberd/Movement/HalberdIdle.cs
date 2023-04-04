@@ -55,32 +55,31 @@ public class HalberdIdle : IActionState
             return;
         }
 
-        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-
-        if(character.FallController.IsGround())
+        switch (character.GetGroundState())
         {
-            character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY);
-            if (moveInput.sqrMagnitude > 0)
-            {
-                // Run
-                if (Input.GetKey(KeyCode.LeftShift))
+            case ACTOR_GROUND_STATE.GROUND:
+                character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY);
+                moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+
+                if (moveInput.sqrMagnitude > 0)
                 {
-                    character.State.SetState(ACTION_STATE.PLAYER_HALBERD_RUN, STATE_SWITCH_BY.WEIGHT);
-                    return;
+                    // -> Run
+                    if (Input.GetKey(KeyCode.LeftShift))
+                        character.State.SetState(ACTION_STATE.PLAYER_HALBERD_RUN, STATE_SWITCH_BY.WEIGHT);
+
+                    // -> Walk
+                    else
+                        character.State.SetState(ACTION_STATE.PLAYER_HALBERD_WALK, STATE_SWITCH_BY.WEIGHT);
                 }
-                // Walk
-                else
-                {
-                    character.State.SetState(ACTION_STATE.PLAYER_HALBERD_WALK, STATE_SWITCH_BY.WEIGHT);
-                    return;
-                }
-            }
+                return;
+
+            case ACTOR_GROUND_STATE.SLOPE:
+                return;
+
+            case ACTOR_GROUND_STATE.AIR: // -> Fall
+                character.State.SetState(ACTION_STATE.PLAYER_FALL, STATE_SWITCH_BY.WEIGHT);
+                return;
         }
-        // Fall
-        else
-        {
-
-        }        
     }
 
     public void Exit()

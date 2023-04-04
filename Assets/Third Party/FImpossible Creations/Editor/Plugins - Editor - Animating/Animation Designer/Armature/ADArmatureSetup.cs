@@ -73,7 +73,6 @@ namespace FIMSpace.AnimationTools
             }
 
             SetCorrectBonesOrder();
-
         }
 
 
@@ -97,6 +96,25 @@ namespace FIMSpace.AnimationTools
             BonesSetup.Add(aRef);
             gatheredBones.Add(t);
         }
+
+        internal Bounds CalculateBounds()
+        {
+            if (Root == null) return new Bounds();
+            if (BonesSetup == null) return new Bounds();
+
+            Bounds bounds = new Bounds(Root.transform.position, Vector3.zero);
+
+            for (int i = 0; i < BonesSetup.Count; i++)
+            {
+                var b = BonesSetup[i];
+                if (b == null) continue;
+                if (b.TempTransform == null) continue;
+                bounds.Encapsulate(b.TempTransform.position);
+            }
+
+            return bounds;
+        }
+
 
         #endregion
 

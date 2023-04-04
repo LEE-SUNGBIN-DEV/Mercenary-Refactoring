@@ -51,49 +51,48 @@ public class SwordShieldRun : IActionState
             return;
         }
 
-        // Move
-        if (character.FallController.IsGround())
+        switch (character.GetGroundState())
         {
-            moveInput.x = Input.GetAxisRaw("Horizontal");
-            moveInput.y = 0;
-            moveInput.z = Input.GetAxisRaw("Vertical");
+            case ACTOR_GROUND_STATE.GROUND:
+                moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
-            verticalDirection.x = character.PlayerCamera.transform.forward.x;
-            verticalDirection.z = character.PlayerCamera.transform.forward.z;
+                verticalDirection.x = character.PlayerCamera.transform.forward.x;
+                verticalDirection.z = character.PlayerCamera.transform.forward.z;
 
-            horizontalDirection.x = character.PlayerCamera.transform.right.x;
-            horizontalDirection.z = character.PlayerCamera.transform.right.z;
+                horizontalDirection.x = character.PlayerCamera.transform.right.x;
+                horizontalDirection.z = character.PlayerCamera.transform.right.z;
 
-            moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
+                moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
 
-            if (moveDirection.sqrMagnitude > 0f)
-            {
-                // Run
-                if (Input.GetKey(KeyCode.LeftShift))
+                if (moveDirection.sqrMagnitude > 0f)
                 {
-                    character.CharacterData.StatusData.CurrentSP -= (Constants.PLAYER_STAMINA_CONSUMPTION_RUN * Time.deltaTime);
-                    runSpeed = character.Status.MoveSpeed * 2;
-                    // Look Direction
-                    character.transform.rotation = Quaternion.Lerp(character.transform.rotation, Quaternion.LookRotation(moveDirection), 10f * Time.deltaTime);
-                    character.CharacterController.SimpleMove(runSpeed * moveDirection);
+                    // Run
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        character.CharacterData.StatusData.CurrentSP -= (Constants.PLAYER_STAMINA_CONSUMPTION_RUN * Time.deltaTime);
+                        runSpeed = character.Status.MoveSpeed * 2;
+                        // Look Direction
+                        character.transform.rotation = Quaternion.Lerp(character.transform.rotation, Quaternion.LookRotation(moveDirection), 10f * Time.deltaTime);
+                        character.CharacterController.SimpleMove(runSpeed * moveDirection);
+                    }
+                    else
+                    {
+                        character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_WALK, STATE_SWITCH_BY.FORCED);
+                    }
                 }
+                // Idle
                 else
                 {
-                    character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_WALK, STATE_SWITCH_BY.FORCED);
-                    return;
+                    character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_IDLE, STATE_SWITCH_BY.FORCED);
                 }
-            }
-            // Idle
-            else
-            {
-                character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_IDLE, STATE_SWITCH_BY.FORCED);
                 return;
-            }
-        }
-        // Fall
-        else
-        {
-            return;
+
+            case ACTOR_GROUND_STATE.SLOPE:
+                return;
+
+            case ACTOR_GROUND_STATE.AIR: // -> Fall
+                character.State.SetState(ACTION_STATE.PLAYER_FALL, STATE_SWITCH_BY.WEIGHT);
+                return;
         }
     }
 

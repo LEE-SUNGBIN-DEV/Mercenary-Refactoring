@@ -1,7 +1,7 @@
 __________________________________________________________________________________________
 
 Package "Animation Designer"
-Version 1.2.0
+Version 1.2.2
 
 Made by FImpossible Creations - Filip Moeglich
 https://www.FilipMoeglich.pl
@@ -66,6 +66,16 @@ MAIN FEATURES:
 • Supporting Root Motion Animations
 
 __________________________________________________________________________________________
+
+Version 1.2.2
+- New Module: Basic Hips Stabilizer (automatic stable pose keeper when using Leg IKs)
+- New Module: Hand Reach Helper (automatic spine rotation on stretched arm IKs)
+- Few small fixes
+
+Version 1.2.1
+- IK Offset parameter now can be adjusted with the scene gizmos when animation playback is paused
+- New Module for setting up Custom Animation Curves for the animation clip
+- Few GUI improvements
 
 Version 1.2.0
 - New way for handling extra features for Animation Designer, introducing "Custom Modules" 

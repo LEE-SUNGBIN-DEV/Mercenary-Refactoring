@@ -137,6 +137,11 @@ namespace FIMSpace.AnimationTools
                 {
                     if (cModule.CustomModules.Count >= 1) _sel_cmodule_index = cModule.CustomModules.Count - 1;
                 }
+                else
+                {
+                    _sel_cmodule_index = cModule.CustomModules.Count - 1;
+                    if (_sel_cmodule_index >= cModule.CustomModules.Count) _sel_cmodule_index = -1;
+                }
             }
 
             GUI.backgroundColor = preBG;
@@ -162,7 +167,7 @@ namespace FIMSpace.AnimationTools
                     if (editedCModuleSet.CustomModules.ContainsIndex(_sel_cmodule_index, true))
                     {
                         Handles.color = new Color(0.4f, 0.8f + timeSin01 * 0.2f, 0.4f - timeSin01 * 0.1f, 0.8f + timeSin01 * 0.2f);
-                        editedCModuleSet.CustomModules[_sel_cmodule_index].DrawSceneHandles(1f + timeSin01 * 0.5f);
+                        editedCModuleSet.CustomModules[_sel_cmodule_index].DrawSceneHandles(1f + timeSin01 * 0.5f, animationProgress);
                     }
 
         }

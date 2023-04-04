@@ -131,6 +131,9 @@ namespace FIMSpace.AnimationTools
             public enum EIKAutoHintMode { Default, FollowHipsRotation }
             public EIKAutoHintMode AutoHintMode = EIKAutoHintMode.Default;
 
+            [NonSerialized] public EWasAdjusted LatelyAdjusted = EWasAdjusted.Offset;
+            public enum EWasAdjusted { Offset, Still }
+
             public IKSet(bool enabled = false, string id = "", int index = -1, float blend = 1f)
             {
                 Enabled = enabled;
@@ -701,6 +704,26 @@ namespace FIMSpace.AnimationTools
                 Color preBC = GUI.backgroundColor;
 
                 FGUI_Inspector.DrawUILine(0.3f, 0.5f, 1, 15, 0.975f);
+
+                #region Lately Adjusted Switches
+
+                if (IKPositionOffset == Vector3.zero)
+                {
+                    if (IKPosStillMul > 0.01f)
+                        if (IKStillPosition.sqrMagnitude > 0.0001f)
+                            LatelyAdjusted = EWasAdjusted.Still;
+                }
+
+                if ( IKPosOffMul < 0.01f)
+                {
+                    if (IKPosStillMul > 0.01f)
+                    { LatelyAdjusted = EWasAdjusted.Still; }
+                }
+
+
+                if (UseMultiStillPoints) LatelyAdjusted = EWasAdjusted.Offset;
+
+                #endregion
 
 
                 #region IK Setup Mode
@@ -1354,6 +1377,8 @@ namespace FIMSpace.AnimationTools
                         }
                         else
                         {
+                            EditorGUI.BeginChangeCheck();
+
                             EditorGUIUtility.labelWidth = 104;
                             IKStillPosition = EditorGUILayout.Vector3Field(" IK Still Position:", IKStillPosition);
                             EditorGUIUtility.labelWidth = 0;
@@ -1361,6 +1386,8 @@ namespace FIMSpace.AnimationTools
                             //IKStillPosition = EditorGUILayout.Vector3Field(new GUIContent("  IK Still Position:", FGUI_Resources.Tex_Movement), IKStillPosition);
                             if (IKPosStillMul < 0.1f) { if (GUILayout.Button(new GUIContent(FGUI_Resources.Tex_Refresh, "Copy current animator hand position and paste into stil position"), EditorStyles.label, GUILayout.Width(20), GUILayout.Height(17))) { IKStillPosition = GatherStillPosition(limb.LastBone.T); IKPosStillMul = 1f; } }
                             //if (IKPosStillMul < 0.1f) { if (GUILayout.Button(new GUIContent(FGUI_Resources.Tex_Refresh, "Copy current animator hand position and paste into stil position"), EditorStyles.label, GUILayout.Width(20), GUILayout.Height(17))) { if (IKStillWorldPos) { if (refToMainSet.LatestAnimator.parent == null) IKStillPosition = limb.LastBone.pos; else IKStillPosition = refToMainSet.LatestAnimator.parent.InverseTransformPoint(limb.LastBone.pos); } else IKStillPosition = refToMainSet.LatestAnimator.transform.InverseTransformPoint(limb.LastBone.pos); IKPosStillMul = 1f; } }
+
+                            if (EditorGUI.EndChangeCheck()) LatelyAdjusted = EWasAdjusted.Still;
                         }
 
                         GUILayout.Space(6);
@@ -1370,12 +1397,15 @@ namespace FIMSpace.AnimationTools
 
                         EditorGUILayout.EndHorizontal();
 
+                        EditorGUI.BeginChangeCheck();
 
                         GUILayout.Space(4);
                         EditorGUILayout.BeginHorizontal();
                         AnimationDesignerWindow.GUIDrawFloatPercentage(ref IKPosStillMul, new GUIContent("Still Blend:", "How much still ik target position should be applied."));
                         AnimationDesignerWindow.DrawCurve(ref IKPosStillEvaluate, "", 70);
                         EditorGUILayout.EndHorizontal();
+
+                        if (EditorGUI.EndChangeCheck()) if (!UseMultiStillPoints) LatelyAdjusted = EWasAdjusted.Still;
 
                         Rect r = AnimationDesignerWindow.DrawSliderProgress(IKPosStillMul * IKPosStillEvaluate.Evaluate(animProgr), 68f, 127f);
                         AnimationDesignerWindow.DrawCurveProgressOnR(animProgr, 140f, 60f, r);
@@ -2098,6 +2128,8 @@ namespace FIMSpace.AnimationTools
 
             void DrawIkBasicPositionOffsetsGUI(float progr, ref Vector3 IKPositionOffset, ref float IKPosOffMul, ref AnimationCurve IKPosOffEvaluate, string hintName = "Elbow", float xOff = 0f)
             {
+                EditorGUI.BeginChangeCheck();
+
                 IKPositionOffset = EditorGUILayout.Vector3Field(new GUIContent("  IK Position Offset:", FGUI_Resources.Tex_Movement), IKPositionOffset);
                 GUILayout.Space(4);
 
@@ -2116,6 +2148,8 @@ namespace FIMSpace.AnimationTools
                 }
 
                 GUILayout.Space(12);
+
+                if (EditorGUI.EndChangeCheck()) LatelyAdjusted = EWasAdjusted.Offset;
             }
 
 
@@ -2161,7 +2195,7 @@ namespace FIMSpace.AnimationTools
                 if (refToMainSet != null)
                 {
                     if (IKType == EIKType.ArmIK)
-                        defHintPos += refToMainSet.LatestAnimator.transform.TransformVector(refToMainSet.GetHipsOffset(progr) * (refToMainSet.OffsetHandsIKBlend * OffsetWithPelvisBlend));
+                        defHintPos += refToMainSet.LatestAnimator.transform.TransformVector(refToMainSet.GetHipsOffset(progr, false) * (refToMainSet.OffsetHandsIKBlend * OffsetWithPelvisBlend));
 
                     if (IKType != EIKType.ChainIK)
                         if (AutoHintMode == EIKAutoHintMode.FollowHipsRotation)
@@ -2808,6 +2842,7 @@ namespace FIMSpace.AnimationTools
                 return -1f;
             }
 
+            public Vector3 LastTargetIKPosition { get; private set; }
             internal Vector3 GetTargetIKPosition(Vector3 newIKPos, Transform root, float progr, FimpIK_Arm armIK, FIK_IKProcessor footIK)
             {
 
@@ -2860,7 +2895,7 @@ namespace FIMSpace.AnimationTools
                             if (stretch > maxStr)
                             {
                                 float len = (maxStr * armIK.limbLength);
-                                newIKPos = armIK.UpperArmIKBone.srcPosition + (newIKPos - armIK.UpperArmIKBone.transform.position).normalized * len;
+                                newIKPos = armIK.UpperArmIKBone.transform.position + (newIKPos - armIK.UpperArmIKBone.transform.position).normalized * len;
                             }
                         }
                     }
@@ -2874,7 +2909,7 @@ namespace FIMSpace.AnimationTools
                 {
                     LastUsedProcessor = footIK;
                 }
-                else if ( IKType == EIKType.ArmIK)
+                else if (IKType == EIKType.ArmIK)
                 {
                     LastUsedProcessor = armIK;
                 }
@@ -2903,6 +2938,7 @@ namespace FIMSpace.AnimationTools
                     }
 
 
+                LastTargetIKPosition = newIKPos;
                 return newIKPos;
             }
 

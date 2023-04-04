@@ -264,7 +264,9 @@ namespace FIMSpace.AnimationTools
 
             RefreshSkeleton(LatestAnimator);
             Armature.Prepare(LatestAnimator);
+
             if (TPose.BonesCoords.Count != Armature.BonesSetup.Count) CaptureTPose();
+
         }
 
         internal void GatherBones()
@@ -274,7 +276,25 @@ namespace FIMSpace.AnimationTools
             Armature.RefreshBonesSpecifics(LatestAnimator);
             RefreshLimbsReferences(Armature);
             AnimationDesignerWindow.AddEditorEvent(() => { AnimationDesignerWindow.ReInitializeCalibration(); });
+            OnAfterRefreshSkeleton();
         }
+
+        public Bounds InitialBounds { get; private set; }
+
+        void OnAfterRefreshSkeleton()
+        {
+            if (Armature == null) return;
+            if (Armature.LatestAnimator == null) return;
+
+            Vector3 prePos = Armature.LatestAnimator.position;
+            Armature.LatestAnimator.position = Vector3.zero;
+
+            if (TPose != null) TPose.RestoreOn(Armature);
+            InitialBounds = Armature.CalculateBounds();
+
+            Armature.LatestAnimator.position = prePos;
+        }
+
 
         internal void CaptureTPose()
         {
@@ -621,7 +641,6 @@ namespace FIMSpace.AnimationTools
 
             return rootB;
         }
-
 
 
         public Transform SearchForBoneInAllAnimatorChildren(string s_ArmatureParentName)

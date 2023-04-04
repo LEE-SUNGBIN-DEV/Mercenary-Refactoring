@@ -419,10 +419,10 @@ namespace FIMSpace.AnimationTools
                     ModuleReference = scrInstance;
             }
 
-            internal void DrawSceneHandles(float v)
+            internal void DrawSceneHandles(float v, float progr)
             {
                 if (ModuleReference == null) return;
-                ModuleReference.SceneView_DrawSceneHandles(this, v);
+                ModuleReference.SceneView_DrawSceneHandles(this, v, progr);
             }
 
             internal void DrawTopGUI(float animationProgress)
@@ -550,6 +550,20 @@ namespace FIMSpace.AnimationTools
                 if (CustomModules[i].ModuleReference == null) continue;
                 var mod = CustomModules[i].ModuleReference;
                 mod.OnInfluenceIKUpdate(animationProgress, deltaTime, s, anim_MainSet, this, CustomModules[i]);
+            }
+        }
+
+        internal void OnExportFinalizeModules(AnimationClip originalClip, AnimationClip targetClip, AnimationDesignerSave s, ADClipSettings_Main anim_MainSet)
+        {
+            if (CustomModules == null) return;
+
+            for (int i = 0; i < CustomModules.Count; i++)
+            {
+                if (CustomModules[i] == null) continue;
+                if (CustomModules[i].Enabled == false) continue;
+                if (CustomModules[i].ModuleReference == null) continue;
+                var mod = CustomModules[i].ModuleReference;
+                mod.OnExportFinalizing(originalClip, targetClip, s, anim_MainSet, this, CustomModules[i]);
             }
         }
     }
