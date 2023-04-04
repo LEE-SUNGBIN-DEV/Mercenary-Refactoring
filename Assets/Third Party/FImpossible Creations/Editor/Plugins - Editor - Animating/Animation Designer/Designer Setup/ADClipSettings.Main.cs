@@ -165,6 +165,8 @@ namespace FIMSpace.AnimationTools
         public int SetIDHash { get { return setIdHash; } }
         public AnimationClip SettingsForClip { get { return settingsForClip; } }
 
+        /// <summary> Dedicated for custom modules modify </summary>
+        public Vector3 PelvisFrameCustomPositionOffset { get; internal set; }
 
         public float ClipDurationMultiplier = 1f;
 
@@ -366,7 +368,10 @@ namespace FIMSpace.AnimationTools
             if (Pelvis)
             {
                 //if (System.Single.IsNaN(Pelvis.transform.position.x)) Pelvis.transform.localPosition = Vector3.zero;
-                Pelvis.transform.position += save.LatestAnimator.transform.TransformVector(GetHipsOffset(progr));
+                Vector3 pelvisOffset = GetHipsOffset(progr);
+                PelvisFrameCustomPositionOffset = Vector3.zero;
+
+                Pelvis.transform.position += save.LatestAnimator.transform.TransformVector(pelvisOffset);
             }
 
             UpdateHipsElasticMotion(elasticDt);
@@ -399,9 +404,10 @@ namespace FIMSpace.AnimationTools
             frameAccumulatedHipsOffset += v;
         }
 
-        internal Vector3 GetHipsOffset(float progr)
+        internal Vector3 GetHipsOffset(float progr, bool withCustomOff = true)
         {
             Vector3 posOffset = RootMotionTransform.TransformDirection(frameAccumulatedHipsOffset);
+            if ( withCustomOff) posOffset += PelvisFrameCustomPositionOffset;
 
             posOffset.x += PelvisXOffset * PelvisOffsetXEvaluate.Evaluate(progr) * PelvisOffsetsBlend;
             posOffset.y += PelvisYOffset * PelvisOffsetYEvaluate.Evaluate(progr) * PelvisOffsetsBlend + PelvisConstantYOffset;

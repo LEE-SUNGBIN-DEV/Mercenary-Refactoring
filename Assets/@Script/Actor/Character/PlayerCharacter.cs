@@ -74,14 +74,21 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
     private void Update()
     {
         Managers.InputManager?.UpdateUIInput();
+        Debug.DrawRay(transform.position, Vector3.down, Color.red, 0.9f);
+        Debug.DrawRay(transform.position + new Vector3(groundRayRadius, 0, 0), Vector3.down, Color.blue, 0.9f);
+        Debug.DrawRay(transform.position + new Vector3(-groundRayRadius, 0, 0), Vector3.down, Color.blue, 0.9f);
+        Debug.DrawRay(transform.position + new Vector3(0, 0, groundRayRadius), Vector3.down, Color.green, 0.9f);
+        Debug.DrawRay(transform.position + new Vector3(0, 0, -groundRayRadius), Vector3.down, Color.green, 0.9f);
         state?.Update();
-        fallController.Update();
     }
 
     public void InitializeCharacterState()
     {
         // Common State
         state.StateDictionary.Add(ACTION_STATE.COMMON_UPPER_EMPTY, new CommonStateUpperEmpty(this));
+
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_FALL, new PlayerStateFall(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_LANDING, new PlayerStateLanding(this));
 
         state.StateDictionary.Add(ACTION_STATE.PLAYER_ROLL, new PlayerStateRoll(this));
         state.StateDictionary.Add(ACTION_STATE.PLAYER_HIT_LIGHT, new PlayerStateLightHit(this));
@@ -91,7 +98,7 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
         state.StateDictionary.Add(ACTION_STATE.PLAYER_STAND_ROLL, new PlayerStateStandRoll(this));
 
         state.StateDictionary.Add(ACTION_STATE.PLAYER_STUN, new PlayerStateStun(this));
-        state.StateDictionary.Add(ACTION_STATE.COMMON_DIE, new PlayerStateDie(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_DIE, new PlayerStateDie(this));
 
         state.SetSubState(ACTION_STATE.COMMON_UPPER_EMPTY, STATE_SWITCH_BY.FORCED);
     }

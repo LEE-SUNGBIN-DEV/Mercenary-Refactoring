@@ -36,7 +36,7 @@ public class SwordShieldHeavyAttack03 : IActionState
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
         // -> Light Attack 1
-        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_03, 0.8f))
+        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_01, 0.8f))
         {
             return;
         }

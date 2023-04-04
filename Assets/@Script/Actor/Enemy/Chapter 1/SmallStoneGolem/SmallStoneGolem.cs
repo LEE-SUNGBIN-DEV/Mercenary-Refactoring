@@ -48,7 +48,7 @@ public class SmallStoneGolem : BaseEnemy, IStunable
     public override void OnDie()
     {
         IsDie = true;
-        state?.SetState(ACTION_STATE.COMMON_DIE, STATE_SWITCH_BY.WEIGHT);
+        state?.SetState(ACTION_STATE.ENEMY_DIE, STATE_SWITCH_BY.WEIGHT);
 
         StartCoroutine(WaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
     }

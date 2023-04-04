@@ -58,22 +58,27 @@ namespace FIMSpace.AnimationTools
             CheckInitialization(set);
         }
 
-        /// <summary> [base need to be executed on the beginning!] After Update() method simulation in Animation Designer loop </summary>
+        /// <summary> [base need to be executed on the beginning of the override!] After Update() method simulation in Animation Designer loop </summary>
         public virtual void OnBeforeIKUpdate(float animationProgress, float deltaTime, AnimationDesignerSave s, ADClipSettings_Main anim_MainSet, ADClipSettings_CustomModules customModules, CustomModuleSet set) { relevantSet = set; }
 
-        /// <summary> [base need to be executed on the beginning!] After IK - LateUpdate() method simulation in Animation Designer loop </summary>
+        /// <summary> [base need to be executed on the beginning of the override!] After IK - LateUpdate() method simulation in Animation Designer loop </summary>
         public virtual void OnLateUpdate(float animationProgress, float deltaTime, AnimationDesignerSave s, ADClipSettings_Main anim_MainSet, ADClipSettings_CustomModules customModules, CustomModuleSet set) { relevantSet = set; }
 
-        /// <summary> [base need to be executed on the beginning!] After all Animation Designer LateUpdates() simulation in Animation Designer loop </summary>
+        /// <summary> [base need to be executed on the beginning of the override!] After all Animation Designer LateUpdates() simulation in Animation Designer loop </summary>
         public virtual void OnLastUpdate(float animationProgress, float deltaTime, AnimationDesignerSave s, ADClipSettings_Main anim_MainSet, ADClipSettings_CustomModules customModules, CustomModuleSet set) { relevantSet = set; }
 
-        /// <summary> [base need to be executed on the beginning!] Called when sampling target clip animation </summary>
+        /// <summary> [base need to be executed on the beginning of the override!] Called when sampling target clip animation </summary>
         public virtual void OnPreUpdateSampling(AnimationDesignerSave s, ADClipSettings_Main anim_MainSet, CustomModuleSet set, ref float animProgress, ref float animationProgressClipTime) { relevantSet = set; }
-        /// <summary> [base need to be executed on the beginning!] </summary>
+        /// <summary> [base need to be executed on the beginning of the override!] </summary>
         public virtual void OnPreUpdateSamplingMorph(AnimationDesignerSave s, AnimationClip clip, ADClipSettings_Morphing.MorphingSet morphSet, CustomModuleSet set, ref float clipTime) { relevantSet = set; }
 
-        /// <summary> [base need to be executed on the beginning!] After IK Offsets Update but before applying IK to the bones </summary>
+        /// <summary> [base need to be executed on the beginning of the override!] After IK Offsets Update but before applying IK to the bones </summary>
         public virtual void OnInfluenceIKUpdate(float animationProgress, float deltaTime, AnimationDesignerSave s, ADClipSettings_Main anim_MainSet, ADClipSettings_CustomModules customModules, CustomModuleSet set) { relevantSet = set; }
+
+
+        /// <summary> [base need to be executed on the beginning of the override!] Called when animation clip compleated baking and is finalizing target animation clip </summary>
+        public virtual void OnExportFinalizing(AnimationClip originalClip, AnimationClip newClip, AnimationDesignerSave s, ADClipSettings_Main anim_MainSet, ADClipSettings_CustomModules customModules, CustomModuleSet set) { relevantSet = set; }
+
 
 
         public virtual void OnResetState(CustomModuleSet customModuleSet) { relevantSet = customModuleSet; }
@@ -289,7 +294,7 @@ namespace FIMSpace.AnimationTools
         }
 
         /// <summary> [No need for base execution] </summary>
-        public virtual void SceneView_DrawSceneHandles(CustomModuleSet customModuleSet, float alphaAnimation = 1f)
+        public virtual void SceneView_DrawSceneHandles(CustomModuleSet customModuleSet, float alphaAnimation = 1f, float progress = 0f)
         {
         }
 

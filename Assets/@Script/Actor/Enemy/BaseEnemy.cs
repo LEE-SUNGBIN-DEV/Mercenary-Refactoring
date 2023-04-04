@@ -41,7 +41,7 @@ public abstract class BaseEnemy : BaseActor
         }
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_IDLE, new EnemyStateIdle(this));
-        state.StateDictionary.Add(ACTION_STATE.COMMON_DIE, new EnemyStateDie(this));
+        state.StateDictionary.Add(ACTION_STATE.ENEMY_DIE, new EnemyStateDie(this));
         state.SetState(ACTION_STATE.PLAYER_HALBERD_IDLE, STATE_SWITCH_BY.FORCED);
     }
 

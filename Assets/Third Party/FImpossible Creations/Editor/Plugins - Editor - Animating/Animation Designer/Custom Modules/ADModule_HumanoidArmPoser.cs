@@ -41,7 +41,7 @@ namespace FIMSpace.AnimationTools.CustomModules
             ApplyMusclesV3(startI, contr.GetVector3Value(), tgtBlend, additive);
 
             tgtBlend = blend;
-             vBlend = GetVariable("LowArmB", set, 1f);
+            vBlend = GetVariable("LowArmB", set, 1f);
             tgtBlend *= vBlend.Float * vBlend.GetBlendEvaluation(animationProgress);
             contr = GetVariable("LowArm", set, Vector2.zero);
             startI = right ? MID_RightForearmStretch : MID_LeftForearmStretch;
@@ -244,7 +244,7 @@ namespace FIMSpace.AnimationTools.CustomModules
 
 
 
-        public override void SceneView_DrawSceneHandles(ADClipSettings_CustomModules.CustomModuleSet customModuleSet, float alphaAnimation = 1)
+        public override void SceneView_DrawSceneHandles(ADClipSettings_CustomModules.CustomModuleSet customModuleSet, float alphaAnimation = 1, float progress = 0f )
         {
             if (S == null) return;
             if (LastHumanoidAnimator == null) return;

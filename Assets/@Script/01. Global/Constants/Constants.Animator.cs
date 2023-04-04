@@ -24,6 +24,8 @@ public static partial class Constants
     public static readonly int ANIMATION_NAME_HASH_DIE = Animator.StringToHash("Die");
 
     // Player
+    public static readonly int ANIMATION_NAME_HASH_PLAYER_DRINK = Animator.StringToHash("Player_Drink");
+
     // - Halberd
     public static readonly int ANIMATION_NAME_HASH_HALBERD_EQUIP = Animator.StringToHash("Halberd_Equip");
 
@@ -50,7 +52,6 @@ public static partial class Constants
 
     public static readonly int ANIMATION_NAME_HASH_HALBERD_PARRYING =           Animator.StringToHash("Halberd_Parrying");
     public static readonly int ANIMATION_NAME_HASH_HALBERD_PARRYING_ATTACK =    Animator.StringToHash("Halberd_Parrying_Attack");
-
 
     // - Sword Shield
     public static readonly int ANIMATION_NAME_HASH_SWORD_SHIELD_EQUIP = Animator.StringToHash("Sword_Shield_Equip");

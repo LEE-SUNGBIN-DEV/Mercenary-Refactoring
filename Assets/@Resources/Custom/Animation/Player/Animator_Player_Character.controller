@@ -152,32 +152,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-7042860642476909678
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: ARPG_Warrior_Landing 1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 34c172a003c41bd4489858399d1b096a, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &-6690084574942206585
 AnimatorState:
   serializedVersion: 6
@@ -513,7 +487,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ARPG_Warrior_Collide 1
+  m_Name: Weapon_Collide
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -739,6 +713,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &-485054879645748111
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Player_Drink
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 41d8a71a201d15a42b6e367b1a365466, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -804,7 +804,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ARPG_Warrior_Airborne 1
+  m_Name: Fall
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -898,32 +898,6 @@ AnimatorState:
   m_Motion: {fileID: 7400000, guid: af551b42775280d4c803197c0ebdc7ed, type: 2}
   m_Tag: 
   m_SpeedParameter: attackSpeed
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &954468970490658316
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: ARPG_Warrior_Landing4 1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 3e8621f921102594bb19711cd69cb62e, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -1108,6 +1082,32 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!1102 &2760371897654169880
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Landing
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 6ec5a750768de544da61e7c6b2add019, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!1102 &2807677625724345346
 AnimatorState:
   serializedVersion: 6
@@ -1259,32 +1259,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 4cf75c47d3317674b99d63afb5acb998, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &4365754016576144974
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: ARPG_Warrior_Landing3 1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 32b0bdb95043e0c4fa16aa0cf9000038, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1499,32 +1473,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &6417884148133000319
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: ARPG_Warrior_Landing2 1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 6ec5a750768de544da61e7c6b2add019, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1107 &6424430608226059560
 AnimatorStateMachine:
   serializedVersion: 6
@@ -1611,7 +1559,7 @@ AnimatorStateMachine:
     m_Position: {x: 310, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 46291818592221288}
-    m_Position: {x: 520, y: -560, z: 0}
+    m_Position: {x: 510, y: -460, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5817877757559545515}
     m_Position: {x: 710, y: 30, z: 0}
@@ -1638,16 +1586,16 @@ AnimatorStateMachine:
     m_Position: {x: 930, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2782355078716173800}
-    m_Position: {x: 520, y: -610, z: 0}
+    m_Position: {x: 310, y: -620, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 828060582177731790}
-    m_Position: {x: 300, y: -660, z: 0}
+    m_Position: {x: 310, y: -770, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2100760125786588679}
-    m_Position: {x: 300, y: -610, z: 0}
+    m_Position: {x: 310, y: -720, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7812084868227236875}
-    m_Position: {x: 300, y: -560, z: 0}
+    m_Position: {x: 310, y: -670, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3416426563942222402}
     m_Position: {x: 1180, y: -20, z: 0}
@@ -1660,18 +1608,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 3804524971830130725}
     m_Position: {x: 710, y: 200, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -7042860642476909678}
-    m_Position: {x: 730, y: -560, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 6417884148133000319}
-    m_Position: {x: 730, y: -610, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 4365754016576144974}
-    m_Position: {x: 940, y: -560, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 954468970490658316}
-    m_Position: {x: 940, y: -610, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3433184678521309596}
     m_Position: {x: 1390, y: -120, z: 0}
@@ -1690,6 +1626,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 5367820356967969574}
     m_Position: {x: 1180, y: -70, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 2760371897654169880}
+    m_Position: {x: 510, y: -510, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -6365997898023679026}
@@ -1797,6 +1736,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 3199957831512604126}
     m_Position: {x: 270, y: 0, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -485054879645748111}
+    m_Position: {x: 270, y: 100, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
