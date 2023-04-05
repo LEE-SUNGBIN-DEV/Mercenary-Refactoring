@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class GameManager
 {
     [Header("Camera")]
-    private PlayerCamera playerCamera;
-    private DirectingCamera directingCamera;
+    [SerializeField] private PlayerCamera playerCamera;
+    [SerializeField] private DirectingCamera directingCamera;
 
     [Header("Cursor")]
     private CURSOR_MODE cursorMode;
-
     private IEnumerator slowMotionCoroutine;
 
     public void Initialize()

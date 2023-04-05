@@ -69,11 +69,6 @@ public class PlayerCamera : BaseCamera
         targetCamera.transform.localPosition = Vector3.Lerp(targetCamera.transform.localPosition, cameraDirection * cameraDistance, Time.deltaTime * smoothness);
     }
 
-    private void OnDestroy()
-    {
-        Managers.GameManager.PlayerCamera = null;
-    }
-
     #region Property
     public float CameraSpeed { get { return cameraSpeed; } }
     public float Sensitivity { get { return sensitivity; } set { sensitivity = value; } }
