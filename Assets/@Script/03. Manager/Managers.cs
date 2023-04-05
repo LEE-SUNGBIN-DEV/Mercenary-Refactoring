@@ -8,8 +8,7 @@ public class Managers : Singleton<Managers>
     private bool isInitialized = false;
 
     [SerializeField] private DataManager dataManager = new DataManager();
-
-    private GameManager gameManager = new GameManager();
+    [SerializeField] private GameManager gameManager = new GameManager();
     private SceneManagerCS sceneManagerCS = new SceneManagerCS();
     private ResourceManager resourceManager = new ResourceManager();
     private InputManager inputManager = new InputManager();
@@ -20,6 +19,7 @@ public class Managers : Singleton<Managers>
     private GameEventManager gameEventManager = new GameEventManager();
     private QuestManager questManager = new QuestManager();
     private CompeteManager competeManager;
+    private EnvironmentManager environmentManager;
 
     public override void Initialize()
     {
@@ -47,6 +47,7 @@ public class Managers : Singleton<Managers>
 
             // Mono
             competeManager = Functions.GetOrAddComponent<CompeteManager>(gameObject);
+            environmentManager = Functions.GetOrAddComponent<EnvironmentManager>(gameObject);
 
             isInitialized = true;
             Debug.Log($"{this} Initialization Complete!");
@@ -66,5 +67,6 @@ public class Managers : Singleton<Managers>
     public static NPCManager NPCManager { get { return Instance?.npcManager; } }
     public static QuestManager QuestManager { get { return Instance?.questManager; } }
     public static CompeteManager CompeteManager { get { return Instance?.competeManager; } }
+    public static EnvironmentManager EnvironmentManager { get { return Instance?.environmentManager; } }
     #endregion
 }

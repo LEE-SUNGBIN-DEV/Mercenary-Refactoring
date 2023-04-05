@@ -21,8 +21,7 @@ public enum SCENE_TYPE
     Unknown,
     Title,
     Selection,
-    Vilage,
-    Dungeon,
+    Game,
     Loading,
 
     Size
