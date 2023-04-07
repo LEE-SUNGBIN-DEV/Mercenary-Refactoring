@@ -41,14 +41,7 @@ public class SkeletonKnight : BaseEnemy, ICompetable
 
         StartCoroutine(StunTime());
     }
-    public override void OnDie()
-    {
-        // Die State
-        IsDie = true;
-        Animator.SetTrigger("doDie");
 
-        StartCoroutine(WaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
-    }
     #endregion
 
     public IEnumerator StunTime(float time = 4f)

@@ -22,6 +22,7 @@ public class SceneManagerCS
         Managers.UIManager.CommonSceneUI.FadeIn(2f);
         OnSceneEnter?.Invoke();
     }
+
     public void SceneExit(Scene scene)
     {
         OnSceneExit?.Invoke();
@@ -38,6 +39,7 @@ public class SceneManagerCS
     {
         Managers.UIManager.CommonSceneUI.FadeOut(2f, () => { SceneManager.LoadScene(sceneName); });
     }
+
     public void LoadScene(SCENE_LIST requestScene)
     {
         LoadScene(requestScene.GetEnumName());

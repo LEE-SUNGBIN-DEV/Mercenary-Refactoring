@@ -20,7 +20,6 @@ public class SmallStoneGolem : BaseEnemy, IStunable
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_LIGHT, new EnemyStateLightHit(this));
         state.StateDictionary.Add(ACTION_STATE.ENEMY_HIT_HEAVY, new EnemyStateHeavyHit(this));
-
         state.StateDictionary.Add(ACTION_STATE.ENEMY_STUN, new EnemyStateStun(this));
     }
 
@@ -43,14 +42,6 @@ public class SmallStoneGolem : BaseEnemy, IStunable
     public virtual void OnStun(float duration)
     {
         state?.SetState(ACTION_STATE.ENEMY_STUN, STATE_SWITCH_BY.WEIGHT, duration);
-    }
-
-    public override void OnDie()
-    {
-        IsDie = true;
-        state?.SetState(ACTION_STATE.ENEMY_DIE, STATE_SWITCH_BY.WEIGHT);
-
-        StartCoroutine(WaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
     }
     #endregion
 }

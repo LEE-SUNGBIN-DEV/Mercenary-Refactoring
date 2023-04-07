@@ -64,7 +64,7 @@ public class UICommonScene : UIBaseScene
         StartCoroutine(CoFadeOut(fadeTime, callback));
     }
 
-    IEnumerator CoFadeIn(float fadeTime, UnityAction callback)
+    IEnumerator CoFadeIn(float fadeTime, UnityAction callback = null)
     {
         Color color = fadeImage.color;
         float currentTime = 0f;
@@ -82,7 +82,8 @@ public class UICommonScene : UIBaseScene
 
         callback?.Invoke();
     }
-    IEnumerator CoFadeOut(float fadeTime, UnityAction callback)
+
+    IEnumerator CoFadeOut(float fadeTime, UnityAction callback = null)
     {
         Color color = fadeImage.color;
         float currentTime = 0f;

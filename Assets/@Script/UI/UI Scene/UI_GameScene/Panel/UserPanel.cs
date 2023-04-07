@@ -8,9 +8,9 @@ public class UserPanel : UIPanel
 {
     public enum IMAGE
     {
-        HPBar,
-        SPBar,
-        ExpBar
+        HP_Bar,
+        SP_Bar,
+        Exp_Bar
     }
 
     private QuickSlotPanel quickSlotPanel;
@@ -31,12 +31,12 @@ public class UserPanel : UIPanel
     public void UpdateUserPanel(StatusData status)
     {
         float ratio = status.CurrentHP / status.MaxHP;
-        GetImage((int)IMAGE.HPBar).fillAmount = ratio;
+        GetImage((int)IMAGE.HP_Bar).fillAmount = ratio;
 
         ratio = status.CurrentExp / status.MaxExp;
-        GetImage((int)IMAGE.ExpBar).fillAmount = ratio;
+        GetImage((int)IMAGE.Exp_Bar).fillAmount = ratio;
 
         ratio = status.CurrentSP / status.MaxSP;
-        GetImage((int)IMAGE.SPBar).fillAmount = ratio;
+        GetImage((int)IMAGE.SP_Bar).fillAmount = ratio;
     }
 }

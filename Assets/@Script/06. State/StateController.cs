@@ -36,7 +36,7 @@ public class StateController
         {
             lifetimeState.SetDuration(duration);
         }
-        if(subState.StateWeight < mainState.StateWeight)
+        if(subState?.StateWeight < mainState?.StateWeight)
         {
             SetSubState(ACTION_STATE.COMMON_UPPER_EMPTY, STATE_SWITCH_BY.FORCED);
         }

@@ -14,7 +14,7 @@ public class EnemyStateIdle : IActionState
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_IDLE;
-        idleAnimationNameHash = Constants.ANIMATION_NAME_HASH_HALBERD_IDLE;
+        idleAnimationNameHash = Constants.ANIMATION_NAME_HASH_IDLE;
     }
 
     public void Enter()
@@ -28,8 +28,7 @@ public class EnemyStateIdle : IActionState
 
     public void Update()
     {
-        // 탐지 가능한 상태라면
-        // Idle -> Chase
+        // -> Chase
         if (enemy.IsTargetInDetectionDistance() && enemy.IsTargetInSight())
         {
             enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WAIT, STATE_SWITCH_BY.WEIGHT);
@@ -37,7 +36,7 @@ public class EnemyStateIdle : IActionState
         }
 
         // 일정 시간마다 패트롤 상태로 전환
-        // Idle -> Patrol
+        // -> Patrol
         idleTime += Time.deltaTime;
         if(idleTime >= patrolInterval)
         {

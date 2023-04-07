@@ -62,8 +62,7 @@ public class PlayerHalberd : PlayerWeapon
             // Heavy Attack
             {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_01, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f) },
             {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_02, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 1.8f) },
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_03_1, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f) },
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_03_2, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f) },
+            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_03, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 2.2f) },
             {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_04_1, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f) },
             {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_04_2, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 2.6f) },
 

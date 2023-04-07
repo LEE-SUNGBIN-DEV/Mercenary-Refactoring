@@ -32,14 +32,16 @@ public class PlayerStateFall : IActionState
             case ACTOR_GROUND_STATE.GROUND:
                 character.FallDamageProcess(fallTime);
                 character.State.SetState(ACTION_STATE.PLAYER_LANDING, STATE_SWITCH_BY.WEIGHT);
-                return;
+                break;
 
             case ACTOR_GROUND_STATE.SLOPE:
             case ACTOR_GROUND_STATE.AIR:
                 fallTime += Time.deltaTime;
-                return;
+                break;
         }
 
+        if (fallTime > 2.5f)
+            character.Status.CurrentHP = 0f;
     }
 
     public void Exit()

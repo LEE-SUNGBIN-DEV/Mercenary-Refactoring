@@ -7,6 +7,8 @@ using UnityEngine.Events;
 
 public class PlayerCharacter : BaseActor, ICompetable, IStunable
 {
+    public event UnityAction<PlayerCharacter> OnPlayerDie;
+
     [Header("Player Character")]
     [SerializeField] private CharacterData characterData;
 
@@ -32,12 +34,12 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
         Status.OnCharacterStatusChanged -= ApplyAttackSpeed;
         Status.OnCharacterStatusChanged += ApplyAttackSpeed;
 
-        Status.OnDie -= OnDie;
-        Status.OnDie += OnDie;
+        Status.OnCharacterStatusChanged -= OnDie;
+        Status.OnCharacterStatusChanged += OnDie;
 
         ApplyAttackSpeed(Status);
 
-        // Weapon
+        // Initialize Weapon
         if (TryGetComponent<PlayerHalberd>(out halberd))
             halberd.InitializeWeapon(this);
 
@@ -52,7 +54,7 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
 
         currentWeapon = weaponDictionary[WEAPON_TYPE.HALBERD];
 
-        // State
+        // Initialize State
         InitializeCharacterState();
         if(TryEquipWeapon(currentWeapon.WeaponType))
         {
@@ -73,12 +75,6 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
 
     private void Update()
     {
-        Managers.InputManager?.UpdateUIInput();
-        Debug.DrawRay(transform.position, Vector3.down, Color.red, 0.9f);
-        Debug.DrawRay(transform.position + new Vector3(groundRayRadius, 0, 0), Vector3.down, Color.blue, 0.9f);
-        Debug.DrawRay(transform.position + new Vector3(-groundRayRadius, 0, 0), Vector3.down, Color.blue, 0.9f);
-        Debug.DrawRay(transform.position + new Vector3(0, 0, groundRayRadius), Vector3.down, Color.green, 0.9f);
-        Debug.DrawRay(transform.position + new Vector3(0, 0, -groundRayRadius), Vector3.down, Color.green, 0.9f);
         state?.Update();
     }
 
@@ -148,7 +144,19 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
     public virtual void OnStun(float duration) { state?.SetState(ACTION_STATE.PLAYER_STUN, STATE_SWITCH_BY.WEIGHT, duration); }
 
     public virtual void OnCompete() { state?.SetState(ACTION_STATE.PLAYER_COMPETE, STATE_SWITCH_BY.WEIGHT); }
-    public virtual void OnDie(StatusData characterStats) { }
+    public void OnDie(StatusData characterStatus)
+    {
+        if (!isDie && characterStatus.CurrentHP <= 0)
+        {
+            OnPlayerDie?.Invoke(this);
+
+            gameObject.layer = Constants.LAYER_DIE;
+            isInvincible = true;
+            IsDie = true;
+            state?.SetState(ACTION_STATE.PLAYER_DIE, STATE_SWITCH_BY.WEIGHT);
+            StartCoroutine(CoWaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
+        }
+    }
 
     public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)
     {

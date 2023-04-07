@@ -46,6 +46,17 @@ public abstract class UIBaseScene : UIBase
     {
         panel.gameObject.SetActive(false);
     }
+    public void TogglePanel(UIPanel panel)
+    {
+        if (panel.gameObject.activeSelf)
+        {
+            ClosePanel(panel);
+        }
+        else
+        {
+            OpenPanel(panel);
+        }
+    }
 
     public void OpenPopup(UIPopup popup)
     {

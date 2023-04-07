@@ -24,7 +24,7 @@ public class HalberdLightAttack04 : IActionState
         mouseLeftDown = false;
         mouseRightDown = false;
         character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.1f);
+        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.05f);
     }
 
     public void Update()
@@ -48,13 +48,13 @@ public class HalberdLightAttack04 : IActionState
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
         // -> Smash Attack 4
-        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_HEAVY_04, 0.8f))
+        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_HEAVY_04, 0.6f))
         {
             return;
         }
 
         // -> Light Attack 1
-        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_01, 0.8f))
+        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_01, 0.6f))
         {
             return;
         }

@@ -8,7 +8,6 @@ using Newtonsoft.Json;
 public class StatusData
 {
     public event UnityAction<StatusData> OnCharacterStatusChanged;
-    public event UnityAction<StatusData> OnDie;
 
     [Header("Stat")]
     [SerializeField] private int level;
@@ -187,7 +186,6 @@ public class StatusData
             if (currentHP < 0)
             {
                 currentHP = 0;
-                OnDie?.Invoke(this);
             }
 
             OnCharacterStatusChanged?.Invoke(this);

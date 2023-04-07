@@ -21,7 +21,7 @@ public class HalberdHeavyAttack01 : IActionState
     {
         mouseLeftDown = false;
         character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.1f);
+        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.2f);
     }
 
     public void Update()
