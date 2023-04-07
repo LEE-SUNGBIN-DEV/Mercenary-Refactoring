@@ -7,7 +7,11 @@ public static partial class Constants
     #region Animator String Hash
     // - Common
     public static readonly int ANIMATION_NAME_HASH_EMPTY = Animator.StringToHash("Empty");
-    public static readonly int ANIMATION_NAME_HASH_SPAWN = Animator.StringToHash("Spawn");
+
+    public static readonly int ANIMATION_NAME_HASH_IDLE = Animator.StringToHash("Idle");
+    public static readonly int ANIMATION_NAME_HASH_WALK = Animator.StringToHash("Walk");
+    public static readonly int ANIMATION_NAME_HASH_RUN = Animator.StringToHash("Run");
+
 
     public static readonly int ANIMATION_NAME_HASH_ROLL = Animator.StringToHash("Roll");
 
@@ -22,6 +26,7 @@ public static partial class Constants
 
     public static readonly int ANIMATION_NAME_HASH_STUN = Animator.StringToHash("Stun");
     public static readonly int ANIMATION_NAME_HASH_DIE = Animator.StringToHash("Die");
+    public static readonly int ANIMATION_NAME_HASH_SPAWN = Animator.StringToHash("Spawn");
 
     // Player
     public static readonly int ANIMATION_NAME_HASH_PLAYER_DRINK = Animator.StringToHash("Player_Drink");

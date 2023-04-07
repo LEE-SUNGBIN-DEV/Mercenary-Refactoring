@@ -36,10 +36,8 @@ public class BlackDragonDoubleAttack : EnemySkill
         leftClaw.OnDisableCollider();
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 127));
-        enemy.MeshRenderer.material.color = Color.blue;
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 140));
-        enemy.MeshRenderer.material.color = Color.white;
         rightClaw.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 1.2f, 4f);
         rightClaw.OnEnableCollider();
 

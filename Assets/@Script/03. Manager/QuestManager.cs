@@ -161,7 +161,7 @@ public class QuestManager
         RefreshAllNPCQuestList();
     }
 
-    public void RequestAcceptList(QuestPopup questPopUp)
+    public void RequestAcceptList(QuestPanel questPopUp)
     {
         for (int i = 0; i < AcceptQuestList.Count; ++i)
         {
@@ -172,7 +172,7 @@ public class QuestManager
         }
     }
 
-    public void RequestCompleteList(QuestPopup questPopUp)
+    public void RequestCompleteList(QuestPanel questPopUp)
     {
         for (int i = 0; i < CompleteQuestList.Count; ++i)
         {

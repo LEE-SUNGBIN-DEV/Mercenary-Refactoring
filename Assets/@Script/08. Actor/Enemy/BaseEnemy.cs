@@ -32,6 +32,9 @@ public abstract class BaseEnemy : BaseActor
     {
         base.Awake();
 
+        status.OnChanageEnemyData -= OnDie;
+        status.OnChanageEnemyData += OnDie;
+
         TryGetComponent(out navMeshAgent);
         skillArray = GetComponents<EnemySkill>();
 
@@ -42,7 +45,7 @@ public abstract class BaseEnemy : BaseActor
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_IDLE, new EnemyStateIdle(this));
         state.StateDictionary.Add(ACTION_STATE.ENEMY_DIE, new EnemyStateDie(this));
-        state.SetState(ACTION_STATE.PLAYER_HALBERD_IDLE, STATE_SWITCH_BY.FORCED);
+        state.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
     }
 
     public virtual void OnEnable()
@@ -180,29 +183,20 @@ public abstract class BaseEnemy : BaseActor
         character.Status.CurrentHP -= damage;
     }
 
-    public IEnumerator WaitForDisapear(float time)
-    {
-        float disapearTime = 0f;
-
-        isDie = true;
-        isInvincible = true;
-        gameObject.layer = Constants.LAYER_ENEMY_DIE;
-
-        while (disapearTime <= time)
-        {
-            disapearTime += Time.deltaTime;
-            yield return null;
-        }
-    }
-
     public abstract void OnLightHit();
     public abstract void OnHeavyHit();
-    public virtual void OnDie()
+    public virtual void OnDie(EnemyData enemyData)
     {
-        if (isDie)
-            return;
+        if (!isDie && enemyData.CurrentHP <= 0)
+        {
+            OnEnemyDie?.Invoke(this);
 
-        OnEnemyDie?.Invoke(this);
+            gameObject.layer = Constants.LAYER_DIE;
+            isInvincible = true;
+            IsDie = true;
+            state?.SetState(ACTION_STATE.ENEMY_DIE, STATE_SWITCH_BY.WEIGHT);
+            StartCoroutine(CoWaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
+        }
     }
 
     #region Property

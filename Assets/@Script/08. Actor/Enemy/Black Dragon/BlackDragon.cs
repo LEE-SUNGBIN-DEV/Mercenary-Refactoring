@@ -29,12 +29,6 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         state.SetState(ACTION_STATE.ENEMY_SPAWN, STATE_SWITCH_BY.WEIGHT);
     }
 
-    public override void OnDie()
-    {
-        base.OnDie();
-        StartCoroutine(WaitForDisapear(10f));
-    }
-
     public override void OnLightHit()
     {
     }

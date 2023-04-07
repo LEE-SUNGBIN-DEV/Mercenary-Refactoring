@@ -15,9 +15,8 @@ public abstract class BaseActor : MonoBehaviour
     protected Animator animator;
     protected CharacterController characterController;
     protected StateController state;
-    protected Dictionary<string, Material> materialDictionary;
-    [SerializeField] protected SkinnedMeshRenderer meshRenderer;
-    [SerializeField] protected MaterialContainer[] materialContainers;
+    [SerializeField] protected SkinnedMeshRenderer[] meshRenderers;
+    [SerializeField] protected MaterialPropertyBlock propertyBlock;
     [SerializeField] protected ObjectPooler objectPooler = new ObjectPooler();
     
     [SerializeField] protected bool isInvincible;
@@ -35,33 +34,58 @@ public abstract class BaseActor : MonoBehaviour
             groundRayRadius = characterController.radius + 0.1f;
         }
 
+        meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        if (meshRenderers != null && propertyBlock == null)
+        {
+            propertyBlock = new MaterialPropertyBlock();
+        }
+
         state = new StateController(animator);
-        meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>(true);
         objectPooler.Initialize(transform);
+    }
 
-        if (materialContainers != null)
+    public IEnumerator CoWaitForDisapear(float time)
+    {
+        float disapearTime = 0f;
+
+        while (disapearTime <= time)
         {
-            materialDictionary = new Dictionary<string, Material>();
-            for (int i=0; i<materialContainers.Length; ++i)
+            disapearTime += Time.deltaTime;
+            yield return null;
+        }
+
+        StartCoroutine(CoStartDissolve());
+    }
+
+    public IEnumerator CoStartDissolve()
+    {
+        float dissolveAmount = 0f;
+        float dissolveSpeed = 0.3f;
+
+        while(dissolveAmount <= 1f)
+        {
+            dissolveAmount += dissolveSpeed * Time.deltaTime;
+            propertyBlock.SetFloat("_DissolveAmount", dissolveAmount);
+            for (int i = 0; i < meshRenderers.Length; ++i)
             {
-                materialDictionary.Add(materialContainers[i].key, materialContainers[i].value);
+                meshRenderers[i].SetPropertyBlock(propertyBlock);
             }
+            yield return null;
         }
     }
 
-    public void SetMaterial(string key)
+    public float FallDamageProcess(float fallTime)
     {
-        if(materialDictionary.ContainsKey(key))
-        {
-            meshRenderer.material = materialDictionary[key];
-        }
-    }
+        Debug.Log("Fall Time: " + fallTime);
 
-    public void FallDamageProcess(float fallTime)
-    {
-        if (fallTime >= 2f)
+        if (fallTime <= 1f)
         {
-            Debug.Log("Fall Damaged: " + fallTime);
+            return 0f;
+        }
+
+        else
+        {
+            return Mathf.Clamp01(0.4f * fallTime);
         }
     }
 
@@ -91,7 +115,7 @@ public abstract class BaseActor : MonoBehaviour
     public CharacterController CharacterController { get { return characterController; } }
     public StateController State { get { return state; } }
     public Animator Animator { get { return animator; } }
-    public SkinnedMeshRenderer MeshRenderer { get { return meshRenderer; } }
+    public SkinnedMeshRenderer[] MeshRenderers { get { return meshRenderers; } }
     public ObjectPooler ObjectPooler { get { return objectPooler; } }
     public bool IsInvincible { get { return isInvincible; } set { isInvincible = value; } }
     public bool IsDie { get { return isDie; } set { isDie = value; } }

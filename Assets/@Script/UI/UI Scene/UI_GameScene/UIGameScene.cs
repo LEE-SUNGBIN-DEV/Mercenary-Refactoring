@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class UIGameScene : UIBaseScene
 {
+    private UIPanel currentUserPanel;
+
     // Panel
     private UserPanel userPanel;
+    private StatusPanel statusPanel;
+    private InventoryPanel inventoryPanel;
+    private QuestPanel questPopup;
     private DialoguePanel dialoguePanel;
     private EnemyPanel enemyPanel;
     private MapPanel mapPanel;
+    private CampaignPopup campaignPopup;
     private CompetePanel competePanel;
 
     // Popup
     private DiePopup diePopup;
-    private InventoryPopup inventoryPopup;
-    private StatusPopup statusPopup;
     private HelpPopup helpPopup;
-    private QuestPopup questPopup;
     private StorePopup storePopup;
-    private CampaignPopup campaignPopup;
 
     public void Initialize(CharacterData characterData)
     {
@@ -28,30 +30,31 @@ public class UIGameScene : UIBaseScene
             return;
         }
         isInitialized = true;
+        currentUserPanel = null;
 
         // Get Component
         userPanel = GetComponentInChildren<UserPanel>(true);
+        statusPanel = GetComponentInChildren<StatusPanel>(true);
+        inventoryPanel = GetComponentInChildren<InventoryPanel>(true);
+        questPopup = GetComponentInChildren<QuestPanel>(true);
         dialoguePanel = GetComponentInChildren<DialoguePanel>(true);
         enemyPanel = GetComponentInChildren<EnemyPanel>(true);
         mapPanel = GetComponentInChildren<MapPanel>(true);
         competePanel = GetComponentInChildren<CompetePanel>(true);
 
         diePopup = GetComponentInChildren<DiePopup>(true);
-        inventoryPopup = GetComponentInChildren<InventoryPopup>(true);
-        statusPopup = GetComponentInChildren<StatusPopup>(true);
         helpPopup = GetComponentInChildren<HelpPopup>(true);
-        questPopup = GetComponentInChildren<QuestPopup>(true);
         storePopup = GetComponentInChildren<StorePopup>(true);
         campaignPopup = GetComponentInChildren<CampaignPopup>(true);
 
         // Initialize
         userPanel.Initialize(characterData);
+        statusPanel.Initialize(characterData);
+        inventoryPanel.Initialize(characterData);
         dialoguePanel.Initialize(characterData);
         competePanel.Initialize();
 
         diePopup.Initialize();
-        inventoryPopup.Initialize(characterData.InventoryData);
-        statusPopup.Initialize(characterData);
         helpPopup.Initialize();
         //questPopup.Initialize();
         storePopup.Initialize();
@@ -70,16 +73,36 @@ public class UIGameScene : UIBaseScene
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
-            TogglePopup(inventoryPopup);
+            SwitchUserPanel(inventoryPanel);
 
         if (Input.GetKeyDown(KeyCode.T))
-            TogglePopup(statusPopup);
+            SwitchUserPanel(statusPanel);
 
         if (Input.GetKeyDown(KeyCode.Q))
-            TogglePopup(questPopup);
+            SwitchUserPanel(questPopup);
 
         if (Input.GetKeyDown(KeyCode.H))
             TogglePopup(helpPopup);
+    }
+
+    public void SwitchUserPanel(UIPanel panel)
+    {
+        if(currentUserPanel == null)
+        {
+            currentUserPanel = panel;
+            OpenPanel(currentUserPanel);
+        }
+        else if(currentUserPanel == panel)
+        {
+            ClosePanel(currentUserPanel);
+            currentUserPanel = null;
+        }
+        else
+        {
+            ClosePanel(currentUserPanel);
+            currentUserPanel = panel;
+            OpenPanel(currentUserPanel);
+        }
     }
 
     public void OpenCompetePanel() { OpenPanel(competePanel); }
@@ -87,10 +110,10 @@ public class UIGameScene : UIBaseScene
 
     #region Property
     public DiePopup DiePopup { get { return diePopup; } }
-    public InventoryPopup InventoryPopup { get { return inventoryPopup; } }
-    public StatusPopup StatusPopup { get { return statusPopup; } }
+    public InventoryPanel InventoryPopup { get { return inventoryPanel; } }
+    public StatusPanel StatusPopup { get { return statusPanel; } }
     public HelpPopup HelpPopup { get { return helpPopup; } }
-    public QuestPopup QuestPopup { get { return questPopup; } }
+    public QuestPanel QuestPopup { get { return questPopup; } }
     public StorePopup StorePopup { get { return storePopup; } }
     public CampaignPopup CampaignPopup { get { return campaignPopup; } }
 

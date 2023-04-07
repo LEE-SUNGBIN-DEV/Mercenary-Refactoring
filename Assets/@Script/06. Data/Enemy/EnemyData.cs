@@ -62,7 +62,9 @@ public class EnemyData
                 currentHP = MaxHP;
 
             if (currentHP < 0)
+            {
                 currentHP = 0;
+            }
 
             OnChanageEnemyData?.Invoke(this);
         }

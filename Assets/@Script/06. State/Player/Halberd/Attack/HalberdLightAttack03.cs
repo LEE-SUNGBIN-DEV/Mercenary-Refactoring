@@ -54,7 +54,7 @@ public class HalberdLightAttack03 : IActionState
         }
 
         // -> Light Attack 4
-        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_04, 0.7f))
+        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_04, 0.5f))
         {
             return;
         }
