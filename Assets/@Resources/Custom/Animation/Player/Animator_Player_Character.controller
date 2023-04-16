@@ -236,7 +236,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Roll
+  m_Name: Player_Roll
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -262,7 +262,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Stand_Roll
+  m_Name: Player_Stand_Roll
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -340,7 +340,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Heavy_Hit_Loop
+  m_Name: Player_Heavy_Hit_Loop
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -379,7 +379,33 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fedbd6f7ae97b38439be2753c9cd8798, type: 2}
+  m_Motion: {fileID: 7400000, guid: 9d64a47d751e53a4b9da5ec4e72ca99d, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-3078479175011982431
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Player_Slide
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 827e3cb808a663a40b8cff47bdafd3bd, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -548,7 +574,7 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
@@ -668,7 +694,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Light_Hit
+  m_Name: Player_Light_Hit
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -694,7 +720,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Stun
+  m_Name: Player_Stun
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -720,7 +746,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Die
+  m_Name: Player_Die
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -830,7 +856,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fall
+  m_Name: Player_Fall
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -934,7 +960,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Stand_Up
+  m_Name: Player_Stand_Up
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1038,7 +1064,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Halberd_Guard_Out
-  m_Speed: 0.5
+  m_Speed: 0.6
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1115,7 +1141,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Landing
+  m_Name: Player_Landing
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1142,7 +1168,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sword_Shield_Guard_In
-  m_Speed: 0.5
+  m_Speed: 0.6
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1297,7 +1323,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Heavy_Hit
+  m_Name: Player_Heavy_Hit
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1313,6 +1339,32 @@ AnimatorState:
   m_Motion: {fileID: 7400000, guid: 0316eaabeb0920744947966229986960, type: 2}
   m_Tag: 
   m_SpeedParameter: competeFloat
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &4658843268443021399
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sword_Shield_Parrying_Attack
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 1
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: cf7831539794f574891f31d26ca79242, type: 2}
+  m_Tag: 
+  m_SpeedParameter: attackSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -1376,7 +1428,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sword_Shield_Guard_Out
-  m_Speed: 0.5
+  m_Speed: 0.6
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -1585,7 +1637,7 @@ AnimatorStateMachine:
     m_Position: {x: 310, y: -160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 46291818592221288}
-    m_Position: {x: 510, y: -460, z: 0}
+    m_Position: {x: 510, y: -510, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5817877757559545515}
     m_Position: {x: 710, y: 30, z: 0}
@@ -1612,16 +1664,16 @@ AnimatorStateMachine:
     m_Position: {x: 930, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2782355078716173800}
-    m_Position: {x: 310, y: -620, z: 0}
+    m_Position: {x: 280, y: -610, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 828060582177731790}
-    m_Position: {x: 310, y: -770, z: 0}
+    m_Position: {x: 280, y: -760, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2100760125786588679}
-    m_Position: {x: 310, y: -720, z: 0}
+    m_Position: {x: 280, y: -710, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7812084868227236875}
-    m_Position: {x: 310, y: -670, z: 0}
+    m_Position: {x: 280, y: -660, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3416426563942222402}
     m_Position: {x: 1180, y: -20, z: 0}
@@ -1654,10 +1706,16 @@ AnimatorStateMachine:
     m_Position: {x: 1180, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2760371897654169880}
-    m_Position: {x: 510, y: -510, z: 0}
+    m_Position: {x: 510, y: -560, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -806582615927885135}
-    m_Position: {x: 510, y: -560, z: 0}
+    m_Position: {x: 510, y: -610, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -3078479175011982431}
+    m_Position: {x: 510, y: -460, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4658843268443021399}
+    m_Position: {x: 1390, y: -170, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -6365997898023679026}
@@ -1677,7 +1735,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Halberd_Guard_In
-  m_Speed: 0.5
+  m_Speed: 0.6
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []

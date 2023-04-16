@@ -6,24 +6,24 @@ public class PlayerStateLightHit : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
 
     public PlayerStateLightHit(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_LIGHT;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_LIGHT_HIT;
+        animationClipInformation = character.AnimationClipDictionary["Player_Light_Hit"];
     }
 
     public void Enter()
     {
-        character.Animator.Play(animationNameHash);
+        character.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()
     {
         // !! When animation is over
-        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, character.CurrentWeapon.BasicStateInformation.idleState, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, character.CurrentWeapon.IdleState, 0.9f))
             return;
     }
 

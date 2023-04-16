@@ -1,0 +1,36 @@
+{
+  "chapter": 0,
+  "name": "Fog Canyon",
+  "wayPointObjects": [
+    {
+      "chapter": 0,
+      "type": 0,
+      "name": "Test Object: 0",
+      "point": {
+        "x": 0.0,
+        "y": 1.0,
+        "z": 2.0
+      }
+    },
+    {
+      "chapter": 0,
+      "type": 0,
+      "name": "Test Object: 1",
+      "point": {
+        "x": 1.0,
+        "y": 2.0,
+        "z": 3.0
+      }
+    },
+    {
+      "chapter": 0,
+      "type": 0,
+      "name": "Test Object: 2",
+      "point": {
+        "x": 2.0,
+        "y": 3.0,
+        "z": 4.0
+      }
+    }
+  ]
+}

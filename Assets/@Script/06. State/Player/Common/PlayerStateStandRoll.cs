@@ -6,7 +6,7 @@ public class PlayerStateStandRoll : IActionState
 {
     private PlayerCharacter character;
     public int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
     private Vector3 moveInput;
     private Vector3 verticalDirection;
     private Vector3 horizontalDirection;
@@ -15,7 +15,7 @@ public class PlayerStateStandRoll : IActionState
     public PlayerStateStandRoll(PlayerCharacter character)
     {
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_STAND_ROLL;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_STAND_ROLL;
+        animationClipInformation = character.AnimationClipDictionary["Player_Stand_Roll"];
         this.character = character;
     }
 
@@ -29,13 +29,13 @@ public class PlayerStateStandRoll : IActionState
         character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
         character.IsInvincible = true;
-        character.Animator.Play(animationNameHash);
+        character.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()
     {
         // !! When animation is over
-        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, character.CurrentWeapon.BasicStateInformation.idleState, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, character.CurrentWeapon.IdleState, 0.9f))
             return;
     }
 

@@ -6,7 +6,7 @@ public class HalberdLightAttack04 : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
     private bool mouseLeftDown;
     private bool mouseRightDown;
 
@@ -14,7 +14,7 @@ public class HalberdLightAttack04 : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_LIGHT_04;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_HALBERD_LIGHT_ATTACK_04;
+        animationClipInformation = character.AnimationClipDictionary["Halberd_Light_Attack_04"];
         mouseLeftDown = false;
         mouseRightDown = false;
     }
@@ -24,7 +24,7 @@ public class HalberdLightAttack04 : IActionState
         mouseLeftDown = false;
         mouseRightDown = false;
         character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.05f);
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.05f);
     }
 
     public void Update()
@@ -48,19 +48,19 @@ public class HalberdLightAttack04 : IActionState
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
         // -> Smash Attack 4
-        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_HEAVY_04, 0.6f))
+        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_HEAVY_04, 0.6f))
         {
             return;
         }
 
         // -> Light Attack 1
-        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_01, 0.6f))
+        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_01, 0.6f))
         {
             return;
         }
 
         // -> Idle
-        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.9f))
             return;
     }
 

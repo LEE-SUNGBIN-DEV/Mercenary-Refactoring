@@ -62,8 +62,8 @@ public class SlotManager
     #region Property
     public BaseSlot StartSlot { get { return startSlot; } }
     public BaseSlot EndSlot { get { return endSlot; } }
-    public InventoryData InventoryData { get { return Managers.DataManager?.SelectCharacterData?.InventoryData; } }
-    public EquipmentSlotData EquipmentSlotData { get { return Managers.DataManager?.SelectCharacterData?.EquipmentSlotData; } }
+    public PlayerInventoryData InventoryData { get { return Managers.DataManager?.CurrentCharacterData?.InventoryData; } }
+    public PlayerEquipmentSlotData EquipmentSlotData { get { return Managers.DataManager?.CurrentCharacterData?.EquipmentSlotData; } }
     #endregion
 
     /*

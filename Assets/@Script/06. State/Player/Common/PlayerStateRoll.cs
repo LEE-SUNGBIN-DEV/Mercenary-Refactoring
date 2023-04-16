@@ -6,38 +6,34 @@ public class PlayerStateRoll : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
-    private Vector3 moveInput;
-    private Vector3 verticalDirection;
-    private Vector3 horizontalDirection;
+    private AnimationClipInformation animationClipInformation;
     private Vector3 moveDirection;
 
     public PlayerStateRoll(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ROLL;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_ROLL;
+        animationClipInformation = character.AnimationClipDictionary["Player_Roll"];
     }
 
     public void Enter()
     {
         // 키보드 입력 방향으로 회피
-        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0.0f, Input.GetAxisRaw("Vertical"));
-        verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z);
-        moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
+        Vector3 verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z) * Input.GetAxisRaw("Vertical");
+        Vector3 horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z) * Input.GetAxisRaw("Horizontal");
+        moveDirection = (verticalDirection + horizontalDirection).normalized;
+
         character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
         character.IsInvincible = true;
         character.Status.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_ROLL;
-        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.1f);
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
     }
 
     public void Update()
     {
-
         // !! When Animation is over
-        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, character.CurrentWeapon.BasicStateInformation.idleState, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, character.CurrentWeapon.IdleState, 0.9f))
             return;
     }
 

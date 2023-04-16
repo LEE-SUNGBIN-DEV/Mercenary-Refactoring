@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Newtonsoft.Json;
 
 [System.Serializable]
 public abstract class QuestTask
@@ -9,7 +10,7 @@ public abstract class QuestTask
     public event UnityAction<QuestTask> OnStartTask;
     public event UnityAction<QuestTask> OnEndTask;
 
-    [SerializeField] private Quest ownerQuest;
+    [JsonIgnore][SerializeField] private Quest ownerQuest;
     [TextArea]
     [SerializeField] private string taskTooltip;
 

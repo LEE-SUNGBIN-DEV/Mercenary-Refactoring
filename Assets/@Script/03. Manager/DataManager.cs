@@ -10,15 +10,17 @@ using Newtonsoft.Json;
 public class DataManager
 {
     private Dictionary<int, float> levelTable = new Dictionary<int, float>();
-    private Dictionary<int, BaseItem> itemDatabase = new Dictionary<int, BaseItem>();
-    private Dictionary<uint, Quest> questDatabase = new Dictionary<uint, Quest>();
-    private Dictionary<uint, EnemyData> enemyDatabase = new Dictionary<uint, EnemyData>();
-    private Dictionary<BUFF_TYPE, BuffData> buffDatabase = new Dictionary<BUFF_TYPE, BuffData>();
-    private Dictionary<DEBUFF_TYPE, DebuffData> debuffDatabase = new Dictionary<DEBUFF_TYPE, DebuffData>();
+    private Dictionary<int, BaseItem> itemTable = new Dictionary<int, BaseItem>();
+    private Dictionary<uint, Quest> questTable = new Dictionary<uint, Quest>();
+    private Dictionary<uint, EnemyData> enemyTable = new Dictionary<uint, EnemyData>();
+    private Dictionary<BUFF_TYPE, BuffData> buffTable = new Dictionary<BUFF_TYPE, BuffData>();
+    private Dictionary<DEBUFF_TYPE, DebuffData> debuffTable = new Dictionary<DEBUFF_TYPE, DebuffData>();
+    private Dictionary<CHAPTER_LIST, WayPointData> wayPointTable = new Dictionary<CHAPTER_LIST, WayPointData>();
 
     private string playerDataPath;
     private string levelTablePath;
     private string questTablePath;
+    private string wayPointTablePath;
     private string enemyTablePath;
     private string buffTablePath;
     private string debuffTablePath;
@@ -35,9 +37,10 @@ public class DataManager
 
     public void Initialize()
     {
-        playerDataPath = Application.dataPath + "Player_Data.json";
+        playerDataPath = Application.dataPath + "/@UserData/Player_Data.json";
         levelTablePath = Application.dataPath + "/@Table/Level_Table.json";
         questTablePath = Application.dataPath + "/Table/Quest_Table.json";
+        wayPointTablePath = Application.dataPath + "/Table/Way_Point_Table.json";
 
         //
         weaponTablePath = Application.dataPath + "/Table/Weapon_Item_Table.json";
@@ -50,8 +53,16 @@ public class DataManager
         //
 
         LoadLevelTable();
-        LoadItemDatabase();
         LoadQuestTable();
+        LoadWayPointTable();
+
+        LoadItemTable<WeaponItem>(weaponTablePath);
+        LoadItemTable<HelmetItem>(helmetTablePath);
+        LoadItemTable<ArmorItem>(armorTablePath);
+        LoadItemTable<BootsItem>(bootsTablePath);
+        LoadItemTable<HPPotion>(hpPotionTablePath);
+        LoadItemTable<SPPotion>(spPotionTablePath);
+
 #if EDITOR_TEST
 #else
         LoadPlayerData();
@@ -63,6 +74,7 @@ public class DataManager
         FileInfo loadFile = new FileInfo(filePath);
         return loadFile.Exists;
     }
+
     public void LoadPlayerData()
     {
         if (CheckFile(playerDataPath))
@@ -90,30 +102,35 @@ public class DataManager
             }
         }
     }
+
+    public void LoadWayPointTable()
+    {
+        if (CheckFile(wayPointTablePath))
+        {
+            string jsonWayPointData = File.ReadAllText(wayPointTablePath);
+            WayPointData[] wayPointDatas = JsonConvert.DeserializeObject<WayPointData[]>(jsonWayPointData);
+
+            for (int i = 0; i < wayPointDatas.Length; ++i)
+            {
+                wayPointTable.Add((CHAPTER_LIST)i, wayPointDatas[i]);
+            }
+        }
+    }
+
     public void LoadItemTable<T>(string path) where T : BaseItem, new()
     {
         if (CheckFile(path))
         {
             string jsonItemData = File.ReadAllText(path);
-            ItemTable<T> itemTable = JsonConvert.DeserializeObject<ItemTable<T>>(jsonItemData);
+            T[] itemDatas = JsonConvert.DeserializeObject<T[]>(jsonItemData);
 
-            for (int i = 0; i < itemTable.items.Length; ++i)
+            for (int i = 0; i < itemDatas.Length; ++i)
             {
-                itemTable.items[i].ItemSprite = Managers.ResourceManager.LoadResourceSync<Sprite>("Sprite_Item_" + itemTable.items[i].ItemName + "_" + itemTable.items[i].ItemID);
-                T item = new();
-                item.Initialize(itemTable.items[i]);
-                itemDatabase.Add(itemTable.items[i].ItemID, item);
+                itemDatas[i].ItemSprite = Managers.ResourceManager.LoadResourceSync<Sprite>("Sprite_Item_" + itemDatas[i].ItemName + "_" + itemDatas[i].ItemID);
+                itemDatas[i].Initialize(itemDatas[i]);
+                itemTable.Add(itemDatas[i].ItemID, itemDatas[i]);
             }
         }
-    }
-    public void LoadItemDatabase()
-    {
-        LoadItemTable<WeaponItem>(weaponTablePath);
-        LoadItemTable<HelmetItem>(helmetTablePath);
-        LoadItemTable<ArmorItem>(armorTablePath);
-        LoadItemTable<BootsItem>(bootsTablePath);
-        LoadItemTable<HPPotion>(hpPotionTablePath);
-        LoadItemTable<SPPotion>(spPotionTablePath);
     }
 
     public void LoadQuestTable()
@@ -121,13 +138,12 @@ public class DataManager
         if (CheckFile(questTablePath))
         {
             string jsonLevelData = File.ReadAllText(questTablePath);
-            QuestTable questTable = JsonConvert.DeserializeObject<QuestTable>(jsonLevelData);
+            Quest[] quests = JsonConvert.DeserializeObject<Quest[]>(jsonLevelData);
 
-            for (int i = 0; i < questTable.questTable.Length; ++i)
+            for (int i = 0; i < quests.Length; ++i)
             {
-                Quest quest = new Quest();
-                quest.Initialize(questTable.questTable[i]);
-                questDatabase.Add(quest.QuestID, quest);
+                quests[i].Initialize();
+                questTable.Add(quests[i].QuestID, quests[i]);
             }
         }
     }
@@ -146,15 +162,13 @@ public class DataManager
 
     #region Property
     public Dictionary<int, float> LevelTable { get { return levelTable; } }
-    public Dictionary<int, BaseItem> ItemDatabase { get { return itemDatabase; } }
-    public Dictionary<uint, Quest> QuestDatabase { get { return questDatabase; } }
-    public Dictionary<uint, EnemyData> EnemyDatabase { get { return enemyDatabase; } }
-    public Dictionary<BUFF_TYPE, BuffData> BuffDatabase { get { return buffDatabase; } }
-    public Dictionary<DEBUFF_TYPE, DebuffData> DebuffDatabase { get { return debuffDatabase; } }
+    public Dictionary<int, BaseItem> ItemTable { get { return itemTable; } }
+    public Dictionary<uint, Quest> QuestTable { get { return questTable; } }
+    public Dictionary<uint, EnemyData> EnemyTable { get { return enemyTable; } }
+    public Dictionary<BUFF_TYPE, BuffData> BuffTable { get { return buffTable; } }
+    public Dictionary<DEBUFF_TYPE, DebuffData> DebuffTable { get { return debuffTable; } }
+    public Dictionary<CHAPTER_LIST, WayPointData> WayPointTable { get { return wayPointTable; } }
     public PlayerData PlayerData { get { return playerData; } }
-    public CharacterData SelectCharacterData
-    {
-        get { return playerData?.CharacterDatas[playerData.SelectCharacterIndex]; }
-    }
+    public CharacterData CurrentCharacterData { get { return playerData?.CharacterDatas[playerData.SelectCharacterIndex]; } }
     #endregion
 }

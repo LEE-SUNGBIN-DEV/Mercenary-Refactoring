@@ -46,7 +46,7 @@ public class EnemyStateSkill : IActionState
     public void Exit()
     {
         enemy.CurrentSkill.OnEndSkill -= IsDone;
-        enemy.CurrentSkill.StopSkillCoroutine();
+        enemy.CurrentSkill.StopSkill();
     }
 
     public void IsDone(bool isSkillDone)
