@@ -6,47 +6,40 @@ public class PlayerStateFall : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
-
-    private float fallTime;
+    private AnimationClipInformation animationClipInformation;
 
     public PlayerStateFall(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_FALL;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_FALL;
-
-        fallTime = 0f;
+        animationClipInformation = character.AnimationClipDictionary["Player_Fall"];
     }
 
     public void Enter()
     {
-        character.Animator.Play(animationNameHash);
-        fallTime = 0f;
+        character.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()
     {
-        switch (character.GetGroundState())
+        switch (character.MoveController.GetGroundState())
         {
             case ACTOR_GROUND_STATE.GROUND:
-                character.FallDamageProcess(fallTime);
+                character.Status.CurrentHP -= character.Status.MaxHP * character.MoveController.GetFallDamage();
                 character.State.SetState(ACTION_STATE.PLAYER_LANDING, STATE_SWITCH_BY.WEIGHT);
                 break;
 
             case ACTOR_GROUND_STATE.SLOPE:
+                character.MoveController.SlideTime += Time.deltaTime;
+                break;
             case ACTOR_GROUND_STATE.AIR:
-                fallTime += Time.deltaTime;
+                character.MoveController.FallTime += Time.deltaTime;
                 break;
         }
-
-        if (fallTime > 2.5f)
-            character.Status.CurrentHP = 0f;
     }
 
     public void Exit()
     {
-        fallTime = 0f;
     }
 
     #region Property

@@ -17,20 +17,20 @@ public class QuestManager
     
     public void Initialize()
     {
-        Managers.DataManager.SelectCharacterData.QuestData.OnChangeQuestData -= LoadUserQuestData;
-        Managers.DataManager.SelectCharacterData.QuestData.OnChangeQuestData += LoadUserQuestData;
+        Managers.DataManager.CurrentCharacterData.QuestData.OnChangeQuestData -= LoadPlayerQuestData;
+        Managers.DataManager.CurrentCharacterData.QuestData.OnChangeQuestData += LoadPlayerQuestData;
 
-        Managers.DataManager.SelectCharacterData.QuestData.OnChangeQuestData -= RefreshInactiveQuest;
-        Managers.DataManager.SelectCharacterData.QuestData.OnChangeQuestData += RefreshInactiveQuest;
+        Managers.DataManager.CurrentCharacterData.QuestData.OnChangeQuestData -= RefreshInactiveQuest;
+        Managers.DataManager.CurrentCharacterData.QuestData.OnChangeQuestData += RefreshInactiveQuest;
 
         AddQuestEvent();
     }
 
-    public void LoadUserQuestData(CharacterQuestData userQuestData)
+    public void LoadPlayerQuestData(PlayerQuestData savedQuest)
     {
-        for (int i = 0; i < userQuestData.QuestSaveList.Count; ++i)
+        for (int i = 0; i < savedQuest.QuestSaveList.Count; ++i)
         {
-            QuestDatabase[userQuestData.QuestSaveList[i].questID].LoadQuest(userQuestData.QuestSaveList[i]);
+            QuestDatabase[savedQuest.QuestSaveList[i].questID].LoadQuest(savedQuest.QuestSaveList[i]);
         }
     }
 
@@ -148,11 +148,11 @@ public class QuestManager
     #endregion
 
     // 비활성화 목록을 검사하여 활성화 가능한 퀘스트가 있으면 활성화 리스트로 이동
-    public void RefreshInactiveQuest(CharacterQuestData questData)
+    public void RefreshInactiveQuest(PlayerQuestData questData)
     {
         for (int i = 0; i < InactiveQuestList.Count; ++i)
         {
-            if (InactiveQuestList[i].CanActive(Managers.DataManager.SelectCharacterData))
+            if (InactiveQuestList[i].CanActive(Managers.DataManager.CurrentCharacterData))
             {
                 InactiveQuestList[i].ActiveQuest();
                 --i;
@@ -218,7 +218,7 @@ public class QuestManager
     }
 
     #region Property
-    public Dictionary<uint, Quest> QuestDatabase { get { return Managers.DataManager?.QuestDatabase; } }
+    public Dictionary<uint, Quest> QuestDatabase { get { return Managers.DataManager?.QuestTable; } }
     public Dictionary<uint, string[]> DialogueDictionary { get { return dialogueDictionary; } }
     public List<Quest> InactiveQuestList { get { return inactiveQuestList; } }
     public List<Quest> ActiveQuestList { get { return activeQuestList; } }

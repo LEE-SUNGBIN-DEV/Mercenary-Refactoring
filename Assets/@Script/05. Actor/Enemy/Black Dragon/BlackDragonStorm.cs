@@ -1,0 +1,62 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BlackDragonStorm : EnemySkill
+{
+    [SerializeField] private int amount;
+    [SerializeField] private float interval;
+    private AnimationClipInformation stormStartAnimationInfo;
+    private AnimationClipInformation stormAnimationInfo;
+    private AnimationClipInformation stormEndAnimationInfo;
+
+    public override void Initialize(BaseEnemy owner)
+    {
+        base.Initialize(owner);
+        skillName = "Skill_Storm";
+        cooldown = 30f;
+        minAttackDistance = 0f;
+        maxAttackDistance = 15f;
+
+        owner.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Storm_Field, 1);
+        owner.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Lightning_Strike, amount);        
+        
+        stormStartAnimationInfo = enemy.AnimationClipDictionary["Skill_Storm_Start"];
+        stormAnimationInfo = enemy.AnimationClipDictionary["Skill_Storm"];
+        stormEndAnimationInfo = enemy.AnimationClipDictionary["Skill_Storm_End"];
+    }
+
+    public override IEnumerator StartSkill()
+    {
+        enemy.Animator.Play(stormStartAnimationInfo.nameHash);
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(stormStartAnimationInfo, 0));
+        GameObject stormField = enemy.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Storm_Field);
+        if (stormField != null)
+            stormField.transform.position = enemy.transform.position;
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(stormAnimationInfo, 0));
+        StartCoroutine(GenerateLightningStrike());
+
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(stormEndAnimationInfo, stormEndAnimationInfo.maxFrame));
+        EndSkill();
+    }
+
+    public IEnumerator GenerateLightningStrike()
+    {
+        WaitForSeconds waitTime = new WaitForSeconds(interval);
+
+        for (int i = 0; i < amount; ++i)
+        {
+            Vector3 generateCoordinate = Functions.GetRandomCircleCoordinate(12f);
+            if (enemy.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Lightning_Strike).TryGetComponent(out EnemyPositioningAttack lightningStrike))
+            {
+                lightningStrike.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 1.3f, 1.5f);
+                lightningStrike.SetPositioningAttack(enemy, enemy.transform.position + generateCoordinate, 1f, 0.2f);
+                lightningStrike.OnAttack();
+            }
+
+            yield return waitTime;
+        }
+    }
+}

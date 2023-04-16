@@ -6,18 +6,18 @@ public class PlayerStateDie : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
 
     public PlayerStateDie(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_DIE;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_DIE;
+        animationClipInformation = character.AnimationClipDictionary["Player_Die"];
     }
 
     public void Enter()
     {
-        character.Animator.Play(animationNameHash);
+        character.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()

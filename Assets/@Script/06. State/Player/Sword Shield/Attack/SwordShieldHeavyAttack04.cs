@@ -6,14 +6,14 @@ public class SwordShieldHeavyAttack04 : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
     private bool mouseLeftDown;
 
     public SwordShieldHeavyAttack04(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_HEAVY_04;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_SWORD_SHIELD_HEAVY_ATTACK_04;
+        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Heavy_Attack_04"];
         mouseLeftDown = false;
     }
 
@@ -21,7 +21,7 @@ public class SwordShieldHeavyAttack04 : IActionState
     {
         mouseLeftDown = false;
         character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.1f);
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
     }
 
     public void Update()
@@ -36,13 +36,13 @@ public class SwordShieldHeavyAttack04 : IActionState
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
         // -> Light Attack 1
-        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_01, 0.8f))
+        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_01, 0.8f))
         {
             return;
         }
 
         // -> Idle
-        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, character.CurrentWeapon.BasicStateInformation.idleState, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, character.CurrentWeapon.IdleState, 0.9f))
             return;
     }
 

@@ -7,45 +7,56 @@ public class EnemyStatePatrol : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private int walkAnimationNameHash;
+    private int animationNameHash;
     private Vector3 destination;
 
     public EnemyStatePatrol(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_PATROL;
-        walkAnimationNameHash = Constants.ANIMATION_NAME_HASH_WALK;
+        animationNameHash = Constants.ANIMATION_NAME_HASH_WALK;
     }
 
     public void Enter()
     {
-        Vector3 patrolPoint = enemy.SpawnPosition + Random.onUnitSphere * Constants.ENEMY_PATROL_RANGE;
-        
-        if(NavMesh.SamplePosition(patrolPoint, out NavMeshHit navMeshHit, 1.0f, NavMesh.AllAreas))
-            destination = navMeshHit.position;
-        else
-            destination = Vector3.zero;
-
-        enemy.NavMeshAgent.isStopped = false;
-        enemy.NavMeshAgent.SetDestination(destination);
-        enemy.Animator.CrossFade(walkAnimationNameHash, 0.2f);
+        if (RandomPoint(enemy.SpawnPosition, out destination))
+        {
+            Debug.DrawRay(destination, Vector3.up, Color.blue, 3.0f);
+            enemy.MoveTo(destination);
+            enemy.Animator.CrossFade(animationNameHash, 0.2f);
+        }
     }
 
     public void Update()
     {
-        enemy.NavMeshAgent.speed = enemy.Status.MoveSpeed;
-
-        // Patrol -> Chase
-        if (enemy.IsTargetInDetectionDistance() && enemy.IsTargetInSight())
+        switch (enemy.MoveController.GetGroundState())
         {
-            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WAIT, STATE_SWITCH_BY.WEIGHT);
-            return;
-        }
+            case ACTOR_GROUND_STATE.GROUND:
 
-        // Patrol -> Idle
-        if (enemy.NavMeshAgent.remainingDistance <= enemy.NavMeshAgent.stoppingDistance)
-        {
-            enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
+                // Patrol -> Chase
+                if (enemy.IsTargetInDetectionDistance() && enemy.IsTargetInSight())
+                {
+                    enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WAIT, STATE_SWITCH_BY.WEIGHT);
+                    return;
+                }
+
+                // Patrol -> Idle
+                if (enemy.MoveDistance < enemy.Status.StopDistance)
+                {
+                    enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
+                    return;
+                }
+
+                enemy.MoveTo(destination);
+                return;
+
+            case ACTOR_GROUND_STATE.SLOPE: // -> Slide
+                enemy.State.SetState(ACTION_STATE.ENEMY_SLIDE, STATE_SWITCH_BY.WEIGHT);
+                return;
+
+            case ACTOR_GROUND_STATE.AIR: // -> Fall
+                enemy.State.SetState(ACTION_STATE.ENEMY_FALL, STATE_SWITCH_BY.WEIGHT);
+                return;
         }
     }
 
@@ -53,6 +64,20 @@ public class EnemyStatePatrol : IActionState
     {
     }
 
+    private bool RandomPoint(Vector3 sourcePosition, out Vector3 result)
+    {
+        for (int i = 0; i < 10; ++i)
+        {
+            Vector3 randomPoint = sourcePosition + (Random.insideUnitSphere * Constants.ENEMY_PATROL_RANGE);
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            {
+                result = hit.position;
+                return true;
+            }
+        }
+        result = sourcePosition;
+        return false;
+    }
 
     #region Property
     public int StateWeight { get { return stateWeight; } }

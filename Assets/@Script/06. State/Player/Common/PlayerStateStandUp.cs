@@ -6,25 +6,25 @@ public class PlayerStateStandUp : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
 
     public PlayerStateStandUp(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_STAND_UP;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_STAND_UP;
+        animationClipInformation = character.AnimationClipDictionary["Player_Stand_Up"];
     }
 
     public void Enter()
     {
-        character.Animator.Play(animationNameHash);
+        character.Animator.Play(animationClipInformation.nameHash);
         //character.IsInvincible = true;
     }
 
     public void Update()
     {
-        // !! When animation is over
-        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, character.CurrentWeapon.BasicStateInformation.idleState, 1.0f))
+        // -> Idle
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, character.CurrentWeapon.IdleState, 1.0f))
             return;
     }
 

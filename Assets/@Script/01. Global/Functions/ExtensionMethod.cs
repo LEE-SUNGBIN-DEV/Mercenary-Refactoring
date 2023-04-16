@@ -48,9 +48,9 @@ public static class ExtensionMethod
         return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
             && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame));
     }
-    public static bool IsAnimationFrameUpTo(this Animator animator, AnimationInfo animationInfo, int targetFrame, int targetLayer = 0)
+    public static bool IsAnimationFrameUpTo(this Animator animator, AnimationClipInformation animationInfo, int targetFrame, int targetLayer = 0)
     {
-        return IsAnimationFrameUpTo(animator, animationInfo.animationNameHash, animationInfo.maxFrame, targetFrame, targetLayer);
+        return IsAnimationFrameUpTo(animator, animationInfo.nameHash, animationInfo.maxFrame, targetFrame, targetLayer);
     }
     public static bool IsAnimationNormalizeTimeUpTo(this Animator animator, int nameHash, float normalizedTime, int targetLayer = 0)
     {

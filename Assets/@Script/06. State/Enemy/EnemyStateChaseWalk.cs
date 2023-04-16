@@ -18,59 +18,62 @@ public class EnemyStateChaseWalk : IActionState
 
     public void Enter()
     {
-        enemy.StartMoveTo(enemy.TargetTransform.position);
         enemy.Animator.CrossFade(animationNameHash, 0.1f);
 
-        runDistance = enemy.Status.ChaseDistance * 0.5f;
+        runDistance = enemy.Status.ChaseDistance * Constants.ENEMY_RUN_DISTANCE;
     }
 
     public void Update()
     {
-        if (enemy.IsTargetInChaseDistance())
+        switch (enemy.MoveController.GetGroundState())
         {
-            // -> Skill
-            if (enemy.IsReadyAnySkill())
-            {
-                enemy.State.SetState(ACTION_STATE.ENEMY_SKILL, STATE_SWITCH_BY.WEIGHT);
-                return;
-            }
-
-            if (enemy.TargetDistance > enemy.Status.StopDistance)
-            {
-                // -> Run
-                if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_RUN)
-                    && enemy.TargetDistance > runDistance)
+            case ACTOR_GROUND_STATE.GROUND:
+                if (enemy.IsTargetInChaseDistance())
                 {
-                    enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_RUN, STATE_SWITCH_BY.WEIGHT);
-                    return;
-                }
+                    // -> Skill
+                    if (enemy.IsReadyAnySkill())
+                    {
+                        enemy.State.SetState(ACTION_STATE.ENEMY_SKILL, STATE_SWITCH_BY.WEIGHT);
+                        return;
+                    }
 
-                // Walk (Current)
-                enemy.StartMoveTo(enemy.TargetTransform.position);
+                    if (enemy.TargetDistance > enemy.Status.StopDistance)
+                    {
+                        // -> Run
+                        if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_RUN)
+                            && enemy.TargetDistance > runDistance)
+                        {
+                            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_RUN, STATE_SWITCH_BY.WEIGHT);
+                            return;
+                        }
+
+                        // Walk (Current)
+                        enemy.MoveTo(enemy.TargetTransform.position);
+                        return;
+                    }
+                    // -> Wait
+                    else
+                    {
+                        enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WAIT, STATE_SWITCH_BY.FORCED);
+                        return;
+                    }
+                }
+                // -> Idle
+                enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
                 return;
-            }
-            // -> Wait
-            else
-            {
-                enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WAIT, STATE_SWITCH_BY.FORCED);
+
+            case ACTOR_GROUND_STATE.SLOPE: // -> Slide
+                enemy.State.SetState(ACTION_STATE.ENEMY_SLIDE, STATE_SWITCH_BY.WEIGHT);
                 return;
-            }
-        }
-        // -> Idle
-        else
-        {
-            enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
-            return;
+
+            case ACTOR_GROUND_STATE.AIR: // -> Fall
+                enemy.State.SetState(ACTION_STATE.ENEMY_FALL, STATE_SWITCH_BY.WEIGHT);
+                return;
         }
     }
 
     public void Exit()
     {
-    }
-
-    public void Stop()
-    {
-
     }
 
     #region Property

@@ -7,18 +7,18 @@ public class PlayerStateStun : IActionState, IDurationState
     private PlayerCharacter character;
     private int stateWeight;
     private float duration;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
 
     public PlayerStateStun(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_STUN;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_STUN;
+        animationClipInformation = character.AnimationClipDictionary["Player_Stun"];
     }
 
     public void Enter()
     {
-        character.Animator.Play(animationNameHash);
+        character.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()

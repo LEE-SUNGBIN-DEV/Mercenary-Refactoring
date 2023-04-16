@@ -6,21 +6,21 @@ public class SwordShieldIdle : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
     private Vector3 moveInput;
 
     public SwordShieldIdle(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_IDLE;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_SWORD_SHIELD_IDLE;
+        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Idle"];
         moveInput = Vector3.zero;
     }
 
     public void Enter()
     {
         moveInput = Vector3.zero;
-        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.1f);
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
     }
 
     public void Update()
@@ -49,7 +49,7 @@ public class SwordShieldIdle : IActionState
             return;
         }
 
-        switch (character.GetGroundState())
+        switch (character.MoveController.GetGroundState())
         {
             case ACTOR_GROUND_STATE.GROUND:
                 character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY);
@@ -67,7 +67,8 @@ public class SwordShieldIdle : IActionState
                 }
                 return;
 
-            case ACTOR_GROUND_STATE.SLOPE:
+            case ACTOR_GROUND_STATE.SLOPE: // -> Slide
+                character.State.SetState(ACTION_STATE.PLAYER_SLIDE, STATE_SWITCH_BY.WEIGHT);
                 return;
 
             case ACTOR_GROUND_STATE.AIR: // -> Fall
@@ -78,6 +79,7 @@ public class SwordShieldIdle : IActionState
 
     public void Exit()
     {
+        character.MoveController.GetGroundState();
     }
 
     #region Property

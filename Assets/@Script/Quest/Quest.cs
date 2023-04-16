@@ -46,7 +46,7 @@ public class Quest
     [SerializeField] private int rewardMoney;
     [SerializeField] private int[] rewardItemIDs;
 
-    public void Initialize(QuestData questTable)
+    public void Initialize()
     {
         for(int i=0; i<questTasks.Length; ++i)
         {
@@ -62,10 +62,11 @@ public class Quest
             questTasks[i].OnEndTask += Managers.QuestManager.RefreshAllNPCQuestList;
         }
     }
+
     public bool CanActive(CharacterData characterData)
     {
         if(characterData.StatusData.Level >= LevelCondition
-            && characterData.QuestData.MainQuestPrograss >= MainQuestCondition)
+            && characterData.QuestData.MainQuestProgress >= MainQuestCondition)
         {
             return true;
         }
@@ -106,39 +107,21 @@ public class Quest
 
     public void Reward()
     {
-        Managers.DataManager.SelectCharacterData.GetQuestReward(this);
+        Managers.DataManager.CurrentCharacterData.GetQuestReward(this);
     }
 
     public QuestSaveData SaveQuest()
     {
-        if (questState == QUEST_STATE.COMPLETE)
-        {
-            QuestSaveData questData = new QuestSaveData
-            {
-                questState = questState,
-                questID = questID,
-                taskIndex = 0,
-                taskSuccessAmount = 0
-            };
-            return questData;
-        }
-        else
-        {
-            QuestSaveData questData = new QuestSaveData
-            {
-                questState = questState,
-                questID = questID,
-                taskIndex = taskIndex,
-                taskSuccessAmount = questTasks[taskIndex].SuccessAmount
-            };
-            return questData;
-        }
+        QuestSaveData saveData = new QuestSaveData(this);
+
+        return saveData;
     }
-    public void LoadQuest(QuestSaveData questData)
+
+    public void LoadQuest(QuestSaveData savedQuest)
     {
-        if (QuestID == questData.questID)
+        if (questID == savedQuest.questID)
         {
-            questState = questData.questState;
+            questState = savedQuest.questState;
 
             for (int i = 0; i < QuestTasks.Length; ++i)
             {
@@ -149,18 +132,18 @@ public class Quest
             {
                 case QUEST_STATE.ACTIVE:
                     {
-                        taskIndex = questData.taskIndex;
-                        questTasks[questData.taskIndex].StartTask();
-                        questTasks[questData.taskIndex].SuccessAmount = questData.taskSuccessAmount;
+                        taskIndex = savedQuest.taskIndex;
+                        questTasks[savedQuest.taskIndex].StartTask();
+                        questTasks[savedQuest.taskIndex].SuccessAmount = savedQuest.taskSuccessAmount;
 
                         OnActiveQuest(this);
                         break;
                     }
                 case QUEST_STATE.ACCEPT:
                     {
-                        taskIndex = questData.taskIndex;
-                        questTasks[questData.taskIndex].StartTask();
-                        questTasks[questData.taskIndex].SuccessAmount = questData.taskSuccessAmount;
+                        taskIndex = savedQuest.taskIndex;
+                        questTasks[savedQuest.taskIndex].StartTask();
+                        questTasks[savedQuest.taskIndex].SuccessAmount = savedQuest.taskSuccessAmount;
 
                         OnActiveQuest(this);
                         OnAcceptQuest(this);

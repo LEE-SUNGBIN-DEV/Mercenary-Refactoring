@@ -19,48 +19,61 @@ public class EnemyStateChaseWait : IActionState
     public void Enter()
     {
         enemy.Animator.CrossFade(animationNameHash, 0.1f);
-        runDistance = enemy.Status.ChaseDistance * 0.5f;
+        runDistance = enemy.Status.ChaseDistance * Constants.ENEMY_RUN_DISTANCE;
     }
 
     public void Update()
     {
-        if (enemy.IsTargetInChaseDistance())
+        switch (enemy.MoveController.GetGroundState())
         {
-            // -> Skill
-            if (enemy.IsReadyAnySkill())
-            {
-                enemy.State.SetState(ACTION_STATE.ENEMY_SKILL, STATE_SWITCH_BY.WEIGHT);
+            case ACTOR_GROUND_STATE.GROUND:
+                if (enemy.IsTargetInChaseDistance())
+                {
+                    // -> Skill
+                    if (enemy.IsReadyAnySkill())
+                    {
+                        enemy.State.SetState(ACTION_STATE.ENEMY_SKILL, STATE_SWITCH_BY.WEIGHT);
+                        return;
+                    }
+
+                    if (enemy.TargetDistance > enemy.Status.StopDistance)
+                    {
+                        // -> Run
+                        if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_RUN)
+                            && enemy.TargetDistance > runDistance)
+                        {
+                            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_RUN, STATE_SWITCH_BY.WEIGHT);
+                            return;
+                        }
+
+                        // -> Walk
+                        if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_WALK))
+                        {
+                            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WALK, STATE_SWITCH_BY.WEIGHT);
+                            return;
+                        }
+                    }
+                    // Stop (Current)
+                    else
+                    {
+                        enemy.LookTarget();
+                    }
+                }
+                // -> Idle
+                else
+                {
+                    enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
+                    return;
+                }
                 return;
-            }
 
-            if (enemy.TargetDistance > enemy.Status.StopDistance)
-            {
-                // -> Run
-                if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_RUN)
-                    && enemy.TargetDistance > runDistance)
-                {
-                    enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_RUN, STATE_SWITCH_BY.WEIGHT);
-                    return;
-                }
+            case ACTOR_GROUND_STATE.SLOPE: // -> Slide
+                enemy.State.SetState(ACTION_STATE.ENEMY_SLIDE, STATE_SWITCH_BY.WEIGHT);
+                return;
 
-                // -> Walk
-                if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_WALK))
-                {
-                    enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WALK, STATE_SWITCH_BY.WEIGHT);
-                    return;
-                }
-            }
-            // Stop (Current)
-            else
-            {
-                enemy.LookTarget();
-            }
-        }
-        // -> Idle
-        else
-        {
-            enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
-            return;
+            case ACTOR_GROUND_STATE.AIR: // -> Fall
+                enemy.State.SetState(ACTION_STATE.ENEMY_FALL, STATE_SWITCH_BY.WEIGHT);
+                return;
         }
     }
 

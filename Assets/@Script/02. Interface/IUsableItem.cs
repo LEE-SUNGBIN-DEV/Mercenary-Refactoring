@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IUsableItem
 {
-    public void UseItem(StatusData statusData);
+    public void UseItem(PlayerStatusData statusData);
 }

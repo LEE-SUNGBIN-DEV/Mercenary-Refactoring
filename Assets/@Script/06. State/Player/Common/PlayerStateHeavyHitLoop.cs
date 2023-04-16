@@ -6,7 +6,7 @@ public class PlayerStateHeavyHitLoop : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
     private float duration;
     private float time;
 
@@ -14,14 +14,14 @@ public class PlayerStateHeavyHitLoop : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_HEAVY_LOOP;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_HEAVY_HIT_Loop;
+        animationClipInformation = character.AnimationClipDictionary["Player_Heavy_Hit_Loop"];
         duration = Constants.TIME_CHARACTER_STAND_UP;
         time = 0f;
     }
 
     public void Enter()
     {
-        character.Animator.Play(animationNameHash);
+        character.Animator.Play(animationClipInformation.nameHash);
         time = 0f;
     }
 

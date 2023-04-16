@@ -6,14 +6,14 @@ public class HalberdParrying : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
     private bool mouseRightDown;
 
     public HalberdParrying(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_PARRYING;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_HALBERD_PARRYING;
+        animationClipInformation = character.AnimationClipDictionary["Halberd_Parrying"];
         mouseRightDown = false;
     }
 
@@ -21,7 +21,7 @@ public class HalberdParrying : IActionState
     {
         mouseRightDown = false;
         character.IsInvincible = true;
-        character.Animator.Play(animationNameHash);
+        character.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()
@@ -30,13 +30,13 @@ public class HalberdParrying : IActionState
             mouseRightDown = Input.GetMouseButtonDown(1);
 
         // Move State -> Parrying Attack
-        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_PARRYING_ATTACK, 0.9f))
+        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_PARRYING_ATTACK, 0.9f))
         {
             return;
         }
 
         // !! When animation is over
-        if (character.State.SetStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 1f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 1f))
         {
             return;
         }

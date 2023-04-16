@@ -16,8 +16,8 @@ public class BaseGameScene : BaseScene
 
     [SerializeField] protected BaseEnemy boss;
     [SerializeField] protected RoomGate bossRoomGate;
-    [SerializeField] protected EnemySpawnController bossSpawnPoint;
-    [SerializeField] protected EnemySpawnController[] enemySpawnPoint;
+    [SerializeField] protected EnemySpawnController bossSpawnController;
+    [SerializeField] protected EnemySpawnController[] enemySpawnController;
     [SerializeField] protected ResonanceGate warpGate;
 
     public override void Initialize()
@@ -26,7 +26,7 @@ public class BaseGameScene : BaseScene
         sceneType = SCENE_TYPE.Game;
 
         // Creat Player Character
-        if (Managers.DataManager.SelectCharacterData != null)
+        if (Managers.DataManager.CurrentCharacterData != null)
             character = Functions.CreateCharacterWithCamera(playerSpawnPosition);
 
         // Initialize NPC
@@ -49,6 +49,7 @@ public class BaseGameScene : BaseScene
         if (gameSceneUI.gameObject.activeSelf == false)
             gameSceneUI.gameObject.SetActive(true);
 
+        enemySpawnController = GetComponentsInChildren<EnemySpawnController>();
         RegisterObject(Constants.Prefab_Floating_Damage_Text, 16);
     }
 
@@ -61,9 +62,9 @@ public class BaseGameScene : BaseScene
 
     public void SpawnEnemy()
     {
-        for (int i = 0; i < enemySpawnPoint.Length; ++i)
+        for (int i = 0; i < enemySpawnController.Length; ++i)
         {
-            enemySpawnPoint[i].SpawnEnemy();
+            enemySpawnController[i].SpawnEnemy();
         }
     }
 

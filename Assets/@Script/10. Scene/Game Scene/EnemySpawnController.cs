@@ -12,7 +12,11 @@ public class EnemySpawnController : MonoBehaviour
         GameObject poolObject = Managers.SceneManagerCS.CurrentScene.RequestObject(spawnEnemyKey);
         if (poolObject != null && poolObject.TryGetComponent<BaseEnemy>(out BaseEnemy enemy))
         {
-            enemy.NavMeshAgent.Warp(transform.position);
+            enemy.CharacterController.enabled = false;
+            enemy.transform.position = transform.position;
+            enemy.CharacterController.enabled = true;
+
+            enemy.Spawn();
         }
     }
 }

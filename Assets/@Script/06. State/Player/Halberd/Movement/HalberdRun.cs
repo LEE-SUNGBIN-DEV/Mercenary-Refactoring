@@ -6,23 +6,19 @@ public class HalberdRun : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
-    private float runSpeed;
-    private Vector3 moveInput;
-    private Vector3 verticalDirection;
-    private Vector3 horizontalDirection;
+    private AnimationClipInformation animationClipInformation;
     private Vector3 moveDirection;
 
     public HalberdRun(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_RUN;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_HALBERD_RUN;
+        animationClipInformation = character.AnimationClipDictionary["Halberd_Run"];
     }
 
     public void Enter()
     {
-        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.1f);
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
     }
 
     public void Update()
@@ -57,18 +53,12 @@ public class HalberdRun : IActionState
             return;
         }
 
-        switch (character.GetGroundState())
+        switch (character.MoveController.GetGroundState())
         {
             case ACTOR_GROUND_STATE.GROUND:
-                moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-
-                verticalDirection.x = character.PlayerCamera.transform.forward.x;
-                verticalDirection.z = character.PlayerCamera.transform.forward.z;
-
-                horizontalDirection.x = character.PlayerCamera.transform.right.x;
-                horizontalDirection.z = character.PlayerCamera.transform.right.z;
-
-                moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
+                Vector3 verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z) * Input.GetAxisRaw("Vertical");
+                Vector3 horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z) * Input.GetAxisRaw("Horizontal");
+                moveDirection = (verticalDirection + horizontalDirection).normalized;
 
                 if (moveDirection.sqrMagnitude > 0f)
                 {
@@ -76,10 +66,7 @@ public class HalberdRun : IActionState
                     if (Input.GetKey(KeyCode.LeftShift))
                     {
                         character.CharacterData.StatusData.CurrentSP -= (Constants.PLAYER_STAMINA_CONSUMPTION_RUN * Time.deltaTime);
-                        runSpeed = character.Status.MoveSpeed * 2;
-                        // Look Direction
-                        character.transform.rotation = Quaternion.Lerp(character.transform.rotation, Quaternion.LookRotation(moveDirection), 10f * Time.deltaTime);
-                        character.CharacterController.SimpleMove(runSpeed * moveDirection);
+                        character.MoveController.SetMoveInformation(moveDirection, character.Status.MoveSpeed * Constants.PLAYER_RUN_SPEED_RATIO);
                     }
                     else
                     {
@@ -93,7 +80,8 @@ public class HalberdRun : IActionState
                 }
                 return;
 
-            case ACTOR_GROUND_STATE.SLOPE:
+            case ACTOR_GROUND_STATE.SLOPE: // -> Slide
+                character.State.SetState(ACTION_STATE.PLAYER_SLIDE, STATE_SWITCH_BY.WEIGHT);
                 return;
 
             case ACTOR_GROUND_STATE.AIR: // -> Fall
@@ -104,6 +92,7 @@ public class HalberdRun : IActionState
 
     public void Exit()
     {
+        character.MoveController.GetGroundState();
     }
 
     #region Property

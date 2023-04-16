@@ -6,23 +6,23 @@ public class PlayerStateDrink : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
 
     public PlayerStateDrink(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_DRINK;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_PLAYER_DRINK;
+        animationClipInformation = character.AnimationClipDictionary["Player_Drink"];
     }
 
     public void Enter()
     {
-        character.Animator.CrossFadeInFixedTime(animationNameHash, 0.05f, (int)ANIMATOR_LAYER.UPPER);
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.05f, (int)ANIMATOR_LAYER.UPPER);
     }
 
     public void Update()
     {
-        if (character.State.SetSubStateByAnimationTimeUpTo(animationNameHash, ACTION_STATE.COMMON_UPPER_EMPTY, 0.9f, (int)ANIMATOR_LAYER.UPPER))
+        if (character.State.SetSubStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.COMMON_UPPER_EMPTY, 0.9f, (int)ANIMATOR_LAYER.UPPER))
         {
             return;
         }
