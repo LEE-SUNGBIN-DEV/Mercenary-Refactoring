@@ -6,19 +6,24 @@ public class HalberdGuardLoop : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+    private PlayerHalberd halberd;
     private AnimationClipInformation animationClipInformation;
 
     public HalberdGuardLoop(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_LOOP;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Guard_Loop"];
+        if(character != null)
+        {
+            halberd = character.WeaponController.GetWeapon<PlayerHalberd>(WEAPON_TYPE.HALBERD);
+            animationClipInformation = character.AnimationClipTable["Halberd_Guard_Loop"];
+        }
     }
 
     public void Enter()
     {
         character.IsInvincible = true;
-        character.Halberd.SetAndEnableHalberd(COMBAT_ACTION_TYPE.HALBERD_GUARD_LOOP);
+        halberd.SetAndEnableHalberd(COMBAT_ACTION_TYPE.HALBERD_GUARD_LOOP);
         character.Animator.Play(animationClipInformation.nameHash);
     }
 
@@ -33,7 +38,7 @@ public class HalberdGuardLoop : IActionState
     public void Exit()
     {
         character.IsInvincible = false;
-        character.Halberd.DisableHalberd();
+        halberd.DisableHalberd();
     }
 
     #region Property

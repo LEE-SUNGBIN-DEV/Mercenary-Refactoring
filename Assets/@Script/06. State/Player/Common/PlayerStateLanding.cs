@@ -12,7 +12,7 @@ public class PlayerStateLanding : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_LANDING;
-        animationClipInformation = character.AnimationClipDictionary["Player_Landing"];
+        animationClipInformation = character.AnimationClipTable["Player_Landing"];
     }
 
     public void Enter()

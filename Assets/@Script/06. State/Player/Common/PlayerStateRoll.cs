@@ -13,7 +13,7 @@ public class PlayerStateRoll : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ROLL;
-        animationClipInformation = character.AnimationClipDictionary["Player_Roll"];
+        animationClipInformation = character.AnimationClipTable["Player_Roll"];
     }
 
     public void Enter()

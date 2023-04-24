@@ -12,7 +12,7 @@ public class HalberdGuardOut : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_OUT;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Guard_Out"];
+        animationClipInformation = character.AnimationClipTable["Halberd_Guard_Out"];
     }
 
     public void Enter()

@@ -10,13 +10,33 @@ public class UserPanel : UIPanel
     {
         HP_Bar,
         SP_Bar,
-        Exp_Bar
+        Exp_Bar,
+
+        Equip_Weapon_Image,
+        Potion_Image
     }
 
+    public enum BUTTON
+    {
+        Prefab_Option_Button,
+        Prefab_Quest_Button,
+        Prefab_Skill_Button,
+        Prefab_Inventory_Button,
+        Prefab_Status_Button
+    }
+
+    private CharacterData characterData;
     private QuickSlotPanel quickSlotPanel;
+
+    private void OnDestroy()
+    {
+        characterData.StatusData.OnCharacterStatusChanged -= UpdateUserPanel;
+    }
 
     public void Initialize(CharacterData characterData)
     {
+        this.characterData = characterData;
+
         BindImage(typeof(IMAGE));
 
         quickSlotPanel = GetComponentInChildren<QuickSlotPanel>(true);

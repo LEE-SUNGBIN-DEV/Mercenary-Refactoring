@@ -18,7 +18,7 @@ public class SmallStoneGolemHeavyAttack : EnemySkill
         heavyAttack = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Heavy_Attack_Controller", true);
         heavyAttack.SetMeleeAttack(enemy);
 
-        animationInfo = enemy.AnimationClipDictionary["Skill_Heavy_Attack"];
+        animationInfo = enemy.AnimationClipTable["Skill_Heavy_Attack"];
     }
 
     public override IEnumerator StartSkill()
@@ -26,7 +26,7 @@ public class SmallStoneGolemHeavyAttack : EnemySkill
         enemy.Animator.Play(animationInfo.nameHash);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationInfo, 24));
-        heavyAttack.SetCombatController(COMBAT_TYPE.ATTACK_HEAVY, 1.5f);
+        heavyAttack.SetCombatController(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f);
         heavyAttack.OnEnableCollider();
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationInfo, 25));

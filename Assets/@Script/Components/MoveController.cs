@@ -79,7 +79,7 @@ public class MoveController
         }
 
         // Air
-        moveSpeed += Constants.GRAVITY_DEFAULT;
+        moveSpeed = Constants.GRAVITY_DEFAULT;
         moveDirection = Vector3.down;
         groundState = ACTOR_GROUND_STATE.AIR;
         return ACTOR_GROUND_STATE.AIR;

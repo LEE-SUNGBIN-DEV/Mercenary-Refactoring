@@ -13,7 +13,7 @@ public class HalberdIdle : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_IDLE;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Idle"];
+        animationClipInformation = character.AnimationClipTable["Halberd_Idle"];
         moveInput = Vector3.zero;
     }
 

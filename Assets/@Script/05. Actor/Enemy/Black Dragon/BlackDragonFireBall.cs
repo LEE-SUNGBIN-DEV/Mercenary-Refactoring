@@ -18,7 +18,7 @@ public class BlackDragonFireBall : EnemySkill
         muzzle = Functions.FindChild<Transform>(gameObject, "Muzzle", true);
         enemy.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Fire_Ball, 2);
         
-        fireBallAnimationInfo = enemy.AnimationClipDictionary["Skill_Fire_Ball"];
+        fireBallAnimationInfo = enemy.AnimationClipTable["Skill_Fire_Ball"];
     }
 
     public override IEnumerator StartSkill()
@@ -32,7 +32,7 @@ public class BlackDragonFireBall : EnemySkill
 
         if (fireBall.TryGetComponent(out EnemyProjectile projectile))
         {
-            projectile.SetCombatController(COMBAT_TYPE.ATTACK_HEAVY, 1.5f);
+            projectile.SetCombatController(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f);
             projectile.SetProjectile(enemy, 20f, transform.forward);
         }
 

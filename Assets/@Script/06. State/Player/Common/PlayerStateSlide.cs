@@ -12,7 +12,7 @@ public class PlayerStateSlide : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_SLIDE;
-        animationClipInformation = character.AnimationClipDictionary["Player_Slide"];
+        animationClipInformation = character.AnimationClipTable["Player_Slide"];
     }
 
     public void Enter()

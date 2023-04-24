@@ -12,7 +12,7 @@ public class PlayerStateLightHit : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_LIGHT;
-        animationClipInformation = character.AnimationClipDictionary["Player_Light_Hit"];
+        animationClipInformation = character.AnimationClipTable["Player_Light_Hit"];
     }
 
     public void Enter()

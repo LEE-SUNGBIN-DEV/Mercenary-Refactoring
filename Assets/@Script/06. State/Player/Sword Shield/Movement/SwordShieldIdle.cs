@@ -13,7 +13,7 @@ public class SwordShieldIdle : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_IDLE;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Idle"];
+        animationClipInformation = character.AnimationClipTable["Sword_Shield_Idle"];
         moveInput = Vector3.zero;
     }
 

@@ -18,7 +18,7 @@ public class BlackDragonRightClaw : EnemySkill
         rightClaw = Functions.FindChild<EnemyCompeteAttack>(gameObject, "Compete Controller", true);
         rightClaw.SetCompeteAttack(enemy);
 
-        rightClawAnimationInfo = enemy.AnimationClipDictionary["Skill_Right_Claw"];
+        rightClawAnimationInfo = enemy.AnimationClipTable["Skill_Right_Claw"];
     }
 
     public override IEnumerator StartSkill()
@@ -26,7 +26,7 @@ public class BlackDragonRightClaw : EnemySkill
         enemy.Animator.Play(rightClawAnimationInfo.nameHash);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(rightClawAnimationInfo, 40));
-        rightClaw.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 2f, 3f);
+        rightClaw.SetCombatController(HIT_TYPE.STUN, GUARD_TYPE.NONE, 2f, 3f);
         rightClaw.OnEnableCollider();
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(rightClawAnimationInfo, 42));

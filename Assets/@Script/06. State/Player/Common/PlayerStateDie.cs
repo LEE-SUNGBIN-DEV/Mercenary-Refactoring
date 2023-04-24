@@ -12,7 +12,7 @@ public class PlayerStateDie : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_DIE;
-        animationClipInformation = character.AnimationClipDictionary["Player_Die"];
+        animationClipInformation = character.AnimationClipTable["Player_Die"];
     }
 
     public void Enter()

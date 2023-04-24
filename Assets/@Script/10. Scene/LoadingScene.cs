@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LoadingScene : BaseScene
 {
-    static private string nextSceneName;    // 전환 요청이 들어온 씬
+    [SerializeField] private Image loadingBackgroundImage;
+    [SerializeField] private TextMeshProUGUI loadingText;
     [SerializeField] private Slider loadingBar;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        Managers.UIManager.CommonSceneUI.SetAlpha(0f);
-    }
+    static private string nextSceneName;    // 전환 요청이 들어온 씬
 
     private void Start()
     {
@@ -23,8 +21,14 @@ public class LoadingScene : BaseScene
     public override void Initialize()
     {
         base.Initialize();
+
+        sceneName = "Loading";
         sceneType = SCENE_TYPE.Loading;
         scene = SCENE_LIST.Loading;
+
+        loadingBackgroundImage = Functions.FindChild<Image>(gameObject, "Loading_Background_Image", true);
+        loadingText = Functions.FindChild<TextMeshProUGUI>(gameObject, "Loading_Text", true);
+        loadingBar = Functions.FindChild<Slider>(gameObject, "Loading_Bar", true);
     }
 
     private IEnumerator LoadSceneProgress()

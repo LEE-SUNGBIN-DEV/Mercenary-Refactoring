@@ -2,79 +2,52 @@
   "CharacterDatas": [
     {
       "StatusData": {
-        "Level": 2,
-        "StatPoint": 5,
+        "Level": 1,
+        "StatPoint": 0,
         "Strength": 10,
         "Vitality": 10,
         "Dexterity": 10,
         "Luck": 10,
         "CurrentHP": 100.0,
-        "CurrentSP": 100.0,
         "CurrentExp": 0.0,
         "MaxHP": 100.0,
+        "MaxExp": 10.0,
         "MaxSP": 100.0,
-        "MaxExp": 20.0,
+        "CurrentSP": 100.0,
         "AttackPower": 20.0,
         "DefensivePower": 10.0,
-        "AttackSpeed": 1.1,
-        "MoveSpeed": 3.2,
         "CriticalChance": 10.0,
         "CriticalDamage": 110.0,
-        "EquipAttackPower": 0.0,
-        "EquipDefensePower": 0.0,
-        "EquipMaxHP": 0.0,
-        "EquipMaxSP": 0.0,
-        "EquipCriticalChance": 0.0,
-        "EquipCriticalDamage": 0.0,
-        "EquipAttackSpeed": 0.0,
-        "EquipMoveSpeed": 0.0
+        "AttackSpeed": 1.1,
+        "MoveSpeed": 3.2,
+        "HitLevel": 0
       },
       "LocationData": {
-        "LastViliage": 3
+        "LastScene": 3,
+        "LastXCoordinate": 125.8029,
+        "LastYCoordinate": 99.99695,
+        "LastZCoordinate": 72.06502,
+        "ResonancePointEnableDictionary": {
+          "Fog_Canyon": [
+            false,
+            false,
+            false
+          ],
+          "Forestia": [],
+          "Cave": []
+        }
       },
       "InventoryData": {
         "Money": 500,
         "InventoryItems": [
-          {
-            "itemID": 1,
-            "itemCount": 1,
-            "grade": 4
-          },
-          {
-            "itemID": 500,
-            "itemCount": 1,
-            "grade": 0
-          },
-          {
-            "itemID": 1000,
-            "itemCount": 1,
-            "grade": 0
-          },
-          {
-            "itemID": 1500,
-            "itemCount": 1,
-            "grade": 0
-          },
-          {
-            "itemID": 10000,
-            "itemCount": 50,
-            "grade": 0
-          },
-          {
-            "itemID": 10000,
-            "itemCount": 50,
-            "grade": 0
-          },
-          {
-            "itemID": 11000,
-            "itemCount": 50,
-            "grade": 0
-          },
-          {
-            "itemID": 11000,
-            "itemCount": 50,
-            "grade": 0
-          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null,
@@ -112,7 +85,7 @@
         "BootsSlotItemData": null
       },
       "QuestData": {
-        "MainQuestPrograss": 0,
+        "MainQuestProgress": 0,
         "QuestSaveList": []
       }
     },

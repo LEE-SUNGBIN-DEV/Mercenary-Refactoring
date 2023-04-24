@@ -12,7 +12,7 @@ public class SwordShieldGuardOut : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_OUT;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Guard_Out"];
+        animationClipInformation = character.AnimationClipTable["Sword_Shield_Guard_Out"];
     }
 
     public void Enter()

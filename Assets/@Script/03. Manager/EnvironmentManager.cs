@@ -11,15 +11,6 @@ public class EnvironmentManager : MonoBehaviour
         Snowing,
     }
 
-    public enum WEATHER_TYPE
-    {
-        Fireflies,
-        StormClouds,
-        FogGround,
-        Rain_Light,
-        Snow,
-    }
-
     private Dictionary<SKY_BOX_TYPE, Material> skyBoxDictionary = new Dictionary<SKY_BOX_TYPE, Material>();
     private Material currentSkyBox;
     private GameObject currentWeather;
@@ -37,7 +28,7 @@ public class EnvironmentManager : MonoBehaviour
 
         if (Managers.GameManager.PlayerCamera != null)
         {
-            currentWeather = Managers.ResourceManager.InstantiatePrefabSync("VFX_Weather_" + weatherType.ToString());
+            currentWeather = Managers.ResourceManager.InstantiatePrefabSync("VFX_Weather_" + weatherType.GetEnumName());
             currentWeather.transform.SetParent(Managers.GameManager.PlayerCamera.transform, false);
             currentWeather.SetActive(true);
         }

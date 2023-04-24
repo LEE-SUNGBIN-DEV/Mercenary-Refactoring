@@ -12,7 +12,7 @@ public class SwordShieldEquip : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_EQUIP;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Equip"];
+        animationClipInformation = character.AnimationClipTable["Sword_Shield_Equip"];
     }
 
     public void Enter()
@@ -31,7 +31,6 @@ public class SwordShieldEquip : IActionState
 
     public void Exit()
     {
-        character.Animator.Play(Constants.ANIMATION_NAME_HASH_EMPTY, (int)ANIMATOR_LAYER.UPPER);
     }
 
     #region Property

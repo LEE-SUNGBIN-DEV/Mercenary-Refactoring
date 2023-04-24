@@ -6,19 +6,24 @@ public class SwordShieldGuardLoop : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+    private PlayerSwordShield swordShield;
     private AnimationClipInformation animationClipInformation;
 
     public SwordShieldGuardLoop(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_LOOP;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Guard_Loop"];
+        if (character != null)
+        {
+            swordShield = character.WeaponController.GetWeapon<PlayerSwordShield>(WEAPON_TYPE.SWORD_SHIELD);
+            animationClipInformation = character.AnimationClipTable["Sword_Shield_Guard_Loop"];
+        }
     }
 
     public void Enter()
     {
         character.IsInvincible = true;
-        character.SwordShield.SetAndEnableShield(COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_LOOP);
+        swordShield.SetAndEnableShield(COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_LOOP);
         character.Animator.Play(animationClipInformation.nameHash);
     }
 
@@ -33,7 +38,7 @@ public class SwordShieldGuardLoop : IActionState
     public void Exit()
     {
         character.IsInvincible = false;
-        character.SwordShield.DisableShield();
+        swordShield.DisableShield();
     }
 
     #region Property

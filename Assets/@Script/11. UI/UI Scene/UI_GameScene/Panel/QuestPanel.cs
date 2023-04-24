@@ -53,6 +53,7 @@ public class QuestPanel : UIPanel
 
         buttonRoot = Functions.FindChild<GameObject>(gameObject, "Content", true);
     }
+
     public void CreateQuestButton()
     {
         QuestPopupButton newQuestPopupButton = Managers.ResourceManager?.InstantiatePrefabSync("Prefab_Quest_Popup_Button", buttonRoot.transform).GetComponent<QuestPopupButton>();

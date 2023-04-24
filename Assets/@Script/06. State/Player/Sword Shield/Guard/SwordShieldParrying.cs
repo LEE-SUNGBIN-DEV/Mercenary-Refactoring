@@ -13,7 +13,7 @@ public class SwordShieldParrying : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_PARRYING;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Parrying"];
+        animationClipInformation = character.AnimationClipTable["Sword_Shield_Parrying"];
         mouseRightDown = false;
     }
 

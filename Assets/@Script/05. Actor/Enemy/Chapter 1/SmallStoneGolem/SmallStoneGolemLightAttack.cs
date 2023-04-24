@@ -18,7 +18,7 @@ public class SmallStoneGolemLightAttack : EnemySkill
         lightAttack = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Light_Attack_Controller", true);
         lightAttack.SetMeleeAttack(enemy);
 
-        animationInfo = enemy.AnimationClipDictionary["Skill_Light_Attack"];
+        animationInfo = enemy.AnimationClipTable["Skill_Light_Attack"];
     }
 
     public override IEnumerator StartSkill()
@@ -26,7 +26,7 @@ public class SmallStoneGolemLightAttack : EnemySkill
         enemy.Animator.Play(animationInfo.nameHash);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationInfo, 24));
-        lightAttack.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
+        lightAttack.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         lightAttack.OnEnableCollider();
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationInfo, 27));

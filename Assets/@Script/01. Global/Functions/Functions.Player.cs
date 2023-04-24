@@ -16,18 +16,19 @@ public static partial class Functions
         character.gameObject.SetTransform(targetTransform);
         character.CharacterController.enabled = true;
     }
+
     public static PlayerCharacter CreateCharacterWithCamera(Vector3 position)
     {
-        GameObject cameraObject = Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_Player_Camera);
-        if(Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_Player_Character).TryGetComponent<PlayerCharacter>(out PlayerCharacter player))
+        Managers.ResourceManager.InstantiatePrefabSync(Constants.PREFAB_PLAYER_CAMERA).TryGetComponent<PlayerCamera>(out PlayerCamera playerCamera);
+        if (Managers.ResourceManager.InstantiatePrefabSync(Constants.PREFAB_PLAYER_CHARACTER).TryGetComponent<PlayerCharacter>(out PlayerCharacter player))
         {
             SetCharacterPosition(player, position);
-            cameraObject.transform.position = position;
+            playerCamera.TargetTransform = player.transform;
         }
 
         return player;
     }
-    public static void TeleportCharacterWithCamera(PlayerCharacter character, Vector3 position, PlayerCamera camera)
+    public static void WarpCharacterWithCamera(PlayerCharacter character, Vector3 position, PlayerCamera camera)
     {
         SetCharacterPosition(character, position);
         camera.transform.position = position;

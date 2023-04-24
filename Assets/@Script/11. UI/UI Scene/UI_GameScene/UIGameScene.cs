@@ -12,6 +12,7 @@ public class UIGameScene : UIBaseScene
     private InventoryPanel inventoryPanel;
     private ResonancePointPanel resonancePointPanel;
     private QuestPanel questPanel;
+    private InteractionPanel interactionPanel;
     private DialoguePanel dialoguePanel;
     private EnemyPanel enemyPanel;
     private MapPanel mapPanel;
@@ -20,17 +21,11 @@ public class UIGameScene : UIBaseScene
 
     // Popup
     private DiePopup diePopup;
-    private HelpPopup helpPopup;
     private StorePopup storePopup;
 
     public void Initialize(CharacterData characterData)
     {
-        if (isInitialized == true)
-        {
-            Debug.Log($"{this}: Already Initialized.");
-            return;
-        }
-        isInitialized = true;
+        base.Initialize();
         currentUserPanel = null;
 
         // Get Component
@@ -39,13 +34,13 @@ public class UIGameScene : UIBaseScene
         inventoryPanel = GetComponentInChildren<InventoryPanel>(true);
         resonancePointPanel = GetComponentInChildren<ResonancePointPanel>(true);
         questPanel = GetComponentInChildren<QuestPanel>(true);
+        interactionPanel = GetComponentInChildren<InteractionPanel>(true);
         dialoguePanel = GetComponentInChildren<DialoguePanel>(true);
         enemyPanel = GetComponentInChildren<EnemyPanel>(true);
         mapPanel = GetComponentInChildren<MapPanel>(true);
         competePanel = GetComponentInChildren<CompetePanel>(true);
 
         diePopup = GetComponentInChildren<DiePopup>(true);
-        helpPopup = GetComponentInChildren<HelpPopup>(true);
         storePopup = GetComponentInChildren<StorePopup>(true);
         campaignPanel = GetComponentInChildren<CampaignPopup>(true);
 
@@ -54,23 +49,25 @@ public class UIGameScene : UIBaseScene
         statusPanel.Initialize(characterData);
         inventoryPanel.Initialize(characterData);
         resonancePointPanel.Initialize(characterData);
+        interactionPanel.Initialize();
         dialoguePanel.Initialize(characterData);
         competePanel.Initialize();
 
         diePopup.Initialize();
-        helpPopup.Initialize();
         //questPanel.Initialize();
         storePopup.Initialize();
         campaignPanel.Initialize(characterData);
 
-        // Add Event
-        Managers.CompeteManager.OnStartCompete -= OpenCompetePanel;
         Managers.CompeteManager.OnStartCompete += OpenCompetePanel;
-
-        Managers.CompeteManager.OnEndCompete -= CloseCompetePanel;
         Managers.CompeteManager.OnEndCompete += CloseCompetePanel;
 
         OpenPanel(userPanel);
+    }
+
+    private void OnDestroy()
+    {
+        Managers.CompeteManager.OnStartCompete -= OpenCompetePanel;
+        Managers.CompeteManager.OnEndCompete -= CloseCompetePanel;
     }
 
     private void Update()
@@ -84,8 +81,10 @@ public class UIGameScene : UIBaseScene
         if (Input.GetKeyDown(KeyCode.Q))
             SwitchUserPanel(questPanel);
 
-        if (Input.GetKeyDown(KeyCode.H))
-            TogglePopup(helpPopup);
+        if (Input.GetKeyDown(KeyCode.Escape) && currentUserPanel != null)
+        {
+            ClosePanel(currentUserPanel);
+        }
     }
 
     public void SwitchUserPanel(UIPanel panel)
@@ -112,17 +111,18 @@ public class UIGameScene : UIBaseScene
     public void CloseCompetePanel() { ClosePanel(competePanel); }
 
     #region Property
-    public DiePopup DiePopup { get { return diePopup; } }
-    public InventoryPanel InventoryPopup { get { return inventoryPanel; } }
-    public StatusPanel StatusPopup { get { return statusPanel; } }
-    public HelpPopup HelpPopup { get { return helpPopup; } }
-    public QuestPanel QuestPopup { get { return questPanel; } }
-    public StorePopup StorePopup { get { return storePopup; } }
-    public CampaignPopup CampaignPopup { get { return campaignPanel; } }
-
     public UserPanel UserPanel { get { return userPanel; } }
+    public StatusPanel StatusPanel { get { return statusPanel; } }
+    public InventoryPanel InventoryPanel { get { return inventoryPanel; } }
+    public ResonancePointPanel ResonancePointPanel { get { return resonancePointPanel; } }
+    public QuestPanel QuestPanel { get { return questPanel; } }
+    public InteractionPanel InteractionPanel { get { return interactionPanel; } }
     public DialoguePanel DialoguePanel { get { return dialoguePanel; } }
     public EnemyPanel EnemyPanel { get { return enemyPanel; } }
     public MapPanel MapPanel { get { return mapPanel; } }
+
+    public CampaignPopup CampaignPopup { get { return campaignPanel; } }
+    public StorePopup StorePopup { get { return storePopup; } }
+    public DiePopup DiePopup { get { return diePopup; } }
     #endregion
 }

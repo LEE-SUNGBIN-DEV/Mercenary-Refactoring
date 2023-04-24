@@ -8,17 +8,23 @@ public enum CURSOR_MODE
 #endregion
 
 #region Combat
-public enum COMBAT_TYPE
+public enum HIT_TYPE
 {
     // Attack
-    ATTACK_NORMAL = 0,
-    ATTACK_LIGHT = 1,
-    ATTACK_HEAVY = 2,
-    ATTACK_STUN = 3,
+    NORMAL = 0,
+    LIGHT = 1,
+    HEAVY = 2,
+    STUN = 3,
 
-    // Guard
-    GUARDABLE = 32,
-    PARRYABLE = 64,
+    NONE = 100,
+}
+
+public enum GUARD_TYPE
+{
+    GUARDABLE,
+    PARRYABLE,
+
+    NONE = 100,
 }
 
 public enum COMBAT_ACTION_TYPE
@@ -66,7 +72,7 @@ public enum COMBAT_ACTION_TYPE
 
 public enum WEAPON_TYPE
 {
-    Null,
+    None,
     HALBERD,
     SWORD_SHIELD,
 }
@@ -82,6 +88,10 @@ public enum ACTION_STATE
     // - Common
     PLAYER_DRINK = 1,
     PLAYER_ROLL = 8,
+
+    PLAYER_RESONANCE_IN = 16,
+    PLAYER_RESONANCE_LOOP = 17,
+    PLAYER_RESONANCE_OUT = 18,
 
     PLAYER_HIT_LIGHT = 32,
     PLAYER_HIT_HEAVY = 33,
@@ -213,6 +223,10 @@ public enum ACTION_STATE_WEIGHT
     PLAYER_FALL = 66,
     PLAYER_LANDING = 67,
 
+    PLAYER_RESONANCE_IN = 128,
+    PLAYER_RESONANCE_LOOP = 129,
+    PLAYER_RESONANCE_OUT = 130,
+
     PLAYER_HIT_LIGHT = 512,
     PLAYER_HIT_HEAVY = 513,
     PLAYER_HIT_HEAVY_LOOP = 514,
@@ -273,13 +287,6 @@ public enum DEBUFF_TYPE
 #endregion
 
 #region Physics
-public enum CHAPTER_LIST
-{
-    Chapter1_Fog_Canyon,
-    Chapter2_Forestia,
-
-    Size
-}
 #endregion
 
 #region Layer
@@ -298,16 +305,14 @@ public enum ANIMATOR_LAYER
 }
 #endregion
 
-#region Object
-public enum WAY_POINT_OBJECT_TYPE
+#region Enemy
+public enum ENEMY_TYPE
 {
-    Crystal,
-    Gate,
-
-    Size
+    Normal,
+    Elite,
+    Boss
 }
 #endregion
-
 
 #region UI
 public enum UI_EVENT
@@ -320,30 +325,41 @@ public enum UI_EVENT
 #region Scene
 public enum SCENE_TYPE
 {
-    Test,
     Unknown,
     Title,
     Selection,
-    Game,
     Loading,
+    Game,
 
-    Size
+    Test = 1000,
 }
 
 public enum SCENE_LIST
 {
-    // Common
-    Test,
-    Title,
-    Selection,
-    Loading,
-
-    // Chapter 01
-    Fog_Canyon,
+    // Scene Name = Build Index
+    Title = 0,
+    Selection = 1,
+    Loading = 2,
+    Fog_Canyon = 3,
     Forestia,
-    Starlight_Forest,
-    Dragon_Temple
+    Cave,
 
-    //
+    Size,
+
+    // Test
+    Test = 1000,
+}
+
+public enum WEATHER_TYPE
+{
+    Sunny,
+    Rain_Light,
+    Rain_Heavy,
+    Snow_Light,
+    Snow_Heavy,
+    Fog,
+    Storm,
+
+    Fireflies,
 }
 #endregion

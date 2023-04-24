@@ -12,7 +12,7 @@ public class PlayerStateDrink : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_DRINK;
-        animationClipInformation = character.AnimationClipDictionary["Player_Drink"];
+        animationClipInformation = character.AnimationClipTable["Player_Drink"];
     }
 
     public void Enter()

@@ -11,7 +11,6 @@ public class CharacterData
     [SerializeField] private PlayerInventoryData inventoryData;
     [SerializeField] private PlayerEquipmentSlotData equipmentSlotData;
     [SerializeField] private PlayerQuestData questData;
-    [SerializeField] private PlayerWayPointData wayPointData;
 
     public CharacterData()
     {
@@ -20,7 +19,6 @@ public class CharacterData
         inventoryData = new PlayerInventoryData();
         equipmentSlotData = new PlayerEquipmentSlotData();
         questData = new PlayerQuestData();
-        wayPointData = new PlayerWayPointData();
     }
 
     public void Initialize()
@@ -30,7 +28,6 @@ public class CharacterData
         inventoryData.Initialize();
         equipmentSlotData.Initialize();
         questData.Initialize();
-        wayPointData.Initialize();
     }
 
     public void GetQuestReward(Quest quest)
@@ -45,6 +42,5 @@ public class CharacterData
     public PlayerInventoryData InventoryData { get { return inventoryData; } set { inventoryData = value; } }
     public PlayerEquipmentSlotData EquipmentSlotData { get { return equipmentSlotData; } set { equipmentSlotData = value; } }
     public PlayerQuestData QuestData { get { return questData; } set { questData = value; } }
-    public PlayerWayPointData WayPointData { get { return wayPointData; } set { wayPointData = value; } }
     #endregion
 }

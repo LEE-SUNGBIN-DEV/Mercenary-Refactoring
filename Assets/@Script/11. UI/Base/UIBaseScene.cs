@@ -5,7 +5,19 @@ using UnityEngine;
 public abstract class UIBaseScene : UIBase
 {
     protected bool isInitialized;
+    protected Canvas canvas;
     protected LinkedList<UIPopup> currentPopUpLinkedList = new LinkedList<UIPopup>();
+
+    public virtual void Initialize()
+    {
+        if (isInitialized == true)
+        {
+            Debug.Log($"{this}: Already Initialized.");
+            return;
+        }
+        isInitialized = true;
+        TryGetComponent<Canvas>(out canvas);
+    }
 
     private void Update()
     {
@@ -40,12 +52,22 @@ public abstract class UIBaseScene : UIBase
 
     public void OpenPanel(UIPanel panel)
     {
-        panel.gameObject.SetActive(true);
+        if(panel.gameObject.activeSelf == false)
+        {
+            panel.gameObject.SetActive(true);
+            panel.FadeIn(Constants.TIME_UI_PANEL_DEFAULT_FADE);
+        }
     }
+
     public void ClosePanel(UIPanel panel)
     {
-        panel.gameObject.SetActive(false);
+        if (panel.gameObject.activeSelf == true)
+        {
+            panel.FadeOut(Constants.TIME_UI_PANEL_DEFAULT_FADE, () => { panel.gameObject.SetActive(false); });
+        }
+            
     }
+
     public void TogglePanel(UIPanel panel)
     {
         if (panel.gameObject.activeSelf)
@@ -65,6 +87,7 @@ public abstract class UIBaseScene : UIBase
             PlayPopupOpenSFX();
             currentPopUpLinkedList.AddFirst(popup);
             popup.gameObject.SetActive(true);
+            popup.FadeIn(0.5f);
         }
 
         RefreshPopupOrder();
@@ -76,7 +99,7 @@ public abstract class UIBaseScene : UIBase
         {
             PlayPopupCloseSFX();
             currentPopUpLinkedList.Remove(popup);
-            popup.gameObject.SetActive(false);
+            popup.FadeOut(0.5f, () => popup.gameObject.SetActive(false));
         }
 
         RefreshPopupOrder();

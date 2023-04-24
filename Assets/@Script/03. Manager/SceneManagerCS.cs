@@ -13,13 +13,16 @@ public class SceneManagerCS
 
     public void Initialize()
     {
+        SceneManager.sceneLoaded -= SceneEnter;
         SceneManager.sceneLoaded += SceneEnter;
+
+        SceneManager.sceneUnloaded -= SceneExit;
         SceneManager.sceneUnloaded += SceneExit;
     }
 
     public void SceneEnter(Scene scene, LoadSceneMode loadMode)
     {
-        Managers.UIManager.CommonSceneUI.FadeIn(2f);
+        Managers.UIManager.CommonSceneUI.FadeIn(Constants.TIME_UI_SCENE_DEFAULT_FADE);
         OnSceneEnter?.Invoke();
     }
 
@@ -35,23 +38,20 @@ public class SceneManagerCS
     }
 
     // Load Scene Fade
-    public void LoadScene(string sceneName)
+    public void LoadSceneFade(string sceneName)
     {
-        Managers.UIManager.CommonSceneUI.FadeOut(2f, () => { SceneManager.LoadScene(sceneName); });
+        Managers.UIManager.CommonSceneUI.FadeOut(Constants.TIME_UI_SCENE_DEFAULT_FADE, () => { SceneManager.LoadScene(sceneName); });
     }
 
-    public void LoadScene(SCENE_LIST requestScene)
+    public void LoadSceneFade(SCENE_LIST requestScene)
     {
-        LoadScene(requestScene.GetEnumName());
+        LoadSceneFade(requestScene.GetEnumName());
     }
 
-    // Load Scene Async 
+    // Load Scene Ascyn (Loading Scene)
     public void LoadSceneAsync(string sceneName)
     {
-        Managers.UIManager.CommonSceneUI.FadeOut(2f, () =>
-        {
-            LoadingScene.LoadScene(sceneName);
-        });
+        Managers.UIManager.CommonSceneUI.FadeOut(Constants.TIME_UI_SCENE_DEFAULT_FADE, () => { LoadingScene.LoadScene(sceneName); });
     }
     public void LoadSceneAsync(SCENE_LIST requestScene)
     {

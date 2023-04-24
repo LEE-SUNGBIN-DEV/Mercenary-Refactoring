@@ -7,39 +7,39 @@ using TMPro;
 
 public class ChapterButton : UIBase
 {
-    public enum TEXT
-    {
-        Chapter_Text
-    }
-
     public enum BUTTON
     {
-        Chapter_Button
+        Prefab_Chapter_Button
     }
+
+    public enum TEXT
+    {
+        Prefab_Chapter_Text
+    }
+
     public event UnityAction<ChapterButton> OnClickChapterButton;
 
-    private Button button;
-    private TextMeshProUGUI chapterText;
-    private WayPointData chapterInformation;
+    [SerializeField] private GameSceneData gameSceneData;
+    [SerializeField] private Button button;
+    [SerializeField] private TextMeshProUGUI chapterText;
 
-    public void Initialize(WayPointData chapterInformation)
+    public void Initialize(GameSceneData gameSceneData)
     {
+        this.gameSceneData = gameSceneData;
+
         BindText(typeof(TEXT));
         BindButton(typeof(BUTTON));
 
-        chapterText = GetText((int)TEXT.Chapter_Text);
-        button = GetButton((int)BUTTON.Chapter_Button);
+        button = GetButton((int)BUTTON.Prefab_Chapter_Button);
         button.onClick.AddListener(ClickChapterButton);
+        chapterText = GetText((int)TEXT.Prefab_Chapter_Text);
 
-        SetChapterButton(chapterInformation);
-        this.chapterInformation = chapterInformation;
-        chapterText.text = null;
+        SetChapterButton();
     }
 
-    public void SetChapterButton(WayPointData chapterInformation)
+    public void SetChapterButton()
     {
-        this.chapterInformation = chapterInformation;
-        chapterText.text = chapterInformation.name;
+        chapterText.text = gameSceneData.sceneName;
     }
 
     public void ClickChapterButton()
@@ -48,7 +48,7 @@ public class ChapterButton : UIBase
     }
 
     #region Property
-    public WayPointData ChapterInformation { get { return chapterInformation; } }
+    public GameSceneData ChapterInformation { get { return gameSceneData; } }
     public Button Button { get { return button; } }
     public TextMeshProUGUI QuestTitleText { get { return chapterText; } }
     #endregion

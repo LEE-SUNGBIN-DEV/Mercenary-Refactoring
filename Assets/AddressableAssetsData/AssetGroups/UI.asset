@@ -81,6 +81,14 @@ MonoBehaviour:
     m_Address: Prefab_Floating_Damage_Text
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 1f06024d536bd4d49b575bc000184789
+    m_Address: Prefab_Chapter_Button
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 66d3cde4f9e009645b51bce9827b1e15
+    m_Address: Prefab_Region_Button
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
   m_SchemaSet:

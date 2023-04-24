@@ -21,7 +21,7 @@ public class BlackDragonDoubleAttack : EnemySkill
         leftClaw.SetMeleeAttack(enemy);
         rightClaw.SetMeleeAttack(enemy);
 
-        doubleClawAnimationInfo = enemy.AnimationClipDictionary["Skill_Double_Claw"];
+        doubleClawAnimationInfo = enemy.AnimationClipTable["Skill_Double_Claw"];
     }
 
     public override IEnumerator StartSkill()
@@ -29,7 +29,7 @@ public class BlackDragonDoubleAttack : EnemySkill
         enemy.Animator.Play(doubleClawAnimationInfo.nameHash);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 32));
-        leftClaw.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
+        leftClaw.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         leftClaw.OnEnableCollider();
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 40));
@@ -38,7 +38,7 @@ public class BlackDragonDoubleAttack : EnemySkill
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 127));
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 140));
-        rightClaw.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 1.2f, 4f);
+        rightClaw.SetCombatController(HIT_TYPE.STUN, GUARD_TYPE.NONE, 1.2f, 4f);
         rightClaw.OnEnableCollider();
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 142));

@@ -12,7 +12,7 @@ public class HalberdEquip : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_EQUIP;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Equip"];
+        animationClipInformation = character.AnimationClipTable["Halberd_Equip"];
     }
 
     public void Enter()
@@ -31,7 +31,6 @@ public class HalberdEquip : IActionState
 
     public void Exit()
     {
-        character.Animator.Play(Constants.ANIMATION_NAME_HASH_EMPTY, (int)ANIMATOR_LAYER.UPPER);
     }
 
     #region Property

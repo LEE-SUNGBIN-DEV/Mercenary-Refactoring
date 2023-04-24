@@ -13,7 +13,7 @@ public class HalberdCounter : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_SKILL_COUNTER;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Counter"];
+        animationClipInformation = character.AnimationClipTable["Halberd_Counter"];
     }
 
     public void Enter()

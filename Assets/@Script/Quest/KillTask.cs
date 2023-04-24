@@ -10,13 +10,13 @@ public class KillTask : QuestTask
     public override void StartTask()
     {
         base.StartTask();
-        Managers.GameEventManager.OnKillEnemy -= Action;
-        Managers.GameEventManager.OnKillEnemy += Action;
+        Managers.GameEventManager.OnPlayerKillEnemy -= Action;
+        Managers.GameEventManager.OnPlayerKillEnemy += Action;
     }
 
     public override void EndTask()
     {
-        Managers.GameEventManager.OnKillEnemy -= Action;
+        Managers.GameEventManager.OnPlayerKillEnemy -= Action;
         ++OwnerQuest.TaskIndex;
         base.EndTask();
     }

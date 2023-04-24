@@ -18,7 +18,7 @@ public class SkeletonKnightHorizontalSlash : EnemySkill
         sword = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Sword", true);
         sword.SetMeleeAttack(enemy);
 
-        horizontalSlashAnimationInfo = enemy.AnimationClipDictionary["Skill_Horizontal_Slash"];
+        horizontalSlashAnimationInfo = enemy.AnimationClipTable["Skill_Horizontal_Slash"];
     }
 
     public override IEnumerator StartSkill()
@@ -26,7 +26,7 @@ public class SkeletonKnightHorizontalSlash : EnemySkill
         enemy.Animator.Play(horizontalSlashAnimationInfo.nameHash);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(horizontalSlashAnimationInfo, 32));
-        sword.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
+        sword.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         sword.OnEnableCollider();
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(horizontalSlashAnimationInfo, 40));

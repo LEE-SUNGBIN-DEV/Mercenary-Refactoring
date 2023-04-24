@@ -9,6 +9,7 @@ public abstract class BaseEnemy : BaseActor
 {
     public event UnityAction<BaseEnemy> OnEnemySpawn;
     public event UnityAction<BaseEnemy> OnEnemyDie;
+    public event UnityAction<BaseEnemy> OnEnemyHit;
 
     [Header("Base Enemy")]
     [SerializeField] protected EnemyData status;
@@ -158,17 +159,72 @@ public abstract class BaseEnemy : BaseActor
         return true;
     }
 
-    public void DamageProcess(PlayerCharacter character, float ratio)
+    public DamageInformation TakeDamage(PlayerCharacter attacker, float damageRatio)
     {
-        float damage = (status.AttackPower - character.Status.DefensivePower * 0.5f) * 0.5f;
+        // Basic Damage Process
+        float damage = (attacker.Status.AttackPower - status.DefensivePower * 0.5f) * 0.5f;
 
         if (damage < 0)
             damage = 0;
 
-        damage += ((status.AttackPower * 0.125f - status.AttackPower * 0.0625f) + 1f);
-        damage *= ratio;
+        damage += ((attacker.Status.AttackPower / 8f - attacker.Status.AttackPower / 16f) + 1f);
 
-        character.Status.CurrentHP -= damage;
+        // Critical Process
+        bool isCritical;
+        if (Random.Range(0.0f, 100.0f) <= attacker.Status.CriticalChance)
+        {
+            isCritical = true;
+            damage *= (1 + attacker.Status.CriticalDamage * 0.01f);
+        }
+        else
+        {
+            isCritical = false;
+        }
+
+        // Damage Ratio Process
+        damage *= damageRatio * Random.Range(0.9f, 1.1f);
+
+        status.CurrentHP -= damage;
+
+        if (isDie)
+            Managers.GameEventManager.EventQueue.Enqueue(new GameEventMessage(GAME_EVENT_TYPE.OnPlayerKillEnemy, this));
+
+        return new DamageInformation(damage, isCritical);
+    }
+
+    public void TakeHit(PlayerCharacter attacker, float damageRatio, HIT_TYPE combatType, Vector3 hitPoint, float duration = 0f)
+    {
+        if (isInvincible)
+            return;
+
+        DamageInformation damageInforamtion = TakeDamage(attacker, damageRatio);
+        OnEnemyHit?.Invoke(this);
+
+        if (Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.PREFAB_FLOATING_DAMAGE_TEXT).TryGetComponent(out FloatingDamageText floatingDamageText))
+            floatingDamageText.SetDamageText(damageInforamtion.isCritical, damageInforamtion.damage, hitPoint);
+
+        if (Status.HitLevel > (int)combatType)
+            return;
+
+        switch (combatType)
+        {
+            case HIT_TYPE.LIGHT:
+                OnLightHit();
+                break;
+
+            case HIT_TYPE.HEAVY:
+                OnHeavyHit();
+                break;
+
+            case HIT_TYPE.STUN:
+                if (this is IStunable stunable)
+                    stunable.OnStun(duration);
+                else
+                    OnHeavyHit();
+                break;
+        }
+        
+        return;
     }
 
     public abstract void OnLightHit();

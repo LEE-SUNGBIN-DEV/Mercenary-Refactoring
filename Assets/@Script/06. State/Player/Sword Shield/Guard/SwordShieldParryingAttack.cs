@@ -12,7 +12,7 @@ public class SwordShieldParryingAttack : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_PARRYING_ATTACK;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Parrying_Attack"];
+        animationClipInformation = character.AnimationClipTable["Sword_Shield_Parrying_Attack"];
     }
 
     public void Enter()

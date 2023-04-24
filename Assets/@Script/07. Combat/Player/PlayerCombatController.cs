@@ -21,7 +21,7 @@ public class PlayerCombatController : BaseCombatController
 
     public virtual void ExecuteAttackProcess(Collider other)
     {
-        if (combatType == COMBAT_TYPE.GUARDABLE || combatType == COMBAT_TYPE.PARRYABLE)
+        if (hitType == HIT_TYPE.NONE)
             return;
 
         if (other.TryGetComponent(out EnemyHitBox hitbox))
@@ -30,63 +30,39 @@ public class PlayerCombatController : BaseCombatController
 
             if (hitbox.Owner != null)
             {
-                // 01. Invincibility Process
-                if (hitbox.Owner.IsInvincible)
-                    return;
-
-                // 02. Prevent Duplicate Damage Process
+                // 01. Prevent Duplicate Damage Process
                 if (hitDictionary.ContainsKey(hitbox.Owner))
                     return;
 
                 hitDictionary.Add(hitbox.Owner, true);
 
-                // 03. Hitting Effect Process
+                // 02. Hitting Effect Process
                 GameObject effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Attack);
                 effect.transform.position = hitPoint;
 
                 // 04. Damage Process
-                character.DamageProcess(hitbox.Owner, damageRatio, hitPoint);
-
-                // 05. Hit Process
-                switch (combatType)
-                {
-                    case COMBAT_TYPE.ATTACK_NORMAL:
-                        break;
-                    case COMBAT_TYPE.ATTACK_LIGHT:
-                        if (hitbox.Owner.Status.HitLevel < (int)COMBAT_TYPE.ATTACK_LIGHT)
-                            hitbox.Owner.OnLightHit();
-                        break;
-
-                    case COMBAT_TYPE.ATTACK_HEAVY:
-                        if (hitbox.Owner.Status.HitLevel < (int)COMBAT_TYPE.ATTACK_HEAVY)
-                            hitbox.Owner.OnHeavyHit();
-                        break;
-                    case COMBAT_TYPE.ATTACK_STUN:
-                        if (hitbox.Owner is IStunable stunableObject)
-                            stunableObject.OnStun(crowdControlDuration);
-                        break;
-
-                    default:
-                        break;
-                }
+                hitbox.Owner.TakeHit(character, damageRatio, hitType, hitPoint, crowdControlDuration);
             }
         }
     }
 
     public virtual void ExecuteDefenseProcess(EnemyCombatController enemyCombatController, Vector3 hitPoint)
     {
+        if (guardType == GUARD_TYPE.NONE)
+            return;
+
         GameObject effect = null;
 
-        switch (combatType)
+        switch (guardType)
         {
-            case COMBAT_TYPE.GUARDABLE:
+            case GUARD_TYPE.GUARDABLE:
                 {
                     effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
                     character.State.SetState(character.CurrentWeapon.GuardBreakState, STATE_SWITCH_BY.WEIGHT);
                     break;
                 }
 
-            case COMBAT_TYPE.PARRYABLE:
+            case GUARD_TYPE.PARRYABLE:
                 {
                     if (enemyCombatController is EnemyCompeteAttack competeController && Managers.CompeteManager.TryCompete(this, competeController))
                         break;

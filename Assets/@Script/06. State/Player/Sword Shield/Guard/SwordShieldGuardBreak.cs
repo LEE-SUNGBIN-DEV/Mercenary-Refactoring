@@ -12,7 +12,7 @@ public class SwordShieldGuardBreak : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_BREAK;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Guard_Break"];
+        animationClipInformation = character.AnimationClipTable["Sword_Shield_Guard_Break"];
     }
 
     public void Enter()

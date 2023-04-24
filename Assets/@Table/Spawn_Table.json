@@ -1,0 +1,42 @@
+[
+  {
+    "scene": 3,
+    "enemyType": 0,
+    "enemyName": "Small_Stone_Golem",
+    "xCoordinate": 122.1791,
+    "yCoordinate": 105.4274,
+    "zCoordinate": 120.6923
+  },
+  {
+    "scene": 3,
+    "enemyType": 0,
+    "enemyName": "Small_Stone_Golem",
+    "xCoordinate": 106.7949,
+    "yCoordinate": 103.4846,
+    "zCoordinate": 146.9487
+  },
+  {
+    "scene": 3,
+    "enemyType": 0,
+    "enemyName": "Small_Stone_Golem",
+    "xCoordinate": 98.21184,
+    "yCoordinate": 102.891,
+    "zCoordinate": 174.6232
+  },
+  {
+    "scene": 3,
+    "enemyType": 0,
+    "enemyName": "Small_Stone_Golem",
+    "xCoordinate": 90.61668,
+    "yCoordinate": 103.2968,
+    "zCoordinate": 181.7099
+  },
+  {
+    "scene": 3,
+    "enemyType": 0,
+    "enemyName": "Small_Stone_Golem",
+    "xCoordinate": 95.03832,
+    "yCoordinate": 105.1401,
+    "zCoordinate": 195.6061
+  }
+]

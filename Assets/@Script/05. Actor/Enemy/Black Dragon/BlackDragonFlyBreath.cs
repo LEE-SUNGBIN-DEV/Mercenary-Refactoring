@@ -23,9 +23,9 @@ public class BlackDragonFlyBreath : EnemySkill
         enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Breath, 15);
         enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Flame_Area, 15);
         
-        flyBreathStartAnimationInfo = enemy.AnimationClipDictionary["Skill_Fly_Breath_Start"];
-        flyBreathAnimationInfo = enemy.AnimationClipDictionary["Skill_Fly_Breath"];
-        flyBreathEndAnimationInfo = enemy.AnimationClipDictionary["Skill_Fly_Breath_End"];
+        flyBreathStartAnimationInfo = enemy.AnimationClipTable["Skill_Fly_Breath_Start"];
+        flyBreathAnimationInfo = enemy.AnimationClipTable["Skill_Fly_Breath"];
+        flyBreathEndAnimationInfo = enemy.AnimationClipTable["Skill_Fly_Breath_End"];
     }
 
     public override IEnumerator StartSkill()
@@ -33,7 +33,7 @@ public class BlackDragonFlyBreath : EnemySkill
         enemy.Animator.Play(flyBreathStartAnimationInfo.nameHash);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(flyBreathAnimationInfo, 55));
-        breath.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
+        breath.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         breath.SetRayAttack(enemy, 30f, 0.1f);
         StartCoroutine(breath.RayCoroutine);
 

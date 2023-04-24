@@ -15,7 +15,7 @@ public class PlayerStateStandRoll : IActionState
     public PlayerStateStandRoll(PlayerCharacter character)
     {
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_STAND_ROLL;
-        animationClipInformation = character.AnimationClipDictionary["Player_Stand_Roll"];
+        animationClipInformation = character.AnimationClipTable["Player_Stand_Roll"];
         this.character = character;
     }
 

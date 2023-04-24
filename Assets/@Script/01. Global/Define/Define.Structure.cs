@@ -1,19 +1,17 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
-public class CharacterSlot
+public struct DamageInformation
 {
-    public int slotIndex;
-    public SelectionCharacter selectionCharacter;
-    public Vector3 characterPoint;
-    public TextMeshProUGUI slotText;
-    public Button slotButton;
+    public float damage;
+    public bool isCritical;
 
-    public CharacterSlot()
+    public DamageInformation(float damage, bool isCritical)
     {
-        slotText = null;
-        slotButton = null;
+        this.damage = damage;
+        this.isCritical = isCritical;
     }
 }
 
@@ -52,40 +50,19 @@ public struct AnimationClipInformation
     }
 }
 
-public struct CombatActionInfomation
+public struct CombatControllerInfomation
 {
-    public COMBAT_TYPE combatType;
+    public HIT_TYPE hitType;
+    public GUARD_TYPE guardType;
     public float damageRatio;
     public float crowdControlDuration;
-    public Location effectLocation;
 
-    public CombatActionInfomation(COMBAT_TYPE hitType, float damageRatio, float crowdControlDuration = 0f)
+    public CombatControllerInfomation(HIT_TYPE hitType = HIT_TYPE.NONE, GUARD_TYPE guardType = GUARD_TYPE.NONE, float damageRatio = 1f, float crowdControlDuration = 0f)
     {
-        this.combatType = hitType;
+        this.hitType = hitType;
+        this.guardType = guardType;
         this.damageRatio = damageRatio;
         this.crowdControlDuration = crowdControlDuration;
-        this.effectLocation = new Location(Vector3.zero, Vector3.zero);
-    }
-
-    public CombatActionInfomation(COMBAT_TYPE hitType, float damageRatio, Vector3 effectPosition, Vector3 effectRotation, float crowdControlDuration = 0f)
-    {
-        this.combatType = hitType;
-        this.damageRatio = damageRatio;
-        this.crowdControlDuration = crowdControlDuration;
-        this.effectLocation = new Location(effectPosition, effectRotation);
-    }
-
-    public CombatActionInfomation(COMBAT_TYPE hitType, float damageRatio, Location effectLocation, float crowdControlDuration = 0f)
-    {
-        this.combatType = hitType;
-        this.damageRatio = damageRatio;
-        this.crowdControlDuration = crowdControlDuration;
-        this.effectLocation = effectLocation;
-    }
-
-    public Quaternion GetQuaternion()
-    {
-        return effectLocation.GetQuaternion();
     }
 }
 
@@ -136,19 +113,58 @@ public struct DebuffData
 }
 
 [System.Serializable]
-public struct WayPointObjectData
+public struct EnemySpawnData
 {
-    public CHAPTER_LIST chapter;
-    public WAY_POINT_OBJECT_TYPE type;
-    public string name;
-    public Vector3 point;
+    public SCENE_LIST scene;
+    public ENEMY_TYPE enemyType;
+    public string enemyName;
+    public float xCoordinate;
+    public float yCoordinate;
+    public float zCoordinate;
+
+    public Vector3 GetPosition()
+    {
+        return new Vector3(xCoordinate, yCoordinate, zCoordinate);
+    }
 }
 
 [System.Serializable]
-public struct WayPointData
+public struct ResonanceObjectData
 {
-    public CHAPTER_LIST chapter;
-    public string name;
-    public WayPointObjectData[] wayPointObjects;
+    public SCENE_LIST scene;
+    public string regionName;
+    public string objectName;
+    public float xCoordinate;
+    public float yCoordinate;
+    public float zCoordinate;
+
+    [JsonIgnore] public int index;
+
+    public Vector3 GetPosition()
+    {
+        return new Vector3(xCoordinate, yCoordinate, zCoordinate);
+    }
+}
+
+[System.Serializable]
+public struct GameSceneData
+{
+    public SCENE_LIST scene;
+    public SCENE_TYPE sceneType;
+    public string sceneName;
+    public WEATHER_TYPE weatherType;
+
+    [JsonIgnore] public List<EnemySpawnData> normalSpawnDataList;
+    [JsonIgnore] public List<EnemySpawnData> eliteSpawnDataList;
+    [JsonIgnore] public List<EnemySpawnData> bossSpawnDataList;
+    [JsonIgnore] public List<ResonanceObjectData> resonanceObjectDataList;
+
+    public void Initialize()
+    {
+        resonanceObjectDataList = new List<ResonanceObjectData>();
+        normalSpawnDataList = new List<EnemySpawnData>();
+        eliteSpawnDataList = new List<EnemySpawnData>();
+        bossSpawnDataList = new List<EnemySpawnData>();
+    }
 }
 #endregion
