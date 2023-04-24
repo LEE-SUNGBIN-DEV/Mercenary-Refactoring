@@ -12,7 +12,7 @@ public class HalberdParryingAttack : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_PARRYING_ATTACK;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Parrying_Attack"];
+        animationClipInformation = character.AnimationClipTable["Halberd_Parrying_Attack"];
     }
 
     public void Enter()

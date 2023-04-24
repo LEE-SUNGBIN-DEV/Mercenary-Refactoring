@@ -14,7 +14,7 @@ public class SwordShieldLightAttack04 : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_LIGHT_04;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Light_Attack_04"];
+        animationClipInformation = character.AnimationClipTable["Sword_Shield_Light_Attack_04"];
         mouseLeftDown = false;
         mouseRightDown = false;
     }

@@ -11,26 +11,39 @@ public class ResonancePointPanel : UIPanel
         Region_Image
     }
 
-    private GameObject chapterButtonRoot;
-    private GameObject regionButtonRoot;
+    public enum BUTTON
+    {
+        Move_Button
+    }
 
-    private List<ChapterButton> chapterButtonList;
-    private List<RegionButton> regionButtonList;
+    [SerializeField] private RectTransform chapterButtonRoot;
+    [SerializeField] private RectTransform regionButtonRoot;
 
-    private PlayerWayPointData wayPointData;
+    [SerializeField] private List<ChapterButton> chapterButtonList = new List<ChapterButton>();
+    [SerializeField] private List<RegionButton> regionButtonList = new List<RegionButton>();
+
+    private PlayerLocationData playerLocationData;
+    private Button moveButton;
+
+    private ResonanceObjectData targetResonanceObject;
 
     public void Initialize(CharacterData characterData)
     {
         BindImage(typeof(IMAGE));
+        BindButton(typeof(BUTTON));
 
-        chapterButtonRoot = Functions.FindChild<GameObject>(gameObject, "Chapter_Content", true);
-        regionButtonRoot = Functions.FindChild<GameObject>(gameObject, "Region_Content", true);
+        moveButton = GetButton((int)BUTTON.Move_Button);
+        moveButton.onClick.AddListener(MoveResonancePoint);
+        moveButton.enabled = false;
 
-        wayPointData = characterData.WayPointData;
-        wayPointData.OnChangeWayPointData -= RefreshChapterList;
-        wayPointData.OnChangeWayPointData += RefreshChapterList;
+        chapterButtonRoot = Functions.FindChild<RectTransform>(gameObject, "Chapter_Content", true);
+        regionButtonRoot = Functions.FindChild<RectTransform>(gameObject, "Region_Content", true);
 
-        RefreshChapterList(wayPointData);
+        playerLocationData = characterData.LocationData;
+        playerLocationData.OnChangeResonancePointData -= RefreshChapterList;
+        playerLocationData.OnChangeResonancePointData += RefreshChapterList;
+
+        RefreshChapterList(playerLocationData);
     }
 
     public void ClearPanel()
@@ -39,54 +52,66 @@ public class ResonancePointPanel : UIPanel
         chapterButtonList.Clear();
     }
 
-    public void RefreshChapterList(PlayerWayPointData resonancePointData)
+    public void RefreshChapterList(PlayerLocationData playerLocationData)
     {
         ClearPanel();
 
         // Load ChapterList from Player Data
-        for (int chapterIndex = 0; chapterIndex < resonancePointData.IsEnableResonancePoint.Length; ++chapterIndex)
+        foreach (var sceneResonanceData in playerLocationData.ResonancePointEnableDictionary)
         {
-            if (resonancePointData.IsEnableResonancePoint[chapterIndex].Length > 0)
+            bool isEnabled = false;
+            for (int i = 0; i < sceneResonanceData.Value.Length; ++i)
             {
-                WayPointData wayPointData = Managers.DataManager.WayPointTable[(CHAPTER_LIST)chapterIndex];
-                RegisterChapterButton(wayPointData);
-
-                for (int objectIndex = 0; objectIndex < resonancePointData.IsEnableResonancePoint[chapterIndex].Length; ++objectIndex)
+                if (sceneResonanceData.Value[i] == true)
                 {
-                    if (resonancePointData.IsEnableResonancePoint[chapterIndex][objectIndex] == true)
-                    {
-                        RegisterRegionButton(wayPointData.wayPointObjects[objectIndex]);
-                    }
+                    isEnabled = true;
+                    break;
                 }
             }
+            RegisterChapterButton(Managers.DataManager.GameSceneTable[sceneResonanceData.Key], isEnabled);
         }
     }
 
-    public void RegisterChapterButton(WayPointData wayPointData)
+    public void RegisterChapterButton(GameSceneData wayPointData, bool isEnabled)
     {
-        ChapterButton newChapterButton = Managers.ResourceManager?.InstantiatePrefabSync("Prefab_Chapter_Button", regionButtonRoot.transform).GetComponent<ChapterButton>();
+        ChapterButton newChapterButton = Managers.ResourceManager?.InstantiatePrefabSync("Prefab_Chapter_Button", chapterButtonRoot.transform).GetComponent<ChapterButton>();
         newChapterButton.Initialize(wayPointData);
-        newChapterButton.OnClickChapterButton -= RefreshRegionList;
-        newChapterButton.OnClickChapterButton += RefreshRegionList;
+        newChapterButton.OnClickChapterButton -= ShowRegionList;
+        newChapterButton.OnClickChapterButton += ShowRegionList;
+        newChapterButton.enabled = isEnabled;
         chapterButtonList.Add(newChapterButton);
     }
 
-    public void RefreshRegionList(ChapterButton chapterButton)
+    public void ShowRegionList(ChapterButton chapterButton)
     {
+        regionButtonList.Clear();
 
+        for (int i = 0; i < playerLocationData.ResonancePointEnableDictionary[chapterButton.ChapterInformation.scene].Length; ++i)
+        {
+            bool isEnabled = playerLocationData.ResonancePointEnableDictionary[chapterButton.ChapterInformation.scene][i];
+            RegisterRegionButton(Managers.DataManager.GameSceneTable[chapterButton.ChapterInformation.scene].resonanceObjectDataList[i], isEnabled);
+        }
     }
 
-    public void RegisterRegionButton(WayPointObjectData objectData)
+    public void RegisterRegionButton(ResonanceObjectData objectData, bool isEnabled)
     {
-        RegionButton newRegionButton = Managers.ResourceManager?.InstantiatePrefabSync("Prefab_Region_Button", chapterButtonRoot.transform).GetComponent<RegionButton>();
+        RegionButton newRegionButton = Managers.ResourceManager?.InstantiatePrefabSync("Prefab_Region_Button", regionButtonRoot.transform).GetComponent<RegionButton>();
         newRegionButton.Initialize(objectData);
-        newRegionButton.OnClickRegionButton -= ShowConfirmWindow;
-        newRegionButton.OnClickRegionButton += ShowConfirmWindow;
+        newRegionButton.OnClickRegionButton -= EnableMoveButton;
+        newRegionButton.OnClickRegionButton += EnableMoveButton;
+        newRegionButton.enabled = isEnabled;
         regionButtonList.Add(newRegionButton);
     }
 
-    public void ShowConfirmWindow(RegionButton regionButton)
+    public void EnableMoveButton(RegionButton regionButton)
     {
+        targetResonanceObject = regionButton.ResonanceObjectData;
+        moveButton.enabled = true;
+    }
 
+    public void MoveResonancePoint()
+    {
+        Managers.DataManager.CurrentCharacterData.LocationData.SetLastPosition(targetResonanceObject.GetPosition());
+        Managers.SceneManagerCS.LoadSceneAsync(targetResonanceObject.scene);
     }
 }

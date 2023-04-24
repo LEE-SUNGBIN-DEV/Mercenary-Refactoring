@@ -12,55 +12,27 @@ public abstract class EnemyCombatController : BaseCombatController
         // Hit With Character
         if (other.TryGetComponent(out PlayerCharacter character))
         {
-            // 01. Invincibility Process
-            if (character.IsInvincible)
-                return;
-
-            // 02. Prevent Duplicate Damage Process
+            // Prevent Duplicate Damage Process
             if (hitDictionary.ContainsKey(character))
                 return;
 
             hitDictionary.Add(character, true);
 
-            // 03. Damage Process
-            enemy.DamageProcess(character, damageRatio);
-
-            // 04. Hit Process
-            switch (combatType)
-            {
-                case COMBAT_TYPE.ATTACK_NORMAL:
-                    break;
-
-                case COMBAT_TYPE.ATTACK_LIGHT:
-                    if (character.Status.HitLevel < (int)COMBAT_TYPE.ATTACK_LIGHT)
-                        character.OnLightHit();
-                    break;
-
-                case COMBAT_TYPE.ATTACK_HEAVY:
-                    if (character.Status.HitLevel < (int)COMBAT_TYPE.ATTACK_HEAVY)
-                        character.OnHeavyHit();
-                    break;
-
-                case COMBAT_TYPE.ATTACK_STUN:
-                    character.OnStun(crowdControlDuration);
-                    break;
-
-                default:
-                    break;
-            }
+            character.TakeHit(enemy, damageRatio, hitType, crowdControlDuration);
         }
 
         // Hit With Shield
         if (other.TryGetComponent(out PlayerCombatController weapon))
         {
-            switch(weapon.CombatType)
+            switch(weapon.GuardType)
             {
-                case COMBAT_TYPE.GUARDABLE:
-                case COMBAT_TYPE.PARRYABLE:
+                case GUARD_TYPE.GUARDABLE:
+                case GUARD_TYPE.PARRYABLE:
                     weapon.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
                     break;
 
-                default: break;
+                default:
+                    break;
             }
         }
     }

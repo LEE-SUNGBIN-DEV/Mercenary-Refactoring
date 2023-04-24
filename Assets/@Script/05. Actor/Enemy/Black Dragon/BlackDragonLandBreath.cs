@@ -20,7 +20,7 @@ public class BlackDragonLandBreath : EnemySkill
         enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Breath, 15);
         enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Flame_Area, 15);
 
-        landBreathAnimationInfo = enemy.AnimationClipDictionary["Skill_Land_Breath"];
+        landBreathAnimationInfo = enemy.AnimationClipTable["Skill_Land_Breath"];
     }
 
     public override IEnumerator StartSkill()
@@ -28,7 +28,7 @@ public class BlackDragonLandBreath : EnemySkill
         enemy.Animator.Play(landBreathAnimationInfo.nameHash);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(landBreathAnimationInfo, 23));
-        breath.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
+        breath.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         breath.SetRayAttack(enemy, 20f, 0.15f);
         StartCoroutine(breath.RayCoroutine);
 

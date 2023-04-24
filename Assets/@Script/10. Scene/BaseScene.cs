@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class BaseScene : MonoBehaviour
 {
-    [SerializeField] protected string mapName;
-    [SerializeField] protected SCENE_TYPE sceneType;
     [SerializeField] protected SCENE_LIST scene;
+    [SerializeField] protected SCENE_TYPE sceneType;
+    [SerializeField] protected string sceneName;
     [SerializeField] protected ObjectPooler objectPooler = new ObjectPooler();
 
     protected virtual void Awake()
     {
         Managers.Instance.Initialize();
 
-        // 이벤트 시스템
-        GameObject eventSystem = GameObject.Find(Constants.Prefab_EventSystem);
+        // Creat Event System
+        GameObject eventSystem = GameObject.Find(Constants.PREFAB_EVENT_SYSTEM);
         if (eventSystem == null)
         {
-            Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_EventSystem);
+            Managers.ResourceManager.InstantiatePrefabSync(Constants.PREFAB_EVENT_SYSTEM);
         }
 
         sceneType = SCENE_TYPE.Unknown;
@@ -52,8 +52,8 @@ public class BaseScene : MonoBehaviour
     }
 
     #region Property
-    public string MapName { get { return mapName; } }
-    public SCENE_TYPE SceneType { get { return sceneType; } }
     public SCENE_LIST Scene { get { return scene; } }
+    public SCENE_TYPE SceneType { get { return sceneType; } }
+    public string SceneName { get { return sceneName; } }
     #endregion
 }

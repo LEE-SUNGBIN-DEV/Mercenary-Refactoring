@@ -7,37 +7,39 @@ using TMPro;
 
 public class RegionButton : UIBase
 {
-    public enum TEXT
-    {
-        Region_Text
-    }
-
     public enum BUTTON
     {
-        Region_Button
+        Prefab_Region_Button
     }
+
+    public enum TEXT
+    {
+        Prefab_Region_Text
+    }
+
     public event UnityAction<RegionButton> OnClickRegionButton;
 
-    private Button button;
-    private TextMeshProUGUI regionText;
-    private WayPointObjectData wayPointData;
+    [SerializeField] private ResonanceObjectData resonanceObjectData;
+    [SerializeField] private Button button;
+    [SerializeField] private TextMeshProUGUI regionText;
 
-    public void Initialize(WayPointObjectData wayPointData)
+    public void Initialize(ResonanceObjectData resonanceObjectData)
     {
+        this.resonanceObjectData = resonanceObjectData;
+
         BindText(typeof(TEXT));
         BindButton(typeof(BUTTON));
 
-        regionText = GetText((int)TEXT.Region_Text);
-        button = GetButton((int)BUTTON.Region_Button);
+        button = GetButton((int)BUTTON.Prefab_Region_Button);
         button.onClick.AddListener(ClickRegionButton);
+        regionText = GetText((int)TEXT.Prefab_Region_Text);
 
-        SetRegionButton(wayPointData);
+        SetRegionButton();
     }
 
-    public void SetRegionButton(WayPointObjectData wayPointData)
+    public void SetRegionButton()
     {
-        this.wayPointData = wayPointData;
-        regionText.text = wayPointData.name;
+        regionText.text = resonanceObjectData.regionName;
     }
 
     public void ClickRegionButton()
@@ -46,7 +48,7 @@ public class RegionButton : UIBase
     }
 
     #region Property
-    public WayPointObjectData ResonanceInformation { get { return wayPointData; } }
+    public ResonanceObjectData ResonanceObjectData { get { return resonanceObjectData; } }
     public Button Button { get { return button; } }
     public TextMeshProUGUI QuestTitleText { get { return regionText; } }
     #endregion

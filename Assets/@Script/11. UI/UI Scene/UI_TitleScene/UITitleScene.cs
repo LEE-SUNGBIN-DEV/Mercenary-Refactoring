@@ -1,48 +1,55 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class UITitleScene : UIBaseScene
 {
     enum TEXT
     {
-        TitleText,
+        Title_Text,
     }
     enum BUTTON
     {
-        StartGameButton,
-        QuitButton,
-        OptionButton
+        Prefab_Start_Button,
+        Prefab_Quit_Button,
+        Prefab_Option_Button
     }
 
-    public void Initialize()
+    private Button startButton;
+    private Button quitButton;
+    private Button optionButton;
+
+    public override void Initialize()
     {
-        if (isInitialized == true)
-        {
-            Debug.Log($"{this}: Already Initialized.");
-            return;
-        }
-        isInitialized = true;
+        base.Initialize();
 
         BindText(typeof(TEXT));
         BindButton(typeof(BUTTON));
-        GetButton((int)BUTTON.StartGameButton).onClick.AddListener(OnClickStartGameButton);
-        GetButton((int)BUTTON.QuitButton).onClick.AddListener(OnClickQuitButton);
-        GetButton((int)BUTTON.OptionButton).onClick.AddListener(OnClickOptionButton);
+
+        startButton = GetButton((int)BUTTON.Prefab_Start_Button);
+        startButton.onClick.AddListener(OnClickStartGameButton);
+
+        quitButton = GetButton((int)BUTTON.Prefab_Quit_Button);
+        quitButton.onClick.AddListener(OnClickQuitButton);
+
+        optionButton = GetButton((int)BUTTON.Prefab_Option_Button);
+        optionButton.onClick.AddListener(OnClickOptionButton);
     }
 
-    #region Event Function
     public void OnClickStartGameButton()
     {
-        Managers.SceneManagerCS.LoadScene(SCENE_LIST.Selection);
-        GetButton((int)BUTTON.StartGameButton).interactable = false;
+        startButton.interactable = false;
+        quitButton.interactable = false;
+        Managers.SceneManagerCS.LoadSceneFade(SCENE_LIST.Selection);
     }
     public void OnClickQuitButton()
     {
+        startButton.interactable = false;
+        quitButton.interactable = false;
         Managers.GameManager.SaveAndQuit();
     }
     public void OnClickOptionButton()
     {
         Managers.UIManager.CommonSceneUI.OpenPopup(Managers.UIManager.CommonSceneUI.OptionPopup);
     }
-    #endregion
 }

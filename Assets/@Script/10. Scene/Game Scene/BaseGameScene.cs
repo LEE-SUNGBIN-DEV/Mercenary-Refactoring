@@ -1,47 +1,48 @@
-#define EDITOR_TEST
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class BaseGameScene : BaseScene
 {
     public event UnityAction<float> OnUpdateBossHPBar;
 
-    [SerializeField] protected UIGameScene gameSceneUI;
-    [SerializeField] protected PlayerCharacter character;
-    [SerializeField] protected List<NPC> npcList = new List<NPC>();
-    [SerializeField] protected Vector3 playerSpawnPosition;
+    protected GameSceneData gameSceneData;
 
-    [SerializeField] protected BaseEnemy boss;
+    [SerializeField] protected PlayerCharacter character;
+    [SerializeField] protected UIGameScene gameSceneUI;
+
+    [SerializeField] protected List<NPC> npcList = new List<NPC>();
+
+    [SerializeField] protected ResonanceGate resonanceGate;
+    [SerializeField] protected ResonanceCrystal[] resonanceCrystals;
+
+    [SerializeField] protected EnemySpawner[] normalEnemySpawners;
+    [SerializeField] protected EnemySpawner[] eliteEnemySpawners;
+    [SerializeField] protected EnemySpawner[] bossEnemySpawners;
+
+    [SerializeField] protected BaseEnemy currentBoss;
     [SerializeField] protected RoomGate bossRoomGate;
-    [SerializeField] protected EnemySpawnController bossSpawnController;
-    [SerializeField] protected EnemySpawnController[] enemySpawnController;
-    [SerializeField] protected ResonanceGate warpGate;
+
 
     public override void Initialize()
     {
         base.Initialize();
-        sceneType = SCENE_TYPE.Game;
+        gameSceneData = Managers.DataManager.GameSceneTable[(SCENE_LIST)SceneManager.GetActiveScene().buildIndex];
+        scene = gameSceneData.scene;
+        sceneType = gameSceneData.sceneType;
+        sceneName = gameSceneData.sceneName;
 
         // Creat Player Character
         if (Managers.DataManager.CurrentCharacterData != null)
-            character = Functions.CreateCharacterWithCamera(playerSpawnPosition);
-
-        // Initialize NPC
-        for(int i=0; i<npcList.Count; ++i)
         {
-            Managers.NPCManager.NPCDictionary.Add(npcList[i].NpcID, npcList[i]);
-            npcList[i].Initialize();
+            character = Functions.CreateCharacterWithCamera(Managers.DataManager.CurrentCharacterData.LocationData.GetLastPosition());
+            character.CharacterData.LocationData.LastScene = scene;
         }
 
-#if EDITOR_TEST
-        character.CharacterData.EquipmentSlotData.Initialize();
-#endif
-
         // Initialize Game Scene UI
-        gameSceneUI = Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_UI_Game_Scene).GetComponent<UIGameScene>();
+        gameSceneUI = Managers.ResourceManager.InstantiatePrefabSync(Constants.PREFAB_UI_GAME_SCENE).GetComponent<UIGameScene>();
         gameSceneUI.transform.SetParent(Managers.UIManager.RootObject.transform);
         gameSceneUI.transform.SetAsFirstSibling();
         gameSceneUI.Initialize(character.CharacterData);
@@ -49,8 +50,57 @@ public class BaseGameScene : BaseScene
         if (gameSceneUI.gameObject.activeSelf == false)
             gameSceneUI.gameObject.SetActive(true);
 
-        enemySpawnController = GetComponentsInChildren<EnemySpawnController>();
-        RegisterObject(Constants.Prefab_Floating_Damage_Text, 16);
+        // Initialize NPC
+        for (int i=0; i<npcList.Count; ++i)
+        {
+            Managers.NPCManager.NPCDictionary.Add(npcList[i].NpcID, npcList[i]);
+            npcList[i].Initialize();
+        }
+
+        // Initialize Resonance Crystals
+        resonanceCrystals = new ResonanceCrystal[gameSceneData.resonanceObjectDataList.Count];
+        for (int i = 0; i < resonanceCrystals.Length; ++i)
+        {
+            Managers.ResourceManager.InstantiatePrefabSync("Prefab_" + gameSceneData.resonanceObjectDataList[i].objectName).TryGetComponent(out resonanceCrystals[i]);
+            resonanceCrystals[i].Initialize(gameSceneData.resonanceObjectDataList[i], gameSceneUI);
+        }
+
+        // Initialize Enemy Spawner
+        normalEnemySpawners = new EnemySpawner[gameSceneData.normalSpawnDataList.Count];
+        for (int i = 0; i < normalEnemySpawners.Length; ++i)
+        {
+            if(Managers.ResourceManager.InstantiatePrefabSync(Constants.PREFAB_ENEMY_SPAWNER).TryGetComponent(out normalEnemySpawners[i]))
+            {
+                normalEnemySpawners[i].Initialize(gameSceneData.normalSpawnDataList[i]);
+                normalEnemySpawners[i].SpawnEnemy();
+            }
+        }
+
+        eliteEnemySpawners = new EnemySpawner[gameSceneData.bossSpawnDataList.Count];
+        for (int i = 0; i < eliteEnemySpawners.Length; ++i)
+        {
+            if(Managers.ResourceManager.InstantiatePrefabSync(Constants.PREFAB_ENEMY_SPAWNER).TryGetComponent(out eliteEnemySpawners[i]))
+            {
+                eliteEnemySpawners[i].Initialize(gameSceneData.normalSpawnDataList[i]);
+                eliteEnemySpawners[i].SpawnEnemy();
+            }
+        }
+
+        bossEnemySpawners = new EnemySpawner[gameSceneData.bossSpawnDataList.Count];
+        for (int i = 0; i < bossEnemySpawners.Length; ++i)
+        {
+            if(Managers.ResourceManager.InstantiatePrefabSync(Constants.PREFAB_ENEMY_SPAWNER).TryGetComponent(out bossEnemySpawners[i]))
+            {
+                bossEnemySpawners[i].Initialize(gameSceneData.normalSpawnDataList[i]);
+            }
+        }
+
+        RegisterObject(Constants.PREFAB_FLOATING_DAMAGE_TEXT, 16);
+    }
+
+    public void Start()
+    {
+        Managers.EnvironmentManager.SetWeather(gameSceneData.weatherType);
     }
 
     public override void ExitScene()
@@ -62,9 +112,9 @@ public class BaseGameScene : BaseScene
 
     public void SpawnEnemy()
     {
-        for (int i = 0; i < enemySpawnController.Length; ++i)
+        for (int i = 0; i < normalEnemySpawners.Length; ++i)
         {
-            enemySpawnController[i].SpawnEnemy();
+            normalEnemySpawners[i].SpawnEnemy();
         }
     }
 
@@ -76,24 +126,24 @@ public class BaseGameScene : BaseScene
 
     public void StartBossBattle()
     {
-        boss.Status.OnChanageEnemyData -= UpdateBossHPBar;
-        boss.Status.OnChanageEnemyData += UpdateBossHPBar;
+        currentBoss.Status.OnChanageEnemyData -= UpdateBossHPBar;
+        currentBoss.Status.OnChanageEnemyData += UpdateBossHPBar;
 
-        boss.OnEnemyDie -= ClearBossBattle;
-        boss.OnEnemyDie += ClearBossBattle;
+        currentBoss.OnEnemyDie -= ClearBossBattle;
+        currentBoss.OnEnemyDie += ClearBossBattle;
         //Managers.UIManager.UIGameScene.MonsterPanel.SetBossHPBar(1f);
 
         bossRoomGate.CloseGate();
-        warpGate.DisableGate();
+        resonanceGate.DisableGate();
     }
 
     public void ClearBossBattle(BaseEnemy enemy)
     {
-        boss.Status.OnChanageEnemyData -= UpdateBossHPBar;
-        boss.OnEnemyDie -= ClearBossBattle;
+        currentBoss.Status.OnChanageEnemyData -= UpdateBossHPBar;
+        currentBoss.OnEnemyDie -= ClearBossBattle;
 
         bossRoomGate.OpenGate();
-        warpGate.EnableGate();
+        resonanceGate.EnableGate();
 
         StartCoroutine(CoDungeonClear());
     }
@@ -107,6 +157,6 @@ public class BaseGameScene : BaseScene
         Managers.UIManager.RequestNotice("Clear");
     }
 
-    public Vector3 SpawnPosition { get { return playerSpawnPosition; } }
+    public UIGameScene GameSceneUI { get { return gameSceneUI; } }
     public PlayerCharacter Character { get { return character; } }
 }

@@ -24,12 +24,13 @@ public static partial class Constants
 
 
     // Prefab
-    public static readonly string Prefab_Player_Camera = "Prefab_Player_Camera";
-    public static readonly string Prefab_Player_Character = "Prefab_Player_Character";
-    public static readonly string Prefab_Player_Character_Slot = "Prefab_Player_Character_Slot";
+    public static readonly string PREFAB_ENEMY_SPAWNER = "Prefab_Enemy_Spawner";
+    public static readonly string PREFAB_PLAYER_CAMERA = "Prefab_Player_Camera";
+    public static readonly string PREFAB_PLAYER_CHARACTER = "Prefab_Player_Character";
+    public static readonly string PREFAB_PLAYER_CHARACTER_SLOT = "Prefab_Player_Character_Slot";
 
-    public static readonly string Prefab_Floating_Damage_Text = "Prefab_Floating_Damage_Text";
-    public static readonly string Prefab_UI_Game_Scene = "Prefab_UI_Game_Scene";
-    public static readonly string Prefab_EventSystem = "Prefab_EventSystem";
+    public static readonly string PREFAB_FLOATING_DAMAGE_TEXT = "Prefab_Floating_Damage_Text";
+    public static readonly string PREFAB_UI_GAME_SCENE = "Prefab_UI_Game_Scene";
+    public static readonly string PREFAB_EVENT_SYSTEM = "Prefab_EventSystem";
 
 }

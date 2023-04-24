@@ -21,9 +21,9 @@ public class BlackDragonStorm : EnemySkill
         owner.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Storm_Field, 1);
         owner.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Lightning_Strike, amount);        
         
-        stormStartAnimationInfo = enemy.AnimationClipDictionary["Skill_Storm_Start"];
-        stormAnimationInfo = enemy.AnimationClipDictionary["Skill_Storm"];
-        stormEndAnimationInfo = enemy.AnimationClipDictionary["Skill_Storm_End"];
+        stormStartAnimationInfo = enemy.AnimationClipTable["Skill_Storm_Start"];
+        stormAnimationInfo = enemy.AnimationClipTable["Skill_Storm"];
+        stormEndAnimationInfo = enemy.AnimationClipTable["Skill_Storm_End"];
     }
 
     public override IEnumerator StartSkill()
@@ -51,7 +51,7 @@ public class BlackDragonStorm : EnemySkill
             Vector3 generateCoordinate = Functions.GetRandomCircleCoordinate(12f);
             if (enemy.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Lightning_Strike).TryGetComponent(out EnemyPositioningAttack lightningStrike))
             {
-                lightningStrike.SetCombatController(COMBAT_TYPE.ATTACK_STUN, 1.3f, 1.5f);
+                lightningStrike.SetCombatController(HIT_TYPE.STUN, GUARD_TYPE.NONE, 1.3f, 1.5f);
                 lightningStrike.SetPositioningAttack(enemy, enemy.transform.position + generateCoordinate, 1f, 0.2f);
                 lightningStrike.OnAttack();
             }

@@ -13,7 +13,7 @@ public class HalberdHeavyAttack01 : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_HEAVY_01;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Heavy_Attack_01"];
+        animationClipInformation = character.AnimationClipTable["Halberd_Heavy_Attack_01"];
         mouseLeftDown = false;
     }
 

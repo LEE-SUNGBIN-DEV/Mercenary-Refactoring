@@ -6,98 +6,83 @@ using UnityEngine.UI;
 
 public class UICommonScene : UIBaseScene
 {
-    public enum IMAGE
-    {
-        FadeImage
-    }
-
+    // Panel
     private ConfirmPanel confirmPanel;
     private NoticePanel noticePanel;
-    private Image fadeImage;
 
+    // Popup
     private OptionPopup optionPopup;
 
-    public void Initialize()
-    {
-        if (isInitialized == true)
-        {
-            Debug.Log($"{this}: Already Initialized.");
-            return;
-        }
-        isInitialized = true;
+    // Fade
+    private Image fadeImage;
+    private Coroutine currentFadeCoroutine;
+    private float fadeDuration;
 
-        BindImage(typeof(IMAGE));
-        fadeImage = GetImage((int)IMAGE.FadeImage);
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        canvas.sortingOrder = 1;
 
         // Panel
-        confirmPanel = gameObject.GetComponentInChildren<ConfirmPanel>(true);
-        noticePanel = gameObject.GetComponentInChildren<NoticePanel>(true);
+        confirmPanel = GetComponentInChildren<ConfirmPanel>(true);
+        noticePanel = GetComponentInChildren<NoticePanel>(true);
+
         confirmPanel.Initialize();
         noticePanel.Initialize();
+
         // Popup
         optionPopup = gameObject.GetComponentInChildren<OptionPopup>(true);
         optionPopup.Initialize();
+
+        // Fade
+        fadeImage = Functions.FindChild<Image>(gameObject, "Fade_Image");
+        fadeDuration = 1f;
     }
 
     public void RequestNotice()
     {
 
     }
+
     public void RequestConfirm(string content, UnityAction action)
     {
         confirmPanel.SetConfirmPanel(content, action);
         OpenPanel(confirmPanel);
     }
 
-    public void SetAlpha(float alpha)
+    public void FadeIn(float duration = 1f, UnityAction callback = null)
     {
-        fadeImage.color = Functions.SetColor(fadeImage.color, alpha);
+        if (currentFadeCoroutine != null)
+            StopCoroutine(currentFadeCoroutine);
+
+        fadeDuration = duration;
+        currentFadeCoroutine = StartCoroutine(CoFade(1f, 0f, callback));
     }
 
-    public void FadeIn(float fadeTime = 1f, UnityAction callback = null)
+    public void FadeOut(float duration = 1f, UnityAction callback = null)
     {
-        StartCoroutine(CoFadeIn(fadeTime, callback));
+        if (currentFadeCoroutine != null)
+            StopCoroutine(currentFadeCoroutine);
+
+        fadeDuration = duration;
+        currentFadeCoroutine = StartCoroutine(CoFade(0f, 1f, callback));
     }
 
-    public void FadeOut(float fadeTime = 1f, UnityAction callback = null)
+    private IEnumerator CoFade(float startAlpha, float targetAlpha, UnityAction callback = null)
     {
-        StartCoroutine(CoFadeOut(fadeTime, callback));
-    }
+        float elapsedTime = 0f;
+        float currentAlpha;
 
-    IEnumerator CoFadeIn(float fadeTime, UnityAction callback = null)
-    {
-        Color color = fadeImage.color;
-        float currentTime = 0f;
-
-        while (currentTime <= fadeTime)
+        while (elapsedTime < fadeDuration)
         {
-            currentTime += Time.deltaTime;
-            color.a -= (currentTime / fadeTime);
-            fadeImage.color = color;
+            elapsedTime += Time.deltaTime;
+            currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / fadeDuration);
+            fadeImage.color = Functions.SetColor(fadeImage.color, currentAlpha);
             yield return null;
         }
 
-        color.a = 0f;
-        fadeImage.color = color;
-
-        callback?.Invoke();
-    }
-
-    IEnumerator CoFadeOut(float fadeTime, UnityAction callback = null)
-    {
-        Color color = fadeImage.color;
-        float currentTime = 0f;
-
-        while (currentTime <= fadeTime)
-        {
-            currentTime += Time.deltaTime;
-            color.a += (currentTime / fadeTime);
-            fadeImage.color = color;
-            yield return null;
-        }
-
-        color.a = 1f;
-        fadeImage.color = color;
+        currentFadeCoroutine = null;
 
         callback?.Invoke();
     }

@@ -13,7 +13,7 @@ public class PlayerStateHeavyHit : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_HEAVY;
-        animationClipInformation = character.AnimationClipDictionary["Player_Heavy_Hit"];
+        animationClipInformation = character.AnimationClipTable["Player_Heavy_Hit"];
     }
 
     public void Enter()

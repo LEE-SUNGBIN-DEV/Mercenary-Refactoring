@@ -6,19 +6,24 @@ public class HalberdGuardIn : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+    private PlayerHalberd halberd;
     private AnimationClipInformation animationClipInformation;
 
     public HalberdGuardIn(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_IN;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Guard_In"];
+        if (character != null)
+        {
+            halberd = character.WeaponController.GetWeapon<PlayerHalberd>(WEAPON_TYPE.HALBERD);
+            animationClipInformation = character.AnimationClipTable["Halberd_Guard_In"];
+        }
     }
 
     public void Enter()
     {
         character.IsInvincible = true;
-        character.Halberd.SetAndEnableHalberd(COMBAT_ACTION_TYPE.HALBERD_GUARD_IN);
+        halberd.SetAndEnableHalberd(COMBAT_ACTION_TYPE.HALBERD_GUARD_IN);
         character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.02f);
     }
 
@@ -39,7 +44,7 @@ public class HalberdGuardIn : IActionState
     public void Exit()
     {
         character.IsInvincible = false;
-        character.Halberd.DisableHalberd();
+        halberd.DisableHalberd();
     }
 
     #region Property

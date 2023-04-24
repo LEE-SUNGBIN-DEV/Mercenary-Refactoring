@@ -10,13 +10,13 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
 {
     public enum IMAGE
     {
-        ItemImage,
-        HighlightImage
+        Item_Image,
+        Highlight_Image
     }
     public enum TEXT
     {
-        ItemCountText,
-        ItemGradeText
+        Item_Count_Text,
+        Item_Grade_Text
     }
 
     [Header("Base Slot")]
@@ -33,10 +33,10 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
         BindImage(typeof(IMAGE));
         BindText(typeof(TEXT));
 
-        itemImage = GetImage((int)IMAGE.ItemImage);
-        highlightImage = GetImage((int)IMAGE.HighlightImage);
-        itemCountText = GetText((int)TEXT.ItemCountText);
-        itemGradeText = GetText((int)TEXT.ItemGradeText);
+        itemImage = GetImage((int)IMAGE.Item_Image);
+        highlightImage = GetImage((int)IMAGE.Highlight_Image);
+        itemCountText = GetText((int)TEXT.Item_Count_Text);
+        itemGradeText = GetText((int)TEXT.Item_Grade_Text);
         itemCount = 0;
         EnableHighlight(false);
     }

@@ -355,13 +355,13 @@ public class PlayerStatusData
         }
     }
 
-    public float EquipAttackPower { get { return equipAttackPower; } set { equipAttackPower = value; UpdateStatus(); } }
-    public float EquipDefensePower { get { return equipDefensePower; } set { equipDefensePower = value; UpdateStatus(); } }
-    public float EquipMaxHP { get { return equipMaxHP; } set { equipMaxHP = value; UpdateStatus(); } }
-    public float EquipMaxSP { get { return equipMaxSP; } set { equipMaxSP = value; UpdateStatus(); } }
-    public float EquipCriticalChance { get { return equipCriticalChance; } set { equipCriticalChance = value; UpdateStatus(); } }
-    public float EquipCriticalDamage { get { return equipCriticalDamage; } set { equipCriticalDamage = value; UpdateStatus(); } }
-    public float EquipAttackSpeed { get { return equipAttackSpeed; } set { equipAttackSpeed = value; UpdateStatus(); } }
-    public float EquipMoveSpeed { get { return equipMoveSpeed; } set { equipMoveSpeed = value; UpdateStatus(); } }
+    [JsonIgnore] public float EquipAttackPower { get { return equipAttackPower; } set { equipAttackPower = value; UpdateStatus(); } }
+    [JsonIgnore] public float EquipDefensePower { get { return equipDefensePower; } set { equipDefensePower = value; UpdateStatus(); } }
+    [JsonIgnore] public float EquipMaxHP { get { return equipMaxHP; } set { equipMaxHP = value; UpdateStatus(); } }
+    [JsonIgnore] public float EquipMaxSP { get { return equipMaxSP; } set { equipMaxSP = value; UpdateStatus(); } }
+    [JsonIgnore] public float EquipCriticalChance { get { return equipCriticalChance; } set { equipCriticalChance = value; UpdateStatus(); } }
+    [JsonIgnore] public float EquipCriticalDamage { get { return equipCriticalDamage; } set { equipCriticalDamage = value; UpdateStatus(); } }
+    [JsonIgnore] public float EquipAttackSpeed { get { return equipAttackSpeed; } set { equipAttackSpeed = value; UpdateStatus(); } }
+    [JsonIgnore] public float EquipMoveSpeed { get { return equipMoveSpeed; } set { equipMoveSpeed = value; UpdateStatus(); } }
     #endregion
 }

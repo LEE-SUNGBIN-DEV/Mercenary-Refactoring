@@ -1,66 +1,51 @@
-#define EDITOR_TEST
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerCharacter : BaseActor, ICompetable, IStunable
+public class PlayerCharacter : BaseActor, ICompetable
 {
     public event UnityAction<PlayerCharacter> OnPlayerSpawn;
     public event UnityAction<PlayerCharacter> OnPlayerDie;
-
-    [Header("Player Character")]
-    [SerializeField] private CharacterData characterData;
+    public event UnityAction<PlayerCharacter> OnPlayerHit;
 
     private PlayerCamera playerCamera;
     private StatusEffectController<PlayerCharacter> statusEffectController;
 
+    [Header("Character Data")]
+    [SerializeField] private CharacterData characterData;
+
     [Header("Player Weapon")]
-    private PlayerHalberd halberd;
-    private PlayerSwordShield swordShield;
-    private PlayerWeapon currentWeapon;
-    private Dictionary<WEAPON_TYPE, PlayerWeapon> weaponDictionary;
+    [SerializeField] private PlayerWeaponController weaponController;
+
+    [SerializeField] private PlayerInteractionController interactionController;
 
     protected override void Awake()
     {
         base.Awake();
 
-        // Data
-#if EDITOR_TEST
-#else
-        characterData = Managers.DataManager.SelectCharacterData;
-        Managers.DataManager.SavePlayerData();
-#endif
-        Status.OnCharacterStatusChanged -= ApplyAttackSpeed;
-        Status.OnCharacterStatusChanged += ApplyAttackSpeed;
+        characterData = Managers.DataManager.CurrentCharacterData;
 
-        Status.OnCharacterStatusChanged -= OnDie;
+        OnPlayerHit += interactionController.DisableInteraction;
+        OnPlayerDie += interactionController.DisableInteraction;
+
+        Status.OnCharacterStatusChanged += SetAttackSpeed;
         Status.OnCharacterStatusChanged += OnDie;
 
-        ApplyAttackSpeed(Status);
+        SetAttackSpeed(Status);
+
+        // Initialize InteractionController
+        interactionController = new PlayerInteractionController();
+        interactionController.Initialize();
 
         // Initialize Weapon
-        if (TryGetComponent<PlayerHalberd>(out halberd))
-            halberd.InitializeWeapon(this);
-
-        if (TryGetComponent<PlayerSwordShield>(out swordShield))
-            swordShield.InitializeWeapon(this);
-
-        weaponDictionary = new Dictionary<WEAPON_TYPE, PlayerWeapon>()
-        {
-            { WEAPON_TYPE.HALBERD, halberd },
-            { WEAPON_TYPE.SWORD_SHIELD, swordShield }
-        };
-
-        currentWeapon = weaponDictionary[WEAPON_TYPE.HALBERD];
+        if (TryGetComponent<PlayerWeaponController>(out weaponController))
+            weaponController.Initialize(this);
 
         // Initialize State
-        InitializeCharacterState();
-        if(TryEquipWeapon(currentWeapon.WeaponType))
-        {
-            state.SetState(currentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
-        }
+        AddDefaultState();
+        if(TryEquipWeapon(CurrentWeapon.WeaponType))
+            state.SetState(CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
     }
     
     private void OnEnable()
@@ -80,14 +65,26 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
         moveController?.Update();
     }
 
-    public void InitializeCharacterState()
+    private void OnDestroy()
     {
-        // Common State
+        OnPlayerHit -= interactionController.DisableInteraction;
+        OnPlayerDie -= interactionController.DisableInteraction;
+
+        Status.OnCharacterStatusChanged -= SetAttackSpeed;
+        Status.OnCharacterStatusChanged -= OnDie;
+    }
+
+    public void AddDefaultState()
+    {
         state.StateDictionary.Add(ACTION_STATE.COMMON_UPPER_EMPTY, new CommonStateUpperEmpty(this));
 
         state.StateDictionary.Add(ACTION_STATE.PLAYER_SLIDE, new PlayerStateSlide(this));
         state.StateDictionary.Add(ACTION_STATE.PLAYER_FALL, new PlayerStateFall(this));
         state.StateDictionary.Add(ACTION_STATE.PLAYER_LANDING, new PlayerStateLanding(this));
+
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESONANCE_IN, new PlayerStateResonanceIn(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESONANCE_LOOP, new PlayerStateResonanceLoop(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESONANCE_OUT, new PlayerStateResonanceOut(this));
 
         state.StateDictionary.Add(ACTION_STATE.PLAYER_ROLL, new PlayerStateRoll(this));
         state.StateDictionary.Add(ACTION_STATE.PLAYER_HIT_LIGHT, new PlayerStateLightHit(this));
@@ -109,47 +106,85 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
         gameObject.layer = Constants.LAYER_PLAYER;
         isInvincible = false;
         IsDie = false;
-        state?.SetState(currentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
+        state?.SetState(CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
     }
 
-    public bool TryEquipWeapon(WEAPON_TYPE weaponType)
+    public void StartInteraction()
     {
-        bool isSucess = false;
 
-        switch (weaponType)
+    }
+
+    public void EndInteraction()
+    {
+
+    }
+
+    public bool TryEquipWeapon(WEAPON_TYPE targetWeapon)
+    {
+        switch (targetWeapon)
         {
             case WEAPON_TYPE.HALBERD:
                 if (state.SetSubState(ACTION_STATE.PLAYER_HALBERD_EQUIP, STATE_SWITCH_BY.WEIGHT))
                 {
-                    swordShield.UnequipWeapon();
-                    halberd.EquipWeapon();
-                    isSucess = true;
+                    weaponController.SwitchWeapon(targetWeapon);
+                    return true;
                 }
                 break;
 
             case WEAPON_TYPE.SWORD_SHIELD:
                 if (state.SetSubState(ACTION_STATE.PLAYER_SWORD_SHIELD_EQUIP, STATE_SWITCH_BY.WEIGHT))
                 {
-                    halberd.UnequipWeapon();
-                    swordShield.EquipWeapon();
-                    isSucess = true;
+                    weaponController.SwitchWeapon(targetWeapon);
+                    return true;
                 }
                 break;
-        }
-
-        if (isSucess)
-        {
-            currentWeapon = weaponDictionary[weaponType];
-            return true;
         }
         return false;
     }
 
-    public virtual void OnHit() { state?.SetState(ACTION_STATE.PLAYER_HIT_LIGHT, STATE_SWITCH_BY.WEIGHT); }
-    public virtual void OnLightHit() { state?.SetState(ACTION_STATE.PLAYER_HIT_LIGHT, STATE_SWITCH_BY.WEIGHT); }
-    public virtual void OnHeavyHit() { state?.SetState(ACTION_STATE.PLAYER_HIT_HEAVY, STATE_SWITCH_BY.WEIGHT); }
+    public DamageInformation TakeDamage(BaseEnemy attacker, float damageRatio)
+    {
+        float damage = (attacker.Status.AttackPower - Status.DefensivePower * 0.5f) * 0.5f;
 
-    public virtual void OnStun(float duration) { state?.SetState(ACTION_STATE.PLAYER_STUN, STATE_SWITCH_BY.WEIGHT, duration); }
+        if (damage < 0)
+            damage = 0;
+
+        damage += ((attacker.Status.AttackPower * 0.125f - Status.AttackPower * 0.0625f) + 1f);
+        damage *= damageRatio;
+
+        Status.CurrentHP -= damage;
+
+        return new DamageInformation(damage, false);
+    }
+
+    public void TakeHit(BaseEnemy attacker, float damageRatio, HIT_TYPE combatType, float duration = 0f)
+    {
+        if (isInvincible)
+            return;
+
+        DamageInformation damageInforamtion = TakeDamage(attacker, damageRatio);
+        OnPlayerHit?.Invoke(this);
+
+        if (Status.HitLevel > (int)combatType)
+            return;
+
+        switch(combatType)
+        {
+            case HIT_TYPE.LIGHT:
+                state?.SetState(ACTION_STATE.PLAYER_HIT_LIGHT, STATE_SWITCH_BY.WEIGHT);
+                break;
+
+            case HIT_TYPE.HEAVY:
+                state?.SetState(ACTION_STATE.PLAYER_HIT_HEAVY, STATE_SWITCH_BY.WEIGHT);
+                break;
+
+            case HIT_TYPE.STUN:
+                state?.SetState(ACTION_STATE.PLAYER_STUN, STATE_SWITCH_BY.WEIGHT, duration);
+                break;
+        }
+
+        return ;
+    }
 
     public virtual void OnCompete() { state?.SetState(ACTION_STATE.PLAYER_COMPETE, STATE_SWITCH_BY.WEIGHT); }
     public void OnDie()
@@ -174,48 +209,7 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
         }
     }
 
-    public float DamageProcess(BaseEnemy enemy, float ratio, Vector3 hitPoint)
-    {
-        // Basic Damage Process
-        float damage = (characterData.StatusData.AttackPower - enemy.Status.DefensivePower * 0.5f) * 0.5f;
-        if (damage < 0) damage = 0;
-
-        damage += ((characterData.StatusData.AttackPower / 8f - characterData.StatusData.AttackPower / 16f) + 1f);
-
-        // Critical Process
-        bool isCritical;
-        float randomNumber = Random.Range(0.0f, 100.0f);
-        if (randomNumber <= characterData.StatusData.CriticalChance)
-        {
-            isCritical = true;
-            damage *= (1 + characterData.StatusData.CriticalDamage * 0.01f);
-            //Managers.AudioManager.PlaySFX("Player Critical Attack");
-        }
-        else
-        {
-            isCritical = false;
-            //Managers.AudioManager.PlaySFX("Player Attack");
-        }
-
-        // Damage Ratio Process
-        damage *= ratio;
-
-        // Final Damage Process
-        float damageRange = Random.Range(0.9f, 1.1f);
-        damage *= damageRange;
-
-        enemy.Status.CurrentHP -= damage;
-
-        if(Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.Prefab_Floating_Damage_Text).TryGetComponent(out FloatingDamageText floatingDamageText))
-            floatingDamageText.SetDamageText(isCritical, damage, hitPoint);
-
-        if (enemy.IsDie)
-            Managers.GameEventManager.EventQueue.Enqueue(new GameEventMessage(GAME_EVENT_TYPE.OnKillEnemy, enemy));
-
-        return damage;
-    }
-
-    public void ApplyAttackSpeed(PlayerStatusData statusData)
+    public void SetAttackSpeed(PlayerStatusData statusData)
     {
         animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_ATTACK_SPEED, statusData.AttackSpeed);
     }
@@ -227,19 +221,16 @@ public class PlayerCharacter : BaseActor, ICompetable, IStunable
 
 
     #region Property
+    public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
+    public StatusEffectController<PlayerCharacter> StatusEffectController { get { return statusEffectController; } }
+    public PlayerWeaponController WeaponController { get { return weaponController; } }
+    public PlayerWeapon CurrentWeapon { get { return weaponController.CurrentWeapon; } }
+    public PlayerInteractionController InteractionController { get { return interactionController; } }
+
     public CharacterData CharacterData { get { return characterData; } }
     public PlayerStatusData Status { get { return characterData?.StatusData; } }
     public PlayerInventoryData InventoryData { get { return characterData?.InventoryData; } }
     public PlayerEquipmentSlotData EquipmentSlotData { get { return characterData?.EquipmentSlotData; } }
     public PlayerQuestData QuestData { get { return characterData?.QuestData; } }
-
-    public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
-
-    public StatusEffectController<PlayerCharacter> StatusEffectController { get { return statusEffectController; } }
-
-    public PlayerHalberd Halberd { get { return halberd; } }
-    public PlayerSwordShield SwordShield { get { return swordShield; } }
-    public PlayerWeapon CurrentWeapon { get { return currentWeapon; } }
-    public Dictionary<WEAPON_TYPE, PlayerWeapon> WeaponDictionary { get { return weaponDictionary; } }
     #endregion
 }

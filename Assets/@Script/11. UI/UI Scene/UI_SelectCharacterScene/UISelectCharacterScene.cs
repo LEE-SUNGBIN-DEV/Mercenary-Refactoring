@@ -4,27 +4,41 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public class CharacterSlot
+{
+    public int slotIndex;
+    public Vector3 characterPoint;
+    public TextMeshProUGUI slotText;
+    public Button slotButton;
+
+    public CharacterSlot()
+    {
+        slotText = null;
+        slotButton = null;
+    }
+}
+
 public class UISelectCharacterScene : UIBaseScene
 {
     public enum BUTTON
     {
         // !! Slot button must come before the any other button. (For Initializing)
-        SlotButton1,
-        SlotButton2,
-        SlotButton3,
+        Slot_Button_01,
+        Slot_Button_02,
+        Slot_Button_03,
 
         // Buttons
-        StartGameButton,
-        CharacterRemoveButton,
-        QuitButton,
-        OptionButton
+        Prefab_Start_Button,
+        Prefab_Quit_Button,
+        Prefab_Option_Button,
+        Character_Remove_Button
     }
     public enum TEXT
     {
         // !! Slot text must come before the any other text. (For Initializing)
-        SlotText1,
-        SlotText2,
-        SlotText3,
+        Slot_Text_01,
+        Slot_Text_02,
+        Slot_Text_03,
 
         // Other
     }
@@ -32,93 +46,69 @@ public class UISelectCharacterScene : UIBaseScene
     private CharacterData[] characterDatas;
     private CharacterSlot[] characterSlots;
     private CharacterSlot selectSlot;
-    private CreateCharacterPanel createCharacterPanel;
 
-    public void Initialize()
+    private Button startButton;
+    private Button characterRemoveButton;
+    private Button quitButton;
+    private Button optionButton;
+
+    public override void Initialize()
     {
-        if (isInitialized == true)
+        base.Initialize();
+
+        BindButton(typeof(BUTTON));
+        BindText(typeof(TEXT));
+
+        startButton = GetButton((int)BUTTON.Prefab_Start_Button);
+        characterRemoveButton = GetButton((int)BUTTON.Character_Remove_Button);
+        quitButton = GetButton((int)BUTTON.Prefab_Quit_Button);
+        optionButton = GetButton((int)BUTTON.Prefab_Option_Button);
+
+        startButton.onClick.AddListener(() => { OnClickStartGameButton(selectSlot.slotIndex); });
+        characterRemoveButton.onClick.AddListener(() => { OnClickRemoveCharacter(selectSlot.slotIndex); });
+        quitButton.onClick.AddListener(OnClickQuitGameButton);
+        optionButton.onClick.AddListener(OnClickOptionButton);
+
+        characterSlots = new CharacterSlot[Constants.MAX_CHARACTER_SLOT_NUMBER];
+        characterDatas = Managers.DataManager.PlayerData.CharacterDatas;
+        selectSlot = null;
+
+        for (int i = 0; i < characterSlots.Length; ++i)
         {
-            Debug.Log($"{this}: Already Initialized.");
-            return;
-        }
-        else
-        {
-            isInitialized = true;
-
-            BindButton(typeof(BUTTON));
-            BindText(typeof(TEXT));
-
-            GetButton((int)BUTTON.StartGameButton).onClick.AddListener(() => { OnClickStartGameButton(selectSlot.slotIndex); });
-            GetButton((int)BUTTON.CharacterRemoveButton).onClick.AddListener(() => { OnClickRemoveCharacter(selectSlot.slotIndex); });
-            GetButton((int)BUTTON.QuitButton).onClick.AddListener(OnClickQuitGameButton);
-            GetButton((int)BUTTON.OptionButton).onClick.AddListener(OnClickOptionButton);
-
-            characterSlots = new CharacterSlot[Constants.MAX_CHARACTER_SLOT_NUMBER];
-            characterDatas = Managers.DataManager.PlayerData.CharacterDatas;
-            selectSlot = null;
-
-            for (int i = 0; i < characterSlots.Length; ++i)
+            characterSlots[i] = new CharacterSlot
             {
-                characterSlots[i] = new CharacterSlot
-                {
-                    slotIndex = i,
-                    selectionCharacter = null,
-                    characterPoint = Constants.SELECTION_CHARACTER_POINT[i],
-                    slotButton = GetButton(i),
-                    slotText = GetText(i)
-                };
-            }
-
-            // Sub Panel Initialize
-            createCharacterPanel = GetComponentInChildren<CreateCharacterPanel>(true);
-            createCharacterPanel.Initialize();
-            createCharacterPanel.SetSlot(selectSlot);
-            createCharacterPanel.OnOpenPanel += () =>
-            {
-                for (int i = 0; i < characterSlots.Length; ++i)
-                {
-                    characterSlots[i].slotButton.interactable = false;
-                }
+                slotIndex = i,
+                characterPoint = Constants.SELECTION_CHARACTER_POINT[i],
+                slotButton = GetButton(i),
+                slotText = GetText(i)
             };
-            createCharacterPanel.OnClosePanel += () =>
-            {
-                Refresh();
-            };
-
-            Refresh();
         }
+
+        Refresh();
     }
 
     public void Refresh()
     {
         selectSlot = null;
 
-        GetButton((int)BUTTON.StartGameButton).interactable = false;
-        GetButton((int)BUTTON.CharacterRemoveButton).interactable = false;
+        startButton.interactable = false;
+        characterRemoveButton.interactable = false;
 
         for (int i=0; i<characterSlots.Length; ++i)
         {
             characterSlots[i].slotButton.onClick.RemoveAllListeners();
 
             int index = i;
-            // Exist CharacterData
+            // Exist Data
             if (characterDatas[i]?.StatusData != null)
             {
-                if (characterSlots[i].selectionCharacter == null)
-                {
-                    CreateCharacterObject(i, characterSlots[i].characterPoint);
-                }
                 characterSlots[i].slotText.text = "Lv. " + characterDatas[i].StatusData.Level;
                 characterSlots[i].slotButton.onClick.AddListener(() => { OnClickCharacterSlot(index); });
             }
 
-            // Don't Exist CharacterData
+            // Don't Exist Data
             else
             {
-                if (characterSlots[i].selectionCharacter != null)
-                {
-                    Destroy(characterSlots[i].selectionCharacter.gameObject);
-                }
                 characterSlots[i].slotText.text = "Create";
                 characterSlots[i].slotButton.onClick.AddListener(() => { OnClickCreateCharacter(index); });
             }
@@ -127,63 +117,52 @@ public class UISelectCharacterScene : UIBaseScene
         }
     }
 
-    public void CreateCharacterObject(int slotIndex, Vector3 position)
-    {
-        characterSlots[slotIndex].selectionCharacter = Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_Player_Character_Slot).GetComponent<SelectionCharacter>();
-        characterSlots[slotIndex].selectionCharacter.transform.position = position;
-    }
-
-    public void ReleaseSelect(int slotIndex)
-    {
-        if (selectSlot != null && selectSlot != characterSlots[slotIndex])
-        {
-            selectSlot.selectionCharacter?.ReleaseCharacter();
-        }
-    }
-
     #region Event Function
     // Selection Scene Panel
     public void OnClickCharacterSlot(int slotIndex)
     {
-        createCharacterPanel.ClosePanel();
-        ReleaseSelect(slotIndex);
-
         selectSlot = characterSlots[slotIndex];
-        selectSlot.selectionCharacter.SelectCharacter();
 
-        GetButton((int)BUTTON.StartGameButton).interactable = true;
-        GetButton((int)BUTTON.CharacterRemoveButton).interactable = true;
+        GetButton((int)BUTTON.Prefab_Start_Button).interactable = true;
+        GetButton((int)BUTTON.Character_Remove_Button).interactable = true;
     }
+
     public void OnClickCreateCharacter(int slotIndex)
     {
-        ReleaseSelect(slotIndex);
-
         selectSlot = characterSlots[slotIndex];
-        createCharacterPanel.SetSlot(selectSlot);
-        createCharacterPanel.OpenPanel();
 
-        GetButton((int)BUTTON.StartGameButton).interactable = false;
-        GetButton((int)BUTTON.CharacterRemoveButton).interactable = false;
+        Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex] = new CharacterData();
+        Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex].Initialize();
+        Managers.DataManager.SavePlayerData();
+
+        startButton.interactable = false;
+        characterRemoveButton.interactable = false;
+
+        Refresh();
     }
+
     public void OnClickRemoveCharacter(int slotIndex)
     {
-        Destroy(characterSlots[slotIndex].selectionCharacter.gameObject);
         characterDatas[slotIndex] = null;
         Managers.DataManager.SavePlayerData();
 
         Refresh();
     }
+
     public void OnClickStartGameButton(int slotIndex)
     {
-        GetButton((int)BUTTON.StartGameButton).interactable = false;
-        GetButton((int)BUTTON.CharacterRemoveButton).interactable = false;
+        startButton.interactable = false;
+        characterRemoveButton.interactable = false;
+
         for (int i = 0; i < characterSlots.Length; ++i)
         {
             characterSlots[i].slotButton.interactable = false;
         }
+
         Managers.DataManager.SetCurrentCharacter(slotIndex);
-        Managers.SceneManagerCS.LoadSceneAsync(SCENE_LIST.Forestia);
+        Managers.SceneManagerCS.LoadSceneAsync(Managers.DataManager.CurrentCharacterData.LocationData.LastScene);
     }
+
     public void OnClickQuitGameButton()
     {
         Managers.GameManager.SaveAndQuit();

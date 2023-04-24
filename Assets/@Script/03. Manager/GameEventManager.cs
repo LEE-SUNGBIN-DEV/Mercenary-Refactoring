@@ -5,9 +5,14 @@ using UnityEngine.Events;
 
 public enum GAME_EVENT_TYPE
 {
+    // Player
     OnPlayerDie,
+    OnPlayerKillEnemy,
+    OnPlayerAttackEnemy,
+
+    // Enemy
     OnEnemyDie,
-    OnKillEnemy
+       
 }
 
 public struct GameEventMessage
@@ -25,14 +30,14 @@ public struct GameEventMessage
 public class GameEventManager
 {
     public event UnityAction<PlayerCharacter> OnPlayerDie;
+    public event UnityAction<BaseEnemy> OnPlayerKillEnemy;
     public event UnityAction<BaseEnemy> OnEnemyDie;
-    public event UnityAction<BaseEnemy> OnKillEnemy;
 
     private Queue<GameEventMessage> eventQueue;
 
     public void Initialize()
     {
-
+        eventQueue = new Queue<GameEventMessage>();
     }
 
     public void Update()
@@ -51,11 +56,13 @@ public class GameEventManager
             case GAME_EVENT_TYPE.OnPlayerDie:
                 OnPlayerDie?.Invoke(eventMessage.sender as PlayerCharacter);
                 break;
+
+            case GAME_EVENT_TYPE.OnPlayerKillEnemy:
+                OnPlayerKillEnemy?.Invoke(eventMessage.sender as BaseEnemy);
+                break;
+
             case GAME_EVENT_TYPE.OnEnemyDie:
                 OnEnemyDie?.Invoke(eventMessage.sender as BaseEnemy);
-                break;
-            case GAME_EVENT_TYPE.OnKillEnemy:
-                OnKillEnemy?.Invoke(eventMessage.sender as BaseEnemy);
                 break;
         }
     }

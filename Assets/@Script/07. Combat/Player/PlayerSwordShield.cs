@@ -13,42 +13,42 @@ public class PlayerSwordShield : PlayerWeapon
         {
             this.character = character;
             weaponType = WEAPON_TYPE.SWORD_SHIELD;
-            swordController = Functions.FindChild<PlayerCombatController>(gameObject, Constants.WEAPON_CONTROLLER_NAME_SWORD, true);
-            shieldController = Functions.FindChild<PlayerCombatController>(gameObject, Constants.WEAPON_CONTROLLER_NAME_SHIELD, true);
+            swordController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_SWORD, true);
+            shieldController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_SHIELD, true);
             swordController.Initialize(character);
             shieldController.Initialize(character);
 
-            AddStateToCharacter(character.State);
-            AddCombatInformation();
+            AddWeaponState(character.State);
+            AddCombatTable();
             AddCommonStateInforamtion();
         }
     }
 
-    public override void AddCombatInformation()
+    public override void AddCombatTable()
     {
-        combatInformationDictionary = new Dictionary<COMBAT_ACTION_TYPE, CombatActionInfomation>()
+        weaponCombatTable = new Dictionary<COMBAT_ACTION_TYPE, CombatControllerInfomation>()
         {
             // Light Attack
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_01, new CombatActionInfomation(COMBAT_TYPE.ATTACK_LIGHT, 1f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_02, new CombatActionInfomation(COMBAT_TYPE.ATTACK_LIGHT, 1.03f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_03, new CombatActionInfomation(COMBAT_TYPE.ATTACK_LIGHT, 1.06f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_04, new CombatActionInfomation(COMBAT_TYPE.ATTACK_LIGHT, 1.09f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_01, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_02, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.03f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_03, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.06f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_04, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.09f) },
 
             // Heavy Attack
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_01, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_02, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 1.8f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_03, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 2.16f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_1, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_2, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 2.6f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_01, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_02, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.8f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_03, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.16f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_1, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_2, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.6f) },
 
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_PARRYING_ATTACK, new CombatActionInfomation(COMBAT_TYPE.ATTACK_HEAVY, 1.5f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_PARRYING_ATTACK, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
 
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_IN, new CombatActionInfomation(COMBAT_TYPE.PARRYABLE, 0f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_LOOP, new CombatActionInfomation(COMBAT_TYPE.GUARDABLE, 0f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_IN, new CombatControllerInfomation(HIT_TYPE.NONE, GUARD_TYPE.PARRYABLE, 0f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_LOOP, new CombatControllerInfomation(HIT_TYPE.NONE, GUARD_TYPE.GUARDABLE, 0f) },
         };
     }
 
-    public override void AddStateToCharacter(StateController state)
+    public override void AddWeaponState(StateController state)
     {
         state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_EQUIP, new SwordShieldEquip(character));
 
@@ -100,33 +100,22 @@ public class PlayerSwordShield : PlayerWeapon
     #region Called by Animation Event
     public void SetAndEnableSword(COMBAT_ACTION_TYPE combatActionType)
     {
-        swordController.SetCombatInformation(combatInformationDictionary[combatActionType]);
+        swordController.SetCombatInformation(weaponCombatTable[combatActionType]);
         swordController.CombatCollider.enabled = true;
-
-        GameObject effectObject = null;
-        if (effectObject != null)
-        {
-            effectObject.transform.SetPositionAndRotation(character.transform.position + combatInformationDictionary[combatActionType].effectLocation.position,
-                Quaternion.Euler(character.transform.rotation.eulerAngles + combatInformationDictionary[combatActionType].effectLocation.rotation));
-        }
     }
+
     public void DisableSword()
     {
         swordController.CombatCollider.enabled = false;
         swordController.HitDictionary.Clear();
     }
+
     public void SetAndEnableShield(COMBAT_ACTION_TYPE combatActionType)
     {
-        shieldController.SetCombatInformation(combatInformationDictionary[combatActionType]);
+        shieldController.SetCombatInformation(weaponCombatTable[combatActionType]);
         shieldController.CombatCollider.enabled = true;
-
-        GameObject effectObject = null;
-        if (effectObject != null)
-        {
-            effectObject.transform.SetPositionAndRotation(character.transform.position + combatInformationDictionary[combatActionType].effectLocation.position,
-                Quaternion.Euler(character.transform.rotation.eulerAngles + combatInformationDictionary[combatActionType].effectLocation.rotation));
-        }
     }
+
     public void DisableShield()
     {
         shieldController.CombatCollider.enabled = false;

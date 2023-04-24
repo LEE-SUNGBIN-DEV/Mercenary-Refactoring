@@ -17,8 +17,13 @@ public static partial class Constants
     public static readonly float TIME_NAMED_MONSTER_DISAPEAR = 5f;
     public static readonly float TIME_BOSS_MONSTER_DISAPEAR = 10f;
 
+    #region UI
     public static readonly float TIME_CLIENT_NOTICE = 1.6f;
     public static readonly float TIME_GLOBAL_NOTICE = 2.0f;
+
+    public const float TIME_UI_PANEL_DEFAULT_FADE = 0.3f;
+    public const float TIME_UI_SCENE_DEFAULT_FADE = 1f;
+    #endregion
 
     public static readonly float TIME_CHARACTER_STAND_UP = 2f;
 }

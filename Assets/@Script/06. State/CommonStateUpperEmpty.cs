@@ -21,7 +21,7 @@ public class CommonStateUpperEmpty : IActionState
     public void Enter()
     {
         layerWeight = 1f;
-        actor.Animator.Play(animationNameHash, (int)ANIMATOR_LAYER.UPPER);
+        //actor.Animator.Play(animationNameHash, (int)ANIMATOR_LAYER.UPPER);
     }
 
     public void Update()
@@ -32,7 +32,7 @@ public class CommonStateUpperEmpty : IActionState
             if (layerWeight < 0f)
                 layerWeight = 0f;
 
-            actor.Animator.SetLayerWeight((int)ANIMATOR_LAYER.UPPER, 0f);
+            actor.Animator.SetLayerWeight((int)ANIMATOR_LAYER.UPPER, layerWeight);
         }
     }
 

@@ -14,7 +14,7 @@ public class HalberdLightAttack01 : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_LIGHT_01;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Light_Attack_01"];
+        animationClipInformation = character.AnimationClipTable["Halberd_Light_Attack_01"];
         mouseLeftDown = false;
         mouseRightDown = false;
     }

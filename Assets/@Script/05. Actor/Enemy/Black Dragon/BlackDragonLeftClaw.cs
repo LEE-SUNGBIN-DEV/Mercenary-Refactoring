@@ -18,7 +18,7 @@ public class BlackDragonLeftClaw : EnemySkill
         leftClaw = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Left Claw Controller", true);
         leftClaw.SetMeleeAttack(enemy);
 
-        leftClawAnimationInfo = enemy.AnimationClipDictionary["Skill_Left_Claw"];
+        leftClawAnimationInfo = enemy.AnimationClipTable["Skill_Left_Claw"];
     }
 
     public override IEnumerator StartSkill()
@@ -26,7 +26,7 @@ public class BlackDragonLeftClaw : EnemySkill
         enemy.Animator.Play(leftClawAnimationInfo.nameHash);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(leftClawAnimationInfo, 32));
-        leftClaw.SetCombatController(COMBAT_TYPE.ATTACK_LIGHT, 1f);
+        leftClaw.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         leftClaw.OnEnableCollider();
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(leftClawAnimationInfo, 40));

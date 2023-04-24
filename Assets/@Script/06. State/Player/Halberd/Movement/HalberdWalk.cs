@@ -13,7 +13,7 @@ public class HalberdWalk : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_WALK;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Walk"];
+        animationClipInformation = character.AnimationClipTable["Halberd_Walk"];
     }
 
     public void Enter()

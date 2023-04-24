@@ -12,7 +12,7 @@ public class HalberdGuardBreak : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_BREAK;
-        animationClipInformation = character.AnimationClipDictionary["Halberd_Guard_Break"];
+        animationClipInformation = character.AnimationClipTable["Halberd_Guard_Break"];
     }
 
     public void Enter()

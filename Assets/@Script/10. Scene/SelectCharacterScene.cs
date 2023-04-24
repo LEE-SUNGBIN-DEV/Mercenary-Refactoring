@@ -17,6 +17,7 @@ public class SelectCharacterScene : BaseScene
         selectCharacterSceneUI.transform.SetParent(Managers.UIManager.RootObject.transform);
         selectCharacterSceneUI.transform.SetAsFirstSibling();
         selectCharacterSceneUI.Initialize();
+
         if (selectCharacterSceneUI.gameObject.activeSelf == false)
         {
             selectCharacterSceneUI.gameObject.SetActive(true);

@@ -13,7 +13,7 @@ public class SwordShieldHeavyAttack04 : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_HEAVY_04;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Heavy_Attack_04"];
+        animationClipInformation = character.AnimationClipTable["Sword_Shield_Heavy_Attack_04"];
         mouseLeftDown = false;
     }
 

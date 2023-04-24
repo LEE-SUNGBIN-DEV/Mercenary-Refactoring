@@ -1,0 +1,20 @@
+[
+  {
+    "scene": 3,
+    "sceneType": 4,
+    "sceneName": "Fog Canyon",
+    "weatherType": 1
+  },
+  {
+    "scene": 4,
+    "sceneType": 4,
+    "sceneName": "Forestia",
+    "weatherType": 0
+  },
+  {
+    "scene": 5,
+    "sceneType": 4,
+    "sceneName": "Cave",
+    "weatherType": 0
+  }
+]

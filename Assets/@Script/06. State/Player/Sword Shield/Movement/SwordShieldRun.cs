@@ -13,7 +13,7 @@ public class SwordShieldRun : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_RUN;
-        animationClipInformation = character.AnimationClipDictionary["Sword_Shield_Run"];
+        animationClipInformation = character.AnimationClipTable["Sword_Shield_Run"];
     }
 
     public void Enter()

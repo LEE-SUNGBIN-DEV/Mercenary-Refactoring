@@ -13,7 +13,7 @@ public class PlayerStateStun : IActionState, IDurationState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_STUN;
-        animationClipInformation = character.AnimationClipDictionary["Player_Stun"];
+        animationClipInformation = character.AnimationClipTable["Player_Stun"];
     }
 
     public void Enter()

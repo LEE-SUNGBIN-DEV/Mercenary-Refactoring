@@ -19,7 +19,7 @@ public class SmallStoneGolemRollAttack : EnemySkill
         rollAttack = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Roll_Attack_Controller", true);
         rollAttack.SetMeleeAttack(enemy);
 
-        animationInfo = enemy.AnimationClipDictionary["Skill_Roll_Attack"];
+        animationInfo = enemy.AnimationClipTable["Skill_Roll_Attack"];
     }
 
     public override IEnumerator StartSkill()
@@ -29,7 +29,7 @@ public class SmallStoneGolemRollAttack : EnemySkill
         attackDirection.y = 0f;
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationInfo, 13));
-        rollAttack.SetCombatController(COMBAT_TYPE.ATTACK_HEAVY, 1.8f);
+        rollAttack.SetCombatController(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.8f);
         rollAttack.OnEnableCollider();
 
         while(!enemy.Animator.IsAnimationFrameUpTo(animationInfo, 40))

@@ -6,7 +6,8 @@ using UnityEngine;
 public abstract class BaseCombatController : MonoBehaviour
 {
     [Header("Base Combat Controller")]
-    [SerializeField] protected COMBAT_TYPE combatType;
+    [SerializeField] protected HIT_TYPE hitType;
+    [SerializeField] protected GUARD_TYPE guardType;
     [SerializeField] protected float damageRatio;
     [SerializeField] protected float crowdControlDuration;
     [SerializeField] protected Collider combatCollider;
@@ -26,21 +27,24 @@ public abstract class BaseCombatController : MonoBehaviour
             combatCollider.enabled = false;
     }
 
-    public void SetCombatController(COMBAT_TYPE combatType, float damageRatio, float crowdControlDuration = 0f)
+    public void SetCombatController(HIT_TYPE hitType = HIT_TYPE.NONE, GUARD_TYPE guardType = GUARD_TYPE.NONE, float damageRatio = 1f, float crowdControlDuration = 0f)
     {
-        this.combatType = combatType;
+        this.hitType = hitType;
+        this.guardType = guardType;
         this.damageRatio = damageRatio;
         this.crowdControlDuration = crowdControlDuration;
     }
 
-    public void SetCombatInformation(CombatActionInfomation combatInformation)
+    public void SetCombatInformation(CombatControllerInfomation combatInformation)
     {
-        this.combatType = combatInformation.combatType;
+        this.hitType = combatInformation.hitType;
+        this.guardType = combatInformation.guardType;
         this.damageRatio = combatInformation.damageRatio;
         this.crowdControlDuration = combatInformation.crowdControlDuration;
     }
 
-    public COMBAT_TYPE CombatType { get { return combatType; } }
+    public HIT_TYPE HitType { get { return hitType; } }
+    public GUARD_TYPE GuardType { get { return guardType; } }
     public float DamageRatio { get { return damageRatio; } }
     public float CrowdControlDuration { get { return crowdControlDuration; } }
     public Collider CombatCollider { get { return combatCollider; } }

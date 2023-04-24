@@ -12,17 +12,17 @@ public enum MATERIAL_TYPE
     SIZE
 }
 
+[RequireComponent(typeof(Animator), typeof(CharacterController))]
 public abstract class BaseActor : MonoBehaviour
 {
     [Header("Base Actor")]
     protected Animator animator;
     protected CharacterController characterController;
     protected StateController state;
-    protected Dictionary<string, AnimationClipInformation> animationClipDictionary;
+    protected Dictionary<string, AnimationClipInformation> animationClipTable;
     [SerializeField] protected MoveController moveController;
+    [SerializeField] protected MaterialController materialController;
     [SerializeField] protected SkinnedMeshRenderer[] skinnedMeshRenderers;
-    [SerializeField] protected Material[] originalMaterials;
-    [SerializeField] protected MaterialPropertyBlock propertyBlock;
     [SerializeField] protected ObjectPooler objectPooler = new ObjectPooler();
     
     [SerializeField] protected bool isInvincible;
@@ -32,10 +32,10 @@ public abstract class BaseActor : MonoBehaviour
     {
         if(TryGetComponent(out animator))
         {
-            animationClipDictionary = new Dictionary<string, AnimationClipInformation>();
+            animationClipTable = new Dictionary<string, AnimationClipInformation>();
             for (int i = 0; i < animator.runtimeAnimatorController.animationClips.Length; ++i)
             {
-                animationClipDictionary.Add(
+                animationClipTable.Add(
                     animator.runtimeAnimatorController.animationClips[i].name,
                     new AnimationClipInformation(
                         animator.runtimeAnimatorController.animationClips[i].name,
@@ -50,36 +50,14 @@ public abstract class BaseActor : MonoBehaviour
         }
 
         skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
-        if (skinnedMeshRenderers != null && propertyBlock == null)
+        if (skinnedMeshRenderers != null)
         {
-            propertyBlock = new MaterialPropertyBlock();
-        }
-
-        originalMaterials = new Material[skinnedMeshRenderers.Length];
-        for (int i = 0; i < skinnedMeshRenderers.Length; ++i)
-        {
-            originalMaterials[i] = skinnedMeshRenderers[i].material;
+            materialController = new MaterialController();
+            materialController.Initialize(skinnedMeshRenderers);
         }
 
         state = new StateController(animator);
         objectPooler.Initialize(transform);
-    }
-
-    public void ChangeAllMaterials(MATERIAL_TYPE targetMaterial)
-    {
-        for (int i = 0; i < skinnedMeshRenderers.Length; ++i)
-        {
-            Material resultMaterial = Managers.ResourceManager.LoadResourceSync<Material>(originalMaterials[i].name.Replace(" (Instance)", "_") + targetMaterial.GetEnumName());
-            skinnedMeshRenderers[i].material = resultMaterial;
-        }
-    }
-
-    public void SetOriginalMaterials()
-    {
-        for (int i = 0; i < skinnedMeshRenderers.Length; ++i)
-        {
-            skinnedMeshRenderers[i].material = originalMaterials[i];
-        }
     }
 
     public IEnumerator CoWaitForDisapear(float time)
@@ -92,23 +70,20 @@ public abstract class BaseActor : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(CoStartDissolve());
+        StartCoroutine(CoDissolve());
     }
 
-    public IEnumerator CoStartDissolve()
+    public IEnumerator CoDissolve()
     {
-        ChangeAllMaterials(MATERIAL_TYPE.Dissolve);
+        materialController.ChangeMaterials(MATERIAL_TYPE.Dissolve);
         float dissolveAmount = 0f;
         float dissolveSpeed = 0.3f;
 
-        while(dissolveAmount <= 1f)
+        while (dissolveAmount <= 1f)
         {
             dissolveAmount += dissolveSpeed * Time.deltaTime;
-            propertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_AMOUNT, dissolveAmount);
-            for (int i = 0; i < skinnedMeshRenderers.Length; ++i)
-            {
-                skinnedMeshRenderers[i].SetPropertyBlock(propertyBlock);
-            }
+            materialController.PropertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_AMOUNT, dissolveAmount);
+            materialController.SetPropertyBlock();
             yield return null;
         }
     }
@@ -118,8 +93,7 @@ public abstract class BaseActor : MonoBehaviour
     public CharacterController CharacterController { get { return characterController; } }
     public StateController State { get { return state; } }
     public MoveController MoveController { get { return moveController; } }
-    public Dictionary<string, AnimationClipInformation> AnimationClipDictionary { get { return animationClipDictionary; } }
-    public SkinnedMeshRenderer[] MeshRenderers { get { return skinnedMeshRenderers; } }
+    public Dictionary<string, AnimationClipInformation> AnimationClipTable { get { return animationClipTable; } }
     public ObjectPooler ObjectPooler { get { return objectPooler; } }
     public bool IsInvincible { get { return isInvincible; } set { isInvincible = value; } }
     public bool IsDie { get { return isDie; } set { isDie = value; } }
