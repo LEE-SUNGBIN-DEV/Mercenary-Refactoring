@@ -22,10 +22,9 @@ public class PlayerStateFall : IActionState
 
     public void Update()
     {
-        switch (character.MoveController.GetGroundState())
+        switch (character.MoveController.GroundState)
         {
             case ACTOR_GROUND_STATE.GROUND:
-                character.Status.CurrentHP -= character.Status.MaxHP * character.MoveController.GetFallDamage();
                 character.State.SetState(ACTION_STATE.PLAYER_LANDING, STATE_SWITCH_BY.WEIGHT);
                 break;
 

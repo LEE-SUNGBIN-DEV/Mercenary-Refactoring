@@ -17,8 +17,9 @@ public class SwordShieldGuardBreak : IActionState
 
     public void Enter()
     {
-        character.IsInvincible = true;
+        character.HitState = HIT_STATE.Hittable;
         character.Animator.Play(animationClipInformation.nameHash);
+        character.SFXPlayer.PlaySFX(Constants.Audio_Shield_Guard_Break);
         character.Status.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_DEFENSE_BREAK;
     }
 
@@ -33,7 +34,6 @@ public class SwordShieldGuardBreak : IActionState
 
     public void Exit()
     {
-        character.IsInvincible = false;
     }
 
     #region Property

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlackDragonLandBreath : EnemySkill
 {
     [SerializeField] private EnemyBreath breath;
-    private AnimationClipInformation landBreathAnimationInfo;
+    private AnimationClipInformation animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {
@@ -20,22 +20,31 @@ public class BlackDragonLandBreath : EnemySkill
         enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Breath, 15);
         enemy.ObjectPooler.RegisterObject(Constants.VFX_Enemy_Flame_Area, 15);
 
-        landBreathAnimationInfo = enemy.AnimationClipTable["Skill_Land_Breath"];
+        animationClipInformation = enemy.AnimationClipTable["Skill_Land_Breath"];
     }
 
-    public override IEnumerator StartSkill()
+    public override IEnumerator CoStartSkill()
     {
-        enemy.Animator.Play(landBreathAnimationInfo.nameHash);
+        enemy.Animator.Play(animationClipInformation.nameHash);
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(landBreathAnimationInfo, 23));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 23));
         breath.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         breath.SetRayAttack(enemy, 20f, 0.15f);
         StartCoroutine(breath.RayCoroutine);
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(landBreathAnimationInfo, 72));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 72));
         StopCoroutine(breath.RayCoroutine);
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(landBreathAnimationInfo, landBreathAnimationInfo.maxFrame));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, animationClipInformation.maxFrame));
         EndSkill();
+    }
+
+    public override IEnumerator CoLookTarget()
+    {
+        while (!enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 20))
+        {
+            enemy.LookTarget();
+            yield return null;
+        }
     }
 }

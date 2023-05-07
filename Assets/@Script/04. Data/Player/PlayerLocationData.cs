@@ -15,22 +15,22 @@ public class PlayerLocationData
     [SerializeField] private float lastYCoordinate;
     [SerializeField] private float lastZCoordinate;
 
-    private Dictionary<SCENE_LIST, bool[]> resonancePointEnableDictionary;
+    private Dictionary<SCENE_LIST, bool[]> resonancePointDictionary;
 
     public void Initialize()
     {
         lastScene = SCENE_LIST.Fog_Canyon;
-        lastXCoordinate = 125.8029f;
-        lastYCoordinate = 99.99695f;
-        lastZCoordinate = 72.06502f;
+        lastXCoordinate = 125.8251f;
+        lastYCoordinate = 100.0769f;
+        lastZCoordinate = 71.98943f;
 
-        resonancePointEnableDictionary = new Dictionary<SCENE_LIST, bool[]>();
+        resonancePointDictionary = new Dictionary<SCENE_LIST, bool[]>();
         foreach (var gameSceneData in Managers.DataManager.GameSceneTable)
         {
-            resonancePointEnableDictionary.Add(gameSceneData.Value.scene, new bool[gameSceneData.Value.resonanceObjectDataList.Count]);
-            for (int i = 0; i < resonancePointEnableDictionary[gameSceneData.Value.scene].Length; ++i)
+            resonancePointDictionary.Add(gameSceneData.Value.scene, new bool[gameSceneData.Value.resonanceObjectDataList.Count]);
+            for (int i = 0; i < resonancePointDictionary[gameSceneData.Value.scene].Length; ++i)
             {
-                resonancePointEnableDictionary[gameSceneData.Value.scene][i] = false;
+                resonancePointDictionary[gameSceneData.Value.scene][i] = false;
             }
         }
     }
@@ -40,6 +40,11 @@ public class PlayerLocationData
         return new Vector3(lastXCoordinate, lastYCoordinate, lastZCoordinate);
     }
 
+    public void SetLastPosition(float x, float y, float z)
+    {
+        SetLastPosition(new Vector3(x, y, z));
+    }
+
     public void SetLastPosition(Vector3 lastPosition)
     {
         lastXCoordinate = lastPosition.x;
@@ -47,15 +52,13 @@ public class PlayerLocationData
         lastZCoordinate = lastPosition.z;
     }
 
-    public void SetLastPosition(float x, float y, float z)
-    {
-        SetLastPosition(new Vector3(x, y, z));
-    }
-
     public void EnableResonancePoint(SCENE_LIST scene, int index)
     {
-        ResonancePointEnableDictionary[scene][index] = true;
-        OnChangeResonancePointData?.Invoke(this);
+        if (resonancePointDictionary[scene][index] == false)
+        {
+            ResonancePointDictionary[scene][index] = true;
+            OnChangeResonancePointData?.Invoke(this);
+        }
     }
 
     #region Property
@@ -73,10 +76,10 @@ public class PlayerLocationData
     public float LastYCoordinate { get { return lastYCoordinate; } set { lastYCoordinate = value; } }
     public float LastZCoordinate { get { return lastZCoordinate; } set { lastZCoordinate = value; } }
 
-    public Dictionary<SCENE_LIST, bool[]> ResonancePointEnableDictionary
+    public Dictionary<SCENE_LIST, bool[]> ResonancePointDictionary
     {
-        get { return resonancePointEnableDictionary; }
-        set { resonancePointEnableDictionary = value; }
+        get { return resonancePointDictionary; }
+        set { resonancePointDictionary = value; }
     }
     #endregion
 }

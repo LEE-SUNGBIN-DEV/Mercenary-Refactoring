@@ -41,6 +41,18 @@ MonoBehaviour:
     m_Address: Material_Small_Stone_Golem_Dissolve
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 7130a42ca40fb57439e2a21bac93f8a3
+    m_Address: Material_Player_Sword_Dissolve
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6a6e6f368afa9bf478635ab88a2f3a4c
+    m_Address: Material_Player_Shield_Dissolve
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b8fe3b98368ac3d4392898556cc9bbd0
+    m_Address: Material_Player_Halberd_Dissolve
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
   m_SchemaSet:

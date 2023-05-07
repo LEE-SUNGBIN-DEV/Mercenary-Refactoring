@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class EnemyCombatController : BaseCombatController
 {
+    public event UnityAction OnHitPlayer;
+    public event UnityAction OnHitPlayerGuard;
+
     [Header("Enemy Combat Controller")]
     [SerializeField] protected BaseEnemy enemy;
 
@@ -19,16 +23,21 @@ public abstract class EnemyCombatController : BaseCombatController
             hitDictionary.Add(character, true);
 
             character.TakeHit(enemy, damageRatio, hitType, crowdControlDuration);
+            OnHitPlayer?.Invoke();
         }
 
         // Hit With Shield
         if (other.TryGetComponent(out PlayerCombatController weapon))
         {
-            switch(weapon.GuardType)
+            if (hitDictionary.ContainsKey(weapon))
+                return;
+
+            switch (weapon.GuardType)
             {
                 case GUARD_TYPE.GUARDABLE:
                 case GUARD_TYPE.PARRYABLE:
                     weapon.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
+                    OnHitPlayerGuard?.Invoke();
                     break;
 
                 default:
@@ -39,12 +48,12 @@ public abstract class EnemyCombatController : BaseCombatController
 
     public virtual void OnEnableCollider()
     {
-        if(combatCollider != null)
+        if(combatCollider != null && combatCollider.enabled == false)
             combatCollider.enabled = true;
     }
     public virtual void OnDisableCollider()
     {
-        if(combatCollider != null)
+        if(combatCollider != null && combatCollider.enabled == true)
         {
             combatCollider.enabled = false;
             hitDictionary.Clear();

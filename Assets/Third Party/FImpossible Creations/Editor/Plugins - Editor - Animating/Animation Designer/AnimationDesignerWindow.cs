@@ -274,7 +274,6 @@ namespace FIMSpace.AnimationTools
                 return;
             }
 
-
             bool isLayoutEvent = false;
             //bool isRepaintEvent = false;
 
@@ -420,6 +419,8 @@ namespace FIMSpace.AnimationTools
                 _latestClip = TargetClip;
                 OnTargetAnimationClipChange();
             }
+
+            if (TargetClip != null) if (currentClipSettings == null) GetTargetClipSettings();
 
             if (_last_toSet_SetSwitchToHash != _toSet_SetSwitchToHash)
             {
@@ -1084,8 +1085,16 @@ namespace FIMSpace.AnimationTools
         }
 
 
+        AnimationClipSettings currentClipSettings = null;
+        void GetTargetClipSettings()
+        {
+            if (TargetClip == null) { currentClipSettings = null; return; }
+            currentClipSettings = AnimationUtility.GetAnimationClipSettings(TargetClip);
+        }
+
         void OnTargetAnimationClipChange()
         {
+            GetTargetClipSettings();
             CheckComponentsInitialization(false);
         }
 

@@ -18,12 +18,16 @@ namespace FIMSpace.AnimationTools
         public bool TurnOnModules = true;
 
         public int Export_LoopAdditionalKeys = 0;
+        public ADBoneReference.EWrapBakeAlgrithmType Export_WrapLoopBakeMode = ADBoneReference.EWrapBakeAlgrithmType.None;
         public bool Export_ForceRootMotion = false;
         public bool Export_DisableRootMotionExport = false;
         public bool Export_JoinRootMotion = false;
         public float Export_ClipTimeOffset = 0;
 
         public bool Additional_UseHumanoidMecanimIK = false;
+
+        public enum ERootMotionCurveAdjust { None, SmoothTangents, LinearTangents }
+        public ERootMotionCurveAdjust Export_RootMotionTangents = ERootMotionCurveAdjust.LinearTangents;
 
         public enum ELoopClipDetection { AutoDetect, NoLoop, ForceLoop }
         public ELoopClipDetection Export_LoopClip = ELoopClipDetection.AutoDetect;
@@ -172,6 +176,26 @@ namespace FIMSpace.AnimationTools
 
         public AnimationCurve ClipSampleTimeCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 1f);
         public AnimationCurve ClipEvaluateTimeCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
+        public bool IsUsingDefaultTimeEvaluation()
+        {
+            if (ClipEvaluateTimeCurve.length < 2) return true;
+
+            var key0 = ClipEvaluateTimeCurve.keys[0];
+
+            if (key0.time == 0f && key0.value == 0f)
+            {
+                var key1 = ClipEvaluateTimeCurve.keys[1];
+
+                if (key1.time == 1f && key1.value == 1f)
+                    if ( (key0.inTangent == 1f && key0.outTangent == 1f) || (key0.inTangent == 0f && key0.outTangent == 1f))
+                        if ((key1.inTangent == 1f && key1.outTangent == 1f) || (key1.inTangent == 1f && key1.outTangent == 0f))
+                        {
+                            return true;
+                        }
+            }
+
+            return false;
+        }
 
         public bool ClipTimeReverse = false;
         public float ClipTrimFirstFrames = 0f;

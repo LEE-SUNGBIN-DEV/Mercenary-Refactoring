@@ -7,9 +7,9 @@ public class AudioManager
 {
     private AudioSource bgmPlayer;        
     private AudioSource[] sfxPlayers;
-    private Slider bgmSlider;             
-    private Slider sfxSlider;
-    private Slider ambientSlider;
+    private float bgmVolume;
+    private float sfxVolume;
+    private float ambientVolume;
 
     public void Initialize(Transform rootTransform)
     {
@@ -29,21 +29,21 @@ public class AudioManager
             sfxPlayerObject = new GameObject("SFX_Player");
         }
         sfxPlayerObject.transform.SetParent(rootTransform);
-        for (int i = 0; i < Constants.NUMBER_SFX_PLAYER; ++i)
+        for (int i = 0; i < Constants.AUDIO_PLAYER_DEFAULT_AMOUNT; ++i)
         {
             sfxPlayerObject.gameObject.AddComponent<AudioSource>();
         }
         sfxPlayers = sfxPlayerObject.GetComponents<AudioSource>();
+
+        Managers.DataManager.PlayerData.OptionData.OnPlayerOptionChanged += SetVolume;
+        SetVolume(Managers.DataManager.PlayerData.OptionData);
     }
 
-    public void SetBGMVolume()
+    public void SetVolume(PlayerOptionData optionData)
     {
-        bgmPlayer.volume = bgmSlider.value;
-    }
-
-    public void SetAmbientVolume()
-    {
-
+        bgmVolume = optionData.BgmVolume;
+        sfxVolume = optionData.SfxVolume;
+        ambientVolume = optionData.AmbientVolume;
     }
 
     public void PlayBGM(string audioClipName)
@@ -52,7 +52,7 @@ public class AudioManager
 
         bgmPlayer.Stop();
         bgmPlayer.loop = true;
-        bgmPlayer.volume = bgmSlider.value;
+        bgmPlayer.volume = bgmVolume;
         bgmPlayer.clip = targetClip;
         bgmPlayer.Play();
     }
@@ -73,7 +73,7 @@ public class AudioManager
         {
             if (!audioPlayers[i].isPlaying)
             {
-                audioPlayers[i].volume = sfxSlider.value;
+                audioPlayers[i].volume = sfxVolume;
                 audioPlayers[i].clip = targetClip;
                 audioPlayers[i].Play();
                 return;
@@ -98,7 +98,7 @@ public class AudioManager
         {
             if (!audioPlayers[i].isPlaying)
             {
-                audioPlayers[i].volume = ambientSlider.value;
+                audioPlayers[i].volume = ambientVolume;
                 audioPlayers[i].clip = targetClip;
                 audioPlayers[i].Play();
                 return;

@@ -7,6 +7,7 @@ public class CommonStateUpperEmpty : IActionState
     private BaseActor actor;
     private int stateWeight;
     private int animationNameHash;
+
     private float layerWeight;
     private float decreaseSpeed;
 
@@ -14,14 +15,13 @@ public class CommonStateUpperEmpty : IActionState
     {
         this.actor = actor;
         stateWeight = (int)ACTION_STATE_WEIGHT.COMMON_UPPER_EMPTY;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_EMPTY;
+        animationNameHash = Constants.ANIMATION_HASH_UPPER_EMPTY;
         decreaseSpeed = 5f;
     }
 
     public void Enter()
     {
         layerWeight = 1f;
-        //actor.Animator.Play(animationNameHash, (int)ANIMATOR_LAYER.UPPER);
     }
 
     public void Update()
@@ -29,8 +29,11 @@ public class CommonStateUpperEmpty : IActionState
         if(layerWeight > 0f)
         {
             layerWeight -= decreaseSpeed * Time.deltaTime;
-            if (layerWeight < 0f)
+            if (layerWeight <= 0f)
+            {
                 layerWeight = 0f;
+                actor.Animator.Play(animationNameHash, (int)ANIMATOR_LAYER.UPPER);
+            }
 
             actor.Animator.SetLayerWeight((int)ANIMATOR_LAYER.UPPER, layerWeight);
         }

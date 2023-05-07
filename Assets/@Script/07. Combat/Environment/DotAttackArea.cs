@@ -23,7 +23,7 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
     {
         if (target.TryGetComponent(out PlayerCharacter character))
         {
-            if(character.IsInvincible == false)
+            if(character.HitState != HIT_STATE.Invincible)
             {
                 character.Status.CurrentHP -= (character.Status.MaxHP * damageRatio * 0.01f);
             }

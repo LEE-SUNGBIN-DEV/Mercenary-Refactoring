@@ -16,7 +16,7 @@ public class EnemyStateCompete : IActionState
     public void Enter()
     {
         // Set Compete State
-        enemy.IsInvincible = true;
+        enemy.HitState = HIT_STATE.Invincible;
         enemy.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.CompeteManager.CompetePower);
         enemy.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
     }
@@ -28,7 +28,7 @@ public class EnemyStateCompete : IActionState
 
     public void Exit()
     {
-        enemy.IsInvincible = false;
+        enemy.HitState = HIT_STATE.Hittable;
     }
 
     #region Property

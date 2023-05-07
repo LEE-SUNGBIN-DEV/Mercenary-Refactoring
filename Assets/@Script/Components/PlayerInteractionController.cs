@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class PlayerInteractionController
 {
+    public event UnityAction<bool> OnInteraction;
+
     [SerializeField] private bool isInteractable;
     [SerializeField] private IInteractable detectedInteraction;
     [SerializeField] private IInteractable enabledInteraction;
@@ -56,6 +59,7 @@ public class PlayerInteractionController
     {
         if(isInteractable && enabledInteraction != requestedInteraction)
         {
+            OnInteraction?.Invoke(true);
             enabledInteraction?.DisableInteraction(character);
             enabledInteraction = requestedInteraction;
             enabledInteraction?.EnableInteraction(character);
@@ -81,6 +85,7 @@ public class PlayerInteractionController
     {
         if (enabledInteraction == requestedInteraction)
         {
+            OnInteraction?.Invoke(false);
             DisableInteraction(character);
             return;
         }

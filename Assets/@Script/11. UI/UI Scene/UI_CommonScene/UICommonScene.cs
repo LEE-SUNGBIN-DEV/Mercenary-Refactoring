@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class UICommonScene : UIBaseScene
 {
+    public event UnityAction<string> OnRequestNotice;
+
     // Panel
     private ConfirmPanel confirmPanel;
     private NoticePanel noticePanel;
-
-    // Popup
-    private OptionPopup optionPopup;
+    private OptionPanel optionPanel;
 
     // Fade
     private Image fadeImage;
@@ -27,28 +27,39 @@ public class UICommonScene : UIBaseScene
         // Panel
         confirmPanel = GetComponentInChildren<ConfirmPanel>(true);
         noticePanel = GetComponentInChildren<NoticePanel>(true);
+        optionPanel = GetComponentInChildren<OptionPanel>(true);
 
         confirmPanel.Initialize();
         noticePanel.Initialize();
-
-        // Popup
-        optionPopup = gameObject.GetComponentInChildren<OptionPopup>(true);
-        optionPopup.Initialize();
+        optionPanel.Initialize();
 
         // Fade
         fadeImage = Functions.FindChild<Image>(gameObject, "Fade_Image");
         fadeDuration = 1f;
     }
 
-    public void RequestNotice()
+    public void RequestNotice(string content)
     {
+        OnRequestNotice(content);
+    }
 
+    public void NoticeQuestState(Quest quest)
+    {
+        if (quest.TaskIndex == 1)
+        {
+            RequestNotice("Äù½ºÆ® ¼ö¶ô");
+        }
+
+        if (quest.TaskIndex == quest.QuestTasks.Length)
+        {
+            RequestNotice("Äù½ºÆ® ¿Ï·á");
+        }
     }
 
     public void RequestConfirm(string content, UnityAction action)
     {
         confirmPanel.SetConfirmPanel(content, action);
-        OpenPanel(confirmPanel);
+        Managers.UIManager.OpenPanel(confirmPanel);
     }
 
     public void FadeIn(float duration = 1f, UnityAction callback = null)
@@ -90,6 +101,6 @@ public class UICommonScene : UIBaseScene
     #region Property
     public ConfirmPanel ConfirmPanel { get { return confirmPanel; } }
     public NoticePanel NoticePanel { get { return noticePanel; } }
-    public OptionPopup OptionPopup { get { return optionPopup; } }
+    public OptionPanel OptionPanel { get { return optionPanel; } }
     #endregion
 }

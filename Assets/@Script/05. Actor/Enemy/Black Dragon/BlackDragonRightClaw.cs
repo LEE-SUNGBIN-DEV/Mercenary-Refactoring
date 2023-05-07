@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlackDragonRightClaw : EnemySkill
 {
     [SerializeField] private EnemyCompeteAttack rightClaw;
-    private AnimationClipInformation rightClawAnimationInfo;
+    private AnimationClipInformation animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {
@@ -18,21 +18,30 @@ public class BlackDragonRightClaw : EnemySkill
         rightClaw = Functions.FindChild<EnemyCompeteAttack>(gameObject, "Compete Controller", true);
         rightClaw.SetCompeteAttack(enemy);
 
-        rightClawAnimationInfo = enemy.AnimationClipTable["Skill_Right_Claw"];
+        animationClipInformation = enemy.AnimationClipTable["Skill_Right_Claw"];
     }
 
-    public override IEnumerator StartSkill()
+    public override IEnumerator CoStartSkill()
     {
-        enemy.Animator.Play(rightClawAnimationInfo.nameHash);
+        enemy.Animator.Play(animationClipInformation.nameHash);
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(rightClawAnimationInfo, 40));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 40));
         rightClaw.SetCombatController(HIT_TYPE.STUN, GUARD_TYPE.NONE, 2f, 3f);
         rightClaw.OnEnableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(rightClawAnimationInfo, 42));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 42));
         rightClaw.OnDisableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(rightClawAnimationInfo, rightClawAnimationInfo.maxFrame));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, animationClipInformation.maxFrame));
         EndSkill();
+    }
+
+    public override IEnumerator CoLookTarget()
+    {
+        while (!enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 24))
+        {
+            enemy.LookTarget();
+            yield return null;
+        }
     }
 }

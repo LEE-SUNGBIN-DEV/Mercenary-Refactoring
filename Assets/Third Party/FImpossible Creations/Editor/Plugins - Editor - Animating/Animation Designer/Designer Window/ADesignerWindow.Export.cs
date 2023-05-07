@@ -368,6 +368,7 @@ namespace FIMSpace.AnimationTools
                 else
                 {
                     newGeneratedClip.wrapMode = WrapMode.Default;
+                    originalSettings.loopTime = false;
                 }
             }
 

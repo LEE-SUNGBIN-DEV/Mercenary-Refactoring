@@ -8,7 +8,6 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
     [SerializeField] private MaterialController materialController;
 
     [Header("For Function")]
-    [SerializeField] private UIGameScene gameSceneUI;
     [SerializeField] private PlayerCharacter targetCharacter;
     [SerializeField] private float distanceFromTarget;
     [SerializeField] private ResonanceObjectData resonanceObjectData;
@@ -21,9 +20,8 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
 
     private Coroutine interactionCoroutine;
 
-    public void Initialize(ResonanceObjectData resonanceObjectData, UIGameScene gameSceneUI)
+    public void Initialize(ResonanceObjectData resonanceObjectData)
     {
-        this.gameSceneUI = gameSceneUI;
         this.resonanceObjectData = resonanceObjectData;
 
         transform.position = resonanceObjectData.GetPosition();
@@ -78,7 +76,7 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
     // Detection
     public void EnableDetection(PlayerCharacter character)
     {
-        gameSceneUI.OpenPanel(gameSceneUI.InteractionPanel);
+        Managers.UIManager.OpenPanel(Managers.UIManager.GameSceneUI.InteractionPanel);
     }
 
     public void UpdateDetection(PlayerCharacter character)
@@ -88,18 +86,20 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
 
     public void DisableDetection(PlayerCharacter character)
     {
-        gameSceneUI.ClosePanel(gameSceneUI.InteractionPanel);
+        Managers.UIManager.ClosePanel(Managers.UIManager.GameSceneUI.InteractionPanel);
     }
 
     // Interaction
     public void EnableInteraction(PlayerCharacter character)
     {
+        character.LocationData.EnableResonancePoint(resonanceObjectData.scene, resonanceObjectData.index);
+
         if (interactionCoroutine != null)
             StopCoroutine(interactionCoroutine);
 
         interactionCoroutine = StartCoroutine(CoStartInteraction());
 
-        gameSceneUI.ClosePanel(gameSceneUI.InteractionPanel);
+        Managers.UIManager.ClosePanel(Managers.UIManager.GameSceneUI.InteractionPanel);
         character.State.SetState(ACTION_STATE.PLAYER_RESONANCE_IN, STATE_SWITCH_BY.FORCED);
     }
 
@@ -115,7 +115,7 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
 
         interactionCoroutine = StartCoroutine(CoStopInteraction());
 
-        gameSceneUI.ClosePanel(gameSceneUI.ResonancePointPanel);
+        Managers.UIManager.ClosePanel(Managers.UIManager.GameSceneUI.ResonancePointPanel);
         character.State.SetState(ACTION_STATE.PLAYER_RESONANCE_OUT, STATE_SWITCH_BY.FORCED);
     }
 
@@ -130,7 +130,7 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
         }
 
         currentLightPower = Mathf.Clamp(currentLightPower, minLightPower, maxLightPower);
-        gameSceneUI.OpenPanel(gameSceneUI.ResonancePointPanel);
+        Managers.UIManager.OpenPanel(Managers.UIManager.GameSceneUI.ResonancePointPanel);
     }
 
     public IEnumerator CoStopInteraction()

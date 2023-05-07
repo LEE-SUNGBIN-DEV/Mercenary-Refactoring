@@ -11,9 +11,9 @@ public class BaseCamera : MonoBehaviour
     protected Vector3 originalPosition;
     protected IEnumerator shakeCoroutine;
     
-    protected virtual void Awake()
+    public virtual void Initialize()
     {
-        if(targetCamera == null)
+        if (targetCamera == null)
             targetCamera = GetComponentInChildren<Camera>();
     }
 
@@ -45,6 +45,11 @@ public class BaseCamera : MonoBehaviour
             yield return null;
         }
         targetCamera.transform.position = originalPosition;
+    }
+
+    public Vector3 GetForward(bool isZeroYPosition)
+    {
+        return isZeroYPosition ? new Vector3(transform.forward.x, 0, transform.forward.z) : new Vector3(transform.forward.x, transform.forward.y, transform.forward.z);
     }
 
     #region Property

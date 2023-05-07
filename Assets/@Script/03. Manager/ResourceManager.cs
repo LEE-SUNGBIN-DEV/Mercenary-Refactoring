@@ -15,6 +15,28 @@ public class ResourceManager
         
     }
     
+    public bool CheckResource<T>(string key) where T : Object
+    {
+        if (resourceDictionary.TryGetValue(key, out Object resource))
+        {
+            return true;
+        }
+        else
+        {
+            var handler = Addressables.LoadAssetAsync<T>(key);
+            resource = handler.WaitForCompletion();
+            if(resource == null)
+            {
+                return false;
+            }
+            else
+            {
+                resourceDictionary.Add(key, resource);
+                return true;
+            }
+        }
+    }
+
     #region Load Sync
     public GameObject InstantiatePrefabSync(string key, Transform parent = null)
     {
@@ -39,7 +61,6 @@ public class ResourceManager
 
             return resource as T;
         }
-        
     }
     #endregion
 

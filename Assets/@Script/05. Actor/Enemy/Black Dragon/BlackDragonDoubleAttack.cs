@@ -6,7 +6,7 @@ public class BlackDragonDoubleAttack : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack leftClaw;
     [SerializeField] private EnemyMeleeAttack rightClaw;
-    private AnimationClipInformation doubleClawAnimationInfo;
+    private AnimationClipInformation animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {
@@ -21,30 +21,45 @@ public class BlackDragonDoubleAttack : EnemySkill
         leftClaw.SetMeleeAttack(enemy);
         rightClaw.SetMeleeAttack(enemy);
 
-        doubleClawAnimationInfo = enemy.AnimationClipTable["Skill_Double_Claw"];
+        animationClipInformation = enemy.AnimationClipTable["Skill_Double_Claw"];
     }
 
-    public override IEnumerator StartSkill()
+    public override IEnumerator CoStartSkill()
     {
-        enemy.Animator.Play(doubleClawAnimationInfo.nameHash);
+        enemy.Animator.Play(animationClipInformation.nameHash);
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 32));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 32));
         leftClaw.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         leftClaw.OnEnableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 40));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 40));
         leftClaw.OnDisableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 127));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 127));
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 140));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 140));
         rightClaw.SetCombatController(HIT_TYPE.STUN, GUARD_TYPE.NONE, 1.2f, 4f);
         rightClaw.OnEnableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, 142));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 142));
         rightClaw.OnDisableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(doubleClawAnimationInfo, doubleClawAnimationInfo.maxFrame));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, animationClipInformation.maxFrame));
         EndSkill();
+    }
+
+    public override IEnumerator CoLookTarget()
+    {
+        while (!enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 24))
+        {
+            enemy.LookTarget();
+            yield return null;
+        }
+
+        while (!enemy.Animator.IsAnimationFrameBetweenTo(animationClipInformation, 60, 120))
+        {
+            enemy.LookTarget();
+            yield return null;
+        }
     }
 }

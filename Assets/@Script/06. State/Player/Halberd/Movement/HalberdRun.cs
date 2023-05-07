@@ -6,6 +6,7 @@ public class HalberdRun : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+
     private AnimationClipInformation animationClipInformation;
     private Vector3 moveDirection;
 
@@ -13,19 +14,20 @@ public class HalberdRun : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_RUN;
+
         animationClipInformation = character.AnimationClipTable["Halberd_Run"];
     }
 
     public void Enter()
     {
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.3f);
     }
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && character.TryEquipWeapon(WEAPON_TYPE.SWORD_SHIELD))
         {
-            character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_RUN, STATE_SWITCH_BY.FORCED);
+            character.State.SetState(character.CurrentWeapon.RunState, STATE_SWITCH_BY.FORCED);
             return;
         }
 
@@ -53,46 +55,32 @@ public class HalberdRun : IActionState
             return;
         }
 
-        switch (character.MoveController.GetGroundState())
+        Vector3 verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z) * Input.GetAxisRaw("Vertical");
+        Vector3 horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z) * Input.GetAxisRaw("Horizontal");
+        moveDirection = (verticalDirection + horizontalDirection);
+
+        if (moveDirection.sqrMagnitude > 0f)
         {
-            case ACTOR_GROUND_STATE.GROUND:
-                Vector3 verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z) * Input.GetAxisRaw("Vertical");
-                Vector3 horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z) * Input.GetAxisRaw("Horizontal");
-                moveDirection = (verticalDirection + horizontalDirection).normalized;
-
-                if (moveDirection.sqrMagnitude > 0f)
-                {
-                    // Run
-                    if (Input.GetKey(KeyCode.LeftShift))
-                    {
-                        character.CharacterData.StatusData.CurrentSP -= (Constants.PLAYER_STAMINA_CONSUMPTION_RUN * Time.deltaTime);
-                        character.MoveController.SetMoveInformation(moveDirection, character.Status.MoveSpeed * Constants.PLAYER_RUN_SPEED_RATIO);
-                    }
-                    else
-                    {
-                        character.State.SetState(ACTION_STATE.PLAYER_HALBERD_WALK, STATE_SWITCH_BY.FORCED);
-                    }
-                }
-                // Idle
-                else
-                {
-                    character.State.SetState(ACTION_STATE.PLAYER_HALBERD_IDLE, STATE_SWITCH_BY.FORCED);
-                }
-                return;
-
-            case ACTOR_GROUND_STATE.SLOPE: // -> Slide
-                character.State.SetState(ACTION_STATE.PLAYER_SLIDE, STATE_SWITCH_BY.WEIGHT);
-                return;
-
-            case ACTOR_GROUND_STATE.AIR: // -> Fall
-                character.State.SetState(ACTION_STATE.PLAYER_FALL, STATE_SWITCH_BY.WEIGHT);
-                return;
+            // Run
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                character.CharacterData.StatusData.CurrentSP -= (Constants.PLAYER_STAMINA_CONSUMPTION_RUN * Time.deltaTime);
+                character.MoveController.SetMovement(moveDirection, character.Status.MoveSpeed * Constants.PLAYER_RUN_SPEED_RATIO);
+            }
+            else
+            {
+                character.State.SetState(ACTION_STATE.PLAYER_HALBERD_WALK, STATE_SWITCH_BY.FORCED);
+            }
+        }
+        // Idle
+        else
+        {
+            character.State.SetState(ACTION_STATE.PLAYER_HALBERD_IDLE, STATE_SWITCH_BY.FORCED);
         }
     }
 
     public void Exit()
     {
-        character.MoveController.GetGroundState();
     }
 
     #region Property

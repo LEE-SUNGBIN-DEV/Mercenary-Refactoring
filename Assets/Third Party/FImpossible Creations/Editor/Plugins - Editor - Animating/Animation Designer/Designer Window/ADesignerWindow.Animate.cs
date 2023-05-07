@@ -8,6 +8,7 @@ namespace FIMSpace.AnimationTools
     {
 
         ADClipSettings_Main _anim_MainSet;
+        public ADClipSettings_Main Anim_MainSet { get { return _anim_MainSet; } }
         ADClipSettings_Elasticness _anim_elSet;
         ADClipSettings_Modificators _anim_modSet;
         ADClipSettings_IK _anim_ikSet;

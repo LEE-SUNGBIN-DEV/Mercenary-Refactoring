@@ -17,10 +17,22 @@ public class PlayerCamera : BaseCamera
     private Vector3 cameraDirection;
     private float cameraDistance;
 
-    protected override void Awake()
+    private bool isInteracting;
+
+    public void Initialize(PlayerCharacter character)
     {
-        base.Awake();
+        base.Initialize();
         Managers.GameManager.PlayerCamera = this;
+        targetTransform = character.transform;
+        isInteracting = false;
+
+        transform.SetPositionAndRotation(targetTransform.position, targetTransform.rotation);
+        mouseRotateX = transform.localRotation.eulerAngles.x;
+        mouseRotateY = transform.localRotation.eulerAngles.y;
+
+        targetCamera.transform.SetLocalPositionAndRotation(cameraPositionOffset, Quaternion.Euler(cameraRotationOffset));
+        cameraDirection = targetCamera.transform.localPosition.normalized;
+        cameraDistance = targetCamera.transform.localPosition.magnitude;
     }
 
     private void Start()
@@ -36,7 +48,7 @@ public class PlayerCamera : BaseCamera
 
     private void Update()
     {
-        if (targetTransform == null)
+        if (targetTransform == null || isInteracting)
             return;
 
         mouseRotateX += -(Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime); // 카메라 X축 회전은 마우스 Y 좌표에 의해 결정됨
@@ -67,6 +79,11 @@ public class PlayerCamera : BaseCamera
         }
 
         targetCamera.transform.localPosition = Vector3.Lerp(targetCamera.transform.localPosition, cameraDirection * cameraDistance, Time.deltaTime * smoothness);
+    }
+
+    public void SetInteraction(bool isInteracting)
+    {
+        this.isInteracting = isInteracting;
     }
 
     #region Property

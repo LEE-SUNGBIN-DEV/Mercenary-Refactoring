@@ -1,11 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIGameScene : UIBaseScene
 {
-    private UIPanel currentUserPanel;
-
     // Panel
     private UserPanel userPanel;
     private StatusPanel statusPanel;
@@ -15,7 +11,7 @@ public class UIGameScene : UIBaseScene
     private InteractionPanel interactionPanel;
     private DialoguePanel dialoguePanel;
     private EnemyPanel enemyPanel;
-    private MapPanel mapPanel;
+    private SceneNamePanel mapPanel;
     private CampaignPopup campaignPanel;
     private CompetePanel competePanel;
 
@@ -26,9 +22,9 @@ public class UIGameScene : UIBaseScene
     public void Initialize(CharacterData characterData)
     {
         base.Initialize();
-        currentUserPanel = null;
+        Managers.UIManager.GameSceneUI = this;
 
-        // Get Component
+        // Get Panels
         userPanel = GetComponentInChildren<UserPanel>(true);
         statusPanel = GetComponentInChildren<StatusPanel>(true);
         inventoryPanel = GetComponentInChildren<InventoryPanel>(true);
@@ -37,7 +33,7 @@ public class UIGameScene : UIBaseScene
         interactionPanel = GetComponentInChildren<InteractionPanel>(true);
         dialoguePanel = GetComponentInChildren<DialoguePanel>(true);
         enemyPanel = GetComponentInChildren<EnemyPanel>(true);
-        mapPanel = GetComponentInChildren<MapPanel>(true);
+        mapPanel = GetComponentInChildren<SceneNamePanel>(true);
         competePanel = GetComponentInChildren<CompetePanel>(true);
 
         diePopup = GetComponentInChildren<DiePopup>(true);
@@ -61,54 +57,11 @@ public class UIGameScene : UIBaseScene
         Managers.CompeteManager.OnStartCompete += OpenCompetePanel;
         Managers.CompeteManager.OnEndCompete += CloseCompetePanel;
 
-        OpenPanel(userPanel);
+        Managers.UIManager.OpenPanel(userPanel);
     }
 
-    private void OnDestroy()
-    {
-        Managers.CompeteManager.OnStartCompete -= OpenCompetePanel;
-        Managers.CompeteManager.OnEndCompete -= CloseCompetePanel;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-            SwitchUserPanel(inventoryPanel);
-
-        if (Input.GetKeyDown(KeyCode.T))
-            SwitchUserPanel(statusPanel);
-
-        if (Input.GetKeyDown(KeyCode.Q))
-            SwitchUserPanel(questPanel);
-
-        if (Input.GetKeyDown(KeyCode.Escape) && currentUserPanel != null)
-        {
-            ClosePanel(currentUserPanel);
-        }
-    }
-
-    public void SwitchUserPanel(UIPanel panel)
-    {
-        if(currentUserPanel == null)
-        {
-            currentUserPanel = panel;
-            OpenPanel(currentUserPanel);
-        }
-        else if(currentUserPanel == panel)
-        {
-            ClosePanel(currentUserPanel);
-            currentUserPanel = null;
-        }
-        else
-        {
-            ClosePanel(currentUserPanel);
-            currentUserPanel = panel;
-            OpenPanel(currentUserPanel);
-        }
-    }
-
-    public void OpenCompetePanel() { OpenPanel(competePanel); }
-    public void CloseCompetePanel() { ClosePanel(competePanel); }
+    public void OpenCompetePanel() { Managers.UIManager.OpenPanel(competePanel); }
+    public void CloseCompetePanel() { Managers.UIManager.ClosePanel(competePanel); }
 
     #region Property
     public UserPanel UserPanel { get { return userPanel; } }
@@ -119,7 +72,7 @@ public class UIGameScene : UIBaseScene
     public InteractionPanel InteractionPanel { get { return interactionPanel; } }
     public DialoguePanel DialoguePanel { get { return dialoguePanel; } }
     public EnemyPanel EnemyPanel { get { return enemyPanel; } }
-    public MapPanel MapPanel { get { return mapPanel; } }
+    public SceneNamePanel MapPanel { get { return mapPanel; } }
 
     public CampaignPopup CampaignPopup { get { return campaignPanel; } }
     public StorePopup StorePopup { get { return storePopup; } }

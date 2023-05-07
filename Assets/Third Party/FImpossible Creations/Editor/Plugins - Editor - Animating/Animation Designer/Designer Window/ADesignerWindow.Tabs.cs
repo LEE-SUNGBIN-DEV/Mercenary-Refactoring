@@ -36,7 +36,7 @@ namespace FIMSpace.AnimationTools
         #endregion
 
         GUIContent _undoTex = null;
-        
+
         void DisplaySaveHeaderTab()
         {
             if (latestAnimator == null) return;
@@ -115,7 +115,7 @@ namespace FIMSpace.AnimationTools
 
                             if (fs)
                             {
-                                draftsMenu.AddItem(new GUIContent(fs.name), ProjectFileSave == fs, () => { _toSet_ProjectFileSave = fs;  });
+                                draftsMenu.AddItem(new GUIContent(fs.name), ProjectFileSave == fs, () => { _toSet_ProjectFileSave = fs; });
                             }
                         }
 
@@ -490,7 +490,7 @@ namespace FIMSpace.AnimationTools
                             clipsMenu.AddItem(new GUIContent(""), false, () => { });
                             clipsMenu.AddItem(new GUIContent(""), false, () => { });
                             AnimationClip toRemove = TargetClip;
-                            clipsMenu.AddItem(new GUIContent("REMOVE Designer Save Data for '" + TargetClip.name + "'"), false, () => {  TargetClip = null; ProjectFileSave.RemoveSaveDataForClip(toRemove); });
+                            clipsMenu.AddItem(new GUIContent("REMOVE Designer Save Data for '" + TargetClip.name + "'"), false, () => { TargetClip = null; ProjectFileSave.RemoveSaveDataForClip(toRemove); });
                         }
 
                         clipsMenu.ShowAsContext();
@@ -944,6 +944,7 @@ namespace FIMSpace.AnimationTools
         bool _Trigger_PrepareArmature = false;
         public static bool _exportLegacy = false;
         public static bool _forceExportGeneric = false;
+        bool _foldout_rareExport = false;
 
         void DrawBakingTab()
         {
@@ -986,7 +987,7 @@ namespace FIMSpace.AnimationTools
 
                         if (GUILayout.Button(gc_SaveAsClip, GUILayout.Height(22), GUILayout.Width(wd)))
                         {
-                            string newClip = SaveClipPopup();
+                            string newClip = SaveClipPopup(Event.current.button == 1);
                             if (string.IsNullOrEmpty(newClip) == false) { _exportLegacy = false; AddEditorEvent(() => { ExportToFile(newClip); }); }
                         }
 
@@ -1006,7 +1007,7 @@ namespace FIMSpace.AnimationTools
 
                         if (GUILayout.Button(new GUIContent("  Save As Legacy Animation Clip", EditorGUIUtility.IconContent("Animation Icon").image), GUILayout.Height(22), GUILayout.Width(wd)))
                         {
-                            string newClip = SaveClipPopup();
+                            string newClip = SaveClipPopup(Event.current.button == 1);
                             if (string.IsNullOrEmpty(newClip) == false) { _exportLegacy = true; AddEditorEvent(() => { ExportToFile(newClip); }); }
                         }
 
@@ -1116,7 +1117,7 @@ namespace FIMSpace.AnimationTools
                                 {
                                     EditorGUILayout.BeginHorizontal();
                                     _anim_MainSet.Export_LoopAdditionalKeys = EditorGUILayout.IntSlider(new GUIContent("Loop Addional Frames:", "Trying to smooth additional frames from end of the clip towards first frame pose. In some models it will solve looping perfectly, in some it can produce some noticable body-rotation swap."), _anim_MainSet.Export_LoopAdditionalKeys, 0, 8);
-                                    ADBoneReference.FramesWrapType = (ADBoneReference.EWrapBakeAlgrithmType)EditorGUILayout.EnumPopup(GUIContent.none, ADBoneReference.FramesWrapType, GUILayout.Width(39));
+                                    Anim_MainSet.Export_WrapLoopBakeMode = (ADBoneReference.EWrapBakeAlgrithmType)EditorGUILayout.EnumPopup(GUIContent.none, Anim_MainSet.Export_WrapLoopBakeMode, GUILayout.Width(39));
                                     EditorGUILayout.EndHorizontal();
                                 }
                         }
@@ -1148,7 +1149,7 @@ namespace FIMSpace.AnimationTools
 
                         GUILayout.Space(2);
                         EditorGUIUtility.labelWidth = 240;
-                        S.Export_SetAllOriginalBake = EditorGUILayout.Toggle(new GUIContent("Set Root Motion Original + Baked", "Automatically switching all animation clip settings to be baked + original motion"), S.Export_SetAllOriginalBake);
+                        S.Export_SetAllOriginalBake = EditorGUILayout.Toggle(new GUIContent("Set Root Motion Original + Baked", "Automatically switching all animation clip settings to be baked + original motion.\n(the settings of the animation clip you see in the inspector window when animation clip is selected)"), S.Export_SetAllOriginalBake);
 
                         if (latestAnimator.IsHuman())
                         {
@@ -1165,20 +1166,27 @@ namespace FIMSpace.AnimationTools
                         //GUIDrawFloatPercentage(ref S.Export_AdaptBakeFramerate, new GUIContent("Adapt Baking Framerate", "This parameter puts effect on the elasticness limbs. Setting it up to 100% will result in motion adapted to 60fps, it means that animation clip motion should look the same like in editor scene view, otherwise elasticness simulation can get more stiff when working with source animation clip framerate."));
                         //GUILayout.Space(4);
 
-                        if (latestAnimator.IsHuman() == false)
-                        {
-                            S.Export_IncludeRootMotionInKeyAnimation = EditorGUILayout.Toggle(new GUIContent("RootMotion+Key", "Enable it if your rig requires both root motion curves and keyframe animation in the same time to work correctly with root motion (rare case)"), S.Export_IncludeRootMotionInKeyAnimation);
-                        }
-                        else
-                        {
-
-                        }
 
                         if (_anim_MainSet != null)
                         {
                             _anim_MainSet.Export_ForceRootMotion = EditorGUILayout.Toggle(new GUIContent("Force Original with RootMotion", "Some models don't contains root motion curves but unity applies it internally which makes detecting it problematically, in such case this toggle should be enabled"), _anim_MainSet.Export_ForceRootMotion);
                             _anim_MainSet.Export_LoopClip = (ADClipSettings_Main.ELoopClipDetection)EditorGUILayout.EnumPopup("Export with Loop:", _anim_MainSet.Export_LoopClip);
                         }
+
+                        GUILayout.Space(4);
+                        FGUI_Inspector.FoldHeaderStart(ref _foldout_rareExport, "Rare Export Settings", FGUI_Resources.BGInBoxStyle, null, 20);
+                        if (_foldout_rareExport)
+                        {
+                            if (latestAnimator.IsHuman() == false)
+                                S.Export_IncludeRootMotionInKeyAnimation = EditorGUILayout.Toggle(new GUIContent("RootMotion+Key", "Enable it if your rig requires both root motion curves and keyframe animation in the same time to work correctly with root motion (rare case)"), S.Export_IncludeRootMotionInKeyAnimation);
+
+                            S.Export_BakeRootIndividually = EditorGUILayout.Toggle(new GUIContent("Bake Root Individually", "(Whole Setup Variable) Required if root bone is containing root motion curves and individual keyframe position/rotation animation. If it's not required, enabling this feature can cause problems in exported animation!"), S.Export_BakeRootIndividually);
+
+                            _anim_MainSet.Export_RootMotionTangents = (ADClipSettings_Main.ERootMotionCurveAdjust)EditorGUILayout.EnumPopup("Root Motion Tangents:", _anim_MainSet.Export_RootMotionTangents);
+                            //EditorGUILayout.CurveField("DebugCRV:", S.Export_DebugCurve);
+                        }
+                        GUILayout.EndVertical();
+                        GUILayout.Space(4);
 
                         EditorGUIUtility.labelWidth = 0;
 
@@ -1229,17 +1237,28 @@ namespace FIMSpace.AnimationTools
             }
         }
 
+        static string staticExportDirectory = "";
 
         void DrawBakeDebugSwitchButton()
         {
 
             if (!debugLogs) GUI.color = new Color(0.7f, 0.7f, 0.7f, 0.8f);
-            if (GUILayout.Button(new GUIContent(FGUI_Resources.Tex_Debug, "Turn on/off export logs"), FGUI_Resources.ButtonStyle, GUILayout.Height(18), GUILayout.Width(22)))
+            if (GUILayout.Button(new GUIContent(FGUI_Resources.Tex_Debug, "Turn on/off export logs"), FGUI_Resources.ButtonStyle, GUILayout.Height(19), GUILayout.Width(22)))
             {
                 debugLogs = !debugLogs;
             }
             GUI.color = preGuiC;
 
+
+            if (GUILayout.Button(new GUIContent(FGUI_Resources.Tex_ExportIcon, "Set constant target export directory for saving clip."), GUILayout.Width(25), GUILayout.Height(21)))
+            {
+                staticExportDirectory = EditorUtility.SaveFolderPanel("Choose target directory in the project for saving animation clips.", Application.dataPath, "");
+                staticExportDirectory = "Assets" + staticExportDirectory.Replace(Application.dataPath, "");
+                if (staticExportDirectory == "Assets") staticExportDirectory = "";
+
+                //UnityEngine.Debug.Log("dire " + staticExportDirectory + " Is Valid? " + AssetDatabase.IsValidFolder(staticExportDirectory));
+                //UnityEngine.Debug.Log("clipPath " + AssetDatabase.GetAssetPath(Get.TargetClip));
+            }
         }
 
         bool DrawTargetClipField(string title, bool withFoldDown = false)

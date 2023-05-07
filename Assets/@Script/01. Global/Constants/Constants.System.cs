@@ -7,7 +7,7 @@ public static partial class Constants
     public static readonly int RESOLUTION_DEFAULT_WIDTH = 1980;
     public static readonly int RESOLUTION_DEFAULT_HEIGHT = 1080;
 
-    public static readonly int NUMBER_SFX_PLAYER = 20;
+    public static readonly int AUDIO_PLAYER_DEFAULT_AMOUNT = 5;
 
     public const int MAX_CHARACTER_SLOT_NUMBER = 3;
 

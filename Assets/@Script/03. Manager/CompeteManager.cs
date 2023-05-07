@@ -38,6 +38,15 @@ public class CompeteManager : MonoBehaviour
         isSuccess = false;
     }
 
+    private void OnDestroy()
+    {
+        OnStartCompete = null;
+        OnEndCompete = null;
+        OnChangeCompetePower = null;
+        OnPressAKey = null;
+        OnPressDKey = null;
+    }
+
     public bool TryCompete(PlayerCombatController weaponController, EnemyCompeteAttack competeController)
     {
         character = weaponController.Character;

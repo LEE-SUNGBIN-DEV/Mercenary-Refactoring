@@ -52,6 +52,26 @@ public static class ExtensionMethod
     {
         return IsAnimationFrameUpTo(animator, animationInfo.nameHash, animationInfo.maxFrame, targetFrame, targetLayer);
     }
+    public static bool IsAnimationFrameDownTo(this Animator animator, int nameHash, int maxFrame, int targetFrame, int targetLayer = 0)
+    {
+        return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame));
+    }
+    public static bool IsAnimationFrameDownTo(this Animator animator, AnimationClipInformation animationInfo, int targetFrame, int targetLayer = 0)
+    {
+        return IsAnimationFrameDownTo(animator, animationInfo.nameHash, animationInfo.maxFrame, targetFrame, targetLayer);
+    }
+    public static bool IsAnimationFrameBetweenTo(this Animator animator, int nameHash, int maxFrame, int startFrame, int endFrame, int targetLayer = 0)
+    {
+        return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, startFrame)
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, endFrame));
+    }
+    public static bool IsAnimationFrameBetweenTo(this Animator animator, AnimationClipInformation animationInfo, int startFrame, int endFrame, int targetLayer = 0)
+    {
+        return IsAnimationFrameBetweenTo(animator, animationInfo.nameHash, animationInfo.maxFrame, startFrame, endFrame, targetLayer);
+    }
+
     public static bool IsAnimationNormalizeTimeUpTo(this Animator animator, int nameHash, float normalizedTime, int targetLayer = 0)
     {
         return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash

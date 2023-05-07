@@ -5,21 +5,13 @@ using UnityEngine.Events;
 
 public class DiePopup : UIPopup
 {
-    private SCENE_LIST returnScene;
-
     public void Initialize()
     {
 
     }
-    public void ReturnViliage()
-    {
-        Managers.SceneManagerCS.LoadSceneAsync(returnScene);
-    }
 
-    #region Property
-    public SCENE_LIST ReturnScene
+    public void ReturnLastResonancePoint()
     {
-        get { return returnScene; }
+        Managers.SceneManagerCS.LoadSceneAsync(Managers.DataManager.CurrentCharacterData.LocationData.LastScene);
     }
-    #endregion
 }

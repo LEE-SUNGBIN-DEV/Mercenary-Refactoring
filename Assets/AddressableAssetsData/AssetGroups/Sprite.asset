@@ -53,6 +53,14 @@ MonoBehaviour:
     m_Address: Sprite_Cursor_Basic
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 97ac91fd9c8e73740816ad7862a34479
+    m_Address: Sprite_Thumbnail_Halberd
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c5c729450bd8d3843b95e8d5e3bf0f09
+    m_Address: Sprite_Thumbnail_Sword_Shield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
   m_SchemaSet:

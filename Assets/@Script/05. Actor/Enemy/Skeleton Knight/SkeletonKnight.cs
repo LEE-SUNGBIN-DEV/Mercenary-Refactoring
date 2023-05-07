@@ -10,11 +10,6 @@ public class SkeletonKnight : BaseEnemy, ICompetable
         base.Awake();
     }
 
-    public override void OnDisable()
-    {
-        base.OnDisable();
-    }
-
     public override void Update()
     {
         base.Update();

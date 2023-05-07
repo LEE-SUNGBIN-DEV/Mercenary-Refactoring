@@ -17,17 +17,15 @@ public class HalberdGuardOut : IActionState
 
     public void Enter()
     {
-        character.IsInvincible = false;
+        character.HitState = HIT_STATE.Hittable;
         character.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()
     {
-        // !! When animation is over
+        // -> Idle
         if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.9f))
-        {
             return;
-        }
     }
 
     public void Exit()

@@ -10,20 +10,21 @@ public class PlayerCharacter : BaseActor, ICompetable
     public event UnityAction<PlayerCharacter> OnPlayerHit;
 
     private PlayerCamera playerCamera;
-    private StatusEffectController<PlayerCharacter> statusEffectController;
 
-    [Header("Character Data")]
+    [Header("Player Character")]
     [SerializeField] private CharacterData characterData;
 
-    [Header("Player Weapon")]
+    [Header("Controllers")]
+    [SerializeField] private PlayerMoveController moveController;
     [SerializeField] private PlayerWeaponController weaponController;
-
     [SerializeField] private PlayerInteractionController interactionController;
+    private StatusEffectController<PlayerCharacter> statusEffectController;
+
+    private bool isLockOn = false;
 
     protected override void Awake()
     {
         base.Awake();
-
         characterData = Managers.DataManager.CurrentCharacterData;
 
         OnPlayerHit += interactionController.DisableInteraction;
@@ -34,13 +35,16 @@ public class PlayerCharacter : BaseActor, ICompetable
 
         SetAttackSpeed(Status);
 
+        moveController = new PlayerMoveController(this);
+
         // Initialize InteractionController
         interactionController = new PlayerInteractionController();
         interactionController.Initialize();
+        interactionController.OnInteraction += Interaction;
 
         // Initialize Weapon
-        if (TryGetComponent<PlayerWeaponController>(out weaponController))
-            weaponController.Initialize(this);
+        weaponController = new PlayerWeaponController();
+        weaponController.Initialize(this);
 
         // Initialize State
         AddDefaultState();
@@ -53,16 +57,15 @@ public class PlayerCharacter : BaseActor, ICompetable
         Spawn();
     }
 
-    private void Start()
-    {
-        playerCamera = Managers.GameManager.PlayerCamera;
-        playerCamera.TargetTransform = transform;
-    }
-
     private void Update()
     {
+        moveController?.UpdateGroundState();
         state?.Update();
-        moveController?.Update();
+    }
+
+    public virtual void LateUpdate()
+    {
+        moveController?.UpdatePosition();
     }
 
     private void OnDestroy()
@@ -72,6 +75,8 @@ public class PlayerCharacter : BaseActor, ICompetable
 
         Status.OnCharacterStatusChanged -= SetAttackSpeed;
         Status.OnCharacterStatusChanged -= OnDie;
+
+        interactionController.OnInteraction -= Interaction;
     }
 
     public void AddDefaultState()
@@ -104,19 +109,25 @@ public class PlayerCharacter : BaseActor, ICompetable
         OnPlayerSpawn?.Invoke(this);
 
         gameObject.layer = Constants.LAYER_PLAYER;
-        isInvincible = false;
+        hitState = HIT_STATE.Hittable;
         IsDie = false;
         state?.SetState(CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
     }
 
-    public void StartInteraction()
+    public void Interaction(bool isInteracting)
     {
+        playerCamera.SetInteraction(isInteracting);
 
-    }
+        switch (isInteracting)
+        {
+            case true:
+                weaponController.HideWeapon(); 
+                break;
 
-    public void EndInteraction()
-    {
-
+            case false:
+                weaponController.ShowWeapon();
+                break;
+        }
     }
 
     public bool TryEquipWeapon(WEAPON_TYPE targetWeapon)
@@ -159,7 +170,7 @@ public class PlayerCharacter : BaseActor, ICompetable
 
     public void TakeHit(BaseEnemy attacker, float damageRatio, HIT_TYPE combatType, float duration = 0f)
     {
-        if (isInvincible)
+        if (hitState == HIT_STATE.Invincible)
             return;
 
         DamageInformation damageInforamtion = TakeDamage(attacker, damageRatio);
@@ -193,9 +204,9 @@ public class PlayerCharacter : BaseActor, ICompetable
         {
             OnPlayerDie?.Invoke(this);
 
-            moveController.SetMoveInformation(Vector3.zero, 0f);
+            moveController.SetMovement(Vector3.zero, 0f);
             gameObject.layer = Constants.LAYER_DIE;
-            isInvincible = true;
+            hitState = HIT_STATE.Invincible;
             IsDie = true;
             state?.SetState(ACTION_STATE.PLAYER_DIE, STATE_SWITCH_BY.WEIGHT);
             StartCoroutine(CoWaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
@@ -219,18 +230,31 @@ public class PlayerCharacter : BaseActor, ICompetable
         Managers.CompeteManager.OnEnemyFail();
     }
 
+    public void SetForwardDirection(Vector3 direction)
+    {
+        if (isLockOn)
+        {
+            return;
+        }
+
+        transform.forward = direction;
+    }
+
 
     #region Property
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
-    public StatusEffectController<PlayerCharacter> StatusEffectController { get { return statusEffectController; } }
+    public PlayerMoveController MoveController { get { return moveController; } }
     public PlayerWeaponController WeaponController { get { return weaponController; } }
-    public PlayerWeapon CurrentWeapon { get { return weaponController.CurrentWeapon; } }
     public PlayerInteractionController InteractionController { get { return interactionController; } }
+    public StatusEffectController<PlayerCharacter> StatusEffectController { get { return statusEffectController; } }
 
     public CharacterData CharacterData { get { return characterData; } }
     public PlayerStatusData Status { get { return characterData?.StatusData; } }
     public PlayerInventoryData InventoryData { get { return characterData?.InventoryData; } }
     public PlayerEquipmentSlotData EquipmentSlotData { get { return characterData?.EquipmentSlotData; } }
     public PlayerQuestData QuestData { get { return characterData?.QuestData; } }
+    public PlayerLocationData LocationData { get { return characterData?.LocationData; } }
+
+    public PlayerWeapon CurrentWeapon { get { return weaponController.CurrentWeapon; } }
     #endregion
 }

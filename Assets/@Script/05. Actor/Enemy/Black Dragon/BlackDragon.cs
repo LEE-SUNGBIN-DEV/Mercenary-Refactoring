@@ -18,9 +18,9 @@ public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
         base.Update();
     }
 
-    public override void Spawn()
+    public override void Spawn(Vector3 spawnPosition)
     {
-        base.Spawn();
+        base.Spawn(spawnPosition);
         state.SetState(ACTION_STATE.ENEMY_SPAWN, STATE_SWITCH_BY.WEIGHT);
     }
 

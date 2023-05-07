@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: ac7483c52db430b4ea4c62a3b4519157
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 21300
   internalIDToNameTable:
   - first:
       1: 100000
@@ -740,15 +740,23 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: root
+    removeConstantScaleCurves: 0
+    motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
       copied configuration does not match position in animation file:\n\t'thigh_l'
-      : position error = 2.257123 mm\n\t'thigh_r' : position error = 1.287986 mm\n\t'lowerarm_l'
-      : position error = 1.148810 mm\n\t'hand_l' : position error = 2.732140 mm\n\t'middle_02_l'
-      : position error = 1.205514 mm\n\t'ring_02_l' : position error = 1.315670 mm\n\t'hand_r'
-      : position error = 1.490201 mm\n\t'middle_02_r' : position error = 1.204100
-      mm\n\t'ring_02_r' : position error = 1.314632 mm\n"
+      : position error = 1.771759 mm\n\t'calf_l' : position error = 7.332817 mm\n\t'foot_l'
+      : position error = 140.288528 mm\n\t'ball_l' : position error = 1.844205 mm\n\t'calf_r'
+      : position error = 7.168482 mm\n\t'foot_r' : position error = 6.626571 mm\n\t'ball_r'
+      : position error = 3.661948 mm\n\t'spine_01' : position error = 1.690182 mm\n\t'spine_02'
+      : position error = 2.522642 mm\n\t'spine_03' : position error = 1.949207 mm\n\t'clavicle_l'
+      : position error = 1.927628 mm\n\t'lowerarm_l' : position error = 1.302371
+      mm\n\t'hand_l' : position error = 2.887309 mm\n\t'middle_02_l' : position error
+      = 1.282108 mm\n\t'ring_02_l' : position error = 1.185689 mm\n\t'pinky_03_l'
+      : position error = 26.099939 mm\n\t'clavicle_r' : position error = 2.381446
+      mm\n\t'hand_r' : position error = 1.276980 mm\n\t'middle_02_r' : position error
+      = 1.184843 mm\n\t'ring_02_r' : position error = 1.317162 mm\n\t'neck_01' :
+      position error = 2.514285 mm\n\t'head' : position error = 1.362266 mm\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
@@ -776,7 +784,36 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 7400000
+      firstFrame: 0
+      lastFrame: 83
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -789,6 +826,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    nodeNameCollisionStrategy: 0
     fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -800,6 +838,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -1247,33 +1286,33 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Cloak
       parentName: Frank_Warrior_Skin(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      position: {x: -0, y: 0, z: 0.010561532}
+      rotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: Frank_Mesh_Unity
       parentName: Frank_Warrior_Skin(Clone)
-      position: {x: -0.00000029563904, y: 0, z: 0}
-      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      position: {x: -0.00000029563904, y: 0.9366794, z: -0.012037815}
+      rotation: {x: -0.7071068, y: -0.50540185, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: FX_Slash_R
       parentName: Frank_Warrior_Skin(Clone)
-      position: {x: -1.707427, y: 0, z: 0}
+      position: {x: -1.707427, y: -0.0048614694, z: -0.0923263}
       rotation: {x: 0.05855422, y: 0.70467824, z: 0.70467824, w: -0.05855422}
       scale: {x: 1.075403, y: 1.075403, z: 1.075403}
     - name: R_Shash_FX
       parentName: Frank_Warrior_Skin(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      position: {x: -0, y: -0.0005606079, z: 0.000064201355}
+      rotation: {x: -0.7071068, y: -0.009850457, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: root
       parentName: Frank_Warrior_Skin(Clone)
-      position: {x: -0.0000000050931943, y: 0, z: 0}
-      rotation: {x: 0.000000021855694, y: 0, z: -0, w: 1}
+      position: {x: -0.0000000050931943, y: -0.000032510758, z: -0.000036582947}
+      rotation: {x: 0.000000021855694, y: 0.079712026, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: ik_foot_root
       parentName: root
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
+      position: {x: -0, y: -0.16596241, z: 0.00068435667}
+      rotation: {x: -0.08611796, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: ik_foot_l
       parentName: ik_foot_root
@@ -1287,8 +1326,8 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1.000001}
     - name: ik_hand_root
       parentName: root
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
+      position: {x: -0, y: -0.0051662824, z: 0.09141292}
+      rotation: {x: -0.15031295, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: ik_hand_gun
       parentName: ik_hand_root
@@ -1302,9 +1341,8 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: ik_hand_r
       parentName: ik_hand_gun
-      position: {x: -0, y: 0, z: -0.000000019073486}
-      rotation: {x: 0.0000000074505784, y: -0.000000029802326, z: -0.000000014901163,
-        w: 1}
+      position: {x: -0, y: 0.16574064, z: -0.000000019073486}
+      rotation: {x: 0.0000000074505784, y: -0.000000029802326, z: -0.000000014901163, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: pelvis
       parentName: root
@@ -1333,7 +1371,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Bone008
       parentName: Bone007
-      position: {x: -0.24139526, y: -0.0000030517576, z: 0}
+      position: {x: -0.24139526, y: -0.0000030517576, z: -0.03781997}
       rotation: {x: -0.000000043826663, y: -0.000000044507086, z: -0.0012238788, w: 0.9999993}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone009
@@ -1343,12 +1381,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Bone010
       parentName: Bone009
-      position: {x: -0.28367943, y: 0, z: 0.000000028610229}
+      position: {x: -0.28367943, y: 0.000023765564, z: 0.000000028610229}
       rotation: {x: -5.548575e-15, y: -2.57387e-10, z: -0.000021557324, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone011
       parentName: Bone010
-      position: {x: -0.28368065, y: 0, z: 0.000000028610229}
+      position: {x: -0.28368065, y: 0.0011664199, z: 0.000000028610229}
       rotation: {x: 1.4187854e-14, y: 1.8735588e-10, z: -0.00007572676, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone012
@@ -1363,7 +1401,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Bone002
       parentName: Bone001
-      position: {x: -0.24139534, y: -0.0000030517576, z: 0}
+      position: {x: -0.24139534, y: -0.0000030517576, z: -0.025377806}
       rotation: {x: -0.00000004370661, y: -0.000000041536822, z: -0.0012238788, w: 0.9999993}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone003
@@ -1373,12 +1411,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Bone004
       parentName: Bone003
-      position: {x: -0.2836795, y: 0, z: 0.000000019073486}
+      position: {x: -0.2836795, y: 0.00013702392, z: 0.000000019073486}
       rotation: {x: -2.5684216e-14, y: -0.0000000011914381, z: -0.000021557324, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone005
       parentName: Bone004
-      position: {x: -0.28368065, y: 0, z: 0}
+      position: {x: -0.28368065, y: 0.01776985, z: -0.021045456}
       rotation: {x: -5.833563e-11, y: -0.0000000016898365, z: -0.00007572583, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone006
@@ -1409,12 +1447,11 @@ ModelImporter:
     - name: lowerarm_twist_01_l
       parentName: lowerarm_l
       position: {x: -0.14000028, y: 0.000000057220458, z: 0.00000015258789}
-      rotation: {x: -0.000000029802322, y: -0.00000004470348, z: 0.000000022351738,
-        w: 1}
+      rotation: {x: -0.000000029802322, y: -0.00000004470348, z: 0.000000022351738, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: hand_l
       parentName: lowerarm_l
-      position: {x: -0.26975152, y: -0.00000019073485, z: 0}
+      position: {x: -0.26975152, y: -0.00000019073485, z: -0.000013427734}
       rotation: {x: -0.617895, y: -0.019372031, z: -0.010653137, w: 0.78594977}
       scale: {x: 1, y: 1, z: 1}
     - name: Lhand_Shield_Bone
@@ -1455,7 +1492,7 @@ ModelImporter:
     - name: Bone055
       parentName: Bone039
       position: {x: -0.079126745, y: 0.000000009536743, z: -0.13466282}
-      rotation: {x: -0, y: -0.7071066, z: 0, w: 0.70710695}
+      rotation: {x: -0, y: -0.7071066, z: -0.4304591, w: 0.70710695}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone056
       parentName: Bone055
@@ -1474,19 +1511,18 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Bone041
       parentName: Bone039
-      position: {x: -0.14633682, y: 0, z: -0.000000017434358}
+      position: {x: -0.14633682, y: 0.000000114440915, z: -0.000000017434358}
       rotation: {x: 3.388132e-21, y: -0.00000005960465, z: 5.684342e-14, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone059
       parentName: Bone041
       position: {x: -0.055730075, y: 0.0000000667572, z: -0.10442974}
-      rotation: {x: -0, y: -0.7071066, z: 0, w: 0.70710695}
+      rotation: {x: -0, y: -0.7071066, z: 0.043619342, w: 0.70710695}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone060
       parentName: Bone059
       position: {x: -0.17106734, y: -0.000000008158386, z: -0.000000019073486}
-      rotation: {x: -0.000000042146826, y: -0.00000011920929, z: -0.000000043532342,
-        w: 1}
+      rotation: {x: -0.000000042146826, y: -0.00000011920929, z: -0.000000043532342, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone049
       parentName: Bone041
@@ -1496,8 +1532,7 @@ ModelImporter:
     - name: Bone050
       parentName: Bone049
       position: {x: -0.20850265, y: -0.0000000099465245, z: -0.000000019073486}
-      rotation: {x: -0.00000004214684, y: -0.00000011920928, z: -0.000000043532314,
-        w: 1}
+      rotation: {x: -0.00000004214684, y: -0.00000011920928, z: -0.000000043532314, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone038
       parentName: Shield_Root
@@ -1517,7 +1552,7 @@ ModelImporter:
     - name: Bone028
       parentName: Bone038
       position: {x: -0.07815791, y: -0.00000007625669, z: -0.1367189}
-      rotation: {x: -0, y: -0.7071066, z: 0, w: 0.70710707}
+      rotation: {x: -0, y: -0.7071066, z: -0.43045926, w: 0.70710707}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone029
       parentName: Bone028
@@ -1537,8 +1572,7 @@ ModelImporter:
     - name: Bone058
       parentName: Bone057
       position: {x: -0.17106734, y: -0.000000008158386, z: -0.000000019073486}
-      rotation: {x: -0.000000042146855, y: -0.00000011920926, z: -0.00000004353223,
-        w: 1}
+      rotation: {x: -0.000000042146855, y: -0.00000011920926, z: -0.00000004353223, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Bone044
       parentName: Bone040
@@ -1548,14 +1582,12 @@ ModelImporter:
     - name: Bone045
       parentName: Bone044
       position: {x: -0.20850267, y: -0.000000009909272, z: -0.000000038146972}
-      rotation: {x: -0.00000004214687, y: -0.00000011920933, z: -0.000000043532285,
-        w: 1}
+      rotation: {x: -0.00000004214687, y: -0.00000011920933, z: -0.000000043532285, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: FX_Shield
       parentName: Shield_Root
-      position: {x: -4.5474734e-15, y: 0.0000000047683715, z: 0}
-      rotation: {x: -0.000000029802077, y: -0.000000104308384, z: -0.00000028312186,
-        w: 1}
+      position: {x: -4.5474734e-15, y: 0.0000000047683715, z: -0.000000035514216}
+      rotation: {x: -0.000000029802077, y: -0.000000104308384, z: -0.00000028312186, w: 1}
       scale: {x: 1.000001, y: 0.999999, z: 1}
     - name: thumb_01_l
       parentName: hand_l
@@ -1564,7 +1596,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: thumb_02_l
       parentName: thumb_01_l
-      position: {x: -0.038696706, y: 0.000000038146972, z: 0}
+      position: {x: -0.038696706, y: 0.000000038146972, z: -0.000000028903006}
       rotation: {x: 0.002635925, y: -0.01981496, z: -0.029705975, w: 0.99935883}
       scale: {x: 1, y: 1, z: 1}
     - name: thumb_03_l
@@ -1579,12 +1611,12 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: pinky_02_l
       parentName: pinky_01_l
-      position: {x: -0.035709646, y: 0, z: -0.000000009536743}
+      position: {x: -0.035709646, y: 0.000000004768368, z: -0.000000009536743}
       rotation: {x: 0.010402153, y: 0.0041389, z: -0.038466096, w: 0.9991972}
       scale: {x: 1, y: 1, z: 0.999999}
     - name: pinky_03_l
       parentName: pinky_02_l
-      position: {x: -0.029856337, y: 0, z: 0.000000009536743}
+      position: {x: -0.029856337, y: -0.027321003, z: 0.000000009536743}
       rotation: {x: 0.0035808461, y: -0.033796433, z: -0.008930321, w: 0.99938244}
       scale: {x: 1, y: 1, z: 1.000001}
     - name: ring_01_l
@@ -1614,7 +1646,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: middle_03_l
       parentName: middle_02_l
-      position: {x: -0.036488418, y: 0, z: 0.000000057220458}
+      position: {x: -0.036488418, y: 0.0000011062622, z: 0.000000057220458}
       rotation: {x: 0.0016212383, y: 0.038866915, z: 0.13362388, w: 0.99026835}
       scale: {x: 1, y: 1, z: 1}
     - name: index_01_l
@@ -1670,8 +1702,7 @@ ModelImporter:
     - name: Sword_R_Bone
       parentName: R_Hand_Weapon
       position: {x: -0.00000030517577, y: 0.000000114440915, z: -0.00000015258789}
-      rotation: {x: -0.00000008940704, y: -0.000000022351768, z: 0.00000023841864,
-        w: 1}
+      rotation: {x: -0.00000008940704, y: -0.000000022351768, z: 0.00000023841864, w: 1}
       scale: {x: 1, y: 0.999999, z: 1}
     - name: Convertable_Sword01
       parentName: Sword_R_Bone
@@ -1680,38 +1711,37 @@ ModelImporter:
       scale: {x: 0.999999, y: 1.000001, z: 1}
     - name: Convertable_Sword02
       parentName: Convertable_Sword01
-      position: {x: -0.056368884, y: 0, z: 0}
+      position: {x: -0.056368884, y: -0.000061035156, z: -0.00000045776366}
       rotation: {x: -0.00000010430813, y: 0.000000007450581, z: 7.771561e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Convertable_Sword03
       parentName: Convertable_Sword02
-      position: {x: -0.05650093, y: -0.000000038146972, z: 0}
+      position: {x: -0.05650093, y: -0.000000038146972, z: 0.0025668454}
       rotation: {x: -0.0000000745058, y: -5.5511146e-16, z: 0.000000007450581, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Convertable_Sword04
       parentName: Convertable_Sword03
-      position: {x: -0.055174712, y: 0, z: 0}
+      position: {x: -0.055174712, y: 0.000000035762785, z: -0.00000015258789}
       rotation: {x: -0.00000007450581, y: 0.0000000074505815, z: 5.5511167e-16, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Convertable_Sword05
       parentName: Convertable_Sword04
-      position: {x: -0.056856688, y: 0, z: 0.000000076293944}
+      position: {x: -0.056856688, y: 0.000000114440915, z: 0.000000076293944}
       rotation: {x: -0.00000008940697, y: -6.661338e-16, z: 0.000000007450581, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Convertable_Sword06
       parentName: Convertable_Sword05
-      position: {x: -0.06076643, y: 0.000000038146972, z: 0}
+      position: {x: -0.06076643, y: 0.000000038146972, z: -0.000000004263397}
       rotation: {x: -0.00000019371512, y: 0.0000000074505815, z: 1.4432902e-15, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Convertable_Sword07
       parentName: Convertable_Sword06
       position: {x: -0.056405716, y: 0.000000019073486, z: 0.000000076293944}
-      rotation: {x: -0.00000014901161, y: -0.0000000074505815, z: 0.0000000074505793,
-        w: 1}
+      rotation: {x: -0.00000014901161, y: -0.0000000074505815, z: 0.0000000074505793, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Convertable_Sword08
       parentName: Convertable_Sword07
-      position: {x: -0.07199215, y: 0, z: 0}
+      position: {x: -0.07199215, y: -0.000000013664822, z: -0.000000005778552}
       rotation: {x: -0.00000020861626, y: -3.1086245e-15, z: 0.000000014901161, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: R_Slash_FX_Bone
@@ -1791,7 +1821,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: index_03_r
       parentName: index_02_r
-      position: {x: 0.033937912, y: 0.0000012969971, z: 0}
+      position: {x: 0.033937912, y: 0.0000012969971, z: -4.5019985e-13}
       rotation: {x: 0.010610948, y: -0.007850732, z: 0.082855254, w: 0.9964742}
       scale: {x: 1, y: 1, z: 1}
     - name: neck_01
@@ -1826,7 +1856,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: foot_l
       parentName: calf_l
-      position: {x: 0.401967, y: 0, z: -0.000000019073486}
+      position: {x: 0.401967, y: 0.14577787, z: -0.000000019073486}
       rotation: {x: -0.005886293, y: -0.031990904, z: -0.070353255, w: 0.9969917}
       scale: {x: 1, y: 1, z: 1}
     - name: ball_l
@@ -1891,13 +1921,13 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: f350503aace63b643a055bd8baaa5c6f,
-    type: 3}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: f350503aace63b643a055bd8baaa5c6f, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

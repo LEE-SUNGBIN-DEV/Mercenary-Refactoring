@@ -22,28 +22,26 @@ public class SwordShieldGuardIn : IActionState
 
     public void Enter()
     {
-        character.IsInvincible = true;
-        swordShield.SetAndEnableShield(COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_IN);
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.02f);
+        character.HitState = HIT_STATE.Parryable;
+        character.SetForwardDirection(character.PlayerCamera.GetForward(true));
+        character.Animator.Play(animationClipInformation.nameHash);
+        swordShield.EnableShield(COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_IN);
     }
 
     public void Update()
     {
+        // -> Guard Out
         if (!Input.GetMouseButton(1) && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT))
-        {
             return;
-        }
 
-        // !! When animation is over
-        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_LOOP, 0.9f))
-        {
+        // -> Guard Loop
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_LOOP, 1f))
             return;
-        }
     }
 
     public void Exit()
     {
-        character.IsInvincible = false;
+        character.HitState = HIT_STATE.Hittable;
         swordShield.DisableShield();
     }
 

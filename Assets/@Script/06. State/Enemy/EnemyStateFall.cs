@@ -6,7 +6,7 @@ public class EnemyStateFall : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
 
     private float fallTime;
 
@@ -14,32 +14,31 @@ public class EnemyStateFall : IActionState
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_FALL;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_FALL;
+        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_FALL];
 
         fallTime = 0f;
     }
 
     public void Enter()
     {
-        enemy.Animator.Play(animationNameHash);
+        enemy.Animator.Play(animationClipInformation.nameHash);
         fallTime = 0f;
     }
 
     public void Update()
     {
-        switch (enemy.MoveController.GetGroundState())
+        switch (enemy.MoveController.GroundState)
         {
             case ACTOR_GROUND_STATE.GROUND:
-                enemy.Status.CurrentHP -= enemy.Status.MaxHP * enemy.MoveController.GetFallDamage();
                 enemy.State.SetState(ACTION_STATE.ENEMY_LANDING, STATE_SWITCH_BY.WEIGHT);
-                break;
+                return;
 
             case ACTOR_GROUND_STATE.SLOPE:
                 enemy.MoveController.SlideTime += Time.deltaTime;
-                break;
+                return;
             case ACTOR_GROUND_STATE.AIR:
                 enemy.MoveController.FallTime += Time.deltaTime;
-                break;
+                return;
         }
 
         if (fallTime > 2.5f)

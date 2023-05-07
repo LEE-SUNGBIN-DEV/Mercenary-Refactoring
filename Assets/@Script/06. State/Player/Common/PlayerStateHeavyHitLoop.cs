@@ -6,6 +6,7 @@ public class PlayerStateHeavyHitLoop : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+
     private AnimationClipInformation animationClipInformation;
     private float duration;
     private float time;
@@ -14,6 +15,7 @@ public class PlayerStateHeavyHitLoop : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_HEAVY_LOOP;
+
         animationClipInformation = character.AnimationClipTable["Player_Heavy_Hit_Loop"];
         duration = Constants.TIME_CHARACTER_STAND_UP;
         time = 0f;

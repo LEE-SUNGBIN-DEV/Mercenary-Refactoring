@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 public class PlayerHalberd : PlayerWeapon
 {
@@ -8,17 +10,18 @@ public class PlayerHalberd : PlayerWeapon
 
     public override void InitializeWeapon(PlayerCharacter character)
     {
-        if (character != null)
-        {
-            this.character = character;
-            weaponType = WEAPON_TYPE.HALBERD;
-            halberdController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_HALBERD, true);
-            halberdController.Initialize(character);
+        base.InitializeWeapon(character);
+        weaponType = WEAPON_TYPE.HALBERD;
+        halberdController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_HALBERD, true);
+        halberdController.Initialize(character);
 
-            AddWeaponState(character.State);
-            AddCombatTable();
-            AddCommonStateInforamtion();
-        }
+        weaponRenderers = new MeshRenderer[] { halberdController.GetComponentInChildren<MeshRenderer>(true) };
+        materialController = new MaterialController();
+        materialController.Initialize(weaponRenderers);
+
+        AddWeaponState(character.State);
+        AddCombatTable();
+        AddCommonStateInforamtion();
     }
 
     public override void AddWeaponState(StateController state)
@@ -54,19 +57,18 @@ public class PlayerHalberd : PlayerWeapon
         weaponCombatTable = new Dictionary<COMBAT_ACTION_TYPE, CombatControllerInfomation>()
         {
             // Light Attack
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_LIGHT_01, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f) },
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_LIGHT_02, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.03f) },
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_LIGHT_03, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.06f) },
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_LIGHT_04, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.09f) },
+            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_LIGHT_01, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.1f) },
+            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_LIGHT_02, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.13f) },
+            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_LIGHT_03, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.16f) },
+            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_LIGHT_04, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.19f) },
             
             // Heavy Attack
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_01, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_02, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.8f) },
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_03, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.2f) },
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_04_1, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
-            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_04_2, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.6f) },
+            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_01, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.6f) },
+            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_02, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.9f) },
+            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_03, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.3f) },
+            {COMBAT_ACTION_TYPE.HALBERD_ATTACK_HEAVY_04, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.8f) },
 
-            {COMBAT_ACTION_TYPE.HALBERD_PARRYING_ATTACK, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
+            {COMBAT_ACTION_TYPE.HALBERD_PARRYING_ATTACK, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2f) },
             {COMBAT_ACTION_TYPE.HALBERD_SKILL_COUNTER, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.5f) },
 
             {COMBAT_ACTION_TYPE.HALBERD_GUARD_IN, new CombatControllerInfomation(HIT_TYPE.NONE, GUARD_TYPE.PARRYABLE, 0f) },
@@ -86,14 +88,15 @@ public class PlayerHalberd : PlayerWeapon
     public override void EquipWeapon()
     {
         halberdController.gameObject.SetActive(true);
+        ShowWeapon();
     }
+
     public override void UnequipWeapon()
     {
         halberdController.gameObject.SetActive(false);
     }
 
-    #region Called by Animation Event
-    public void SetAndEnableHalberd(COMBAT_ACTION_TYPE combatActionType)
+    public void EnableHalberd(COMBAT_ACTION_TYPE combatActionType)
     {
         halberdController.SetCombatInformation(weaponCombatTable[combatActionType]);
         halberdController.CombatCollider.enabled = true;
@@ -104,5 +107,4 @@ public class PlayerHalberd : PlayerWeapon
         halberdController.CombatCollider.enabled = false;
         halberdController.HitDictionary.Clear();
     }
-    #endregion
 }

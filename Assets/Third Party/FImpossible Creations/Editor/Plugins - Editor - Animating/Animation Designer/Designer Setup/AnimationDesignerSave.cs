@@ -26,6 +26,8 @@ namespace FIMSpace.AnimationTools
         public float Export_OptimizeCurves = 0.01f;
         //public float Export_AdaptBakeFramerate = 1f;
         public bool Export_IncludeRootMotionInKeyAnimation = false;
+        public bool Export_BakeRootIndividually = false;
+        internal AnimationCurve Export_DebugCurve;
 
 
 

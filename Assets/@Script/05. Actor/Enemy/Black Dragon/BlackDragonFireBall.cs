@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlackDragonFireBall : EnemySkill
 {
     [SerializeField] private Transform muzzle;
-    private AnimationClipInformation fireBallAnimationInfo;
+    private AnimationClipInformation animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {
@@ -18,14 +18,14 @@ public class BlackDragonFireBall : EnemySkill
         muzzle = Functions.FindChild<Transform>(gameObject, "Muzzle", true);
         enemy.ObjectPooler.RegisterObject(Constants.VFX_Black_Dragon_Fire_Ball, 2);
         
-        fireBallAnimationInfo = enemy.AnimationClipTable["Skill_Fire_Ball"];
+        animationClipInformation = enemy.AnimationClipTable["Skill_Fire_Ball"];
     }
 
-    public override IEnumerator StartSkill()
+    public override IEnumerator CoStartSkill()
     {
-        enemy.Animator.Play(fireBallAnimationInfo.nameHash);
+        enemy.Animator.Play(animationClipInformation.nameHash);
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(fireBallAnimationInfo, 27));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 27));
 
         GameObject fireBall = enemy.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Fire_Ball);
         fireBall.transform.position = muzzle.position;
@@ -36,7 +36,16 @@ public class BlackDragonFireBall : EnemySkill
             projectile.SetProjectile(enemy, 20f, transform.forward);
         }
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(fireBallAnimationInfo, fireBallAnimationInfo.maxFrame));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, animationClipInformation.maxFrame));
         EndSkill();
+    }
+
+    public override IEnumerator CoLookTarget()
+    {
+        while (!enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 20))
+        {
+            enemy.LookTarget();
+            yield return null;
+        }
     }
 }

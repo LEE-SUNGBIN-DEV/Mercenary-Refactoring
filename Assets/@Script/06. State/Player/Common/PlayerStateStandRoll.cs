@@ -28,7 +28,7 @@ public class PlayerStateStandRoll : IActionState
         moveDirection = (verticalDirection * moveInput.z + horizontalDirection * moveInput.x).normalized;
         character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
 
-        character.IsInvincible = true;
+        character.HitState = HIT_STATE.Invincible;
         character.Animator.Play(animationClipInformation.nameHash);
     }
 
@@ -41,7 +41,7 @@ public class PlayerStateStandRoll : IActionState
 
     public void Exit()
     {
-        character.IsInvincible = false;
+        character.HitState = HIT_STATE.Hittable;
     }
 
     #region Property

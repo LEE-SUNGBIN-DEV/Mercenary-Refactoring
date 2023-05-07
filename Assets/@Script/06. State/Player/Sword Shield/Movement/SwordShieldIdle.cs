@@ -6,6 +6,7 @@ public class SwordShieldIdle : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+
     private AnimationClipInformation animationClipInformation;
     private Vector3 moveInput;
 
@@ -13,21 +14,22 @@ public class SwordShieldIdle : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_IDLE;
+
         animationClipInformation = character.AnimationClipTable["Sword_Shield_Idle"];
         moveInput = Vector3.zero;
     }
 
     public void Enter()
     {
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.3f);
         moveInput = Vector3.zero;
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
     }
 
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && character.TryEquipWeapon(WEAPON_TYPE.HALBERD))
         {
-            character.State.SetState(ACTION_STATE.PLAYER_HALBERD_IDLE, STATE_SWITCH_BY.FORCED);
+            character.State.SetState(character.CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
             return;
         }
 
@@ -49,37 +51,23 @@ public class SwordShieldIdle : IActionState
             return;
         }
 
-        switch (character.MoveController.GetGroundState())
+        character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY);
+        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+
+        if (moveInput.sqrMagnitude > 0)
         {
-            case ACTOR_GROUND_STATE.GROUND:
-                character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY);
-                moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+            // -> Run
+            if (Input.GetKey(KeyCode.LeftShift))
+                character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_RUN, STATE_SWITCH_BY.WEIGHT);
 
-                if (moveInput.sqrMagnitude > 0)
-                {
-                    // -> Run
-                    if (Input.GetKey(KeyCode.LeftShift))
-                        character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_RUN, STATE_SWITCH_BY.WEIGHT);
-
-                    // -> Walk
-                    else
-                        character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_WALK, STATE_SWITCH_BY.WEIGHT);
-                }
-                return;
-
-            case ACTOR_GROUND_STATE.SLOPE: // -> Slide
-                character.State.SetState(ACTION_STATE.PLAYER_SLIDE, STATE_SWITCH_BY.WEIGHT);
-                return;
-
-            case ACTOR_GROUND_STATE.AIR: // -> Fall
-                character.State.SetState(ACTION_STATE.PLAYER_FALL, STATE_SWITCH_BY.WEIGHT);
-                return;
+            // -> Walk
+            else
+                character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_WALK, STATE_SWITCH_BY.WEIGHT);
         }
     }
 
     public void Exit()
     {
-        character.MoveController.GetGroundState();
     }
 
     #region Property

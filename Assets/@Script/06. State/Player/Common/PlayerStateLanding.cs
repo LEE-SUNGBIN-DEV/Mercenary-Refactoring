@@ -18,6 +18,7 @@ public class PlayerStateLanding : IActionState
     public void Enter()
     {
         character.Animator.Play(animationClipInformation.nameHash);
+        character.Status.CurrentHP -= character.Status.MaxHP * character.MoveController.GetFallDamage();
     }
 
     public void Update()

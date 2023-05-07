@@ -8,6 +8,10 @@ using Newtonsoft.Json;
 public class PlayerStatusData
 {
     public event UnityAction<PlayerStatusData> OnCharacterStatusChanged;
+    public event UnityAction<WEAPON_TYPE> OnCharacterWeaponChanged;
+
+    [Header("Weapon Mode")]
+    [SerializeField] private WEAPON_TYPE currentWeapon;
 
     [Header("Stat")]
     [SerializeField] private int level;
@@ -30,7 +34,7 @@ public class PlayerStatusData
     [SerializeField] private float criticalDamage;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float moveSpeed;
-    [JsonIgnore][SerializeField] private int hitLevel; 
+    [SerializeField] private int hitLevel; 
 
     [Header("Equipment Status")]
     private float equipAttackPower;
@@ -44,8 +48,9 @@ public class PlayerStatusData
 
     public void Initialize()
     {
-        level = Constants.CHARACTER_DATA_DEFALUT_LEVEL;
+        currentWeapon = WEAPON_TYPE.HALBERD;
 
+        level = Constants.CHARACTER_DATA_DEFALUT_LEVEL;
         maxExp = Managers.DataManager.LevelTable[level];
         currentExp = Constants.CHARACTER_DATA_DEFALUT_EXPERIENCE;
 
@@ -174,6 +179,7 @@ public class PlayerStatusData
     #endregion
 
     #region Status Property
+    public WEAPON_TYPE CurrentWeapon { get { return currentWeapon; } set { currentWeapon = value; OnCharacterWeaponChanged?.Invoke(currentWeapon); } }
 
     public float CurrentHP
     {
@@ -181,13 +187,12 @@ public class PlayerStatusData
         set
         {
             currentHP = value;
+
             if (currentHP > MaxHP)
                 currentHP = MaxHP;
 
             if (currentHP < 0)
-            {
                 currentHP = 0;
-            }
 
             OnCharacterStatusChanged?.Invoke(this);
         }
@@ -258,7 +263,7 @@ public class PlayerStatusData
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
-    public float AttackPower
+    [JsonIgnore] public float AttackPower
     {
         get { return attackPower; }
         set
@@ -270,7 +275,7 @@ public class PlayerStatusData
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
-    public float DefensivePower
+    [JsonIgnore] public float DefensivePower
     {
         get { return defensivePower; }
         set
@@ -283,7 +288,7 @@ public class PlayerStatusData
         }
     }
 
-    public float CriticalChance
+    [JsonIgnore] public float CriticalChance
     {
         get { return criticalChance; }
         set
@@ -298,7 +303,7 @@ public class PlayerStatusData
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
-    public float CriticalDamage
+    [JsonIgnore] public float CriticalDamage
     {
         get { return criticalDamage; }
         set
@@ -310,7 +315,7 @@ public class PlayerStatusData
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
-    public float AttackSpeed
+    [JsonIgnore] public float AttackSpeed
     {
         get { return attackSpeed; }
         set
@@ -326,7 +331,7 @@ public class PlayerStatusData
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
-    public float MoveSpeed
+    [JsonIgnore] public float MoveSpeed
     {
         get { return moveSpeed; }
         set
@@ -342,7 +347,7 @@ public class PlayerStatusData
             OnCharacterStatusChanged?.Invoke(this);
         }
     }
-    public int HitLevel
+    [JsonIgnore] public int HitLevel
     {
         get { return hitLevel; }
         set
