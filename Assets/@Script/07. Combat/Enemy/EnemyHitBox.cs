@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHitBox : MonoBehaviour
+public class EnemyHitbox : MonoBehaviour
 {
-    [SerializeField] private BaseEnemy owner;
+    [SerializeField] private BaseEnemy enemy;
 
-    private void Awake()
+    public void Initialize(BaseEnemy enemy)
     {
-        owner = GetComponentInParent<BaseEnemy>(true);
+        this.enemy = enemy;
     }
 
-    public BaseEnemy Owner { get { return owner; } }
+    public BaseEnemy Enemy { get { return enemy; } }
 }

@@ -595,6 +595,9 @@ namespace FIMSpace.AnimationTools
 
             public void RefreshMod(AnimationDesignerSave save, ADClipSettings_Main main)
             {
+                if (main == null) return;
+                if (main.settingsForClip == null) return;
+
                 clipLength = main.settingsForClip.length;
                 clipFramerate = main.settingsForClip.frameRate;
                 clipKeyStep = 1f / clipFramerate;
@@ -714,7 +717,7 @@ namespace FIMSpace.AnimationTools
                             LatelyAdjusted = EWasAdjusted.Still;
                 }
 
-                if ( IKPosOffMul < 0.01f)
+                if (IKPosOffMul < 0.01f)
                 {
                     if (IKPosStillMul > 0.01f)
                     { LatelyAdjusted = EWasAdjusted.Still; }

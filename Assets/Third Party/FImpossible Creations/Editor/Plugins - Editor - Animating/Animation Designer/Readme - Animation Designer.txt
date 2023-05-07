@@ -1,7 +1,7 @@
 __________________________________________________________________________________________
 
 Package "Animation Designer"
-Version 1.2.2
+Version 1.2.2.2
 
 Made by FImpossible Creations - Filip Moeglich
 https://www.FilipMoeglich.pl
@@ -66,6 +66,21 @@ MAIN FEATURES:
 • Supporting Root Motion Animations
 
 __________________________________________________________________________________________
+
+Version 1.2.2.2
+- Animation Clip Internal Crop fixes
+- Animation Clip Internal Crop preview support 
+uncorrectly exporting source root motion curves when editing internally cropped animation clips (still center of mass motion can be used)
+(need to be handled in a different way for generics, differently for humanoids and differently for humanoid IK, it's not implemented fully yet)
+
+Version 1.2.2.1
+- You can set constant animation clips export directory with the button on the right to export button
+- Hit export button with right mouse button to save clip without Save File popup
+- Updated and upgraded IK position handles display
+- Reworked some parts of root motion export procedure
+- Fixed some time cropping related calculations for animation previewing
+- If root bone of the character is using keyframe animation, you can enable baking it under additional settings (export tab)
+but you also need to remember about including it in the armature report
 
 Version 1.2.2
 - New Module: Basic Hips Stabilizer (automatic stable pose keeper when using Leg IKs)

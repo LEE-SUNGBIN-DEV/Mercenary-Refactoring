@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class DirectingCamera : BaseCamera
 {
-    protected override void Awake()
+    public override void Initialize()
     {
-        base.Awake();
+        base.Initialize();
         Managers.GameManager.DirectingCamera = this;
         gameObject.SetActive(false);
     }

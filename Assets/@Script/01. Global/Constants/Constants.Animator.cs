@@ -4,31 +4,32 @@ using UnityEngine;
 
 public static partial class Constants
 {
-    #region Animator String Hash
+    #region Animation Clip Name
     // Enemy
-    public static readonly int ANIMATION_NAME_HASH_EMPTY = Animator.StringToHash("Empty");
+    public static readonly string ANIMATION_NAME_EMPTY = "Empty";
+    public static readonly string ANIMATION_NAME_UPPER_EMPTY = "Upper_Empty";
 
-    public static readonly int ANIMATION_NAME_HASH_IDLE = Animator.StringToHash("Idle");
-    public static readonly int ANIMATION_NAME_HASH_WALK = Animator.StringToHash("Walk");
-    public static readonly int ANIMATION_NAME_HASH_RUN = Animator.StringToHash("Run");
+    public static readonly string ANIMATION_NAME_IDLE = "Idle";
+    public static readonly string ANIMATION_NAME_WALK = "Walk";
+    public static readonly string ANIMATION_NAME_RUN = "Run";
 
+    public static readonly string ANIMATION_NAME_HEAVY_HIT = "Heavy_Hit";
+    public static readonly string ANIMATION_NAME_LIGHT_HIT = "Light_Hit";
+    public static readonly string ANIMATION_NAME_STUN = "Stun";
 
-    public static readonly int ANIMATION_NAME_HASH_ROLL = Animator.StringToHash("Roll");
+    public static readonly string ANIMATION_NAME_SLIDE = "Slide";
+    public static readonly string ANIMATION_NAME_FALL = "Fall";
+    public static readonly string ANIMATION_NAME_LANDING = "Landing";
 
-    public static readonly int ANIMATION_NAME_HASH_SLIDE = Animator.StringToHash("Slide");
-    public static readonly int ANIMATION_NAME_HASH_FALL = Animator.StringToHash("Fall");
-    public static readonly int ANIMATION_NAME_HASH_LANDING = Animator.StringToHash("Landing");
+    public static readonly string ANIMATION_NAME_SPAWN = "Spawn";
+    public static readonly string ANIMATION_NAME_DIE = "Die";
+    #endregion
 
-    public static readonly int ANIMATION_NAME_HASH_LIGHT_HIT = Animator.StringToHash("Light_Hit");
-    public static readonly int ANIMATION_NAME_HASH_HEAVY_HIT = Animator.StringToHash("Heavy_Hit");
-    public static readonly int ANIMATION_NAME_HASH_HEAVY_HIT_LOOP = Animator.StringToHash("Heavy_Hit_Loop");
-    public static readonly int ANIMATION_NAME_HASH_STAND_UP = Animator.StringToHash("Stand_Up");
-    public static readonly int ANIMATION_NAME_HASH_STAND_ROLL = Animator.StringToHash("Stand_Roll");
+    #region Animation Name Hash
+    public static readonly int ANIMATION_HASH_UPPER_EMPTY = Animator.StringToHash("Upper_Empty");
+    #endregion
 
-    public static readonly int ANIMATION_NAME_HASH_STUN = Animator.StringToHash("Stun");
-    public static readonly int ANIMATION_NAME_HASH_DIE = Animator.StringToHash("Die");
-    public static readonly int ANIMATION_NAME_HASH_SPAWN = Animator.StringToHash("Spawn");
-
+    #region Animator Parameter Hash
     // Skill
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_STAGGER = Animator.StringToHash("doStagger");
     public static readonly int ANIMATOR_PARAMETERS_BOOL_STAGGER = Animator.StringToHash("isStagger");
@@ -40,7 +41,6 @@ public static partial class Constants
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_COMPETE = Animator.StringToHash("doCompete");
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_COMPETE_SUCCESS = Animator.StringToHash("doCompeteSuccess");
     public static readonly int ANIMATOR_PARAMETERS_TRIGGER_COMPETE_FAIL = Animator.StringToHash("doCompeteFail");
-
     #endregion
 
     // Character

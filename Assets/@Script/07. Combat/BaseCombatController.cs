@@ -11,7 +11,7 @@ public abstract class BaseCombatController : MonoBehaviour
     [SerializeField] protected float damageRatio;
     [SerializeField] protected float crowdControlDuration;
     [SerializeField] protected Collider combatCollider;
-    protected Dictionary<BaseActor, bool> hitDictionary = new Dictionary<BaseActor, bool>();
+    protected Dictionary<Object, bool> hitDictionary = new Dictionary<Object, bool>();
 
     public virtual void Awake()
     {
@@ -48,5 +48,5 @@ public abstract class BaseCombatController : MonoBehaviour
     public float DamageRatio { get { return damageRatio; } }
     public float CrowdControlDuration { get { return crowdControlDuration; } }
     public Collider CombatCollider { get { return combatCollider; } }
-    public Dictionary<BaseActor, bool> HitDictionary { get { return hitDictionary; } }
+    public Dictionary<Object, bool> HitDictionary { get { return hitDictionary; } }
 }

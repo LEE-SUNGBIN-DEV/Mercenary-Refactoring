@@ -6,74 +6,60 @@ public class EnemyStateChaseWait : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
     private float runDistance;
 
     public EnemyStateChaseWait(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_CHASE_WAIT;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_IDLE;
+        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_IDLE];
     }
 
     public void Enter()
     {
-        enemy.Animator.CrossFade(animationNameHash, 0.1f);
+        enemy.Animator.CrossFade(animationClipInformation.nameHash, 0.1f);
         runDistance = enemy.Status.ChaseDistance * Constants.ENEMY_RUN_DISTANCE;
     }
 
     public void Update()
     {
-        switch (enemy.MoveController.GetGroundState())
+        if (enemy.IsTargetInChaseDistance())
         {
-            case ACTOR_GROUND_STATE.GROUND:
-                if (enemy.IsTargetInChaseDistance())
-                {
-                    // -> Skill
-                    if (enemy.IsReadyAnySkill())
-                    {
-                        enemy.State.SetState(ACTION_STATE.ENEMY_SKILL, STATE_SWITCH_BY.WEIGHT);
-                        return;
-                    }
+            // -> Skill
+            if (enemy.IsReadyAnySkill())
+            {
+                enemy.State.SetState(ACTION_STATE.ENEMY_SKILL, STATE_SWITCH_BY.WEIGHT);
+                return;
+            }
 
-                    if (enemy.TargetDistance > enemy.Status.StopDistance)
-                    {
-                        // -> Run
-                        if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_RUN)
-                            && enemy.TargetDistance > runDistance)
-                        {
-                            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_RUN, STATE_SWITCH_BY.WEIGHT);
-                            return;
-                        }
-
-                        // -> Walk
-                        if (enemy.Animator.HasState(0, Constants.ANIMATION_NAME_HASH_WALK))
-                        {
-                            enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WALK, STATE_SWITCH_BY.WEIGHT);
-                            return;
-                        }
-                    }
-                    // Stop (Current)
-                    else
-                    {
-                        enemy.LookTarget();
-                    }
-                }
-                // -> Idle
-                else
+            if (enemy.TargetDistance > enemy.Status.StopDistance)
+            {
+                // -> Run
+                if (enemy.AnimationClipTable.ContainsKey(Constants.ANIMATION_NAME_RUN) && enemy.TargetDistance > runDistance)
                 {
-                    enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
+                    enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_RUN, STATE_SWITCH_BY.WEIGHT);
                     return;
                 }
-                return;
 
-            case ACTOR_GROUND_STATE.SLOPE: // -> Slide
-                enemy.State.SetState(ACTION_STATE.ENEMY_SLIDE, STATE_SWITCH_BY.WEIGHT);
-                return;
-
-            case ACTOR_GROUND_STATE.AIR: // -> Fall
-                enemy.State.SetState(ACTION_STATE.ENEMY_FALL, STATE_SWITCH_BY.WEIGHT);
-                return;
+                // -> Walk
+                if (enemy.AnimationClipTable.ContainsKey(Constants.ANIMATION_NAME_WALK))
+                {
+                    enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WALK, STATE_SWITCH_BY.WEIGHT);
+                    return;
+                }
+            }
+            // Stop (Current)
+            else
+            {
+                enemy.MoveController.SetMovement(enemy.TargetDirection, 0f);
+            }
+        }
+        // -> Idle
+        else
+        {
+            enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
+            return;
         }
     }
 

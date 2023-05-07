@@ -9,21 +9,19 @@ public class PlayerData
     [SerializeField] private CharacterData[] characterDatas;
     [SerializeField] private int currentCharacterIndex;
 
-    [Header("Game Option")]
-    [SerializeField] private float bgmVolume;
-    [SerializeField] private float sfxVolume;
+    [Header("Option Data")]
+    [SerializeField] private PlayerOptionData optionData;
 
     public void Initialize()
     {
         characterDatas = new CharacterData[Constants.MAX_CHARACTER_SLOT_NUMBER];
         currentCharacterIndex = 0;
 
-        bgmVolume = 0.5f;
-        sfxVolume = 0.5f;
+        optionData = new PlayerOptionData();
+        optionData.Initialize();
     }
 
     public CharacterData[] CharacterDatas { get { return characterDatas; } set { characterDatas = value; } }
     public int SelectCharacterIndex { get { return currentCharacterIndex; } set { currentCharacterIndex = value; } }
-    public float BgmVolume { get { return bgmVolume; } set { bgmVolume = value; } }
-    public float SfxVolume { get { return sfxVolume; } set { sfxVolume = value; } }
+    public PlayerOptionData OptionData { get { return optionData; } set { optionData = value; } }
 }

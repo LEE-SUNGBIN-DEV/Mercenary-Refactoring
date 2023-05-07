@@ -28,7 +28,7 @@ public class BlackDragonFlyBreath : EnemySkill
         flyBreathEndAnimationInfo = enemy.AnimationClipTable["Skill_Fly_Breath_End"];
     }
 
-    public override IEnumerator StartSkill()
+    public override IEnumerator CoStartSkill()
     {
         enemy.Animator.Play(flyBreathStartAnimationInfo.nameHash);
 
@@ -42,5 +42,14 @@ public class BlackDragonFlyBreath : EnemySkill
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(flyBreathEndAnimationInfo, flyBreathEndAnimationInfo.maxFrame));
         EndSkill();
+    }
+
+    public override IEnumerator CoLookTarget()
+    {
+        while (!enemy.Animator.IsAnimationFrameUpTo(flyBreathStartAnimationInfo, 20))
+        {
+            enemy.LookTarget();
+            yield return null;
+        }
     }
 }

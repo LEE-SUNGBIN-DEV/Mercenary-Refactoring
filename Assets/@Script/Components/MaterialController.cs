@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class MaterialController
@@ -28,8 +29,11 @@ public class MaterialController
     {
         for (int i = 0; i < renderers.Length; ++i)
         {
-            Material resultMaterial = Managers.ResourceManager.LoadResourceSync<Material>(originalMaterials[i].name.Replace(" (Instance)", "_") + targetMaterial.GetEnumName());
-            renderers[i].material = resultMaterial;
+            if(Managers.ResourceManager.CheckResource<Material>(originalMaterials[i].name.Replace(" (Instance)", "_") + targetMaterial.GetEnumName()))
+            {
+                Material resultMaterial = Managers.ResourceManager.LoadResourceSync<Material>(originalMaterials[i].name.Replace(" (Instance)", "_") + targetMaterial.GetEnumName());
+                renderers[i].material = resultMaterial;
+            }
         }
     }
 
@@ -47,6 +51,34 @@ public class MaterialController
         {
             renderers[i].SetPropertyBlock(propertyBlock);
         }
+    }
+
+    public IEnumerator CoDissolve(float startAmount, float targetAmount, float duration = 0.5f, UnityAction callback = null)
+    {
+        float elapsedTime = 0f;
+        float dissolveAmount = startAmount;
+
+        ChangeMaterials(MATERIAL_TYPE.Dissolve);
+
+        propertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_AMOUNT, 0f);
+        propertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_GLOW_SIZE, 0.1f);
+        SetPropertyBlock();
+
+        while (elapsedTime <= duration)
+        {
+            elapsedTime += Time.deltaTime;
+            dissolveAmount = Mathf.Lerp(startAmount, targetAmount, elapsedTime / duration);
+
+            propertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_AMOUNT, dissolveAmount);
+            SetPropertyBlock();
+            yield return null;
+        }
+
+        propertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_AMOUNT, 1f);
+        propertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_GLOW_SIZE, 0f);
+        SetPropertyBlock();
+
+        callback?.Invoke();
     }
 
     public Renderer[] Renderers { get { return renderers; } }

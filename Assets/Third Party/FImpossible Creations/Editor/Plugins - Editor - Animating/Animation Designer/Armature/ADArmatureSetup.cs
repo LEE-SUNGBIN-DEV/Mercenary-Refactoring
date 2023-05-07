@@ -358,14 +358,22 @@ namespace FIMSpace.AnimationTools
                 BakeBonesSetup.Add(adRef);
             }
 
-            // validating if something not went wrong way
-            for (int i = BakeBonesSetup.Count - 1; i >= 0; i--)
+            if (save.Export_BakeRootIndividually == false)
             {
-                if (BakeBonesSetup[i].TempTransform == RootBoneReference.TempTransform)
+                // validating if something not went wrong way
+                for (int i = BakeBonesSetup.Count - 1; i >= 0; i--)
                 {
-                    BakeBonesSetup.RemoveAt(i);
-                    continue;
+                    if (BakeBonesSetup[i].TempTransform == RootBoneReference.TempTransform)
+                    {
+                        BakeBonesSetup.RemoveAt(i);
+                        continue;
+                    }
                 }
+            }
+            else
+            {
+                if (BakeBonesSetup.Contains(RootBoneReference) == false) BakeBonesSetup.Add(RootBoneReference);
+                if (BakeBonesSetup.Contains(PelvisBoneReference) == false) BakeBonesSetup.Add(PelvisBoneReference);
             }
 
             #endregion
@@ -515,10 +523,15 @@ namespace FIMSpace.AnimationTools
                 // Copy original root motion curves
                 if (main.Export_DisableRootMotionExport == false && bake.OriginalClipWithAnyRootMotion)
                 {
-                    if (!rootBake.DetectedBakedMotion())
-                    {
-                        rootBake.CopyRootMotionFrom(originalClip);
-                    }
+                    string motionStr = "Motion";
+
+                    if (ADRootMotionBakeHelper.ClipContainsAnyRootCurves(originalClip, motionStr))
+                        rootBake.PreapreOriginalRootMotionFrom(originalClip, false);
+
+                    //if (!rootBake.DetectedBakedMotion())
+                    //{
+                    //    rootBake.CopyRootMotionFrom(originalClip);
+                    //}
 
                     if (main.Export_JoinRootMotion)
                     {
@@ -534,7 +547,7 @@ namespace FIMSpace.AnimationTools
 
                 #endregion
 
-                RootBoneReference.SaveCurvesForClip(ref clip, save.Export_OptimizeCurves * 0.6f, true);
+                RootBoneReference.SaveCurvesForClip(main.Export_WrapLoopBakeMode, ref clip, save.Export_OptimizeCurves * 0.6f, true);
 
             }
             else // Generic
@@ -542,7 +555,7 @@ namespace FIMSpace.AnimationTools
                 if (main.Export_DisableRootMotionExport == false)
                 {
 
-                    bool motionInRootInsteadOfMotion = false; // Just infiuriating exception handling... 
+                    //bool motionInRootInsteadOfMotion = false; // Just infiuriating exception handling... 
 
                     // Copy original root motion curves
                     if (bake.OriginalClipWithAnyRootMotion)
@@ -550,15 +563,28 @@ namespace FIMSpace.AnimationTools
                         bool allowRoot = false;
                         if (bake.BakeMain != null) allowRoot = bake.BakeMain.Export_ForceRootMotion;
 
-                        if (!rootBake.DetectedBakedMotion())
+                        string motionStr = rootBake.CheckForMotionOrRootTag(originalClip, allowRoot);
+
+                        if (ADRootMotionBakeHelper.ClipContainsAnyRootCurves(originalClip, motionStr))
+                            rootBake.PreapreOriginalRootMotionFrom(originalClip, allowRoot);
+
+                        //if (!rootBake.DetectedBakedMotion())
+                        //{
+                        //    //rootBake.CheckForMotionOrRootTag(originalClip, allowRoot);//CopyRootMotionFrom(originalClip, allowRoot);
+                        //}
+
+                        //if (allowRoot) motionInRootInsteadOfMotion = rootBake.DetectedMotionInRootInsteadOfMotion;
+
+                        if (!main.Export_JoinRootMotion)
                         {
-                            rootBake.CopyRootMotionFrom(originalClip, allowRoot);
+                            rootBake.SaveRootMotionPositionCurves(ref clip, motionStr);
+                            rootBake.SaveRootMotionRotationCurves(ref clip, motionStr);
                         }
-
-                        if (allowRoot) motionInRootInsteadOfMotion = rootBake.DetectedMotionInRootInsteadOfMotion;
-
-                        rootBake.SaveRootMotionPositionCurves(ref clip, motionInRootInsteadOfMotion ? "Root" : "Motion");
-                        rootBake.SaveRootMotionRotationCurves(ref clip, motionInRootInsteadOfMotion ? "Root" : "Motion");
+                        else
+                        {
+                            rootBake.SaveRootMotionPositionCurves(ref clip, motionStr, originalClip);
+                            rootBake.SaveRootMotionRotationCurves(ref clip, motionStr, originalClip);
+                        }
                     }
                     else // Saving new root motion to the animation
                     {
@@ -585,7 +611,7 @@ namespace FIMSpace.AnimationTools
 
                     if (save.Export_IncludeRootMotionInKeyAnimation)
                     {
-                        RootBoneReference.SaveCurvesForClip(ref clip, save.Export_OptimizeCurves * 0.6f, false);
+                        RootBoneReference.SaveCurvesForClip(main.Export_WrapLoopBakeMode, ref clip, save.Export_OptimizeCurves * 0.6f, false);
                     }
                 }
             }
@@ -595,7 +621,7 @@ namespace FIMSpace.AnimationTools
             {
                 var b = BakeBonesSetup[a];
                 if (b == null) continue;
-                b.SaveCurvesForClip(ref clip, save.Export_OptimizeCurves * 0.8f);
+                b.SaveCurvesForClip(main.Export_WrapLoopBakeMode, ref clip, save.Export_OptimizeCurves * 0.8f);
             }
 
             bake.SaveHumanoidCurves(ref clip, save.Export_OptimizeCurves, save.Export_HipsAndLegsPrecisionBoost);

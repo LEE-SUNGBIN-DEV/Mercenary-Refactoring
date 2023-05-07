@@ -23,11 +23,11 @@ namespace FIMSpace.AnimationTools
                 Reset();
             }
 
-            public void SaveCurves(ref AnimationClip clip, float reduction, float legsReduMul)
+            public void SaveCurves(ADBoneReference.EWrapBakeAlgrithmType wrapLoopMode, ref AnimationClip clip, float reduction, float legsReduMul)
             {
                 if (ADBoneReference.LoopBakedPose)
                 {
-                    ADBoneReference.WrapBake(curve);
+                    ADBoneReference.WrapBake(wrapLoopMode, curve);
                 }
 
                 if (isLeg) { reduction *= 1f - legsReduMul; }
@@ -109,11 +109,6 @@ namespace FIMSpace.AnimationTools
                 if (b == "Right Thumb Spread") return "RightHand.Thumb.Spread";
 
                 return b;
-            }
-
-            internal void SaveCurves(ref AnimationClip clip, object bakeReduction, float lengthMlp)
-            {
-                throw new NotImplementedException();
             }
 
 

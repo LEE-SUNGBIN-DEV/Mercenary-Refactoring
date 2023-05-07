@@ -21,25 +21,26 @@ public class PlayerStateRoll : IActionState
         // 키보드 입력 방향으로 회피
         Vector3 verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z) * Input.GetAxisRaw("Vertical");
         Vector3 horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z) * Input.GetAxisRaw("Horizontal");
-        moveDirection = (verticalDirection + horizontalDirection).normalized;
+        moveDirection = (verticalDirection + horizontalDirection);
+        moveDirection = moveDirection == Vector3.zero ? character.transform.forward : moveDirection;
 
-        character.transform.forward = (moveDirection == Vector3.zero ? character.transform.forward : moveDirection);
+        character.SetForwardDirection(moveDirection);
 
-        character.IsInvincible = true;
+        character.HitState = HIT_STATE.Invincible;
         character.Status.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_ROLL;
         character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
     }
 
     public void Update()
     {
-        // !! When Animation is over
+        // -> Idle
         if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, character.CurrentWeapon.IdleState, 0.9f))
             return;
     }
 
     public void Exit()
     {
-        character.IsInvincible = false;
+        character.HitState = HIT_STATE.Hittable;
     }
 
     #region Property

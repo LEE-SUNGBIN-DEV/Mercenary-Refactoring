@@ -6,18 +6,18 @@ public class EnemyStateDie : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
 
     public EnemyStateDie(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_DIE;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_DIE;
+        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_DIE];
     }
 
     public void Enter()
     {
-        enemy.Animator.Play(animationNameHash);
+        enemy.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()

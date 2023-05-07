@@ -17,23 +17,21 @@ public class HalberdGuardBreak : IActionState
 
     public void Enter()
     {
-        character.IsInvincible = true;
+        character.HitState = HIT_STATE.Hittable;
         character.Animator.Play(animationClipInformation.nameHash);
+        character.SFXPlayer.PlaySFX(Constants.Audio_Halberd_Guard_Break);
         character.Status.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_DEFENSE_BREAK;
     }
 
     public void Update()
     {
-        // !! When animation is over
+        // -> Idle
         if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.9f))
-        {
             return;
-        }
     }
 
     public void Exit()
     {
-        character.IsInvincible = false;
     }
 
     #region Property

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum MATERIAL_TYPE
 {
@@ -12,25 +13,40 @@ public enum MATERIAL_TYPE
     SIZE
 }
 
-[RequireComponent(typeof(Animator), typeof(CharacterController))]
+public enum HIT_STATE
+{
+    Hittable,
+    Guardable,
+    Parryable,
+    Invincible,
+}
+
+[RequireComponent(typeof(Animator))]
 public abstract class BaseActor : MonoBehaviour
 {
     [Header("Base Actor")]
-    protected Animator animator;
     protected CharacterController characterController;
-    protected StateController state;
+    protected Animator animator;
+    protected SkinnedMeshRenderer[] skinnedMeshRenderers;
     protected Dictionary<string, AnimationClipInformation> animationClipTable;
-    [SerializeField] protected MoveController moveController;
+    protected SFXPlayer sfxPlayer;
+
+    [Header("Controllers")]
+    protected StateController state;
     [SerializeField] protected MaterialController materialController;
-    [SerializeField] protected SkinnedMeshRenderer[] skinnedMeshRenderers;
-    [SerializeField] protected ObjectPooler objectPooler = new ObjectPooler();
+    [SerializeField] protected ObjectPooler objectPooler = new ();
     
-    [SerializeField] protected bool isInvincible;
+    [SerializeField] protected HIT_STATE hitState;
     [SerializeField] protected bool isDie;
 
     protected virtual void Awake()
     {
-        if(TryGetComponent(out animator))
+        if (TryGetComponent(out characterController))
+        {
+            characterController.slopeLimit = Constants.ANGLE_SLOPE_LIMIT;
+        }
+
+        if (TryGetComponent(out animator))
         {
             animationClipTable = new Dictionary<string, AnimationClipInformation>();
             for (int i = 0; i < animator.runtimeAnimatorController.animationClips.Length; ++i)
@@ -44,10 +60,7 @@ public abstract class BaseActor : MonoBehaviour
             }
         }
 
-        if (TryGetComponent(out characterController))
-        {
-            moveController = new MoveController(characterController);
-        }
+        TryGetComponent(out sfxPlayer);
 
         skinnedMeshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
         if (skinnedMeshRenderers != null)
@@ -70,32 +83,17 @@ public abstract class BaseActor : MonoBehaviour
             yield return null;
         }
 
-        StartCoroutine(CoDissolve());
-    }
-
-    public IEnumerator CoDissolve()
-    {
-        materialController.ChangeMaterials(MATERIAL_TYPE.Dissolve);
-        float dissolveAmount = 0f;
-        float dissolveSpeed = 0.3f;
-
-        while (dissolveAmount <= 1f)
-        {
-            dissolveAmount += dissolveSpeed * Time.deltaTime;
-            materialController.PropertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_AMOUNT, dissolveAmount);
-            materialController.SetPropertyBlock();
-            yield return null;
-        }
+        StartCoroutine(materialController.CoDissolve(0f, 1f, 3f));
     }
 
     #region Property
-    public Animator Animator { get { return animator; } }
     public CharacterController CharacterController { get { return characterController; } }
+    public Animator Animator { get { return animator; } }
+    public SFXPlayer SFXPlayer { get { return sfxPlayer; } }
     public StateController State { get { return state; } }
-    public MoveController MoveController { get { return moveController; } }
     public Dictionary<string, AnimationClipInformation> AnimationClipTable { get { return animationClipTable; } }
     public ObjectPooler ObjectPooler { get { return objectPooler; } }
-    public bool IsInvincible { get { return isInvincible; } set { isInvincible = value; } }
+    public HIT_STATE HitState { get { return hitState; } set { hitState = value; } }
     public bool IsDie { get { return isDie; } set { isDie = value; } }
     #endregion
 }

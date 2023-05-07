@@ -5,21 +5,24 @@ using UnityEngine;
 public class SFXPlayer : MonoBehaviour
 {
     [SerializeField] private int audioPlayerAmount;
-    [SerializeField] private AudioSource[] sfxPlayers;
+    [SerializeField] private AudioSource[] audioPlayers;
 
     private void Awake()
     {
+        if(audioPlayerAmount == 0)
+            audioPlayerAmount = Constants.AUDIO_PLAYER_DEFAULT_AMOUNT;
+
         for (int i = 0; i < audioPlayerAmount; ++i)
         {
             gameObject.AddComponent<AudioSource>();
         }
-        sfxPlayers = GetComponents<AudioSource>();
+        audioPlayers = GetComponents<AudioSource>();
     }
 
     public void PlaySFX(string sfxName)
     {
-        Managers.AudioManager.PlaySFX(sfxPlayers, sfxName);
+        Managers.AudioManager.PlaySFX(audioPlayers, sfxName);
     }
 
-    public AudioSource[] SfxPlayers { get { return sfxPlayers; } }
+    public AudioSource[] AudioPlayers { get { return audioPlayers; } }
 }

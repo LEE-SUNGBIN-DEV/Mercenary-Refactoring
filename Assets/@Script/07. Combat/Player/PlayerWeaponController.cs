@@ -2,33 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeaponController : MonoBehaviour
+public class PlayerWeaponController
 {
-    [SerializeField] private PlayerWeapon currentWeapon;
+    private PlayerCharacter character;
+    private PlayerWeapon currentWeapon;
     private Dictionary<WEAPON_TYPE, PlayerWeapon> weaponDictionary;
 
     public void Initialize(PlayerCharacter character)
     {
-        weaponDictionary = new Dictionary<WEAPON_TYPE, PlayerWeapon>()
-        {
-            { WEAPON_TYPE.HALBERD, new PlayerHalberd() },
-            { WEAPON_TYPE.SWORD_SHIELD, new PlayerSwordShield() }
-        };
+        this.character = character;
+        weaponDictionary = new Dictionary<WEAPON_TYPE, PlayerWeapon>();
 
-        foreach (var weapon in weaponDictionary.Values)
+        if(character.TryGetComponent(out PlayerHalberd halberd))
         {
-            weapon.InitializeWeapon(character);
+            weaponDictionary.Add(WEAPON_TYPE.HALBERD, halberd);
+            halberd.InitializeWeapon(character);
         }
-        currentWeapon = weaponDictionary[WEAPON_TYPE.HALBERD];
+        if (character.TryGetComponent(out PlayerSwordShield swordShield))
+        {
+            weaponDictionary.Add(WEAPON_TYPE.SWORD_SHIELD, swordShield);
+            swordShield.InitializeWeapon(character);
+        }
+
+        weaponDictionary.TryGetValue(character.Status.CurrentWeapon, out currentWeapon);
+    }
+
+    public void HideWeapon()
+    {
+        if (currentWeapon != null)
+            currentWeapon.HideWeapon();
+    }
+
+    public void ShowWeapon()
+    {
+        if (currentWeapon != null)
+            currentWeapon.ShowWeapon();
     }
 
     public void SwitchWeapon(WEAPON_TYPE targetWeapon)
     {
         if(weaponDictionary.ContainsKey(targetWeapon))
         {
-            currentWeapon?.UnequipWeapon();
+            if(currentWeapon != null)
+                currentWeapon.UnequipWeapon();
+
             currentWeapon = weaponDictionary[targetWeapon];
             currentWeapon.EquipWeapon();
+            character.Status.CurrentWeapon = currentWeapon.WeaponType;
         }
     }
 

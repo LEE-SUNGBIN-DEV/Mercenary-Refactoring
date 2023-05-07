@@ -52,7 +52,12 @@ public class Managers : Singleton<Managers>
             isInitialized = true;
             Debug.Log($"{this} Initialization Complete!");
         }
-    }    
+    }
+
+    private void Update()
+    {
+        uiManager.Update();
+    }
 
     #region Property
     public static GameManager GameManager { get { return Instance?.gameManager; } }

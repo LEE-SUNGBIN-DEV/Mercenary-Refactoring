@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkeletonKnightHorizontalSlash : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack sword;
-    private AnimationClipInformation horizontalSlashAnimationInfo;
+    private AnimationClipInformation animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {
@@ -18,21 +18,30 @@ public class SkeletonKnightHorizontalSlash : EnemySkill
         sword = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Sword", true);
         sword.SetMeleeAttack(enemy);
 
-        horizontalSlashAnimationInfo = enemy.AnimationClipTable["Skill_Horizontal_Slash"];
+        animationClipInformation = enemy.AnimationClipTable["Skill_Horizontal_Slash"];
     }
 
-    public override IEnumerator StartSkill()
+    public override IEnumerator CoStartSkill()
     {
-        enemy.Animator.Play(horizontalSlashAnimationInfo.nameHash);
+        enemy.Animator.Play(animationClipInformation.nameHash);
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(horizontalSlashAnimationInfo, 32));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 32));
         sword.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         sword.OnEnableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(horizontalSlashAnimationInfo, 40));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 40));
         sword.OnDisableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(horizontalSlashAnimationInfo, horizontalSlashAnimationInfo.maxFrame));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, animationClipInformation.maxFrame));
         EndSkill();
+    }
+
+    public override IEnumerator CoLookTarget()
+    {
+        while (!enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 20))
+        {
+            enemy.LookTarget();
+            yield return null;
+        }
     }
 }

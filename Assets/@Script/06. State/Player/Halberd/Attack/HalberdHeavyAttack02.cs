@@ -6,22 +6,29 @@ public class HalberdHeavyAttack02 : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+
+    private PlayerHalberd halberd;
     private AnimationClipInformation animationClipInformation;
+
     private bool mouseLeftDown;
 
     public HalberdHeavyAttack02(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_HEAVY_02;
+
+        halberd = character.WeaponController.GetWeapon<PlayerHalberd>(WEAPON_TYPE.HALBERD);
         animationClipInformation = character.AnimationClipTable["Halberd_Heavy_Attack_02"];
+
         mouseLeftDown = false;
     }
 
     public void Enter()
     {
+        character.SetForwardDirection(character.PlayerCamera.GetForward(true));
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
+
         mouseLeftDown = false;
-        character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
     }
 
     public void Update()
@@ -54,6 +61,7 @@ public class HalberdHeavyAttack02 : IActionState
 
     public void Exit()
     {
+        halberd.DisableHalberd();
     }
 
     #region Property

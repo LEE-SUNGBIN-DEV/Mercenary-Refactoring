@@ -6,36 +6,35 @@ public class EnemyStateSlide : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private int animationNameHash;
+    private AnimationClipInformation animationClipInformation;
 
     public EnemyStateSlide(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_SLIDE;
-        animationNameHash = Constants.ANIMATION_NAME_HASH_SLIDE;
+        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_SLIDE];
     }
 
     public void Enter()
     {
-        enemy.Animator.Play(animationNameHash);
+        enemy.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()
     {
-        switch (enemy.MoveController.GetGroundState())
+        switch (enemy.MoveController.GroundState)
         {
             case ACTOR_GROUND_STATE.GROUND:
-                enemy.Status.CurrentHP -= enemy.Status.MaxHP * enemy.MoveController.GetFallDamage();
-                enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
-                break;
+                enemy.State.SetState(ACTION_STATE.ENEMY_LANDING, STATE_SWITCH_BY.FORCED);
+                return;
 
             case ACTOR_GROUND_STATE.SLOPE:
                 enemy.MoveController.SlideTime += Time.deltaTime;
-                break;
+                return;
 
             case ACTOR_GROUND_STATE.AIR:
                 enemy.State.SetState(ACTION_STATE.ENEMY_FALL, STATE_SWITCH_BY.WEIGHT);
-                break;
+                return;
         }
     }
 

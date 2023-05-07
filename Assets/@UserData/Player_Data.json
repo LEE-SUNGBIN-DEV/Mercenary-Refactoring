@@ -8,26 +8,20 @@
         "Vitality": 10,
         "Dexterity": 10,
         "Luck": 10,
+        "CurrentWeapon": 1,
         "CurrentHP": 100.0,
         "CurrentExp": 0.0,
         "MaxHP": 100.0,
         "MaxExp": 10.0,
         "MaxSP": 100.0,
-        "CurrentSP": 100.0,
-        "AttackPower": 20.0,
-        "DefensivePower": 10.0,
-        "CriticalChance": 10.0,
-        "CriticalDamage": 110.0,
-        "AttackSpeed": 1.1,
-        "MoveSpeed": 3.2,
-        "HitLevel": 0
+        "CurrentSP": 100.0
       },
       "LocationData": {
         "LastScene": 3,
-        "LastXCoordinate": 125.8029,
-        "LastYCoordinate": 99.99695,
-        "LastZCoordinate": 72.06502,
-        "ResonancePointEnableDictionary": {
+        "LastXCoordinate": 125.8251,
+        "LastYCoordinate": 100.0769,
+        "LastZCoordinate": 71.98943,
+        "ResonancePointDictionary": {
           "Fog_Canyon": [
             false,
             false,
@@ -93,6 +87,9 @@
     null
   ],
   "SelectCharacterIndex": 0,
-  "BgmVolume": 0.5,
-  "SfxVolume": 0.5
+  "OptionData": {
+    "BgmVolume": 0.5,
+    "SfxVolume": 0.5,
+    "AmbientVolume": 0.5
+  }
 }

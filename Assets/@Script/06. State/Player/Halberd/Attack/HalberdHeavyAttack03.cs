@@ -6,22 +6,29 @@ public class HalberdHeavyAttack03 : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+
+    private PlayerHalberd halberd;
     private AnimationClipInformation animationClipInformation;
+
     private bool mouseLeftDown;
 
     public HalberdHeavyAttack03(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_HEAVY_03;
+
+        halberd = character.WeaponController.GetWeapon<PlayerHalberd>(WEAPON_TYPE.HALBERD);
         animationClipInformation = character.AnimationClipTable["Halberd_Heavy_Attack_03"];
+
         mouseLeftDown = false;
     }
 
     public void Enter()
     {
+        character.SetForwardDirection(character.PlayerCamera.GetForward(true));
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
+
         mouseLeftDown = false;
-        character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.05f);
     }
 
     public void Update()
@@ -42,18 +49,19 @@ public class HalberdHeavyAttack03 : IActionState
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
         // -> Light Attack 1
-        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_01, 0.9f))
+        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_01, 0.6f))
         {
             return;
         }
 
         // -> Idle
-        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.6f))
             return;
     }
 
     public void Exit()
     {
+        halberd.DisableHalberd();
     }
 
     #region Property

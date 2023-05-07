@@ -528,6 +528,25 @@ namespace FIMSpace.AnimationTools
             }
         }
 
+        public static void LogCurve(AnimationCurve c)
+        {
+            if (c == null) return;
+
+            string report = "Curve.Length = " + c.length;
+
+            for (int i = 0; i < c.length; i++)
+            {
+                var key = c.keys[i];
+                report += "\n";
+                report += "[" + i + "] time: " + key.time + "  value: " + key.value;
+                report += "  inTan: " + key.inTangent + "  outTan: " + key.outTangent;
+                report += "  inWght: " + key.inWeight + "  outWght: " + key.outWeight;
+                report += "  mode: " + key.weightedMode;
+            }
+
+            UnityEngine.Debug.Log(report);
+        } 
+
 
         #endregion
 
@@ -659,12 +678,17 @@ namespace FIMSpace.AnimationTools
         }
 
 
-        public static string SaveClipPopup()
+        public static string SaveClipPopup(bool rightMouseButton = false)
         {
             string lastPath = "";
 
-            if (Get.TargetClip) lastPath = Path.GetDirectoryName(AssetDatabase.GetAssetPath(Get.TargetClip));
-            if (string.IsNullOrEmpty(lastPath)) lastPath = Application.dataPath;
+            if (!string.IsNullOrWhiteSpace(staticExportDirectory))
+            {
+                if (AssetDatabase.IsValidFolder(staticExportDirectory)) lastPath = staticExportDirectory;
+            }
+
+            if (string.IsNullOrWhiteSpace(lastPath)) if (Get.TargetClip) lastPath = Path.GetDirectoryName(AssetDatabase.GetAssetPath(Get.TargetClip));
+            if (string.IsNullOrWhiteSpace(lastPath)) lastPath = Application.dataPath;
 
             int ver = 0;
             if (Get._anim_MainSet != null)
@@ -691,7 +715,14 @@ namespace FIMSpace.AnimationTools
             string clipName = "Anim - " + Get._anim_MainSet.AlternativeName;
             if (string.IsNullOrWhiteSpace(Get._anim_MainSet.AlternativeName)) clipName = Get.TargetClip.name + " - Modified" + verStr;
 
-            string filename = EditorUtility.SaveFilePanelInProject("Choose path to save animation clip file", clipName, "anim", "New Animation Clip Name", lastPath);
+            string filename = "";
+
+            if (rightMouseButton)
+            {
+                filename = Path.Combine(lastPath, clipName + ".anim");
+            }
+            else
+                filename = EditorUtility.SaveFilePanelInProject("Choose path to save animation clip file", clipName, "anim", "New Animation Clip Name", lastPath);
 
             //AnimationClip nClip = null;
 

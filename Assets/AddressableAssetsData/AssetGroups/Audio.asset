@@ -53,10 +53,6 @@ MonoBehaviour:
     m_Address: Audio_Button_Click
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 74ba421e23eaa4542829ceaba224005e
-    m_Address: Audio_Player_Step
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 206785b8b093d944b8cfee4105855b42
     m_Address: Audio_Player_Roll
     m_ReadOnly: 0
@@ -65,36 +61,44 @@ MonoBehaviour:
     m_Address: Audio_Player_Compete_Attack
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 8d51e8855dec4fe48b7b63a71d09e2b6
-    m_Address: Audio_Lancer_Smash_Attack
+  - m_GUID: 4cab33f920167fa47960ed5945dcb318
+    m_Address: Audio_Shield_Guard_Break
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 63204070a0d0a6b4684e371db4120112
-    m_Address: Audio_Lancer_Perfect_Defense
+  - m_GUID: 62e065f70bd7919478e3fb647bcec6f6
+    m_Address: Audio_Shield_Parrying
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 109ba2c32f080a44a820dc10878e658c
-    m_Address: Audio_Lancer_Defense_Start
+  - m_GUID: d410ee1503aa0594e91e81445f015e2a
+    m_Address: Audio_Halberd_Swing_1
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: c8796eb7c1a4a93459150c925ba37f02
-    m_Address: Audio_Lancer_Defense_Breaked
+  - m_GUID: eaf7dd9fd18e9554196d03cf18c088b7
+    m_Address: Audio_Halberd_Swing_2
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: ab63ad6221d513e4fb663c1165c56313
-    m_Address: Audio_Lancer_Default_Attack
+  - m_GUID: 919b4f5d487419f419e1ccf0d77d781c
+    m_Address: Audio_Halberd_Swing_3
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 5a16bb1c78c43f049948e370645db9c7
-    m_Address: Audio_Lancer_Critical_Attack
+  - m_GUID: dd3ceb068b74baa45b15eeb01586b28f
+    m_Address: Audio_Sword_Swing_1
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 0b6ed73c5cb18d94192dff0107553833
-    m_Address: Audio_Lancer_Counter_Skill
+  - m_GUID: bd2c6742b9066054289f8aef836fbd1a
+    m_Address: Audio_Sword_Swing_2
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 13affabff422d874a9c2fbd253c794d4
-    m_Address: Audio_Lancer_Attack
+  - m_GUID: 84e778d3ea94940438733e8644eebe87
+    m_Address: Audio_Sword_Swing_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2719aa3da12fbfe4ca77d4309222f537
+    m_Address: Audio_Halberd_Parrying
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a236d286cd209c145bf31a5be6ab0550
+    m_Address: Audio_Halberd_Guard_Break
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

@@ -174,7 +174,7 @@ public class Quest
         {
             taskIndex = value;
 
-            Managers.UIManager.NoticeQuestState(this);
+            Managers.UIManager.CommonSceneUI.NoticeQuestState(this);
 
             if (taskIndex == QuestTasks.Length && questState == QUEST_STATE.ACCEPT)
             {

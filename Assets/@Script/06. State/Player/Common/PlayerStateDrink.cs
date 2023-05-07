@@ -30,7 +30,6 @@ public class PlayerStateDrink : IActionState
 
     public void Exit()
     {
-        character.Animator.Play(Constants.ANIMATION_NAME_HASH_EMPTY, (int)ANIMATOR_LAYER.UPPER);
     }
 
     #region Property

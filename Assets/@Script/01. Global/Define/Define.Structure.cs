@@ -144,6 +144,11 @@ public struct ResonanceObjectData
     {
         return new Vector3(xCoordinate, yCoordinate, zCoordinate);
     }
+
+    public bool IsSameRegion(ResonanceObjectData target)
+    {
+        return (scene == target.scene && regionName == target.regionName);
+    }
 }
 
 [System.Serializable]

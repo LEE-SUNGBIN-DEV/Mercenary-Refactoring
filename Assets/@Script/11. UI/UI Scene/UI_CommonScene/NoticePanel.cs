@@ -18,8 +18,8 @@ public class NoticePanel : UIPanel
     {
         BindText(typeof(TEXT));
 
-        Managers.UIManager.OnRequestNotice -= AcceptRequest;
-        Managers.UIManager.OnRequestNotice += AcceptRequest;
+        Managers.UIManager.CommonSceneUI.OnRequestNotice -= AcceptRequest;
+        Managers.UIManager.CommonSceneUI.OnRequestNotice += AcceptRequest;
 
         isNotice = false;
         noticeTime = 0f;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public static partial class Constants
 {
-    public static readonly float TIME_ENEMY_MIN_PATROL = 2f;
-    public static readonly float TIME_ENEMY_MAX_PATROL = 4f;
+    public static readonly float TIME_ENEMY_MIN_PATROL = 4f;
+    public static readonly float TIME_ENEMY_MAX_PATROL = 6f;
 
     public static readonly float TIME_COMPETE = 5f;
     public static readonly float TIME_COMPETE_COOLDOWN = 60f;

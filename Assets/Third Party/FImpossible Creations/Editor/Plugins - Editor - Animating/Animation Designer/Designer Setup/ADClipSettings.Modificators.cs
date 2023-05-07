@@ -487,6 +487,7 @@ namespace FIMSpace.AnimationTools
                     }
                     GUI.backgroundColor = preC;
 
+
                     AnimationDesignerWindow.DrawCurve(ref RotationEvaluate, "", 60, 0f, -1f, 1f, 1f);
                     EditorGUILayout.EndHorizontal();
 

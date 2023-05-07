@@ -50,6 +50,6 @@ public class UITitleScene : UIBaseScene
     }
     public void OnClickOptionButton()
     {
-        Managers.UIManager.CommonSceneUI.OpenPopup(Managers.UIManager.CommonSceneUI.OptionPopup);
+        Managers.UIManager.OpenPanel(Managers.UIManager.CommonSceneUI.OptionPanel);
     }
 }

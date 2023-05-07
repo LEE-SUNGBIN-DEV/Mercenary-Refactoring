@@ -22,22 +22,21 @@ public class HalberdGuardLoop : IActionState
 
     public void Enter()
     {
-        character.IsInvincible = true;
-        halberd.SetAndEnableHalberd(COMBAT_ACTION_TYPE.HALBERD_GUARD_LOOP);
+        character.HitState = HIT_STATE.Guardable;
+        halberd.EnableHalberd(COMBAT_ACTION_TYPE.HALBERD_GUARD_LOOP);
         character.Animator.Play(animationClipInformation.nameHash);
     }
 
     public void Update()
     {
+        // -> Guard Out
         if (!Input.GetMouseButton(1) && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_GUARD_OUT))
-        {
             return;
-        }
     }
 
     public void Exit()
     {
-        character.IsInvincible = false;
+        character.HitState = HIT_STATE.Hittable;
         halberd.DisableHalberd();
     }
 

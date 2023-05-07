@@ -6,7 +6,10 @@ public class HalberdLightAttack02 : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+
+    private PlayerHalberd halberd;
     private AnimationClipInformation animationClipInformation;
+
     private bool mouseLeftDown;
     private bool mouseRightDown;
 
@@ -14,17 +17,21 @@ public class HalberdLightAttack02 : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_LIGHT_02;
+
+        halberd = character.WeaponController.GetWeapon<PlayerHalberd>(WEAPON_TYPE.HALBERD);
         animationClipInformation = character.AnimationClipTable["Halberd_Light_Attack_02"];
+
         mouseLeftDown = false;
         mouseRightDown = false;
     }
 
     public void Enter()
     {
+        character.SetForwardDirection(character.PlayerCamera.GetForward(true));
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.25f);
+
         mouseLeftDown = false;
         mouseRightDown = false;
-        character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
     }
 
     public void Update()
@@ -48,13 +55,13 @@ public class HalberdLightAttack02 : IActionState
             mouseLeftDown = Input.GetMouseButtonDown(0);
 
         // -> Smash Attack 2
-        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_HEAVY_02, 0.6f))
+        if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_HEAVY_02, 0.55f))
         {
             return;
         }
 
         // -> Light Attack 3
-        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_03, 0.6f))
+        if (mouseLeftDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_03, 0.55f))
         {
             return;
         }
@@ -66,6 +73,7 @@ public class HalberdLightAttack02 : IActionState
 
     public void Exit()
     {
+        halberd.DisableHalberd();
     }
 
     #region Property

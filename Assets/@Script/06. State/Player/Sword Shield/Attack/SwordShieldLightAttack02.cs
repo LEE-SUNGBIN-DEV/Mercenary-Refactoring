@@ -6,7 +6,10 @@ public class SwordShieldLightAttack02 : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+
+    private PlayerSwordShield swordShield;
     private AnimationClipInformation animationClipInformation;
+
     private bool mouseLeftDown;
     private bool mouseRightDown;
 
@@ -14,17 +17,21 @@ public class SwordShieldLightAttack02 : IActionState
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_LIGHT_02;
+
+        swordShield = character.WeaponController.GetWeapon<PlayerSwordShield>(WEAPON_TYPE.SWORD_SHIELD);
         animationClipInformation = character.AnimationClipTable["Sword_Shield_Light_Attack_02"];
+
         mouseLeftDown = false;
         mouseRightDown = false;
     }
 
     public void Enter()
     {
+        character.SetForwardDirection(character.PlayerCamera.GetForward(true));
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
+
         mouseLeftDown = false;
         mouseRightDown = false;
-        character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
     }
 
     public void Update()
@@ -60,6 +67,7 @@ public class SwordShieldLightAttack02 : IActionState
 
     public void Exit()
     {
+        swordShield.DisableSword();
     }
 
     #region Property

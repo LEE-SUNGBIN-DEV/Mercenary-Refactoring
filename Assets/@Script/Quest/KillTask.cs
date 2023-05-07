@@ -26,7 +26,7 @@ public class KillTask : QuestTask
         if(enemy.Status.EnemyID == targetID)
         {
             ++SuccessAmount;
-            Managers.UIManager.RequestNotice(enemy.Status.EnemyName + " 처치: " + SuccessAmount + "/" + RequireAmount);
+            Managers.UIManager.CommonSceneUI.RequestNotice(enemy.Status.EnemyName + " 처치: " + SuccessAmount + "/" + RequireAmount);
         }
     }
     #region Property

@@ -27,36 +27,71 @@ public class UserPanel : UIPanel
 
     private CharacterData characterData;
     private QuickSlotPanel quickSlotPanel;
-
-    private void OnDestroy()
-    {
-        characterData.StatusData.OnCharacterStatusChanged -= UpdateUserPanel;
-    }
+    private Image hpBar;
+    private Image spBar;
+    private Image expBar;
+    private Image equipWeaponImage;
+    private Image potionImage;
 
     public void Initialize(CharacterData characterData)
     {
         this.characterData = characterData;
 
         BindImage(typeof(IMAGE));
+        hpBar = GetImage((int)IMAGE.HP_Bar);
+        expBar = GetImage((int)IMAGE.Exp_Bar);
+        spBar = GetImage((int)IMAGE.SP_Bar);
+        equipWeaponImage = GetImage((int)IMAGE.Equip_Weapon_Image);
+        potionImage = GetImage((int)IMAGE.Potion_Image);
 
         quickSlotPanel = GetComponentInChildren<QuickSlotPanel>(true);
         quickSlotPanel.Initialize(characterData.InventoryData);
 
-        characterData.StatusData.OnCharacterStatusChanged -= UpdateUserPanel;
         characterData.StatusData.OnCharacterStatusChanged += UpdateUserPanel;
+        characterData.StatusData.OnCharacterWeaponChanged += UpdateWeaponImage;
 
         UpdateUserPanel(characterData.StatusData);
+    }
+
+    private void OnDestroy()
+    {
+        characterData.StatusData.OnCharacterStatusChanged -= UpdateUserPanel;
+        characterData.StatusData.OnCharacterWeaponChanged -= UpdateWeaponImage;
+    }
+
+    public void UpdateWeaponImage(WEAPON_TYPE weaponType)
+    {
+        switch(weaponType)
+        {
+            case WEAPON_TYPE.None:
+                equipWeaponImage.color = Functions.SetColor(Color.white, 0f);
+                equipWeaponImage.sprite = null;
+                break;
+            case WEAPON_TYPE.HALBERD:
+                equipWeaponImage.color = Functions.SetColor(Color.white, 1f);
+                equipWeaponImage.sprite = Managers.ResourceManager.LoadResourceSync<Sprite>(Constants.Sprite_Thumbnail_Halberd);
+                break;
+            case WEAPON_TYPE.SWORD_SHIELD:
+                equipWeaponImage.color = Functions.SetColor(Color.white, 1f);
+                equipWeaponImage.sprite = Managers.ResourceManager.LoadResourceSync<Sprite>(Constants.Sprite_Thumbnail_Sword_Shield);
+                break;
+        }
+    }
+
+    public void UpdatePotionImage()
+    {
+
     }
 
     public void UpdateUserPanel(PlayerStatusData status)
     {
         float ratio = status.CurrentHP / status.MaxHP;
-        GetImage((int)IMAGE.HP_Bar).fillAmount = ratio;
+        hpBar.fillAmount = ratio;
 
         ratio = status.CurrentExp / status.MaxExp;
-        GetImage((int)IMAGE.Exp_Bar).fillAmount = ratio;
+        expBar.fillAmount = ratio;
 
         ratio = status.CurrentSP / status.MaxSP;
-        GetImage((int)IMAGE.SP_Bar).fillAmount = ratio;
+        spBar.fillAmount = ratio;
     }
 }

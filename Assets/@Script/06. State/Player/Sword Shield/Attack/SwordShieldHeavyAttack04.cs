@@ -6,22 +6,29 @@ public class SwordShieldHeavyAttack04 : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+
+    private PlayerSwordShield swordShield;
     private AnimationClipInformation animationClipInformation;
+
     private bool mouseLeftDown;
 
     public SwordShieldHeavyAttack04(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_HEAVY_04;
+
+        swordShield = character.WeaponController.GetWeapon<PlayerSwordShield>(WEAPON_TYPE.SWORD_SHIELD);
         animationClipInformation = character.AnimationClipTable["Sword_Shield_Heavy_Attack_04"];
+
         mouseLeftDown = false;
     }
 
     public void Enter()
     {
-        mouseLeftDown = false;
-        character.transform.forward = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z);
+        character.SetForwardDirection(character.PlayerCamera.GetForward(true));
         character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
+
+        mouseLeftDown = false;
     }
 
     public void Update()
@@ -48,6 +55,7 @@ public class SwordShieldHeavyAttack04 : IActionState
 
     public void Exit()
     {
+        swordShield.DisableSword();
     }
 
     #region Property

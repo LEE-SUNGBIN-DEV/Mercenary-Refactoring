@@ -11,7 +11,7 @@ public class TitleScene : BaseScene
         sceneType = SCENE_TYPE.Title;
         scene = SCENE_LIST.Title;
 
-        titleSceneUI = Managers.ResourceManager.InstantiatePrefabSync("Prefab_UI_Title_Scene").GetComponent<UITitleScene>();
+        titleSceneUI = Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_UI_Scene_Title).GetComponent<UITitleScene>();
         titleSceneUI.transform.SetParent(Managers.UIManager.RootObject.transform);
         titleSceneUI.transform.SetAsFirstSibling();
         titleSceneUI.Initialize();

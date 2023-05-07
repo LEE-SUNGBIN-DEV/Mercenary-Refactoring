@@ -6,6 +6,7 @@ public class SwordShieldGuardLoop : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
+
     private PlayerSwordShield swordShield;
     private AnimationClipInformation animationClipInformation;
 
@@ -22,22 +23,21 @@ public class SwordShieldGuardLoop : IActionState
 
     public void Enter()
     {
-        character.IsInvincible = true;
-        swordShield.SetAndEnableShield(COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_LOOP);
+        character.HitState = HIT_STATE.Guardable;
         character.Animator.Play(animationClipInformation.nameHash);
+        swordShield.EnableShield(COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_LOOP);
     }
 
     public void Update()
     {
+        // -> Guard Out
         if (!Input.GetMouseButton(1) && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT))
-        {
             return;
-        }
     }
 
     public void Exit()
     {
-        character.IsInvincible = false;
+        character.HitState = HIT_STATE.Hittable;
         swordShield.DisableShield();
     }
 

@@ -26,7 +26,7 @@ public class BlackDragonStorm : EnemySkill
         stormEndAnimationInfo = enemy.AnimationClipTable["Skill_Storm_End"];
     }
 
-    public override IEnumerator StartSkill()
+    public override IEnumerator CoStartSkill()
     {
         enemy.Animator.Play(stormStartAnimationInfo.nameHash);
 
@@ -48,15 +48,24 @@ public class BlackDragonStorm : EnemySkill
 
         for (int i = 0; i < amount; ++i)
         {
-            Vector3 generateCoordinate = Functions.GetRandomCircleCoordinate(12f);
+            Vector2 randomCoordinate = Random.insideUnitCircle * 12f;
             if (enemy.ObjectPooler.RequestObject(Constants.VFX_Black_Dragon_Lightning_Strike).TryGetComponent(out EnemyPositioningAttack lightningStrike))
             {
                 lightningStrike.SetCombatController(HIT_TYPE.STUN, GUARD_TYPE.NONE, 1.3f, 1.5f);
-                lightningStrike.SetPositioningAttack(enemy, enemy.transform.position + generateCoordinate, 1f, 0.2f);
+                lightningStrike.SetPositioningAttack(enemy, enemy.transform.position + new Vector3(randomCoordinate.x, 0, randomCoordinate.y), 1f, 0.2f);
                 lightningStrike.OnAttack();
             }
 
             yield return waitTime;
+        }
+    }
+
+    public override IEnumerator CoLookTarget()
+    {
+        while (!enemy.Animator.IsAnimationFrameUpTo(stormStartAnimationInfo, stormStartAnimationInfo.maxFrame))
+        {
+            enemy.LookTarget();
+            yield return null;
         }
     }
 }

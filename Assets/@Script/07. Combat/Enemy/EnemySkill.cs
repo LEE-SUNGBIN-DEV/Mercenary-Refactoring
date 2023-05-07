@@ -16,6 +16,7 @@ public abstract class EnemySkill : MonoBehaviour
     [SerializeField] protected bool isReady;
     protected IEnumerator cooldownCoroutine;
     protected IEnumerator skillCoroutine;
+    protected IEnumerator lookTargetCoroutine;
 
     public virtual void Initialize()
     {
@@ -33,17 +34,19 @@ public abstract class EnemySkill : MonoBehaviour
 
     public void OnDisable()
     {
-        StopSkill();
+        DisableSkill();
     }
 
-    public virtual void ActiveSkill()
+    public virtual void EnableSkill()
     {
         RegisterCoroutine();
         StartCoroutine(cooldownCoroutine);
         StartCoroutine(skillCoroutine);
+        StartCoroutine(lookTargetCoroutine);
     }
 
-    public abstract IEnumerator StartSkill();
+    public abstract IEnumerator CoStartSkill();
+    public abstract IEnumerator CoLookTarget();
 
     public virtual bool IsReady(float targetDistance)
     {
@@ -65,12 +68,16 @@ public abstract class EnemySkill : MonoBehaviour
     public void RegisterCoroutine()
     {
         cooldownCoroutine = WaitForCooldown();
-        skillCoroutine = StartSkill();
+        skillCoroutine = CoStartSkill();
+        lookTargetCoroutine = CoLookTarget();
     }
-    public virtual void StopSkill()
+    public virtual void DisableSkill()
     {
         if (skillCoroutine != null)
+        {
             StopCoroutine(skillCoroutine);
+            StopCoroutine(lookTargetCoroutine);
+        }
     }
 
     #region Property

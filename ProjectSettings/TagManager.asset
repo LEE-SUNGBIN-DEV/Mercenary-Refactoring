@@ -28,10 +28,10 @@ TagManager:
   - Die
   - 
   - Camera
-  - Player Weapon
-  - Player Shield
-  - Enemy Weapon
-  - Enemy Shield
+  - Hitbox
+  - 
+  - 
+  - 
   - 
   - 
   - 

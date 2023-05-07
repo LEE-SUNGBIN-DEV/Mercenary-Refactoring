@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlackDragonLeftClaw : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack leftClaw;
-    private AnimationClipInformation leftClawAnimationInfo;
+    private AnimationClipInformation animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {
@@ -18,21 +18,30 @@ public class BlackDragonLeftClaw : EnemySkill
         leftClaw = Functions.FindChild<EnemyMeleeAttack>(gameObject, "Left Claw Controller", true);
         leftClaw.SetMeleeAttack(enemy);
 
-        leftClawAnimationInfo = enemy.AnimationClipTable["Skill_Left_Claw"];
+        animationClipInformation = enemy.AnimationClipTable["Skill_Left_Claw"];
     }
 
-    public override IEnumerator StartSkill()
+    public override IEnumerator CoStartSkill()
     {
-        enemy.Animator.Play(leftClawAnimationInfo.nameHash);
+        enemy.Animator.Play(animationClipInformation.nameHash);
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(leftClawAnimationInfo, 32));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 32));
         leftClaw.SetCombatController(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f);
         leftClaw.OnEnableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(leftClawAnimationInfo, 40));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 40));
         leftClaw.OnDisableCollider();
 
-        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(leftClawAnimationInfo, leftClawAnimationInfo.maxFrame));
+        yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, animationClipInformation.maxFrame));
         EndSkill();
+    }
+
+    public override IEnumerator CoLookTarget()
+    {
+        while (!enemy.Animator.IsAnimationFrameUpTo(animationClipInformation, 24))
+        {
+            enemy.LookTarget();
+            yield return null;
+        }
     }
 }

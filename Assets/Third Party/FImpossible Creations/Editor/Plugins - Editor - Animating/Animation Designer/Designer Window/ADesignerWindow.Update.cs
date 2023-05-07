@@ -21,6 +21,13 @@ namespace FIMSpace.AnimationTools
         GameObject _latest_SceneObj = null;
         int _latest_SceneObjRepaintFor = -1;
 
+        private float _play_sett_startTime = 0f;
+        private float _play_sett_stopTime = 0f;
+
+        /// <summary> Is it a dream? Or Unity seriously made it so unnceccesary overcomplicated???? </summary>
+        private float _play_humanoidPreviewCorrection = 0f;
+        private float _play_humanoidPreviewCorrectionMul = 1f;
+
         private float _play_mod_clipOrigLen = 1f;
         private float _play_mod_clipLenMul = 1f;
         private float _play_mod_clipStartTrim = 0f;
@@ -43,7 +50,7 @@ namespace FIMSpace.AnimationTools
             _play_mod_clipStartTrim = GetClipLeftTrim();
             _play_mod_clipEndTrim = GetClipRightTrim(false);
 
-            _play_mod_TrimmedLength = TargetClip.length - (TargetClip.length * (_play_mod_clipStartTrim + _play_mod_clipEndTrim));
+            _play_mod_TrimmedLength = _play_mod_clipOrigLen - (_play_mod_clipOrigLen * (_play_mod_clipStartTrim + _play_mod_clipEndTrim));
 
             return _play_mod_TrimmedLength * _play_mod_clipLenMul;
         }
@@ -222,6 +229,49 @@ namespace FIMSpace.AnimationTools
         public void RefreshClipLengthModValues()
         {
             if (TargetClip) _play_mod_clipOrigLen = TargetClip.length;
+
+            _play_sett_startTime = 0f;
+            _play_sett_stopTime = 0f;
+            _play_humanoidPreviewCorrection = 0f;
+            _play_humanoidPreviewCorrectionMul = 1f;
+
+            bool skipAnimRange = currentClipSettings == null;
+            bool isHumanoidIKSetup = false;
+            if (currentMecanim != null) if (currentMecanim.isHuman)
+                    if (Anim_MainSet.Additional_UseHumanoidMecanimIK)
+                    {
+                        skipAnimRange = true;
+                        isHumanoidIKSetup = true;
+                    }
+
+            if (skipAnimRange == false)
+            {
+                bool change = false;
+                if (currentClipSettings.startTime != 0f)
+                {
+                    change = true;
+                    _play_sett_startTime = currentClipSettings.startTime;
+                }
+
+                if (currentClipSettings.stopTime != TargetClip.length)
+                {
+                    change = true;
+                    _play_sett_stopTime = currentClipSettings.stopTime;
+                }
+
+                if (change)
+                {
+                    _play_mod_clipOrigLen = _play_sett_stopTime - _play_sett_startTime;
+                }
+            }
+
+            if (isHumanoidIKSetup)
+            {
+                _play_mod_clipOrigLen = currentClipSettings.stopTime - currentClipSettings.startTime;
+                _play_humanoidPreviewCorrection = currentClipSettings.startTime;
+                _play_humanoidPreviewCorrectionMul = TargetClip.length / _play_mod_clipOrigLen;
+            }
+
             _play_mod_clipLenMul = GetClipDurationMul();
             _play_mod_clipStartTrim = GetClipLeftTrim();
             _play_mod_clipEndTrim = GetClipRightTrim(false);
@@ -300,30 +350,21 @@ namespace FIMSpace.AnimationTools
 
             float evlaluatedTime = clipTime;
 
-
             if (_anim_MainSet.ClipEvaluateTimeCurve != null)
                 if (_anim_MainSet.ClipEvaluateTimeCurve.keys.Length > 1)
                 {
-                    bool isDefault = false;
-
-                    if (_anim_MainSet.ClipEvaluateTimeCurve.keys[0].time == 0f && _anim_MainSet.ClipEvaluateTimeCurve.keys[0].value == 0f)
-                        if (_anim_MainSet.ClipEvaluateTimeCurve.keys[1].time == 1f && _anim_MainSet.ClipEvaluateTimeCurve.keys[1].value == 1f)
-                            if (_anim_MainSet.ClipEvaluateTimeCurve.keys[0].inTangent == 0f && _anim_MainSet.ClipEvaluateTimeCurve.keys[0].outTangent == 1f)
-                                if (_anim_MainSet.ClipEvaluateTimeCurve.keys[1].inTangent == 1f && _anim_MainSet.ClipEvaluateTimeCurve.keys[1].outTangent == 0f)
-                                {
-                                    isDefault = true;
-                                }
+                    bool isDefault = _anim_MainSet.IsUsingDefaultTimeEvaluation();
 
                     if (!isDefault)
+                    {
                         if (_play_mod_Length != 0f)
                             evlaluatedTime = _anim_MainSet.ClipEvaluateTimeCurve.Evaluate
-                                (clipTime / _play_mod_TrimmedLength) * _play_mod_TrimmedLength;
+                                (clipTime / _play_mod_clipOrigLen) * _play_mod_clipOrigLen;
+                    }
                 }
 
-
-            TargetClip.SampleAnimation(latestAnimator.gameObject, evlaluatedTime);
-            UpdateHumanoidIKPreview(TargetClip, evlaluatedTime);
-
+            TargetClip.SampleAnimation(latestAnimator.gameObject, evlaluatedTime + _play_humanoidPreviewCorrection);
+            UpdateHumanoidIKPreview(TargetClip, evlaluatedTime * _play_humanoidPreviewCorrectionMul);
 
             #region Secondary Animator Play
 
@@ -390,21 +431,21 @@ namespace FIMSpace.AnimationTools
             if (cyclesMul > 1f)
             {
                 sampleTime *= cyclesMul;
-                sampleTime %= TargetClip.length;
+                sampleTime %= _play_mod_clipOrigLen;
             }
 
             if (_anim_MainSet != null)
             {
                 if (_anim_MainSet.Export_ClipTimeOffset > 0.001f)
                 {
-                    sampleTime %= TargetClip.length;
+                    sampleTime %= _play_mod_clipOrigLen;
                 }
 
-                float sampleTimeNorm = sampleTime / TargetClip.length;
+                float sampleTimeNorm = sampleTime / _play_mod_clipOrigLen;
 
                 if (_anim_MainSet.ClipTimeReverse)
                 {
-                    sampleTime = (1f - sampleTimeNorm) * TargetClip.length;
+                    sampleTime = (1f - sampleTimeNorm) * _play_mod_clipOrigLen;
                 }
 
                 if (_anim_MainSet.ClipSampleTimeCurve != null)
@@ -414,6 +455,7 @@ namespace FIMSpace.AnimationTools
                     }
             }
 
+            sampleTime += _play_sett_startTime;
             return sampleTime;
         }
 
@@ -429,8 +471,14 @@ namespace FIMSpace.AnimationTools
             {
 
                 if (autoElapse == true) animationProgress = sampleTime.Value / _play_mod_Length;
-                else animationProgress = FLogicMethods.InverseLerpUnclamped(_play_mod_clipStartTrim * _play_mod_Length_PlusJustMul, _play_mod_Length_PlusJustMul - (_play_mod_clipEndTrim * _play_mod_Length_PlusJustMul), sampleTime.Value);
-
+                else
+                {
+                    if (isBaking == false)
+                        animationProgress = FLogicMethods.InverseLerpUnclamped(0f, _play_mod_Length_PlusJustMul - (_play_mod_clipEndTrim * _play_mod_Length_PlusJustMul + (_play_mod_clipStartTrim * _play_mod_Length_PlusJustMul)), sampleTime.Value);
+                    else
+                        animationProgress = FLogicMethods.InverseLerpUnclamped(_play_mod_clipStartTrim * _play_mod_Length_PlusJustMul, _play_mod_Length_PlusJustMul - (_play_mod_clipEndTrim * _play_mod_Length_PlusJustMul), sampleTime.Value);
+                    //UnityEngine.Debug.Log("progr = " + sampleTime.Value + "  clipStartTrim = " + _play_mod_clipStartTrim + "|" + (_play_mod_clipStartTrim * _play_mod_Length_PlusJustMul) + "   endTrim =  " + _play_mod_clipEndTrim + "|" + (_play_mod_Length_PlusJustMul - (_play_mod_clipEndTrim * _play_mod_Length_PlusJustMul)) + "   lengJustMul: " + _play_mod_Length_PlusJustMul + "  =>  " + animationProgress);
+                }
                 //if (!autoElapse)
                 //{
                 //    UnityEngine.Debug.Log("elapsed  = " + sampleTime + "   " + animationElapsed);

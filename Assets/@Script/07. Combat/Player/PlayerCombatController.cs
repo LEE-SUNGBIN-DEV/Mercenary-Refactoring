@@ -24,24 +24,24 @@ public class PlayerCombatController : BaseCombatController
         if (hitType == HIT_TYPE.NONE)
             return;
 
-        if (other.TryGetComponent(out EnemyHitBox hitbox))
+        if (other.TryGetComponent(out EnemyHitbox hitbox))
         {
             Vector3 hitPoint = other.bounds.ClosestPoint(transform.position);
 
-            if (hitbox.Owner != null)
+            if (hitbox.Enemy != null)
             {
                 // 01. Prevent Duplicate Damage Process
-                if (hitDictionary.ContainsKey(hitbox.Owner))
+                if (hitDictionary.ContainsKey(hitbox.Enemy))
                     return;
 
-                hitDictionary.Add(hitbox.Owner, true);
+                hitDictionary.Add(hitbox.Enemy, true);
 
                 // 02. Hitting Effect Process
                 GameObject effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Attack);
                 effect.transform.position = hitPoint;
 
                 // 04. Damage Process
-                hitbox.Owner.TakeHit(character, damageRatio, hitType, hitPoint, crowdControlDuration);
+                hitbox.Enemy.TakeHit(character, damageRatio, hitType, hitPoint, crowdControlDuration);
             }
         }
     }
@@ -57,14 +57,15 @@ public class PlayerCombatController : BaseCombatController
         {
             case GUARD_TYPE.GUARDABLE:
                 {
-                    effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Defense);
+                    effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Guard);
                     character.State.SetState(character.CurrentWeapon.GuardBreakState, STATE_SWITCH_BY.WEIGHT);
                     break;
                 }
 
             case GUARD_TYPE.PARRYABLE:
                 {
-                    if (enemyCombatController is EnemyCompeteAttack competeController && Managers.CompeteManager.TryCompete(this, competeController))
+                    if (enemyCombatController is EnemyCompeteAttack competeAttack
+                        && Managers.CompeteManager.TryCompete(this, competeAttack))
                         break;
 
                     effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Parrying);

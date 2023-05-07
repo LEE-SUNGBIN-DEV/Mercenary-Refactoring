@@ -21,12 +21,12 @@ MonoBehaviour:
     m_Address: VFX_Player_Attack
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 09523e6b640ca2f489e0d2d25dce96bc
-    m_Address: VFX_Player_Defense
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 5c38afae62cb9a341a14fa22e2112414
     m_Address: VFX_Player_Parrying
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4c34dbeb0efa40141aabe65e8f5fd7cf
+    m_Address: VFX_Player_Guard
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 06cd6a9f0bdf2b944bdb6752cca8ba59

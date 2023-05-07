@@ -14,10 +14,10 @@ public class BaseScene : MonoBehaviour
         Managers.Instance.Initialize();
 
         // Creat Event System
-        GameObject eventSystem = GameObject.Find(Constants.PREFAB_EVENT_SYSTEM);
+        GameObject eventSystem = GameObject.Find(Constants.Prefab_Event_System);
         if (eventSystem == null)
         {
-            Managers.ResourceManager.InstantiatePrefabSync(Constants.PREFAB_EVENT_SYSTEM);
+            Managers.ResourceManager.InstantiatePrefabSync(Constants.Prefab_Event_System);
         }
 
         sceneType = SCENE_TYPE.Unknown;
