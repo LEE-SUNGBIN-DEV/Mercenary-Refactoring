@@ -17,6 +17,7 @@ public class EnemyStateLightHit : IActionState
 
     public void Enter()
     {
+        enemy.SFXPlayer.PlaySFX("Audio_" + enemy.name + "_Light_Hit");
         enemy.Animator.Play(animationClipInformation.nameHash);
     }
 

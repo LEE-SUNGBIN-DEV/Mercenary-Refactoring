@@ -8,5 +8,5 @@ public interface IPoolObject
 
     public void ActionAfterRequest(ObjectPooler owner);
     public void ActionBeforeReturn();
-    public void ReturnOrDestoryObject(ObjectPooler owner);
+    public void ReturnOrDestoryObject();
 }

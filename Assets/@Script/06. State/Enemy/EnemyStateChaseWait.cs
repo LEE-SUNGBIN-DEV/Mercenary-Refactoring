@@ -7,24 +7,26 @@ public class EnemyStateChaseWait : IActionState
     private BaseEnemy enemy;
     private int stateWeight;
     private AnimationClipInformation animationClipInformation;
+
     private float runDistance;
 
     public EnemyStateChaseWait(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_CHASE_WAIT;
-        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_IDLE];
+        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_CHASE_WAIT];
+
+        runDistance = enemy.Status.ChaseDistance * Constants.ENEMY_RUN_DISTANCE;
     }
 
     public void Enter()
     {
-        enemy.Animator.CrossFade(animationClipInformation.nameHash, 0.1f);
-        runDistance = enemy.Status.ChaseDistance * Constants.ENEMY_RUN_DISTANCE;
+        enemy.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
     }
 
     public void Update()
     {
-        if (enemy.IsTargetInChaseDistance())
+        if (enemy.IsChaseCondition())
         {
             // -> Skill
             if (enemy.IsReadyAnySkill())
@@ -33,26 +35,34 @@ public class EnemyStateChaseWait : IActionState
                 return;
             }
 
+            // -> Turn
+            if (enemy.State.HasState(ACTION_STATE.ENEMY_CHASE_TURN) && !enemy.IsTargetInAngle(Constants.ENEMY_DETECTION_ANGLE * 0.5f))
+            {
+                enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_TURN, STATE_SWITCH_BY.WEIGHT);
+                return;
+            }
+
             if (enemy.TargetDistance > enemy.Status.StopDistance)
             {
                 // -> Run
-                if (enemy.AnimationClipTable.ContainsKey(Constants.ANIMATION_NAME_RUN) && enemy.TargetDistance > runDistance)
+                if (enemy.State.HasState(ACTION_STATE.ENEMY_CHASE_RUN) && enemy.TargetDistance > runDistance)
                 {
                     enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_RUN, STATE_SWITCH_BY.WEIGHT);
                     return;
                 }
 
                 // -> Walk
-                if (enemy.AnimationClipTable.ContainsKey(Constants.ANIMATION_NAME_WALK))
+                if (enemy.State.HasState(ACTION_STATE.ENEMY_CHASE_WALK))
                 {
                     enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WALK, STATE_SWITCH_BY.WEIGHT);
                     return;
                 }
             }
+
             // Stop (Current)
             else
             {
-                enemy.MoveController.SetMovement(enemy.TargetDirection, 0f);
+                enemy.MoveController.SetMovementAndRotation(enemy.TargetDirection, 0f);
             }
         }
         // -> Idle
@@ -65,6 +75,7 @@ public class EnemyStateChaseWait : IActionState
 
     public void Exit()
     {
+        enemy.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     #region Property

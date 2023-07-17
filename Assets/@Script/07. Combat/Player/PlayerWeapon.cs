@@ -9,6 +9,9 @@ public abstract class PlayerWeapon : MonoBehaviour
 {
     protected PlayerCharacter character;
 
+    protected PlayerCombatController attackController;
+    protected PlayerCombatController guardController;
+
     protected WEAPON_TYPE weaponType;
     protected MeshRenderer[] weaponRenderers;
     protected MaterialController materialController;
@@ -20,7 +23,7 @@ public abstract class PlayerWeapon : MonoBehaviour
     protected ACTION_STATE guardBreakState;
     protected ACTION_STATE parryingState;
 
-    protected Coroutine currentPhaseCoroutine;
+    protected Coroutine phaseCoroutine;
 
     public virtual void InitializeWeapon(PlayerCharacter character)
     {
@@ -31,22 +34,25 @@ public abstract class PlayerWeapon : MonoBehaviour
     public abstract void AddCommonStateInforamtion();
     public abstract void EquipWeapon();
     public abstract void UnequipWeapon();
+    public abstract void PlayWeaponHittingSFX();
     public void ShowWeapon(float duration = 0.5f)
     {
-        if (currentPhaseCoroutine != null)
-            currentPhaseCoroutine = null;
+        if (phaseCoroutine != null)
+            StopCoroutine(phaseCoroutine);
 
-        currentPhaseCoroutine = StartCoroutine(materialController.CoDissolve(1, 0, duration, materialController.SetOriginalMaterials));
+        phaseCoroutine = StartCoroutine(materialController.CoDissolve(1, 0, duration, materialController.SetDefaultMaterials));
     }
     public void HideWeapon(float duration = 0.5f, UnityAction callback = null)
     {
-        if (currentPhaseCoroutine != null)
-            currentPhaseCoroutine = null;
+        if (phaseCoroutine != null)
+            StopCoroutine(phaseCoroutine);
 
-        currentPhaseCoroutine = StartCoroutine(materialController.CoDissolve(0, 1, duration, callback));
+        phaseCoroutine = StartCoroutine(materialController.CoDissolve(0, 1, duration, callback));
     }
 
     #region Property
+    public PlayerCombatController AttackController { get { return attackController; } }
+    public PlayerCombatController GuardController { get { return guardController; } }
     public WEAPON_TYPE WeaponType { get { return weaponType; } }
     public Dictionary<COMBAT_ACTION_TYPE, CombatControllerInfomation> WeaponCombatTable { get { return weaponCombatTable; } }
     public ACTION_STATE IdleState { get { return idleState; } }

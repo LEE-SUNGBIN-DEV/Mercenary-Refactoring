@@ -11,7 +11,6 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
     [SerializeField] private Vector3 boxHalfScale;
     private IEnumerator autoReturnCoroutine;
     private IEnumerator dotDamageCoroutine;
-    private ObjectPooler objectPooler;
 
     private void Awake()
     {
@@ -25,7 +24,7 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
         {
             if(character.HitState != HIT_STATE.Invincible)
             {
-                character.Status.CurrentHP -= (character.Status.MaxHP * damageRatio * 0.01f);
+                character.Status.ReduceHP(damageRatio, CALCULATE_MODE.Ratio);
             }
         }
     }
@@ -46,7 +45,7 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
     public IEnumerator CoAutoReturn()
     {
         yield return new WaitForSeconds(duration);
-        ReturnOrDestoryObject(objectPooler);
+        ReturnOrDestoryObject();
     }
 
     #region IPoolObject Interface Fucntion
@@ -54,7 +53,7 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
     {
         autoReturnCoroutine = CoAutoReturn();
         dotDamageCoroutine = CoCastDotDamage();
-        objectPooler = owner;
+        ObjectPooler = owner;
 
         if (autoReturnCoroutine != null)
             StartCoroutine(autoReturnCoroutine);
@@ -76,14 +75,14 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
             StopCoroutine(dotDamageCoroutine);
     }
 
-    public void ReturnOrDestoryObject(ObjectPooler owner)
+    public void ReturnOrDestoryObject()
     {
-        if (owner == null)
+        if (ObjectPooler == null)
             Destroy(gameObject);
 
-        owner.ReturnObject(name, gameObject);
+        ObjectPooler.ReturnObject(name, gameObject);
     }
 
-    public ObjectPooler ObjectPooler { get { return objectPooler; } }
+    public ObjectPooler ObjectPooler { get; set; }
     #endregion
 }

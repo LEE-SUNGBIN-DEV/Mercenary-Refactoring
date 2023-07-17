@@ -10,7 +10,10 @@ public abstract class BaseCombatController : MonoBehaviour
     [SerializeField] protected GUARD_TYPE guardType;
     [SerializeField] protected float damageRatio;
     [SerializeField] protected float crowdControlDuration;
+
     [SerializeField] protected Collider combatCollider;
+    protected SFXPlayer sfxPlayer;
+
     protected Dictionary<Object, bool> hitDictionary = new Dictionary<Object, bool>();
 
     public virtual void Awake()
@@ -25,6 +28,8 @@ public abstract class BaseCombatController : MonoBehaviour
 
         if (combatCollider != null)
             combatCollider.enabled = false;
+
+        TryGetComponent(out sfxPlayer);
     }
 
     public void SetCombatController(HIT_TYPE hitType = HIT_TYPE.NONE, GUARD_TYPE guardType = GUARD_TYPE.NONE, float damageRatio = 1f, float crowdControlDuration = 0f)
@@ -41,6 +46,13 @@ public abstract class BaseCombatController : MonoBehaviour
         this.guardType = combatInformation.guardType;
         this.damageRatio = combatInformation.damageRatio;
         this.crowdControlDuration = combatInformation.crowdControlDuration;
+    }
+
+    public IEnumerator CoPlaySFX(string sfxName, float delayTime = 0f)
+    {
+        yield return new WaitForSeconds(delayTime);
+        if (sfxPlayer != null)
+            sfxPlayer.PlaySFX(sfxName);
     }
 
     public HIT_TYPE HitType { get { return hitType; } }

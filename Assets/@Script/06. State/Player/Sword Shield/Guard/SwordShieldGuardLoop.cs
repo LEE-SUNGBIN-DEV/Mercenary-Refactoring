@@ -30,8 +30,11 @@ public class SwordShieldGuardLoop : IActionState
 
     public void Update()
     {
+        character.Status.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_LOOP * Time.deltaTime);
+
         // -> Guard Out
-        if (!Input.GetMouseButton(1) && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT))
+        if ((!character.GetInput().RightMouseHold || !character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_LOOP))
+            && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT))
             return;
     }
 

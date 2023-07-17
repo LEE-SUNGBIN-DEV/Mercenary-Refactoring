@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class ResonanceGate : MonoBehaviour, IInteractable
 {
-    public float DistanceFromTarget => throw new System.NotImplementedException();
+    [Header("For Function")]
+    [SerializeField] private ResonanceGateData resonanceGateData;
+    [SerializeField] private PlayerCharacter targetCharacter;
+    [SerializeField] private float distanceFromTarget;
 
-    public PlayerCharacter TargetCharacter => throw new System.NotImplementedException();
+    private Coroutine interactionCoroutine;
+
+    public void Initialize(ResonanceGateData resonanceGateData)
+    {
+        this.resonanceGateData = resonanceGateData;
+    }
 
     #region Detection
     public void EnableDetection(PlayerCharacter character)
@@ -46,4 +54,7 @@ public class ResonanceGate : MonoBehaviour, IInteractable
     {
 
     }
+
+    public float DistanceFromTarget { get { return distanceFromTarget; } }
+    public PlayerCharacter TargetCharacter { get { return targetCharacter; } }
 }

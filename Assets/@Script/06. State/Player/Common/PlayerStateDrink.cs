@@ -6,30 +6,45 @@ public class PlayerStateDrink : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInformation animationClipInfo;
+
+    private Coroutine drinkCoroutine;
 
     public PlayerStateDrink(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_DRINK;
-        animationClipInformation = character.AnimationClipTable["Player_Drink"];
+        animationClipInfo = character.AnimationClipTable["Player_Drink"];
     }
 
     public void Enter()
     {
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.05f, (int)ANIMATOR_LAYER.UPPER);
+        character.ResonanceWater.ShowResonanceWater(true);
+        drinkCoroutine = character.StartCoroutine(CoDrink());
+        character.Animator.CrossFadeInFixedTime(animationClipInfo.nameHash, 0.05f, (int)ANIMATOR_LAYER.UPPER);
     }
 
     public void Update()
     {
-        if (character.State.SetSubStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.COMMON_UPPER_EMPTY, 0.9f, (int)ANIMATOR_LAYER.UPPER))
-        {
+        // -> Upper Empty
+        if (character.State.SetSubStateByAnimationTimeUpTo(animationClipInfo.nameHash, ACTION_STATE.COMMON_UPPER_EMPTY, 0.9f, (int)ANIMATOR_LAYER.UPPER))
             return;
-        }
     }
 
     public void Exit()
     {
+        if (drinkCoroutine != null)
+            character.StopCoroutine(drinkCoroutine);
+
+        character.ResonanceWater.ShowResonanceWater(false);
+    }
+
+    private IEnumerator CoDrink()
+    {
+        yield return new WaitUntil(() => character.Animator.IsAnimationFrameUpTo(animationClipInfo, 26, (int)ANIMATOR_LAYER.UPPER) && !character.Animator.IsInTransition((int)ANIMATOR_LAYER.UPPER));
+        character.InventoryData.DrinkResonanceWater();
+        character.Status.RecoverHP(character.InventoryData.ResonanceWaterRecoverAmount, CALCULATE_MODE.Ratio);
+        character.Status.RecoverStamina(character.InventoryData.ResonanceWaterRecoverAmount, CALCULATE_MODE.Ratio);
     }
 
     #region Property

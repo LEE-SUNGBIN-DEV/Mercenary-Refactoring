@@ -68,10 +68,10 @@ public struct CombatControllerInfomation
 
 #region Data Structure
 [System.Serializable]
-public struct LevelTable
+public struct LevelData
 {
-    public int[] levels;
-    public float[] maxExperiences;
+    public int level;
+    public float experience;
 }
 
 [System.Serializable]
@@ -112,42 +112,107 @@ public struct DebuffData
     public bool isRemovable;
 }
 
-[System.Serializable]
-public struct EnemySpawnData
+public struct EnemyData
 {
-    public SCENE_LIST scene;
-    public ENEMY_TYPE enemyType;
+    public int id;
     public string enemyName;
-    public float xCoordinate;
-    public float yCoordinate;
-    public float zCoordinate;
+    public string enemyPrefabName;
 
-    public Vector3 GetPosition()
+    public ENEMY_TYPE enemyType;
+    public float maxHP;
+    public float attackPower;
+    public float defensePower;
+    public float criticalChance;
+    public float criticalDamage;
+    public float attackSpeed;
+    public float moveSpeed;
+    public float fixedDamage;
+    public float defensePenetration;
+    public float damageReduction;
+    public float detectionDistance;
+    public float chaseDistance;
+
+    public int dropDataID;
+}
+[System.Serializable]
+public struct EnemySpawnerData
+{
+    public int id;
+    public int enemyID;
+
+    public SCENE_LIST GetSpawnerScene()
     {
-        return new Vector3(xCoordinate, yCoordinate, zCoordinate);
+        return (SCENE_LIST)(id / 100);
+    }
+
+    public int GetSpawnerIndex()
+    {
+        return id % 100;
     }
 }
 
 [System.Serializable]
-public struct ResonanceObjectData
+public struct ResonanceGateData
 {
-    public SCENE_LIST scene;
-    public string regionName;
-    public string objectName;
-    public float xCoordinate;
-    public float yCoordinate;
-    public float zCoordinate;
+    public int id;
+    public SCENE_LIST destination;
 
-    [JsonIgnore] public int index;
-
-    public Vector3 GetPosition()
+    public SCENE_LIST GetLocatedScene()
     {
-        return new Vector3(xCoordinate, yCoordinate, zCoordinate);
+        return (SCENE_LIST)(id / 100);
     }
 
-    public bool IsSameRegion(ResonanceObjectData target)
+    public SCENE_LIST GetDestination()
     {
-        return (scene == target.scene && regionName == target.regionName);
+        return destination;
+    }
+
+    public int GetResonanceGateIndex()
+    {
+        return id % 100;
+    }
+}
+
+[System.Serializable]
+public struct ResonanceCrystalData
+{
+    public int id;
+    public string regionName;
+
+    public SCENE_LIST GetLocatedScene()
+    {
+        return (SCENE_LIST)(id / 100);
+    }
+
+    public int GetResonancePointIndex()
+    {
+        return id % 100;
+    }
+}
+
+[System.Serializable]
+public struct DropData
+{
+    public int id;
+    public float experience;
+    public float resonanceStone;
+    public string[] itemNames;
+    public int[] itemWeights;
+}
+
+[System.Serializable]
+public struct TreasureBoxData
+{
+    public int id;
+
+    public SCENE_LIST GetLocatedScene()
+    {
+        return (SCENE_LIST)(id / 100);
+    }
+
+    public int GetTreasureBoxIndex()
+    {
+        return id % 100;
     }
 }
 
@@ -159,17 +224,48 @@ public struct GameSceneData
     public string sceneName;
     public WEATHER_TYPE weatherType;
 
-    [JsonIgnore] public List<EnemySpawnData> normalSpawnDataList;
-    [JsonIgnore] public List<EnemySpawnData> eliteSpawnDataList;
-    [JsonIgnore] public List<EnemySpawnData> bossSpawnDataList;
-    [JsonIgnore] public List<ResonanceObjectData> resonanceObjectDataList;
+    [JsonIgnore] public List<ResonanceCrystalData> resonanceCrystalDataList;
+    [JsonIgnore] public List<ResonanceGateData> resonanceGateDataList;
+    [JsonIgnore] public List<TreasureBoxData> treasureBoxDataList;
 
     public void Initialize()
     {
-        resonanceObjectDataList = new List<ResonanceObjectData>();
-        normalSpawnDataList = new List<EnemySpawnData>();
-        eliteSpawnDataList = new List<EnemySpawnData>();
-        bossSpawnDataList = new List<EnemySpawnData>();
+        resonanceCrystalDataList = new List<ResonanceCrystalData>();
+        resonanceGateDataList = new List<ResonanceGateData>();
+        treasureBoxDataList = new List<TreasureBoxData>();
     }
+}
+
+public struct HalberdData
+{
+    public int id;
+    public string name;
+
+    public float attackPower;
+    public float attackSpeed;
+    public float fixedDamage;
+    public float defensePenetration;
+}
+public struct SwordShieldData
+{
+    public int id;
+    public string name;
+
+    public float attackPower;
+    public float attackSpeed;
+    public float fixedDamage;
+    public float defensePower;
+}
+public struct ArmorData
+{
+    public int id;
+    public string name;
+
+    public float hp;
+    public float sp;
+    public float defensePower;
+    public float damageReduction;
+    public float spRecovery;
+    public float spCostReduction;
 }
 #endregion

@@ -4,32 +4,30 @@ using UnityEngine;
 
 public class ResonanceCrystal : MonoBehaviour, IInteractable
 {
+    [SerializeField] private ResonanceCrystalData resonanceCrystalData;
+    [SerializeField] private PlayerCharacter targetCharacter;
+    [SerializeField] private float distanceFromTarget;
+
+    private Coroutine interactionCoroutine;
+
+    [Header("For Shader")]
     [SerializeField] private MeshRenderer[] meshRenderer;
     [SerializeField] private MaterialController materialController;
 
-    [Header("For Function")]
-    [SerializeField] private PlayerCharacter targetCharacter;
-    [SerializeField] private float distanceFromTarget;
-    [SerializeField] private ResonanceObjectData resonanceObjectData;
-
-    [Header("For Shader")]
     [SerializeField] private float minLightPower;
     [SerializeField] private float maxLightPower;
     [SerializeField] private float currentLightPower;
     [SerializeField] private float transitionSpeed;
 
-    private Coroutine interactionCoroutine;
-
-    public void Initialize(ResonanceObjectData resonanceObjectData)
+    public void Initialize(ResonanceCrystalData resonanceCrystalData)
     {
-        this.resonanceObjectData = resonanceObjectData;
-
-        transform.position = resonanceObjectData.GetPosition();
+        this.resonanceCrystalData = resonanceCrystalData;
 
         minLightPower = 1f;
         maxLightPower = 30f;
         currentLightPower = 1f;
-        transitionSpeed = (maxLightPower - minLightPower) / 2.5f;
+        float resonanceAnimationTime = 1.8f;
+        transitionSpeed = (maxLightPower - minLightPower) / resonanceAnimationTime;
         interactionCoroutine = null;
 
         meshRenderer = GetComponentsInChildren<MeshRenderer>(true);
@@ -55,8 +53,8 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
     {
         if (other.TryGetComponent(out PlayerCharacter character) && character == targetCharacter)
         {
-            targetCharacter.InteractionController.DisableDetection(this, targetCharacter);
-            targetCharacter.InteractionController.DisableInteraction(this, targetCharacter);
+            targetCharacter.InteractionController.InactiveDetection(this, targetCharacter);
+            targetCharacter.InteractionController.InactiveInteraction(this, targetCharacter);
             targetCharacter = null;
         }
     }
@@ -67,7 +65,7 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
         {
             distanceFromTarget = Vector3.SqrMagnitude(targetCharacter.transform.position - transform.position);
 
-            targetCharacter.InteractionController.EnableDetection(this, targetCharacter);
+            targetCharacter.InteractionController.ActiveDetection(this, targetCharacter);
             targetCharacter.InteractionController.UpdateDetection(this, targetCharacter);
             targetCharacter.InteractionController.UpdateInteraction(this, targetCharacter);
         }
@@ -81,7 +79,6 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
 
     public void UpdateDetection(PlayerCharacter character)
     {
-
     }
 
     public void DisableDetection(PlayerCharacter character)
@@ -92,15 +89,15 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
     // Interaction
     public void EnableInteraction(PlayerCharacter character)
     {
-        character.LocationData.EnableResonancePoint(resonanceObjectData.scene, resonanceObjectData.index);
+        character.LocationData.EnableResonancePoint(resonanceCrystalData.id, true);
 
         if (interactionCoroutine != null)
             StopCoroutine(interactionCoroutine);
 
         interactionCoroutine = StartCoroutine(CoStartInteraction());
 
-        Managers.UIManager.ClosePanel(Managers.UIManager.GameSceneUI.InteractionPanel);
         character.State.SetState(ACTION_STATE.PLAYER_RESONANCE_IN, STATE_SWITCH_BY.FORCED);
+        character.InventoryData.RefillResonanceWater();
     }
 
     public void UpdateInteraction(PlayerCharacter character)
@@ -114,8 +111,6 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
             StopCoroutine(interactionCoroutine);
 
         interactionCoroutine = StartCoroutine(CoStopInteraction());
-
-        Managers.UIManager.ClosePanel(Managers.UIManager.GameSceneUI.ResonancePointPanel);
         character.State.SetState(ACTION_STATE.PLAYER_RESONANCE_OUT, STATE_SWITCH_BY.FORCED);
     }
 
@@ -130,11 +125,13 @@ public class ResonanceCrystal : MonoBehaviour, IInteractable
         }
 
         currentLightPower = Mathf.Clamp(currentLightPower, minLightPower, maxLightPower);
-        Managers.UIManager.OpenPanel(Managers.UIManager.GameSceneUI.ResonancePointPanel);
+        Managers.UIManager.SwitchOrToggleUserPanel(Managers.UIManager.GameSceneUI.ResonancePointPanel);
     }
 
     public IEnumerator CoStopInteraction()
     {
+        Managers.UIManager.SwitchOrToggleUserPanel(Managers.UIManager.GameSceneUI.ResonancePointPanel);
+
         while (currentLightPower > minLightPower)
         {
             currentLightPower -= transitionSpeed * Time.deltaTime;

@@ -18,13 +18,13 @@ public class EnemyStateChaseRun : IActionState
 
     public void Enter()
     {
-        enemy.Animator.CrossFade(animationClipInformation.nameHash, 0.1f);
+        enemy.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
         runDistance = enemy.Status.ChaseDistance * Constants.ENEMY_RUN_DISTANCE;
     }
 
     public void Update()
     {
-        if (enemy.IsTargetInChaseDistance())
+        if (enemy.IsChaseCondition())
         {
             // -> Skill
             if (enemy.IsReadyAnySkill())
@@ -38,12 +38,12 @@ public class EnemyStateChaseRun : IActionState
                 // Run (Current)
                 if (enemy.TargetDistance > runDistance)
                 {
-                    enemy.MoveTo(enemy.TargetTransform.position, 1.5f);
+                    enemy.TryMoveTo(enemy.TargetTransform.position, 1.5f);
                     return;
                 }
 
                 // -> Walk
-                if (enemy.AnimationClipTable.ContainsKey(Constants.ANIMATION_NAME_WALK))
+                if (enemy.State.HasState(ACTION_STATE.ENEMY_CHASE_WALK))
                 {
                     enemy.State.SetState(ACTION_STATE.ENEMY_CHASE_WALK, STATE_SWITCH_BY.FORCED);
                     return;
@@ -62,6 +62,7 @@ public class EnemyStateChaseRun : IActionState
 
     public void Exit()
     {
+        enemy.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     #region Property

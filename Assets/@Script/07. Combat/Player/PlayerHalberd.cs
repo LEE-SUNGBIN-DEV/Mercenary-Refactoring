@@ -6,16 +6,24 @@ using Cysharp.Threading.Tasks;
 
 public class PlayerHalberd : PlayerWeapon
 {
-    [SerializeField] private PlayerCombatController halberdController;
+    private void OnDestroy()
+    {
+        attackController.OnHitting -= PlayWeaponHittingSFX;
+    }
 
     public override void InitializeWeapon(PlayerCharacter character)
     {
         base.InitializeWeapon(character);
         weaponType = WEAPON_TYPE.HALBERD;
-        halberdController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_HALBERD, true);
-        halberdController.Initialize(character);
 
-        weaponRenderers = new MeshRenderer[] { halberdController.GetComponentInChildren<MeshRenderer>(true) };
+        attackController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_HALBERD, true);
+        attackController.Initialize(character);
+
+        guardController = attackController;
+
+        attackController.OnHitting += PlayWeaponHittingSFX;
+
+        weaponRenderers = new MeshRenderer[] { attackController.GetComponentInChildren<MeshRenderer>(true) };
         materialController = new MaterialController();
         materialController.Initialize(weaponRenderers);
 
@@ -87,24 +95,29 @@ public class PlayerHalberd : PlayerWeapon
 
     public override void EquipWeapon()
     {
-        halberdController.gameObject.SetActive(true);
+        attackController.gameObject.SetActive(true);
         ShowWeapon();
     }
 
     public override void UnequipWeapon()
     {
-        halberdController.gameObject.SetActive(false);
+        attackController.gameObject.SetActive(false);
     }
 
     public void EnableHalberd(COMBAT_ACTION_TYPE combatActionType)
     {
-        halberdController.SetCombatInformation(weaponCombatTable[combatActionType]);
-        halberdController.CombatCollider.enabled = true;
+        attackController.SetCombatInformation(weaponCombatTable[combatActionType]);
+        attackController.CombatCollider.enabled = true;
     }
 
     public void DisableHalberd()
     {
-        halberdController.CombatCollider.enabled = false;
-        halberdController.HitDictionary.Clear();
+        attackController.CombatCollider.enabled = false;
+        attackController.HitDictionary.Clear();
+    }
+
+    public override void PlayWeaponHittingSFX()
+    {
+        character.SFXPlayer.PlaySFX("Audio_Player_Hitting");
     }
 }

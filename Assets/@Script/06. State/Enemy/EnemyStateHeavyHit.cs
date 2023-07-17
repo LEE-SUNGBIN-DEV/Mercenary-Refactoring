@@ -17,6 +17,7 @@ public class EnemyStateHeavyHit : IActionState
 
     public void Enter()
     {
+        enemy.SFXPlayer.PlaySFX("Audio_" + enemy.name + "_Heavy_Hit");
         enemy.Animator.Play(animationClipInformation.nameHash);
     }
 

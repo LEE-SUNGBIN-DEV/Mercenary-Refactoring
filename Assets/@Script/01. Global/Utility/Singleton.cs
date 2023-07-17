@@ -25,6 +25,13 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
             return instance;
         }
     }
+    public static T NullCheckInstance
+    {
+        get
+        {
+            return instance;
+        }
+    }
 
     public abstract void Initialize();
 }

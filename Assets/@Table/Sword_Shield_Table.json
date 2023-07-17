@@ -1,0 +1,50 @@
+[
+  {
+    "id": 0,
+    "name": "검/방패",
+    "attackPower": 8,
+    "attackSpeed": 1,
+    "fixedDamage": 1,
+    "defensePower": 3
+  },
+  {
+    "id": 1,
+    "name": "검/방패 +1",
+    "attackPower": 12,
+    "attackSpeed": 2,
+    "fixedDamage": 4,
+    "defensePower": 5
+  },
+  {
+    "id": 2,
+    "name": "검/방패 +2",
+    "attackPower": 18,
+    "attackSpeed": 4,
+    "fixedDamage": 6,
+    "defensePower": 8
+  },
+  {
+    "id": 3,
+    "name": "검/방패 +3",
+    "attackPower": 27,
+    "attackSpeed": 6,
+    "fixedDamage": 9,
+    "defensePower": 12
+  },
+  {
+    "id": 4,
+    "name": "검/방패 +4",
+    "attackPower": 41,
+    "attackSpeed": 8,
+    "fixedDamage": 14,
+    "defensePower": 18
+  },
+  {
+    "id": 5,
+    "name": "검/방패 +5",
+    "attackPower": 62,
+    "attackSpeed": 10,
+    "fixedDamage": 21,
+    "defensePower": 27
+  }
+]

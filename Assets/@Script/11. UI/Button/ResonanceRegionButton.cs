@@ -19,13 +19,13 @@ public class ResonanceRegionButton : UIBase
 
     public event UnityAction<ResonanceRegionButton> OnClickRegionButton;
 
-    [SerializeField] private ResonanceObjectData resonanceObjectData;
+    [SerializeField] private ResonanceCrystalData resonanceCrystalData;
     [SerializeField] private Button resgionButton;
     [SerializeField] private TextMeshProUGUI regionText;
 
-    public void Initialize(ResonanceObjectData resonanceObjectData)
+    public void Initialize(ResonanceCrystalData resonanceCrystalData)
     {
-        this.resonanceObjectData = resonanceObjectData;
+        this.resonanceCrystalData = resonanceCrystalData;
 
         BindText(typeof(TEXT));
         BindButton(typeof(BUTTON));
@@ -39,7 +39,7 @@ public class ResonanceRegionButton : UIBase
 
     public void SetRegionButton()
     {
-        regionText.text = resonanceObjectData.regionName;
+        regionText.text = resonanceCrystalData.regionName;
     }
 
     public void ClickRegionButton()
@@ -48,7 +48,7 @@ public class ResonanceRegionButton : UIBase
     }
 
     #region Property
-    public ResonanceObjectData ResonanceObjectData { get { return resonanceObjectData; } }
+    public ResonanceCrystalData ResonanceCrystalData { get { return resonanceCrystalData; } }
     public Button RegionButton { get { return resgionButton; } }
     public TextMeshProUGUI RegionText { get { return regionText; } }
     #endregion

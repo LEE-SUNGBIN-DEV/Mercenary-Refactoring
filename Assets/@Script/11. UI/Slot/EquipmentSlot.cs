@@ -7,10 +7,10 @@ using TMPro;
 [System.Serializable]
 public abstract class EquipmentSlot<T> : BaseSlot where T : EquipmentItem, new()
 {
-    protected PlayerStatusData status;
+    protected CharacterStatusData status;
     [SerializeField] protected T item;
 
-    public virtual void Initialize(PlayerStatusData _status)
+    public virtual void Initialize(CharacterStatusData _status)
     {
         base.Initialize();
         status = _status;

@@ -21,6 +21,10 @@ MonoBehaviour:
     m_Address: Prefab_Player_Camera
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 9148f4d65b4dc8f4ea07d1ac7711de10
+    m_Address: Prefab_Camera_For_Render_Resonance_Water
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   - m_GUID: 33360c0d1280a6e4ab9228a26c16a3c7
     m_Address: Prefab_Player_Character
     m_ReadOnly: 0

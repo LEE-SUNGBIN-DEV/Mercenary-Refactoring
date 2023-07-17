@@ -57,8 +57,8 @@ MonoBehaviour:
     m_Address: Audio_Player_Roll
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 66b49f6441c241249a685f69d8098ed1
-    m_Address: Audio_Player_Compete_Attack
+  - m_GUID: 5cbfbc2c06a80e249ab3d2a4cd3f855f
+    m_Address: Audio_Weather_Rain_Light
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4cab33f920167fa47960ed5945dcb318
@@ -69,28 +69,28 @@ MonoBehaviour:
     m_Address: Audio_Shield_Parrying
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: d410ee1503aa0594e91e81445f015e2a
-    m_Address: Audio_Halberd_Swing_1
+  - m_GUID: b605a1dae4d67d941a3fa27acaded83b
+    m_Address: Audio_Halberd_Sting_01
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: eaf7dd9fd18e9554196d03cf18c088b7
-    m_Address: Audio_Halberd_Swing_2
+  - m_GUID: 1347e8265a412fc40a07e3b887f3b5d9
+    m_Address: Audio_Halberd_Swing_02
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 919b4f5d487419f419e1ccf0d77d781c
-    m_Address: Audio_Halberd_Swing_3
+  - m_GUID: 8a2eb1555f66715468f99e8b7cf804b3
+    m_Address: Audio_Halberd_Swing_01
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: dd3ceb068b74baa45b15eeb01586b28f
-    m_Address: Audio_Sword_Swing_1
+    m_Address: Audio_Sword_Swing_01
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: bd2c6742b9066054289f8aef836fbd1a
-    m_Address: Audio_Sword_Swing_2
+    m_Address: Audio_Sword_Swing_02
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 84e778d3ea94940438733e8644eebe87
-    m_Address: Audio_Sword_Swing_3
+    m_Address: Audio_Sword_Swing_03
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 2719aa3da12fbfe4ca77d4309222f537
@@ -99,6 +99,146 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: a236d286cd209c145bf31a5be6ab0550
     m_Address: Audio_Halberd_Guard_Break
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1551c1e5756ca004a996a4c0c7dc4055
+    m_Address: Audio_Ground_Slam
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c9eb4d779ed1254468a612d039333881
+    m_Address: Audio_Halberd_Swing_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b85a4100d9f392449a033454ab4da4fd
+    m_Address: Audio_Halberd_Swing_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8b23f5618f73b2544911e27bbb980148
+    m_Address: Audio_Shield_Swing_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 667d6152fa93248468789992484a6b7c
+    m_Address: Audio_Shield_Swing_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 875d3a0ab11ad4d4286be5114cd72320
+    m_Address: Audio_Shield_Swing_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 8903f801e8e188b48a1fbb7bbda638fd
+    m_Address: Audio_Shield_Swing_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ce30732d128ba37409cd38a8bbc32aef
+    m_Address: Audio_Shield_Swing_05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6e63374ff63793e4d8f7edb2e881b57d
+    m_Address: Audio_Shield_Swing_06
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9e984e7d6941ff24e8cb7cb9c7bc4903
+    m_Address: Audio_Player_Hitting
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 83dd4efe9943581479514b4f8bba4752
+    m_Address: Audio_Player_Hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5d70e5dcc9b2e0c4fb313f3e065fb060
+    m_Address: Audio_Ground_Burst
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 354a8a80b57d5c345940240802e41b5e
+    m_Address: Audio_Player_Footstep_Dirt_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 4fab4425fcd7d874cafa3dac1323d5e8
+    m_Address: Audio_Player_Footstep_Dirt_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0bb86f1dfd2dd78428308d8bbf19e3d3
+    m_Address: Audio_Player_Footstep_Dirt_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 127920beb16678347ab2d2c66f12b96e
+    m_Address: Audio_Player_Footstep_Dirt_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cfdf670bf6e22ae4eab02e16553ab747
+    m_Address: Audio_Player_Footstep_Dirt_05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 016198c86c2d88d4688e6b5fba4b621a
+    m_Address: Audio_Big_Golem_Footstep_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5bc5273d65bfc094293048c1162dada7
+    m_Address: Audio_Big_Golem_Footstep_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7259417c73a72314fbf1c99e4d8dee03
+    m_Address: Audio_Big_Golem_Footstep_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c231d4e66d087eb4aa0ed052bcd64e54
+    m_Address: Audio_Big_Golem_Footstep_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 77b5f3f8452e3674fac25b05089baca3
+    m_Address: Audio_Big_Golem_Footstep_05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: efccb2f420d518a478d683eb33505353
+    m_Address: Audio_Big_Golem_Die
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7f76c51e00a1a574f91a40eeaaedcee7
+    m_Address: Audio_Big_Golem_Spawn
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c4bbf2d3d205f854d933010da436b00a
+    m_Address: Audio_Competing
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a691e68b13f15484b89610b36f31018d
+    m_Address: Audio_Small_Golem_Footstep_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dfd30c5eb956b5b438ff0afd2c1aa687
+    m_Address: Audio_Small_Golem_Footstep_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: baed501c0b204434d8300d6ea7af1886
+    m_Address: Audio_Small_Golem_Footstep_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 72f72d2db9cef8f488cd65f75a345c13
+    m_Address: Audio_Small_Golem_Footstep_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c5608c08ce576e14ba5cd26e4ed55967
+    m_Address: Audio_Small_Golem_Footstep_05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 81d200b75949bf0408d1842e9d7fac6c
+    m_Address: Audio_Big_Golem_Attack_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 72181f402f75f644aa0a1b57235863cb
+    m_Address: Audio_Big_Golem_Attack_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ed23afe658485064a94992559772a92d
+    m_Address: Audio_Big_Golem_Attack_03
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1b9758d99bf867840b3caca867952429
+    m_Address: Audio_Big_Golem_Attack_04
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 55d387298fbeeb94984715ef7065a4b4
+    m_Address: Audio_Big_Golem_Attack_05
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

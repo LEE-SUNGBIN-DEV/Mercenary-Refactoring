@@ -17,7 +17,7 @@ public class InventorySlot : BaseSlot
     public void LoadSlot(ItemData itemData)
     {
         ClearSlot();
-        if (itemData != null)
+        if (itemData != null && Managers.DataManager.ItemTable.ContainsKey(itemData.itemID))
         {
             item = Managers.DataManager.ItemTable[itemData.itemID];
             itemCount = itemData.itemCount;
@@ -56,17 +56,10 @@ public class InventorySlot : BaseSlot
         else if (EndSlot is QuickSlot endQuickSlot)
             InventoryData.RegisterQuickSlot(endQuickSlot.SlotIndex, this.Item.ItemID);
 
-        else if (EndSlot is WeaponSlot && this.Item is WeaponItem)
+        /*
+        else if (EndSlot is RuneSlot && Item is RuneItem)
             InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipWeaponData(InventoryData.InventoryItems[this.slotIndex]), this.slotIndex);
-
-        else if (EndSlot is HelmetSlot && this.Item is HelmetItem)
-            InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipHelmetData(InventoryData.InventoryItems[this.slotIndex]), this.slotIndex);
-
-        else if (EndSlot is ArmorSlot && this.Item is ArmorItem)
-            InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipArmorData(InventoryData.InventoryItems[this.slotIndex]), this.slotIndex);
-
-        else if (EndSlot is BootsSlot && this.Item is BootsItem)
-            InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipBootsData(InventoryData.InventoryItems[this.slotIndex]), this.slotIndex);
+        */
     }
     public override void ClearSlot()
     {

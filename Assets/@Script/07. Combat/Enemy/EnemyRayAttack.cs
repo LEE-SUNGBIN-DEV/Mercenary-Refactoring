@@ -23,12 +23,12 @@ public class EnemyRayAttack : EnemyCombatController
         while (true)
         {
             GenerateMuzzleEffect(transform);
-            if (Physics.SphereCast(transform.position, 1f, transform.forward, out RaycastHit hitData, 30f, LayerMask.GetMask("Player")))
+            if (Physics.SphereCast(transform.position, 1f, transform.forward, out RaycastHit hitData, 30f, 1 << Constants.LAYER_PLAYER))
             {
                 CollideWithPlayer(hitData);
             }
 
-            if ((time >= rayInterval) && Physics.Raycast(transform.position, transform.forward, out hitData, 30f, LayerMask.GetMask("Terrain")))
+            if ((time >= rayInterval) && Physics.Raycast(transform.position, transform.forward, out hitData, 30f, 1 << Constants.LAYER_TERRAIN))
             {
                 CollideWithTerrain(hitData);
                 time -= rayInterval;
@@ -41,7 +41,7 @@ public class EnemyRayAttack : EnemyCombatController
 
     private void OnDrawGizmos()
     {
-        if (Physics.SphereCast(transform.position, 1f, transform.forward, out RaycastHit hitData, 30f, LayerMask.GetMask("Terrain")))
+        if (Physics.SphereCast(transform.position, 1f, transform.forward, out RaycastHit hitData, 30f, 1 << Constants.LAYER_TERRAIN))
         {
             Gizmos.DrawWireSphere(hitData.point, 1f);
         }

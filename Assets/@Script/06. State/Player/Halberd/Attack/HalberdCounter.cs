@@ -8,9 +8,9 @@ public class HalberdCounter : IActionState
     private int stateWeight;
 
     private PlayerHalberd halberd;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInformation animationClipInfo;
 
-    private Vector3 moveDirection;
+    private Coroutine combatCoroutine;
 
     public HalberdCounter(PlayerCharacter character)
     {
@@ -18,31 +18,63 @@ public class HalberdCounter : IActionState
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_SKILL_COUNTER;
 
         halberd = character.WeaponController.GetWeapon<PlayerHalberd>(WEAPON_TYPE.HALBERD);
-        animationClipInformation = character.AnimationClipTable["Halberd_Counter"];
+        animationClipInfo = character.AnimationClipTable["Halberd_Counter"];
     }
 
     public void Enter()
     {
-        character.Status.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER;
-        character.SetForwardDirection(character.PlayerCamera.GetForward(true));
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
+        character.Status.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER);
+        character.SetForwardDirection(character.PlayerCamera.GetZeroYForward());
+        character.Animator.CrossFadeInFixedTime(animationClipInfo.nameHash, 0.1f);
+
+        combatCoroutine = halberd.StartCoroutine(CoEnableCombat());
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
+        if (character.GetInput().RollDown && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
             character.State.SetState(ACTION_STATE.PLAYER_ROLL, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        // !! When animation is over
-        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.7f))
+        // -> Idle
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInfo.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.7f))
             return;
+
+        // Movement
+        if (character.Animator.IsAnimationFrameBetweenTo(animationClipInfo, 0, 23))
+            character.MoveController.SetMovementAndRotation(character.transform.forward, 3f * character.Status.AttackSpeed);
+
+        else if (character.Animator.IsAnimationFrameBetweenTo(animationClipInfo, 24, 31))
+            character.MoveController.SetMovementAndRotation(character.transform.forward, 6f * character.Status.AttackSpeed);
+        else
+            character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     public void Exit()
     {
+        if (combatCoroutine != null)
+            halberd.StopCoroutine(combatCoroutine);
+
+        halberd.DisableHalberd();
+        character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
+    }
+
+    private IEnumerator CoEnableCombat()
+    {
+        yield return new WaitUntil(() => character.Animator.IsAnimationFrameUpTo(animationClipInfo, 7) && !character.Animator.IsInTransition((int)ANIMATOR_LAYER.BASE));
+        halberd.EnableHalberd(COMBAT_ACTION_TYPE.HALBERD_SKILL_COUNTER);
+        character.SFXPlayer.PlaySFX("Audio_Halberd_Swing_03");
+
+        yield return new WaitUntil(() => character.Animator.IsAnimationFrameUpTo(animationClipInfo, 12) && !character.Animator.IsInTransition((int)ANIMATOR_LAYER.BASE));
+        halberd.DisableHalberd();
+
+        yield return new WaitUntil(() => character.Animator.IsAnimationFrameUpTo(animationClipInfo, 29) && !character.Animator.IsInTransition((int)ANIMATOR_LAYER.BASE));
+        halberd.EnableHalberd(COMBAT_ACTION_TYPE.HALBERD_SKILL_COUNTER);
+        character.SFXPlayer.PlaySFX("Audio_Halberd_Swing_04");
+
+        yield return new WaitUntil(() => character.Animator.IsAnimationFrameUpTo(animationClipInfo, 33) && !character.Animator.IsInTransition((int)ANIMATOR_LAYER.BASE));
         halberd.DisableHalberd();
     }
 

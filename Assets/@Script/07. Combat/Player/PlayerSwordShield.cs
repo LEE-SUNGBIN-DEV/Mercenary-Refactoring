@@ -6,21 +6,27 @@ using Cysharp.Threading.Tasks;
 
 public class PlayerSwordShield : PlayerWeapon
 {
-    [SerializeField] private PlayerCombatController swordController;
-    [SerializeField] private PlayerCombatController shieldController;
+    private void OnDestroy()
+    {
+        attackController.OnHitting -= PlayWeaponHittingSFX;
+        guardController.OnHitting -= PlayWeaponHittingSFX;
+    }
 
     public override void InitializeWeapon(PlayerCharacter character)
     {
         base.InitializeWeapon(character);
         weaponType = WEAPON_TYPE.SWORD_SHIELD;
 
-        swordController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_SWORD, true);
-        swordController.Initialize(character);
+        attackController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_SWORD, true);
+        attackController.Initialize(character);
 
-        shieldController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_SHIELD, true);
-        shieldController.Initialize(character);
+        guardController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_SHIELD, true);
+        guardController.Initialize(character);
 
-        weaponRenderers = new MeshRenderer[] { swordController.GetComponentInChildren<MeshRenderer>(true), shieldController.GetComponentInChildren<MeshRenderer>(true) };
+        attackController.OnHitting += PlayWeaponHittingSFX;
+        guardController.OnHitting += PlayWeaponHittingSFX;
+
+        weaponRenderers = new MeshRenderer[] { attackController.GetComponentInChildren<MeshRenderer>(true), guardController.GetComponentInChildren<MeshRenderer>(true) };
         materialController = new MaterialController();
         materialController.Initialize(weaponRenderers);
 
@@ -43,7 +49,8 @@ public class PlayerSwordShield : PlayerWeapon
             {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_01, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
             {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_02, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.8f) },
             {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_03, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.2f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.7f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_01, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_02, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.2f) },
 
             {COMBAT_ACTION_TYPE.SWORD_SHIELD_PARRYING_ATTACK, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2f) },
 
@@ -79,6 +86,7 @@ public class PlayerSwordShield : PlayerWeapon
         state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_PARRYING_ATTACK, new SwordShieldParryingAttack(character));
 
         state.StateDictionary.Add(ACTION_STATE.PLAYER_COMPETE, new SwordShieldCompete(character));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_COMPETE_SUCCESS, new SwordShieldCompeteSuccess(character));
     }
 
     public override void AddCommonStateInforamtion()
@@ -92,38 +100,43 @@ public class PlayerSwordShield : PlayerWeapon
 
     public override void EquipWeapon()
     {
-        swordController.gameObject.SetActive(true);
-        shieldController.gameObject.SetActive(true);
+        attackController.gameObject.SetActive(true);
+        guardController.gameObject.SetActive(true);
         ShowWeapon();
     }
 
     public override void UnequipWeapon()
     {
-        swordController.gameObject.SetActive(false);
-        shieldController.gameObject.SetActive(false);
+        attackController.gameObject.SetActive(false);
+        guardController.gameObject.SetActive(false);
     }
 
     public void EnableSword(COMBAT_ACTION_TYPE combatActionType)
     {
-        swordController.SetCombatInformation(weaponCombatTable[combatActionType]);
-        swordController.CombatCollider.enabled = true;
+        attackController.SetCombatInformation(weaponCombatTable[combatActionType]);
+        attackController.CombatCollider.enabled = true;
     }
 
     public void DisableSword()
     {
-        swordController.CombatCollider.enabled = false;
-        swordController.HitDictionary.Clear();
+        attackController.CombatCollider.enabled = false;
+        attackController.HitDictionary.Clear();
     }
 
     public void EnableShield(COMBAT_ACTION_TYPE combatActionType)
     {
-        shieldController.SetCombatInformation(weaponCombatTable[combatActionType]);
-        shieldController.CombatCollider.enabled = true;
+        guardController.SetCombatInformation(weaponCombatTable[combatActionType]);
+        guardController.CombatCollider.enabled = true;
     }
 
     public void DisableShield()
     {
-        shieldController.CombatCollider.enabled = false;
-        shieldController.HitDictionary.Clear();
+        guardController.CombatCollider.enabled = false;
+        guardController.HitDictionary.Clear();
+    }
+
+    public override void PlayWeaponHittingSFX()
+    {
+        character.SFXPlayer.PlaySFX("Audio_Player_Hitting");
     }
 }

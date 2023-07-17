@@ -46,7 +46,8 @@ public static class ExtensionMethod
     public static bool IsAnimationFrameUpTo(this Animator animator, int nameHash, int maxFrame, int targetFrame, int targetLayer = 0)
     {
         return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
-            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame));
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame)
+            && !animator.IsInTransition(targetLayer));
     }
     public static bool IsAnimationFrameUpTo(this Animator animator, AnimationClipInformation animationInfo, int targetFrame, int targetLayer = 0)
     {
@@ -55,7 +56,8 @@ public static class ExtensionMethod
     public static bool IsAnimationFrameDownTo(this Animator animator, int nameHash, int maxFrame, int targetFrame, int targetLayer = 0)
     {
         return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
-            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame));
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame)
+            && !animator.IsInTransition(targetLayer));
     }
     public static bool IsAnimationFrameDownTo(this Animator animator, AnimationClipInformation animationInfo, int targetFrame, int targetLayer = 0)
     {
@@ -65,7 +67,8 @@ public static class ExtensionMethod
     {
         return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
             && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, startFrame)
-            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, endFrame));
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, endFrame)
+            && !animator.IsInTransition(targetLayer));
     }
     public static bool IsAnimationFrameBetweenTo(this Animator animator, AnimationClipInformation animationInfo, int startFrame, int endFrame, int targetLayer = 0)
     {
@@ -75,18 +78,21 @@ public static class ExtensionMethod
     public static bool IsAnimationNormalizeTimeUpTo(this Animator animator, int nameHash, float normalizedTime, int targetLayer = 0)
     {
         return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
-            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= normalizedTime);
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= normalizedTime
+            && !animator.IsInTransition(targetLayer));
     }
     public static bool IsAnimationNormalizeTimeDownTo(this Animator animator, int nameHash, float normalizedTime, int targetLayer = 0)
     {
         return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
-            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= normalizedTime);
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= normalizedTime
+            && !animator.IsInTransition(targetLayer));
     }
     public static bool IsAnimationNormalizeTimeBetweenTo(this Animator animator, int nameHash, float minNormalizedTime, float maxNormalizedTime, int targetLayer = 0)
     {
         return (animator.GetCurrentAnimatorStateInfo(targetLayer).shortNameHash == nameHash
             && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= minNormalizedTime
-            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= maxNormalizedTime);
+            && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= maxNormalizedTime
+            && !animator.IsInTransition(targetLayer));
     }
     #endregion
 

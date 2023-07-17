@@ -17,6 +17,7 @@ public class EnemyStateSpawn : IActionState
 
     public void Enter()
     {
+        enemy.PlaySpawnSound();
         enemy.Animator.Play(animationClipInformation.nameHash);
         enemy.HitState = HIT_STATE.Invincible;
     }

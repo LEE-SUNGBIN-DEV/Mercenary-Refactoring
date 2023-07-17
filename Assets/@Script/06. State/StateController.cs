@@ -27,6 +27,11 @@ public class StateController
         subState?.Update();
     }
 
+    public bool HasState(ACTION_STATE targetState)
+    {
+        return stateDictionary.ContainsKey(targetState);
+    }
+
     #region Main State Functions
     private void SwitchState(ACTION_STATE targetState, float duration = 0f)
     {
@@ -84,7 +89,7 @@ public class StateController
     // !! 해당 Animation의 특정 구간을 만족하고, Transition 되는 동안 실행을 방지하면서 상태 전환이 필요한 경우
     public virtual bool SetStateByAnimationTimeUpTo(int currentNameHash, ACTION_STATE targetState, float normalizedTime, int targetLayer = 0)
     {
-        if (animator.IsAnimationNormalizeTimeUpTo(currentNameHash, normalizedTime, targetLayer) && !animator.IsInTransition(targetLayer))
+        if (animator.IsAnimationNormalizeTimeUpTo(currentNameHash, normalizedTime, targetLayer))
         {
             return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }
@@ -92,7 +97,7 @@ public class StateController
     }
     public virtual bool SetStateByAnimationTimeDownTo(int currentNameHash, ACTION_STATE targetState, float normalizedTime, int targetLayer = 0)
     {
-        if (animator.IsAnimationNormalizeTimeDownTo(currentNameHash, normalizedTime, targetLayer) && !animator.IsInTransition(targetLayer))
+        if (animator.IsAnimationNormalizeTimeDownTo(currentNameHash, normalizedTime, targetLayer))
         {
             return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }
@@ -100,7 +105,7 @@ public class StateController
     }
     public virtual bool SetStateByAnimationTimeBetweenTo(int currentNameHash, ACTION_STATE targetState, float lowerNormalizedTime, float upperNormalizedTime, int targetLayer = 0)
     {
-        if (animator.IsAnimationNormalizeTimeBetweenTo(currentNameHash, lowerNormalizedTime, upperNormalizedTime, targetLayer) && !animator.IsInTransition(targetLayer))
+        if (animator.IsAnimationNormalizeTimeBetweenTo(currentNameHash, lowerNormalizedTime, upperNormalizedTime, targetLayer))
         {
             return SetState(targetState, STATE_SWITCH_BY.FORCED);
         }
@@ -155,7 +160,7 @@ public class StateController
     // !! 해당 Animation의 특정 구간을 만족하고, Transition 되는 동안 실행을 방지하면서 상태 전환이 필요한 경우
     public bool SetSubStateByAnimationTimeUpTo(int currentNameHash, ACTION_STATE targetState, float normalizedTime, int targetLayer = 1)
     {
-        if (animator.IsAnimationNormalizeTimeUpTo(currentNameHash, normalizedTime, targetLayer) && !animator.IsInTransition(targetLayer))
+        if (animator.IsAnimationNormalizeTimeUpTo(currentNameHash, normalizedTime, targetLayer))
         {
             return SetSubState(targetState, STATE_SWITCH_BY.FORCED);
         }
@@ -163,7 +168,7 @@ public class StateController
     }
     public bool SetSubStateByAnimationTimeDownTo(int currentNameHash, ACTION_STATE targetState, float normalizedTime, int targetLayer = 1)
     {
-        if (animator.IsAnimationNormalizeTimeDownTo(currentNameHash, normalizedTime, targetLayer) && !animator.IsInTransition(targetLayer))
+        if (animator.IsAnimationNormalizeTimeDownTo(currentNameHash, normalizedTime, targetLayer))
         {
             return SetSubState(targetState, STATE_SWITCH_BY.FORCED);
         }
@@ -171,7 +176,7 @@ public class StateController
     }
     public bool SetSubStateByAnimationTimeBetweenTo(int currentNameHash, ACTION_STATE targetState, float lowerNormalizedTime, float upperNormalizedTime, int targetLayer = 1)
     {
-        if (animator.IsAnimationNormalizeTimeBetweenTo(currentNameHash, lowerNormalizedTime, upperNormalizedTime, targetLayer) && !animator.IsInTransition(targetLayer))
+        if (animator.IsAnimationNormalizeTimeBetweenTo(currentNameHash, lowerNormalizedTime, upperNormalizedTime, targetLayer))
         {
             return SetSubState(targetState, STATE_SWITCH_BY.FORCED);
         }
