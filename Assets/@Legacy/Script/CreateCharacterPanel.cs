@@ -72,7 +72,7 @@ namespace Legacy
         public void OnClickCreateButton()
         {
             Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex] = new CharacterData();
-            Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex].Initialize();
+            Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex].CreateCharacterData();
             Managers.DataManager.SavePlayerData();
 
             ClosePanel();

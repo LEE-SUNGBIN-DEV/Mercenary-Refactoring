@@ -22,13 +22,14 @@ public class EnemyStatePatrol : IActionState
         if (RandomPatrolPoint(enemy.SpawnPosition, out destination))
         {
             Debug.DrawRay(destination, Vector3.up, Color.blue, 5.0f);
-            enemy.Animator.CrossFade(animationClipInformation.nameHash, 0.2f);
+            enemy.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
         }
-        enemy.MoveTo(destination);
     }
 
     public void Update()
     {
+        enemy.TryMoveTo(destination);
+
         // -> Chase
         if (enemy.IsTargetDetected())
         {
@@ -42,19 +43,18 @@ public class EnemyStatePatrol : IActionState
             enemy.State.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
             return;
         }
-
-        enemy.MoveTo(destination);
     }
 
     public void Exit()
     {
+        enemy.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     private bool RandomPatrolPoint(Vector3 spawnPosition, out Vector3 resultPosition)
     {
-        for (int i = 0; i < 10; ++i)
+        for (int i = 0; i < 5; ++i)
         {
-            Vector3 randomPoint = spawnPosition + (Random.insideUnitSphere * Constants.ENEMY_PATROL_RANGE);
+            Vector3 randomPoint = spawnPosition + (Random.onUnitSphere * Constants.ENEMY_PATROL_RANGE);
             if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 0.5f, NavMesh.AllAreas))
             {
                 resultPosition = hit.position;

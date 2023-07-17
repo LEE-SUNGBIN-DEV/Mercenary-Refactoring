@@ -41,18 +41,6 @@ MonoBehaviour:
     m_Address: Prefab_Slot_Inventory
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 00e17e12419d0da489ce15fbc9f2d366
-    m_Address: Prefab_Slot_Helmet
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 1fc3f1342d3eddc42a4fe74dacaee2d7
-    m_Address: Prefab_Slot_Boots
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 9670c85635be3c44d810bfe1139ffc15
-    m_Address: Prefab_Slot_Armor
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 2e2a1f7174799dc48b893ed5f38c8b5c
     m_Address: Prefab_UI_Scene_Title
     m_ReadOnly: 0

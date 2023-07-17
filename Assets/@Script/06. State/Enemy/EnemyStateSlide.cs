@@ -24,15 +24,18 @@ public class EnemyStateSlide : IActionState
     {
         switch (enemy.MoveController.GroundState)
         {
-            case ACTOR_GROUND_STATE.GROUND:
-                enemy.State.SetState(ACTION_STATE.ENEMY_LANDING, STATE_SWITCH_BY.FORCED);
+            case ACTOR_GROUND_STATE.GROUNDING:
+                enemy.State.SetState(ACTION_STATE.ENEMY_LANDING, STATE_SWITCH_BY.WEIGHT);
                 return;
 
-            case ACTOR_GROUND_STATE.SLOPE:
+            case ACTOR_GROUND_STATE.FLOATING:
+                return;
+
+            case ACTOR_GROUND_STATE.SLIDING:
                 enemy.MoveController.SlideTime += Time.deltaTime;
                 return;
 
-            case ACTOR_GROUND_STATE.AIR:
+            case ACTOR_GROUND_STATE.FALLING:
                 enemy.State.SetState(ACTION_STATE.ENEMY_FALL, STATE_SWITCH_BY.WEIGHT);
                 return;
         }

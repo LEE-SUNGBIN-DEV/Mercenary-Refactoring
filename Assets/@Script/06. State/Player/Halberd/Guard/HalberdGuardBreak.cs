@@ -6,32 +6,39 @@ public class HalberdGuardBreak : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInformation animationClipInfo;
 
     public HalberdGuardBreak(PlayerCharacter character)
     {
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_BREAK;
-        animationClipInformation = character.AnimationClipTable["Halberd_Guard_Break"];
+        animationClipInfo = character.AnimationClipTable["Halberd_Guard_Break"];
     }
 
     public void Enter()
     {
+        character.Status.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_BREAK);
         character.HitState = HIT_STATE.Hittable;
-        character.Animator.Play(animationClipInformation.nameHash);
+        character.Animator.Play(animationClipInfo.nameHash);
         character.SFXPlayer.PlaySFX(Constants.Audio_Halberd_Guard_Break);
-        character.Status.CurrentSP -= Constants.PLAYER_STAMINA_CONSUMPTION_DEFENSE_BREAK;
     }
 
     public void Update()
     {
         // -> Idle
-        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.9f))
+        if (character.State.SetStateByAnimationTimeUpTo(animationClipInfo.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.9f))
             return;
+
+        // Movement
+        if (character.Animator.IsAnimationFrameBetweenTo(animationClipInfo, 0, 30))
+            character.MoveController.SetMoveOnly(-character.transform.forward, 2f);
+        else
+            character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     public void Exit()
     {
+        character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     #region Property

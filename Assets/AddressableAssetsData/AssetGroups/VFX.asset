@@ -17,10 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 30da35cb4dea6c44db36989a956b711f
   m_SerializeEntries:
-  - m_GUID: 5c1d046d9fc66cf4594a700f05e0eafc
-    m_Address: VFX_Player_Attack
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 5c38afae62cb9a341a14fa22e2112414
     m_Address: VFX_Player_Parrying
     m_ReadOnly: 0
@@ -53,20 +49,36 @@ MonoBehaviour:
     m_Address: VFX_Player_Stun
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 9dc4e23629a840d42a176a20a257c478
-    m_Address: VFX_Player_Combo_Attack
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 08e135e20124aaa4ea97e49d6a663b05
-    m_Address: VFX_Player_Smash_Attack
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 41e06dae592921744aab26653806f6ca
-    m_Address: VFX_Player_Stinger_Attack
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 57b72c5ed83337f4e818193901d09bbe
     m_Address: VFX_Weather_Rain_Light
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5bcc7d7413a76a441a477ab4b081e3ce
+    m_Address: VFX_Ground_Slam
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 23fd1cdab470e9946bc56e34efa2c636
+    m_Address: VFX_Player_Attack
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 16eeed9d567a23d40a6bd2cd0dd9c338
+    m_Address: VFX_Ground_Burst
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e3603a15e58ea584d839549b134cfdba
+    m_Address: VFX_Ground_Dust_Inplace
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 90af72553a910d24f81a3efe554cddea
+    m_Address: VFX_Ground_Smoke_Gray_Inplace
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b818dc2f1acd25b46a80654212c43896
+    m_Address: VFX_Competing
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: aa7db132a8cbf7a42b3e5f37cbc41934
+    m_Address: VFX_Compete_Start
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

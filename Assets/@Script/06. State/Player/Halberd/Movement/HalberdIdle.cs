@@ -27,53 +27,64 @@ public class HalberdIdle : IActionState
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && character.TryEquipWeapon(WEAPON_TYPE.SWORD_SHIELD))
+        if (character.GetInput().SwapDown && character.TryEquipWeapon(WEAPON_TYPE.SWORD_SHIELD))
         {
             character.State.SetState(character.CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
+        if (character.GetInput().ResonanceWaterDown && character.InventoryData.TryDrinkResonanceWater())
+        {
+            character.State.SetSubState(ACTION_STATE.PLAYER_DRINK, STATE_SWITCH_BY.WEIGHT);
+            return;
+        }
+
+        if (character.GetInput().RollDown && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
             character.State.SetState(ACTION_STATE.PLAYER_ROLL, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
+        if (character.GetInput().CounterDown && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
             character.State.SetState(ACTION_STATE.PLAYER_HALBERD_SKILL_COUNTER, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+        if (character.GetInput().LeftMouseDown && character.Status.CheckStamina(Constants.HALBERD_STAMINA_CONSUMPTION_LIGHT_ATTACK_01))
         {
             character.State.SetState(ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_01, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (Input.GetMouseButtonDown(1) || Input.GetMouseButton(1))
+        if (character.GetInput().RightMouseDown || character.GetInput().RightMouseHold)
         {
-            character.State.SetState(ACTION_STATE.PLAYER_HALBERD_GUARD_IN, STATE_SWITCH_BY.WEIGHT);
-            return;
+            if (character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_IN))
+            {
+                character.State.SetState(ACTION_STATE.PLAYER_HALBERD_GUARD_IN, STATE_SWITCH_BY.WEIGHT);
+                return;
+            }
         }
 
-        character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY);
-        moveInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        moveInput = character.GetInput().MoveInput;
 
         if (moveInput.sqrMagnitude > 0)
         {
             // -> Run
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (character.GetInput().RunHold && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_RUN))
                 character.State.SetState(ACTION_STATE.PLAYER_HALBERD_RUN, STATE_SWITCH_BY.WEIGHT);
 
             // -> Walk
             else
                 character.State.SetState(ACTION_STATE.PLAYER_HALBERD_WALK, STATE_SWITCH_BY.WEIGHT);
         }
+
+        character.Status.RecoverStaminaPerSec(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY_RATIO, CALCULATE_MODE.Ratio);
     }
 
     public void Exit()
     {
+        character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     #region Property

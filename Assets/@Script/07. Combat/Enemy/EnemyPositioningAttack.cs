@@ -5,21 +5,7 @@ using UnityEngine;
 public class EnemyPositioningAttack : EnemyCombatController, IPoolObject
 {
     [Header("Positioning Attack")]
-    [SerializeField] private float delayTime;
-    [SerializeField] private float attackTime;
-    [SerializeField] private float duration;
-    [SerializeField] private Vector3 targetPosition;
-    private IEnumerator delayAttackCoroutine;
-    private IEnumerator autoReturnCoroutine;
-    private ObjectPooler objectPooler;
-
-    public void SetPositioningAttack(BaseEnemy owner, Vector3 targetPosition, float delayTime, float attackTime)
-    {
-        this.enemy = owner;
-        this.delayTime = delayTime;
-        this.attackTime = attackTime;
-        this.targetPosition = targetPosition;
-    }
+    private Coroutine autoReturnCoroutine;
 
     protected virtual void OnTriggerEnter(Collider other)
     {
@@ -27,36 +13,40 @@ public class EnemyPositioningAttack : EnemyCombatController, IPoolObject
             ExecuteAttackProcess(other);
     }
 
-    public void OnAttack()
+    public void EnablePositioningAttack(BaseEnemy owner, Vector3 spawnPosition, float lifeTime, float delayTime, float attackDuration)
     {
-        transform.position = targetPosition;
-        if (delayAttackCoroutine != null)
-            StartCoroutine(delayAttackCoroutine);
+        enemy = owner;
+        transform.position = spawnPosition;
 
+        OnDelayAttack(delayTime, attackDuration);
+        OnAutoReturn(lifeTime);
+    }
+
+    public void EnablePositioningAttack(BaseEnemy owner, Vector3 spawnPosition, Quaternion rotation, float lifeTime, float delayTime, float attackDuration)
+    {
+        EnablePositioningAttack(owner, spawnPosition, lifeTime, delayTime, attackDuration);
+        transform.rotation = rotation;
+    }
+
+    // Auto Return
+    public void OnAutoReturn(float lifeTime)
+    {
         if (autoReturnCoroutine != null)
-            StartCoroutine(autoReturnCoroutine);
+            StopCoroutine(autoReturnCoroutine);
+
+        autoReturnCoroutine = StartCoroutine(CoAutoReturn(lifeTime));
     }
 
-    public IEnumerator CoDelayAttack()
+    public IEnumerator CoAutoReturn(float lifeTime)
     {
-        yield return new WaitForSeconds(delayTime);
-        OnEnableCollider();
-        yield return new WaitForSeconds(attackTime);
-        OnDisableCollider();
-    }
-    public IEnumerator CoAutoReturn()
-    {
-        yield return new WaitForSeconds(duration);
-        ReturnOrDestoryObject(objectPooler);
+        yield return new WaitForSeconds(lifeTime);
+        ReturnOrDestoryObject();
     }
 
-    #region IPoolObject Interface Fucntion
+    #region Interface Fucntions : IPoolObject
     public void ActionAfterRequest(ObjectPooler owner)
     {
-        objectPooler = owner;
-        delayAttackCoroutine = CoDelayAttack();
-        autoReturnCoroutine = CoAutoReturn();
-
+        ObjectPooler = owner;
         OnDisableCollider();
     }
     public void ActionBeforeReturn()
@@ -69,13 +59,14 @@ public class EnemyPositioningAttack : EnemyCombatController, IPoolObject
         if (autoReturnCoroutine != null)
             StopCoroutine(autoReturnCoroutine);
     }
-    public void ReturnOrDestoryObject(ObjectPooler owner)
+    public void ReturnOrDestoryObject()
     {
-        if (owner == null)
+        if (ObjectPooler == null)
             Destroy(gameObject);
 
-        owner.ReturnObject(name, gameObject);
+        ObjectPooler.ReturnObject(name, gameObject);
     }
-    public ObjectPooler ObjectPooler { get { return objectPooler; } }
+
+    public ObjectPooler ObjectPooler { get; set; }
     #endregion
 }

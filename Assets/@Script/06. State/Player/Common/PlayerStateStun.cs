@@ -24,7 +24,7 @@ public class PlayerStateStun : IActionState, IDurationState
     public void Update()
     {
         if (duration <= 0f)
-            character.State.SetState(ACTION_STATE.PLAYER_HALBERD_IDLE, STATE_SWITCH_BY.FORCED);
+            character.State.SetState(character.CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
 
         duration -= Time.deltaTime;
     }

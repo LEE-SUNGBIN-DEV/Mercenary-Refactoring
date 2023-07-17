@@ -40,6 +40,7 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
         itemCount = 0;
         EnableHighlight(false);
     }
+
     public void EnableHighlight(bool isEnable)
     {
         if (isEnable)
@@ -68,6 +69,7 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
         else
             itemGradeText.enabled = false;
     }
+
     public virtual void ClearSlot()
     {
         itemImage.sprite = null;
@@ -126,7 +128,6 @@ public abstract class BaseSlot : UIBase, IPointerClickHandler, IBeginDragHandler
     public int ItemCount { get { return itemCount; } set { itemCount = value; } }
     public int SlotIndex { get { return slotIndex; } set { slotIndex = value; } }
     public BaseSlot EndSlot { get { return Managers.SlotManager?.EndSlot; } }
-    public PlayerInventoryData InventoryData { get { return Managers.DataManager?.CurrentCharacterData?.InventoryData; } }
-    public PlayerEquipmentSlotData EquipmentSlotData { get { return Managers.DataManager?.CurrentCharacterData?.EquipmentSlotData; } }
+    public CharacterInventoryData InventoryData { get { return Managers.DataManager?.CurrentCharacterData?.InventoryData; } }
     #endregion
 }

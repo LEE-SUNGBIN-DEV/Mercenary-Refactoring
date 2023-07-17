@@ -22,8 +22,9 @@ public class SwordShieldGuardIn : IActionState
 
     public void Enter()
     {
+        character.Status.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_IN);
         character.HitState = HIT_STATE.Parryable;
-        character.SetForwardDirection(character.PlayerCamera.GetForward(true));
+        character.SetForwardDirection(character.PlayerCamera.GetZeroYForward());
         character.Animator.Play(animationClipInformation.nameHash);
         swordShield.EnableShield(COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_IN);
     }
@@ -31,7 +32,7 @@ public class SwordShieldGuardIn : IActionState
     public void Update()
     {
         // -> Guard Out
-        if (!Input.GetMouseButton(1) && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT))
+        if (!character.GetInput().RightMouseHold && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT))
             return;
 
         // -> Guard Loop

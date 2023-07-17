@@ -17,6 +17,7 @@ public class EnemyStateDie : IActionState
 
     public void Enter()
     {
+        enemy.PlayDieSound();
         enemy.Animator.Play(animationClipInformation.nameHash);
     }
 

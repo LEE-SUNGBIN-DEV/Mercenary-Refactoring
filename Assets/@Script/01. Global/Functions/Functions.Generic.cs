@@ -5,26 +5,6 @@ using UnityEngine.Events;
 
 public static partial class Functions
 {
-    public static Color SetColor(Color color, float alpha = 1f)
-    {
-        Color resultColor = color;
-        resultColor.a = alpha;
-
-        return resultColor;
-    }
-
-    #region Async Operation
-    public static IEnumerator WaitAsyncOperation(System.Func<bool> isLoaded, UnityAction callback = null)
-    {
-        while (!isLoaded.Invoke())
-        {
-            yield return null;
-        }
-
-        callback?.Invoke();
-    }
-    #endregion
-
     public static T GetOrAddComponent<T>(GameObject gameObject) where T : Component
     {
         T targetComponent = gameObject.GetComponent<T>();
@@ -37,21 +17,41 @@ public static partial class Functions
         return targetComponent;
     }
 
-    public static T FindChild<T>(GameObject gameObject, string name = null, bool recursive = false) where T : Object
+    public static GameObject FindObjectFromChild(GameObject rootObject, string name, bool recursive = false)
     {
-        if (gameObject == null)
-        {
+        if (rootObject == null)
             return null;
+
+        for (int i = 0; i < rootObject.transform.childCount; i++)
+        {
+            Transform childTransform = rootObject.transform.GetChild(i);
+
+            if (string.IsNullOrEmpty(name) || childTransform.name == name)
+                return childTransform.gameObject;
+
+            if(recursive)
+            {
+                GameObject findObject = FindObjectFromChild(childTransform.gameObject, name, recursive);
+                if (findObject != null)
+                    return findObject;
+            }
         }
+        return null;
+    }
+
+    public static T FindChild<T>(GameObject rootObject, string name = null, bool recursive = false) where T : Object
+    {
+        if (rootObject == null)
+            return null;
 
         if (recursive == false)
         {
-            for (int i = 0; i < gameObject.transform.childCount; i++)
+            for (int i = 0; i < rootObject.transform.childCount; i++)
             {
-                Transform transform = gameObject.transform.GetChild(i);
-                if (string.IsNullOrEmpty(name) || transform.name == name)
+                Transform childTransform = rootObject.transform.GetChild(i);
+                if (string.IsNullOrEmpty(name) || childTransform.name == name)
                 {
-                    T component = transform.GetComponent<T>();
+                    T component = childTransform.GetComponent<T>();
 
                     if (component != null)
                     {
@@ -63,7 +63,7 @@ public static partial class Functions
 
         else
         {
-            foreach (T component in gameObject.GetComponentsInChildren<T>(true))
+            foreach (T component in rootObject.GetComponentsInChildren<T>(true))
             {
                 if (string.IsNullOrEmpty(name) || component.name == name)
                 {

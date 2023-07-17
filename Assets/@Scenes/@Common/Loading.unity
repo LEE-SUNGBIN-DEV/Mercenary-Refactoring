@@ -382,11 +382,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01542ff69dd10514098543db8aeadf43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapName: 
-  sceneType: 5
   scene: 2
-  objectPooler:
-    objectPoolList: []
+  sceneType: 5
+  sceneName: 
   loadingBackgroundImage: {fileID: 0}
   loadingText: {fileID: 0}
   loadingBar: {fileID: 1061469238}
@@ -809,7 +807,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -976,7 +974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 77bd76cd7807ef1458fa849c3a3b3818, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -989,7 +987,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

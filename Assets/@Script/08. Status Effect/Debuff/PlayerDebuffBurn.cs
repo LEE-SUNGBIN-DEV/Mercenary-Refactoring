@@ -37,7 +37,7 @@ public class PlayerDebuffBurn : BaseDebuff<PlayerCharacter>
             if(timer >= interval)
             {
                 timer -= interval;
-                actor.Status.CurrentHP -= (actor.Status.MaxHP * ratio);
+                actor.Status.ReduceHP(ratio, CALCULATE_MODE.Ratio);
             }
         }
         else

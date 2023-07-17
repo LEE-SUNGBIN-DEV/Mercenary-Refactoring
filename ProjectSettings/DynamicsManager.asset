@@ -7,7 +7,7 @@ PhysicsManager:
   m_Gravity: {x: 0, y: -9.81, z: 0}
   m_DefaultMaterial: {fileID: 0}
   m_BounceThreshold: 2
-  m_DefaultMaxDepenetrationVelocity: 10
+  m_DefaultMaxDepenetrationVelocity: 100
   m_SleepThreshold: 0.005
   m_DefaultContactOffset: 0.01
   m_DefaultSolverIterations: 6
@@ -18,9 +18,9 @@ PhysicsManager:
   m_ClothInterCollisionDistance: 0
   m_ClothInterCollisionStiffness: 0
   m_ContactsGeneration: 1
-  m_LayerCollisionMatrix: dfffffffdfffffffdfffffffffffffffdfffffff0800ffffdfefffffdffcffff5ffdffff5f04ffffdfffffffdffdffff9fedffffdffdffffdffdffffdffdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  m_LayerCollisionMatrix: df95ffffdf85ffffdf95ffffffffffffdf87ffff0800ffff9f87ffff5f94ffff5f84ffff5804ffffdfffffff0884ffff8d84ffff0884ffff0884ffffdffdffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
   m_AutoSimulation: 1
-  m_AutoSyncTransforms: 0
+  m_AutoSyncTransforms: 1
   m_ReuseCollisionCallbacks: 1
   m_ClothInterCollisionSettingsToggle: 0
   m_ClothGravity: {x: 0, y: -9.81, z: 0}

@@ -10,39 +10,40 @@ public abstract class EnemySkill : MonoBehaviour
     [Header("Enemy Skill")]
     [SerializeField] protected BaseEnemy enemy;
     [SerializeField] protected string skillName;
+    [SerializeField] protected int priority;
     [SerializeField] protected float cooldown;
     [SerializeField] protected float minAttackDistance;
     [SerializeField] protected float maxAttackDistance;
     [SerializeField] protected bool isReady;
-    protected IEnumerator cooldownCoroutine;
-    protected IEnumerator skillCoroutine;
-    protected IEnumerator lookTargetCoroutine;
-
-    public virtual void Initialize()
-    {
-        enemy = GetComponentInParent<BaseEnemy>(true);
-        isReady = true;
-        RegisterCoroutine();
-    }
+    protected Coroutine cooldownCoroutine;
+    protected Coroutine skillCoroutine;
+    protected Coroutine lookTargetCoroutine;
 
     public virtual void Initialize(BaseEnemy enemy)
     {
         this.enemy = enemy;
         isReady = true;
-        RegisterCoroutine();
+        priority = 0;
     }
 
     public void OnDisable()
     {
-        DisableSkill();
+        //DisableSkill();
     }
 
     public virtual void EnableSkill()
     {
-        RegisterCoroutine();
-        StartCoroutine(cooldownCoroutine);
-        StartCoroutine(skillCoroutine);
-        StartCoroutine(lookTargetCoroutine);
+        if(cooldownCoroutine != null)
+            StopCoroutine(cooldownCoroutine);
+        cooldownCoroutine = StartCoroutine(CoStartCooldown());
+
+        if (lookTargetCoroutine != null)
+            StopCoroutine(lookTargetCoroutine);
+        lookTargetCoroutine = StartCoroutine(CoLookTarget());
+
+        if (skillCoroutine != null)
+            StopCoroutine(skillCoroutine);
+        skillCoroutine = StartCoroutine(CoStartSkill());
     }
 
     public abstract IEnumerator CoStartSkill();
@@ -53,7 +54,7 @@ public abstract class EnemySkill : MonoBehaviour
         return (isReady && (targetDistance >= minAttackDistance) && (targetDistance <= maxAttackDistance));
     }
 
-    public IEnumerator WaitForCooldown()
+    public IEnumerator CoStartCooldown()
     {
         isReady = false;
         yield return new WaitForSeconds(cooldown);
@@ -65,22 +66,21 @@ public abstract class EnemySkill : MonoBehaviour
         OnEndSkill?.Invoke(true);
     }
 
-    public void RegisterCoroutine()
-    {
-        cooldownCoroutine = WaitForCooldown();
-        skillCoroutine = CoStartSkill();
-        lookTargetCoroutine = CoLookTarget();
-    }
     public virtual void DisableSkill()
     {
         if (skillCoroutine != null)
-        {
             StopCoroutine(skillCoroutine);
+
+        if (lookTargetCoroutine != null)
             StopCoroutine(lookTargetCoroutine);
-        }
     }
 
     #region Property
     public BaseEnemy Enemy { get { return enemy; } }
+    public string SkillName { get { return skillName; } }
+    public int Priority { get { return priority; } }
+    public float Cooldown { get { return cooldown; } }
+    public float MinAttackDistance { get { return minAttackDistance; } }
+    public float MaxAttackDistance { get { return maxAttackDistance; } }
     #endregion
 }

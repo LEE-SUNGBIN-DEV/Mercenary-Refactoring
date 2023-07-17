@@ -17,38 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 378e22ad452e77044a7a114b632fcf4a
   m_SerializeEntries:
-  - m_GUID: 5c948f1014ea7b045b641639c8a8b59a
-    m_Address: Sprite_Item_Yellow Potion_11000
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: eabac1329b73ada4aa5a0967a1da1d4e
-    m_Address: Sprite_Item_Spear_1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: c1e24fd9eb8ac9e4493ccbd56dbbe5a4
-    m_Address: Sprite_Item_Red Potion_10000
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: d5ff8f6d892ada84da22d8a8832ca241
-    m_Address: Sprite_Item_Helmet_500
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 2c8f7221383472b4584bb00e6e9fb685
-    m_Address: Sprite_Item_Boots_1500
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 74d0ba03306783b42927854d25b69345
-    m_Address: Sprite_Item_Armor_1000
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 4b5e96b2a16a0324085bcb771d9872d1
-    m_Address: Sprite_Item_Gloves
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: daeb5338b96b2574a98ece1bb015597c
-    m_Address: Sprite_Item_Bracers
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 87d28997275f30943a4bf1cdc156bb73
     m_Address: Sprite_Cursor_Basic
     m_ReadOnly: 0
@@ -59,6 +27,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: c5c729450bd8d3843b95e8d5e3bf0f09
     m_Address: Sprite_Thumbnail_Sword_Shield
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 44204a190ea09934696aeb4a08d31905
+    m_Address: Sprite_Thumbnail_Armor
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

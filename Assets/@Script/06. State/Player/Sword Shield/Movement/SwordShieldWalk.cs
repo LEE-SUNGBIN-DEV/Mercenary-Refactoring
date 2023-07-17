@@ -20,62 +20,68 @@ public class SwordShieldWalk : IActionState
 
     public void Enter()
     {
-        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.3f);
+        character.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab) && character.TryEquipWeapon(WEAPON_TYPE.HALBERD))
+        if (character.GetInput().SwapDown && character.TryEquipWeapon(WEAPON_TYPE.HALBERD))
         {
             character.State.SetState(character.CurrentWeapon.WalkState, STATE_SWITCH_BY.FORCED);
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
+        if (character.GetInput().ResonanceWaterDown && character.InventoryData.TryDrinkResonanceWater())
+        {
+            character.State.SetSubState(ACTION_STATE.PLAYER_DRINK, STATE_SWITCH_BY.WEIGHT);
+            return;
+        }
+
+        if (character.GetInput().RollDown && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
             character.State.SetState(ACTION_STATE.PLAYER_ROLL, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButton(0))
+        if (character.GetInput().LeftMouseDown && character.Status.CheckStamina(Constants.SWORD_SHIELD_STAMINA_CONSUMPTION_LIGHT_ATTACK_01))
         {
             character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_01, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (Input.GetMouseButtonDown(1) || Input.GetMouseButton(1))
+        if (character.GetInput().RightMouseDown || character.GetInput().RightMouseHold)
         {
-            character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_IN, STATE_SWITCH_BY.WEIGHT);
-            return;
+            if (character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_IN))
+            {
+                character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_IN, STATE_SWITCH_BY.WEIGHT);
+                return;
+            }
         }
 
-        character.CharacterData.StatusData.AutoRecoverStamina(Constants.PLAYER_STAMINA_WALK_AUTO_RECOVERY);
-
-        Vector3 verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z) * Input.GetAxisRaw("Vertical");
-        Vector3 horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z) * Input.GetAxisRaw("Horizontal");
+        Vector3 horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z) * character.GetInput().MoveInput.x;
+        Vector3 verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z) * character.GetInput().MoveInput.z;
         moveDirection = (verticalDirection + horizontalDirection);
 
         if (moveDirection.sqrMagnitude > 0f)
         {
-            // Run
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
+            // -> Run
+            if (character.GetInput().RunHold && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_RUN))
                 character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_RUN, STATE_SWITCH_BY.WEIGHT);
-            }
+
+            // Current
             else
-            {
-                character.MoveController.SetMovement(moveDirection, character.Status.MoveSpeed);
-            }
+                character.MoveController.SetMovementAndRotation(moveDirection, character.Status.MoveSpeed);
         }
-        // Idle
+        // -> Idle
         else
-        {
             character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_IDLE, STATE_SWITCH_BY.FORCED);
-        }
+
+        character.Status.RecoverStaminaPerSec(Constants.PLAYER_STAMINA_WALK_AUTO_RECOVERY_RATIO, CALCULATE_MODE.Ratio);
     }
 
     public void Exit()
     {
+        character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     #region Property

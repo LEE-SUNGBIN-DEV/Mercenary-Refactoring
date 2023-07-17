@@ -24,19 +24,24 @@ public class PlayerWeaponController
             swordShield.InitializeWeapon(character);
         }
 
-        weaponDictionary.TryGetValue(character.Status.CurrentWeapon, out currentWeapon);
+        weaponDictionary.TryGetValue(character.InventoryData.EquippedWeapon, out currentWeapon);
     }
 
-    public void HideWeapon()
+    public void HideWeapon(bool isHide)
     {
-        if (currentWeapon != null)
-            currentWeapon.HideWeapon();
-    }
+        if (currentWeapon == null)
+            return;
 
-    public void ShowWeapon()
-    {
-        if (currentWeapon != null)
-            currentWeapon.ShowWeapon();
+        switch (isHide)
+        {
+            case true:
+                currentWeapon.HideWeapon();
+                break;
+
+            case false:
+                currentWeapon.ShowWeapon();
+                break;
+        }
     }
 
     public void SwitchWeapon(WEAPON_TYPE targetWeapon)
@@ -44,11 +49,13 @@ public class PlayerWeaponController
         if(weaponDictionary.ContainsKey(targetWeapon))
         {
             if(currentWeapon != null)
+            {
                 currentWeapon.UnequipWeapon();
+            }
 
             currentWeapon = weaponDictionary[targetWeapon];
             currentWeapon.EquipWeapon();
-            character.Status.CurrentWeapon = currentWeapon.WeaponType;
+            character.InventoryData.EquipWeapon(character.Status, currentWeapon.WeaponType);
         }
     }
 

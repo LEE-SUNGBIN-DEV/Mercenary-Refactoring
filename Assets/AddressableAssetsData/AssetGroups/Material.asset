@@ -53,6 +53,22 @@ MonoBehaviour:
     m_Address: Material_Player_Halberd_Dissolve
     m_ReadOnly: 0
     m_SerializedLabels: []
+  - m_GUID: 5a48f9fb50f62e44cb7b2d598fa37b59
+    m_Address: Material_Rock_Golem_A_Dissolve
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 93c1fa03fe4ce3f4380670b481bb5ae3
+    m_Address: Material_Rock_Golem_B_Dissolve
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5d95c4a1d90e8da4ca4a92c753c54f80
+    m_Address: Material_Moled_A_Dissolve
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 029ed83772ff24641827e3ad74e6cd09
+    m_Address: Material_Moled_B_Dissolve
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 985155d037619ca4ca86e1e414f07244, type: 2}
   m_SchemaSet:

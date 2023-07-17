@@ -11,7 +11,6 @@ public class FloatingDamageText : MonoBehaviour, IPoolObject
     private Color textColor;
 
     private IEnumerator autoReturnCoroutine;
-    private ObjectPooler objectPooler;
 
     private void Awake()
     {
@@ -46,13 +45,13 @@ public class FloatingDamageText : MonoBehaviour, IPoolObject
     public IEnumerator CoAutoReturn()
     {
         yield return new WaitForSeconds(duration);
-        ReturnOrDestoryObject(objectPooler);
+        ReturnOrDestoryObject();
     }
 
     #region IPoolObject Interface Fucntion
     public void ActionAfterRequest(ObjectPooler owner)
     {
-        objectPooler = owner;
+        ObjectPooler = owner;
         autoReturnCoroutine = CoAutoReturn();
 
         if (autoReturnCoroutine != null)
@@ -68,14 +67,14 @@ public class FloatingDamageText : MonoBehaviour, IPoolObject
             StopCoroutine(autoReturnCoroutine);
     }
 
-    public void ReturnOrDestoryObject(ObjectPooler owner)
+    public void ReturnOrDestoryObject()
     {
-        if (owner == null)
+        if (ObjectPooler == null)
             Destroy(gameObject);
 
-        owner.ReturnObject(name, gameObject);
+        ObjectPooler.ReturnObject(name, gameObject);
     }
 
-    public ObjectPooler ObjectPooler { get { return objectPooler; } }
+    public ObjectPooler ObjectPooler { get; set; }
     #endregion
 }

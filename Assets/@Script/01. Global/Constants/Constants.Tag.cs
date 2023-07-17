@@ -13,5 +13,7 @@ public static partial class Constants
     public const int LAYER_ENEMY = 8;
     public const int LAYER_DIE = 9;
 
-
+    public const int LAYER_HITBOX = 12;
+    public const int LAYER_RENDER_TEXTURE = 13;
+    public const int LAYER_PREVENT_PUSH = 14;
 }

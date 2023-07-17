@@ -6,14 +6,12 @@ public class PlayerStateResonanceLoop : IActionState
 {
     private int stateWeight;
     private Animator animator;
-    private StateController stateController;
     private AnimationClipInformation animationClipInformation;
 
     public PlayerStateResonanceLoop(PlayerCharacter character)
     {
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_RESONANCE_LOOP;
         animator = character.Animator;
-        stateController = character.State;
         animationClipInformation = character.AnimationClipTable["Player_Resonance_Loop"];
     }
 

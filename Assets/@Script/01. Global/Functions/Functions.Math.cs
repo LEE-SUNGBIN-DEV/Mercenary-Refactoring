@@ -4,14 +4,13 @@ using UnityEngine;
 
 public static partial class Functions
 {
-    public static float GetAnimationNormalizedTimeByFrame(int maxFrame, int targetFrame)
+    public static string GetIntCommaString(int data)
     {
-        return targetFrame / (float)maxFrame;
+        return string.Format($"{data:#,###}");
     }
-
-    public static float GetAnimationTimeByFrame(float length, int maxFrame, int targetFrame, float speed = 1f)
+    public static string GetFloatCommaString(float data)
     {
-        return GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame) * length / speed;
+        return string.Format($"{data:#,###.#}");
     }
 
     public static Vector3 GetRandomRectCoordinate(float halfWidth, float halfDepth)
@@ -34,5 +33,13 @@ public static partial class Functions
     {
         Vector2 directionVector = endPoint - startPoint;
         return Mathf.Atan2(directionVector.y, directionVector.x) * Mathf.Rad2Deg;
+    }
+
+    public static Vector3 GetZeroYDirection(Vector3 sourcePosition, Vector3 targetPosition)
+    {
+        Vector3 zeroYDirection = targetPosition - sourcePosition;
+        zeroYDirection.y = 0;
+
+        return zeroYDirection;
     }
 }

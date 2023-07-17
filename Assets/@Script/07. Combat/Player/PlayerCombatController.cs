@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerCombatController : BaseCombatController
 {
+    public event UnityAction OnHitting;
+
     [Header("Player Weapon")]
     protected PlayerCharacter character;
 
@@ -24,6 +27,14 @@ public class PlayerCombatController : BaseCombatController
         if (hitType == HIT_TYPE.NONE)
             return;
 
+        // Counter Attack
+        if (character.State.MainState is HalberdCounter
+            && other.TryGetComponent(out EnemyCompeteAttack competeAttack)
+            && Managers.SpecialCombatManager.TryCounter(this, competeAttack))
+        {
+            return;
+        }
+
         if (other.TryGetComponent(out EnemyHitbox hitbox))
         {
             Vector3 hitPoint = other.bounds.ClosestPoint(transform.position);
@@ -36,47 +47,50 @@ public class PlayerCombatController : BaseCombatController
 
                 hitDictionary.Add(hitbox.Enemy, true);
 
-                // 02. Hitting Effect Process
-                GameObject effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Attack);
-                effect.transform.position = hitPoint;
+                // 02. Generate Hit VFX Process
+                GameObject vfxObject = character.ObjectPooler.RequestObject(Constants.VFX_Player_Attack);
+                vfxObject.transform.position = hitPoint;
 
-                // 04. Damage Process
+                // 03. Damage Process
                 hitbox.Enemy.TakeHit(character, damageRatio, hitType, hitPoint, crowdControlDuration);
+                OnHitting?.Invoke();
             }
         }
     }
 
     public virtual void ExecuteDefenseProcess(EnemyCombatController enemyCombatController, Vector3 hitPoint)
     {
-        if (guardType == GUARD_TYPE.NONE)
-            return;
-
-        GameObject effect = null;
+        character.transform.forward = Functions.GetZeroYDirection(character.transform.position, enemyCombatController.Enemy.transform.position);
+        character.PlayerCamera.ActiveCorrectionMode(enemyCombatController.Enemy.transform.position);
 
         switch (guardType)
         {
+            case GUARD_TYPE.NONE:
+                return;
+
             case GUARD_TYPE.GUARDABLE:
                 {
-                    effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Guard);
                     character.State.SetState(character.CurrentWeapon.GuardBreakState, STATE_SWITCH_BY.WEIGHT);
+                    GameObject vfxObject = character.ObjectPooler.RequestObject(Constants.VFX_Player_Guard);
+                    vfxObject.transform.position = hitPoint;
                     break;
                 }
 
             case GUARD_TYPE.PARRYABLE:
                 {
-                    if (enemyCombatController is EnemyCompeteAttack competeAttack
-                        && Managers.CompeteManager.TryCompete(this, competeAttack))
+                    if (character.CurrentWeapon.WeaponType == WEAPON_TYPE.SWORD_SHIELD
+                        && enemyCombatController is EnemyCompeteAttack competeAttack
+                        && Managers.SpecialCombatManager.TryCompete(this, competeAttack))
+                    {
                         break;
+                    }
 
-                    effect = character.ObjectPooler.RequestObject(Constants.VFX_Player_Parrying);
                     character.State.SetState(character.CurrentWeapon.ParryingState, STATE_SWITCH_BY.WEIGHT);
+                    GameObject vfxObject = character.ObjectPooler.RequestObject(Constants.VFX_Player_Parrying);
+                    vfxObject.transform.position = hitPoint;
                     break;
                 }
         }
-
-        if (effect != null)
-            effect.transform.position = hitPoint;
-
         combatCollider.enabled = false;
     }
 

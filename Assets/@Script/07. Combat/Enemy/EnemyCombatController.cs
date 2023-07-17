@@ -6,10 +6,10 @@ using UnityEngine.Events;
 public abstract class EnemyCombatController : BaseCombatController
 {
     public event UnityAction OnHitPlayer;
-    public event UnityAction OnHitPlayerGuard;
 
     [Header("Enemy Combat Controller")]
     [SerializeField] protected BaseEnemy enemy;
+    protected Coroutine delayAttackCoroutine;
 
     protected virtual void ExecuteAttackProcess(Collider other)
     {
@@ -21,31 +21,46 @@ public abstract class EnemyCombatController : BaseCombatController
                 return;
 
             hitDictionary.Add(character, true);
-
-            character.TakeHit(enemy, damageRatio, hitType, crowdControlDuration);
             OnHitPlayer?.Invoke();
-        }
 
-        // Hit With Shield
-        if (other.TryGetComponent(out PlayerCombatController weapon))
-        {
-            if (hitDictionary.ContainsKey(weapon))
-                return;
-
-            switch (weapon.GuardType)
+            switch (character.HitState)
             {
-                case GUARD_TYPE.GUARDABLE:
-                case GUARD_TYPE.PARRYABLE:
-                    weapon.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
-                    OnHitPlayerGuard?.Invoke();
+                case HIT_STATE.Invincible:
                     break;
 
-                default:
+                case HIT_STATE.Hittable:
+                    character.TakeHit(enemy, damageRatio, hitType, crowdControlDuration);
+                    break;
+
+                case HIT_STATE.Guardable:
+                    character.CurrentWeapon.GuardController.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
+                    break;
+
+                case HIT_STATE.Parryable:
+                    character.CurrentWeapon.GuardController.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
                     break;
             }
         }
     }
 
+    // Delay
+    public void OnDelayAttack(float delayTime, float attackDuration)
+    {
+        if (delayAttackCoroutine != null)
+            StopCoroutine(delayAttackCoroutine);
+
+        delayAttackCoroutine = StartCoroutine(CoDelayAttack(delayTime, attackDuration));
+    }
+
+    public IEnumerator CoDelayAttack(float delayTime, float attackDuration)
+    {
+        yield return new WaitForSeconds(delayTime);
+        OnEnableCollider();
+        yield return new WaitForSeconds(attackDuration);
+        OnDisableCollider();
+    }
+
+    // Enable / Disable
     public virtual void OnEnableCollider()
     {
         if(combatCollider != null && combatCollider.enabled == false)

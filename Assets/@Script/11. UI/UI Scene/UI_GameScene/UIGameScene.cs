@@ -5,6 +5,7 @@ public class UIGameScene : UIBaseScene
     // Panel
     private UserPanel userPanel;
     private StatusPanel statusPanel;
+    private SkillPanel skillPanel;
     private InventoryPanel inventoryPanel;
     private ResonancePointPanel resonancePointPanel;
     private QuestPanel questPanel;
@@ -12,11 +13,11 @@ public class UIGameScene : UIBaseScene
     private DialoguePanel dialoguePanel;
     private EnemyPanel enemyPanel;
     private SceneNamePanel mapPanel;
-    private CampaignPopup campaignPanel;
     private CompetePanel competePanel;
+    private CenterNoticePanel centerNoticePanel;
+    private DiePanel diePanel;
 
     // Popup
-    private DiePopup diePopup;
     private StorePopup storePopup;
 
     public void Initialize(CharacterData characterData)
@@ -27,6 +28,7 @@ public class UIGameScene : UIBaseScene
         // Get Panels
         userPanel = GetComponentInChildren<UserPanel>(true);
         statusPanel = GetComponentInChildren<StatusPanel>(true);
+        skillPanel = GetComponentInChildren<SkillPanel>(true);
         inventoryPanel = GetComponentInChildren<InventoryPanel>(true);
         resonancePointPanel = GetComponentInChildren<ResonancePointPanel>(true);
         questPanel = GetComponentInChildren<QuestPanel>(true);
@@ -35,27 +37,28 @@ public class UIGameScene : UIBaseScene
         enemyPanel = GetComponentInChildren<EnemyPanel>(true);
         mapPanel = GetComponentInChildren<SceneNamePanel>(true);
         competePanel = GetComponentInChildren<CompetePanel>(true);
-
-        diePopup = GetComponentInChildren<DiePopup>(true);
-        storePopup = GetComponentInChildren<StorePopup>(true);
-        campaignPanel = GetComponentInChildren<CampaignPopup>(true);
+        centerNoticePanel = GetComponentInChildren<CenterNoticePanel>(true);
+        diePanel = GetComponentInChildren<DiePanel>(true);
 
         // Initialize
         userPanel.Initialize(characterData);
         statusPanel.Initialize(characterData);
+        skillPanel.Initialize(characterData);
         inventoryPanel.Initialize(characterData);
         resonancePointPanel.Initialize(characterData);
         interactionPanel.Initialize();
         dialoguePanel.Initialize(characterData);
+        enemyPanel.Initialize();
         competePanel.Initialize();
-
-        diePopup.Initialize();
+        centerNoticePanel.Initialize();
+        diePanel.Initialize();
         //questPanel.Initialize();
-        storePopup.Initialize();
-        campaignPanel.Initialize(characterData);
 
-        Managers.CompeteManager.OnStartCompete += OpenCompetePanel;
-        Managers.CompeteManager.OnEndCompete += CloseCompetePanel;
+        storePopup = GetComponentInChildren<StorePopup>(true);
+        storePopup.Initialize();
+
+        Managers.SpecialCombatManager.OnStartCompete += OpenCompetePanel;
+        Managers.SpecialCombatManager.OnEndCompete += CloseCompetePanel;
 
         Managers.UIManager.OpenPanel(userPanel);
     }
@@ -66,6 +69,7 @@ public class UIGameScene : UIBaseScene
     #region Property
     public UserPanel UserPanel { get { return userPanel; } }
     public StatusPanel StatusPanel { get { return statusPanel; } }
+    public SkillPanel SkillPanel { get { return skillPanel; } }
     public InventoryPanel InventoryPanel { get { return inventoryPanel; } }
     public ResonancePointPanel ResonancePointPanel { get { return resonancePointPanel; } }
     public QuestPanel QuestPanel { get { return questPanel; } }
@@ -73,9 +77,9 @@ public class UIGameScene : UIBaseScene
     public DialoguePanel DialoguePanel { get { return dialoguePanel; } }
     public EnemyPanel EnemyPanel { get { return enemyPanel; } }
     public SceneNamePanel MapPanel { get { return mapPanel; } }
+    public CenterNoticePanel CenterNoticePanel { get { return centerNoticePanel; } }
+    public DiePanel DiePanel { get { return diePanel; } }
 
-    public CampaignPopup CampaignPopup { get { return campaignPanel; } }
     public StorePopup StorePopup { get { return storePopup; } }
-    public DiePopup DiePopup { get { return diePopup; } }
     #endregion
 }

@@ -3,36 +3,56 @@
     {
       "StatusData": {
         "Level": 1,
-        "StatPoint": 0,
+        "AbilityPoint": 0,
+        "SkillPoint": 0,
         "Strength": 10,
         "Vitality": 10,
         "Dexterity": 10,
-        "Luck": 10,
-        "CurrentWeapon": 1,
-        "CurrentHP": 100.0,
+        "Will": 10,
+        "CurrentHP": 0.0,
         "CurrentExp": 0.0,
-        "MaxHP": 100.0,
-        "MaxExp": 10.0,
-        "MaxSP": 100.0,
-        "CurrentSP": 100.0
+        "MaxHP": 105.0,
+        "MaxExp": 11.0518036,
+        "MaxSP": 85.0,
+        "CurrentSP": 0.0
+      },
+      "SkillData": {
+        "SkillLevelDictionary": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "11": 0,
+          "12": 0,
+          "21": 0,
+          "22": 0,
+          "31": 0,
+          "101": 0,
+          "102": 0,
+          "103": 0,
+          "201": 0,
+          "202": 0,
+          "203": 0,
+          "204": 0
+        }
       },
       "LocationData": {
         "LastScene": 3,
-        "LastXCoordinate": 125.8251,
-        "LastYCoordinate": 100.0769,
-        "LastZCoordinate": 71.98943,
+        "LastLocationX": 0.0,
+        "LastLocationY": 0.0,
+        "LastLocationZ": 0.0,
         "ResonancePointDictionary": {
-          "Fog_Canyon": [
-            false,
-            false,
-            false
-          ],
-          "Forestia": [],
-          "Cave": []
+          "300": false,
+          "301": false
         }
       },
+      "SceneData": {
+        "SceneClearDictionary": {},
+        "ResonanceGateDictionary": {},
+        "ItemBoxGetDictionary": {}
+      },
       "InventoryData": {
-        "Money": 500,
+        "EquippedWeapon": 2,
+        "ResonanceStone": 500,
         "InventoryItems": [
           null,
           null,
@@ -65,18 +85,18 @@
           null,
           null
         ],
+        "ResonanceWaterGrade": 0,
+        "ResonanceWaterMaxCount": 3,
+        "ResonanceWaterRemainingCount": 3,
+        "HalberdID": 0,
+        "SwordShieldID": 0,
+        "ArmorID": 0,
         "QuickSlotItemIDs": [
           -1,
           -1,
           -1,
           -1
         ]
-      },
-      "EquipmentSlotData": {
-        "WeaponSlotItemData": null,
-        "HelmetSlotItemData": null,
-        "ArmorSlotItemData": null,
-        "BootsSlotItemData": null
       },
       "QuestData": {
         "MainQuestProgress": 0,
@@ -86,10 +106,14 @@
     null,
     null
   ],
-  "SelectCharacterIndex": 0,
+  "CurrentCharacterIndex": 0,
   "OptionData": {
     "BgmVolume": 0.5,
     "SfxVolume": 0.5,
-    "AmbientVolume": 0.5
+    "AmbientVolume": 0.5,
+    "IsFullScreen": true,
+    "ScreenWidth": 1920,
+    "ScreenHeight": 1080,
+    "ScreenRefreshRate": 60
   }
 }

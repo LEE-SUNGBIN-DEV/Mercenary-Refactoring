@@ -24,15 +24,18 @@ public class PlayerStateSlide : IActionState
     {
         switch (character.MoveController.GroundState)
         {
-            case ACTOR_GROUND_STATE.GROUND:
+            case ACTOR_GROUND_STATE.GROUNDING:
                 character.State.SetState(ACTION_STATE.PLAYER_LANDING, STATE_SWITCH_BY.WEIGHT);
                 break;
 
-            case ACTOR_GROUND_STATE.SLOPE:
+            case ACTOR_GROUND_STATE.FLOATING:
+                break;
+
+            case ACTOR_GROUND_STATE.SLIDING:
                 character.MoveController.SlideTime += Time.deltaTime;
                 break;
 
-            case ACTOR_GROUND_STATE.AIR:
+            case ACTOR_GROUND_STATE.FALLING:
                 character.State.SetState(ACTION_STATE.PLAYER_FALL, STATE_SWITCH_BY.WEIGHT);
                 break;
         }

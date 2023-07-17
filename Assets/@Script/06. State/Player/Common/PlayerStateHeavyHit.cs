@@ -8,7 +8,7 @@ public class PlayerStateHeavyHit : IActionState
     private int stateWeight;
 
     private Animator animator;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInformation animationClipInfo;
 
     public PlayerStateHeavyHit(PlayerCharacter character)
     {
@@ -16,23 +16,30 @@ public class PlayerStateHeavyHit : IActionState
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_HIT_HEAVY;
 
         animator = character.Animator;
-        animationClipInformation = character.AnimationClipTable["Player_Heavy_Hit"];
+        animationClipInfo = character.AnimationClipTable["Player_Heavy_Hit"];
     }
 
     public void Enter()
     {
-        animator.Play(animationClipInformation.nameHash);
+        animator.Play(animationClipInfo.nameHash);
     }
 
     public void Update()
     {
         // -> Hit Heavy Loop
-        if (character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HIT_HEAVY_LOOP, 1.0f))
-            return;
+        if (character.Animator.IsAnimationFrameUpTo(animationClipInfo, animationClipInfo.maxFrame))
+            character.State.SetState(ACTION_STATE.PLAYER_HIT_HEAVY_LOOP, STATE_SWITCH_BY.FORCED);
+
+        // Movement
+        if (character.Animator.IsAnimationFrameBetweenTo(animationClipInfo, 0, 20))
+            character.MoveController.SetMoveOnly(-character.transform.forward, Constants.PLAYER_HEAVY_HIT_SPEED);
+        else
+            character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     public void Exit()
     {
+        character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     #region Property

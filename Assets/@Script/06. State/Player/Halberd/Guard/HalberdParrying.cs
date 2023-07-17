@@ -21,6 +21,7 @@ public class HalberdParrying : IActionState
 
     public void Enter()
     {
+        character.Status.RecoverStamina(Constants.PLAYER_STAMINA_PARRYING_RECOVERY_RATIO, CALCULATE_MODE.Ratio);
         character.SFXPlayer.PlaySFX(Constants.Audio_Halberd_Parrying);
         character.Animator.Play(animationClipInformation.nameHash);
 
@@ -31,7 +32,7 @@ public class HalberdParrying : IActionState
     public void Update()
     {
         if (!mouseRightDown)
-            mouseRightDown = Input.GetMouseButtonDown(1);
+            mouseRightDown = character.GetInput().RightMouseDown;
 
         // -> Parrying Attack
         if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_PARRYING_ATTACK, 0.5f))

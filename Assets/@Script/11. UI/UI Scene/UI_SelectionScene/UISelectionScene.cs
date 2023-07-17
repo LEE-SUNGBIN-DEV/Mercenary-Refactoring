@@ -103,14 +103,16 @@ public class UISelectionScene : UIBaseScene
             // Exist Data
             if (characterDatas[i]?.StatusData != null)
             {
-                characterSlots[i].slotText.text = "Lv. " + characterDatas[i].StatusData.Level;
+                characterSlots[i].slotText.text =
+                    "Lv. " + characterDatas[i].StatusData.Level + "\n"
+                    + Managers.DataManager.GameSceneTable[characterDatas[i].LocationData.LastScene].sceneName;
                 characterSlots[i].slotButton.onClick.AddListener(() => { OnClickCharacterSlot(index); });
             }
 
             // Don't Exist Data
             else
             {
-                characterSlots[i].slotText.text = "Create";
+                characterSlots[i].slotText.text = "»ý¼º";
                 characterSlots[i].slotButton.onClick.AddListener(() => { OnClickCreateCharacter(index); });
             }
 
@@ -133,7 +135,7 @@ public class UISelectionScene : UIBaseScene
         selectSlot = characterSlots[slotIndex];
 
         Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex] = new CharacterData();
-        Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex].Initialize();
+        Managers.DataManager.PlayerData.CharacterDatas[selectSlot.slotIndex].CreateCharacterData();
         Managers.DataManager.SavePlayerData();
 
         startButton.interactable = false;

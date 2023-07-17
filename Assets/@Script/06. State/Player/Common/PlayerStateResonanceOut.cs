@@ -21,7 +21,7 @@ public class PlayerStateResonanceOut : IActionState
 
     public void Enter()
     {
-        animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
+        animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.1f);
     }
 
     public void Update()

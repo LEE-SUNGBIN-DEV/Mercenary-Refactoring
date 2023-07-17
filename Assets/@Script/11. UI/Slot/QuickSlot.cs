@@ -14,7 +14,7 @@ public class QuickSlot : BaseSlot
         slotIndex = i;
     }
 
-    public void LoadSlot(PlayerInventoryData inventoryData)
+    public void LoadSlot(CharacterInventoryData inventoryData)
     {
         ClearSlot();
         if (inventoryData.QuickSlotItemIDs[slotIndex] != Constants.NULL_INT)
@@ -52,7 +52,7 @@ public class QuickSlot : BaseSlot
         }
     }
 
-    public void UseItem(PlayerInventoryData inventoryData)
+    public void UseItem(CharacterInventoryData inventoryData)
     {
         inventoryData.UseQuickSlotItem(slotIndex);
     }
