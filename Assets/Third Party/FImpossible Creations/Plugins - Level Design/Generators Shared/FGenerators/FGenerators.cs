@@ -97,6 +97,7 @@ namespace FIMSpace.Generating
 #endif
         }
 
+
         /// <summary> Should be used instead of == null on unity classes to be able for call in async methods </summary>
         public static bool RefIsNull(object varMat)
         {
@@ -125,6 +126,11 @@ namespace FIMSpace.Generating
                 random = new System.Random(seed);
             }
 
+            public void ReInitializeSeed(int seed)
+            {
+                random = new System.Random(seed);
+            }
+
             public float GetRandom()
             {
                 return (float)random.NextDouble();
@@ -135,14 +141,25 @@ namespace FIMSpace.Generating
                 return from + (float)random.NextDouble() * (to - from);
             }
 
+            /// <summary> To is exclusive, dedicated for arrays </summary>
             public int GetRandom(int from, int to)
             {
                 return random.Next(from, to);
             }
 
+            public int GetRandomInclusive(int from, int to)
+            {
+                return random.Next(from, to + 1);
+            }
+
             public int GetRandom(MinMax minMax)
             {
                 return (int)(minMax.Min + (float)random.NextDouble() * ((minMax.Max + 1) - minMax.Min));
+            }
+
+            public bool GetRandomFlip()
+            {
+                return GetRandom(0, 2) == 1;
             }
 
             #endregion
@@ -183,7 +200,7 @@ namespace FIMSpace.Generating
         /// <summary> Ensuring 'from' is lower value </summary>
         public static float GetRandomSwap(float from, float to)
         {
-            if ( from > to)
+            if (from > to)
             {
                 float swapTo = from;
                 from = to;
@@ -821,6 +838,24 @@ namespace FIMSpace.Generating
             //}
         }
 
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            Shuffle(list, random);
+        }
+
+        public static void Shuffle<T>(this IList<T> list, System.Random random)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
+        }
+
 
 #if UNITY_EDITOR
         public static bool DrawAllPropsOf(SerializedObject so, bool addIndent = false)
@@ -897,7 +932,61 @@ return 1f;
         #endregion
 
 
-        #endregion
+        #region Other Editor Related
+
+#if UNITY_EDITOR
+        /// <summary> !!! EDITOR ONLY METHOD !!! </summary>
+        public static void Editor_IteratorReload(SerializedProperty iterator, bool doNextEnter = true, bool deepCheck = false, bool fullCheck = false)
+        {
+            if (iterator == null) return;
+
+            var refreshIterator = iterator.Copy();
+
+            if (doNextEnter)
+            {
+                if (refreshIterator.Next(true) == false) return;
+                if (refreshIterator.NextVisible(false) == false) return;
+            }
+
+            Rect drawRect = new Rect(-1000, 0, 2, 2);
+
+            if ( fullCheck)
+            {
+                while (refreshIterator.Next(false))
+                {
+                    EditorGUI.PropertyField(drawRect, refreshIterator, true);
+
+                    var deppIter = refreshIterator.Copy();
+                    if ( deppIter.Next(true))
+                    {
+                        while(deppIter.Next(false))
+                        {
+                            EditorGUI.PropertyField(drawRect, deppIter, true);
+                        }
+                    }
+                }
+            }
+            else if (deepCheck)
+            {
+                while (refreshIterator.Next(false))
+                {
+                    EditorGUI.PropertyField(drawRect, refreshIterator, true);
+                }
+            }
+            else
+            {
+                while (refreshIterator.NextVisible(false))
+                {
+                    EditorGUI.PropertyField(drawRect, refreshIterator, true);
+                }
+            }
+        }
+#endif
+
+#endregion
+
+
+#endregion
 
     }
 

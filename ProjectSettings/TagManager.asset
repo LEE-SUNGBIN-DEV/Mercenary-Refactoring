@@ -26,12 +26,12 @@ TagManager:
   - Player
   - Enemy
   - Die
-  - 
+  - None
   - Camera
   - Hitbox
-  - Render Texture
-  - VFX
   - 
+  - VFX
+  - NPC
   - 
   - 
   - 
@@ -49,9 +49,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
   - name: VFX
     uniqueID: 2865592449
     locked: 0
-  - name: Default
-    uniqueID: 0
+  - name: UI
+    uniqueID: 3654668071
+    locked: 0
+  - name: UI Particle
+    uniqueID: 4239227461
     locked: 0

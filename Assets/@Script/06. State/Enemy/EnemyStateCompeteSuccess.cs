@@ -6,7 +6,7 @@ public class EnemyStateCompeteSuccess : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation animationClipInfo;
+    private AnimationClipInfo animationClipInfo;
 
     public EnemyStateCompeteSuccess(BaseEnemy enemy)
     {
@@ -17,7 +17,7 @@ public class EnemyStateCompeteSuccess : IActionState
 
     public void Enter()
     {
-        enemy.HitState = HIT_STATE.Invincible;
+        enemy.HitState = HIT_STATE.INVINCIBLE;
         enemy.Animator.Play(animationClipInfo.nameHash);
     }
 
@@ -30,7 +30,7 @@ public class EnemyStateCompeteSuccess : IActionState
 
     public void Exit()
     {
-        enemy.HitState = HIT_STATE.Hittable;
+        enemy.HitState = HIT_STATE.HITTABLE;
     }
 
     #region Property

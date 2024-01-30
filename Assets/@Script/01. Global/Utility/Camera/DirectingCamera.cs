@@ -7,7 +7,6 @@ public class DirectingCamera : BaseCamera
     public override void Initialize()
     {
         base.Initialize();
-        Managers.GameManager.DirectingCamera = this;
         gameObject.SetActive(false);
     }
 }

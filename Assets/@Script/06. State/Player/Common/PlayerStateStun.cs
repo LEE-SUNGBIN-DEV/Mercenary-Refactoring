@@ -7,7 +7,7 @@ public class PlayerStateStun : IActionState, IDurationState
     private PlayerCharacter character;
     private int stateWeight;
     private float duration;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public PlayerStateStun(PlayerCharacter character)
     {

@@ -1,14 +1,19 @@
 public static partial class Constants
 {
+    public static readonly string UNIQUE_EQUIPMENT_HALBERD_WHITE_NIGHT = "UNIQUE_EQUIPMENT_HALBERD_WHITE_NIGHT";
+    public static readonly string UNIQUE_EQUIPMENT_SWORD_POLAR_NIGHT = "UNIQUE_EQUIPMENT_SWORD_POLAR_NIGHT";
+    public static readonly string UNIQUE_EQUIPMENT_SHIELD_POLAR_NIGHT = "UNIQUE_EQUIPMENT_SHIELD_POLAR_NIGHT";
+
     // Inventory
-    public static readonly int MAX_INVENTORY_SLOT_NUMBER = 30;
-    public static readonly int MAX_QUICK_SLOT_NUMBER = 4;
-    public static readonly int MAX_EQUIPMENT_SLOT_NUMBER = 4;
-    public static readonly int CHARACTER_DATA_DEFAULT_STONE = 500;
+    public static readonly int MAX_INVENTORY_SLOT_COUNTS = 48;
+    public static readonly int MAX_RUNE_SLOT_COUNTS = 3;
+    public static readonly int MAX_QUICK_SLOT_COUNTS = 4;
+    public static readonly int MAX_FIXED_OPTION_SLOT_COUNTS = 10;
+    public static readonly int MAX_RANDOM_OPTION_SLOT_COUNTS = 10;
+    public static readonly int CHARACTER_DATA_DEFAULT_RESPONSE_STONE = 500;
 
     // Character
     public static readonly float PLAYER_RUN_SPEED_RATIO = 2f;
-    public const float PLAYER_DEFAULT_ROTATION_SPEED = 6f;
 
     public static readonly float PLAYER_ROLL_SPEED = 7f;
     public static readonly float PLAYER_STAND_ROLL_SPEED = 5f;
@@ -48,36 +53,12 @@ public static partial class Constants
     public static readonly float SWORD_SHIELD_STAMINA_CONSUMPTION_HEAVY_ATTACK_04 = 7f;
 
     // Character Default Status
-    public static readonly int CHARACTER_DATA_DEFALUT_LEVEL = 1;
-    public static readonly int CHARACTER_DATA_MAX_LEVEL = 30;
-    public static readonly float CHARACTER_DATA_DEFALUT_EXPERIENCE = 0f;
+    public static readonly int CHARACTER_STATUS_LEVEL_MIN = 1;
+    public static readonly int CHARACTER_STATUS_LEVEL_MAX = 30;
 
-    public static readonly int CHARACTER_DATA_LEVEL_UP_ABILITY_POINT = 5;
-    public static readonly int CHARACTER_DATA_LEVEL_UP_SKILL_POINT = 3;
-
-    public static readonly int CHARACTER_DATA_DEFALUT_MAX_HP = 60;
-    public static readonly int CHARACTER_DATA_DEFALUT_MAX_SP = 60;
-
-    public static readonly int CHARACTER_DATA_DEFALUT_STRENGTH = 10;
-    public static readonly int CHARACTER_DATA_DEFALUT_VITALITY = 10;
-    public static readonly int CHARACTER_DATA_DEFALUT_DEXTERITY = 10;
-    public static readonly int CHARACTER_DATA_DEFALUT_LUCK = 10;
-
-    public static readonly float PLAYER_STAT_ATTACK_SPEED_MIN = 0.1f;
-    public static readonly float PLAYER_STAT_ATTACK_SPEED_DEFAULT = 1f;
-    public static readonly float PLAYER_STAT_ATTACK_SPEED_MAX = 2f;
-
-    public static readonly float PLAYER_STAT_MOVE_SPEED_MIN = 0.1f;
-    public static readonly float PLAYER_STAT_MOVE_SPEED_DEFAULT = 3f;
-    public static readonly float PLAYER_STAT_MOVE_SPEED_MAX = 5f;
-
-    public static readonly float PLAYER_STAT_CRITICAL_CHANCE_MIN = 0f;
-    public static readonly float PLAYER_STAT_CRITICAL_CHANCE_DEFAULT = 0f;
-    public static readonly float PLAYER_STAT_CRITICAL_CHANCE_MAX = 100f;
-
-    public static readonly float PLAYER_STAT_CRITICAL_DAMAGE_MIN = 100f;
-    public static readonly float PLAYER_STAT_CRITICAL_DAMAGE_DEFAULT = 100f;
+    public static readonly int CHARACTER_STATUS_LEVEL_UP_ABILITY_POINT = 5;
+    public static readonly int CHARACTER_STATUS_LEVEL_UP_SKILL_POINT = 3;
 
     // Quest
-    public static readonly uint CHARACTER_DATA_MAIN_QUEST_PROGRESS = 0;
+    public static readonly string CHARACTER_MAIN_QUEST_PROGRESS = "MAIN_0";
 }

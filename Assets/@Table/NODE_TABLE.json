@@ -1,0 +1,407 @@
+[
+  {
+    "nodeID": "ATTACK_NODE_1_1",
+    "nodeType": 0,
+    "nodeTransform": [
+      -150,
+      0,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_1_2",
+    "nodeType": 0,
+    "nodeTransform": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_1_3",
+    "nodeType": 0,
+    "nodeTransform": [
+      150,
+      0,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_2_1",
+    "nodeType": 0,
+    "nodeTransform": [
+      -150,
+      -160,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_2_2",
+    "nodeType": 0,
+    "nodeTransform": [
+      0,
+      -160,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_2_3",
+    "nodeType": 0,
+    "nodeTransform": [
+      150,
+      -160,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_3_1",
+    "nodeType": 0,
+    "nodeTransform": [
+      -150,
+      -320,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_3_2",
+    "nodeType": 0,
+    "nodeTransform": [
+      0,
+      -320,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_3_3",
+    "nodeType": 0,
+    "nodeTransform": [
+      150,
+      -320,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_4_1",
+    "nodeType": 0,
+    "nodeTransform": [
+      -150,
+      -480,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_4_2",
+    "nodeType": 0,
+    "nodeTransform": [
+      0,
+      -480,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_4_3",
+    "nodeType": 0,
+    "nodeTransform": [
+      150,
+      -480,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_5_1",
+    "nodeType": 0,
+    "nodeTransform": [
+      -150,
+      -640,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_5_2",
+    "nodeType": 0,
+    "nodeTransform": [
+      0,
+      -640,
+      0
+    ]
+  },
+  {
+    "nodeID": "ATTACK_NODE_5_3",
+    "nodeType": 0,
+    "nodeTransform": [
+      150,
+      -640,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_1_1",
+    "nodeType": 1,
+    "nodeTransform": [
+      -150,
+      0,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_1_2",
+    "nodeType": 1,
+    "nodeTransform": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_1_3",
+    "nodeType": 1,
+    "nodeTransform": [
+      150,
+      0,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_2_1",
+    "nodeType": 1,
+    "nodeTransform": [
+      -150,
+      -160,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_2_2",
+    "nodeType": 1,
+    "nodeTransform": [
+      0,
+      -160,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_2_3",
+    "nodeType": 1,
+    "nodeTransform": [
+      150,
+      -160,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_3_1",
+    "nodeType": 1,
+    "nodeTransform": [
+      -150,
+      -320,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_3_2",
+    "nodeType": 1,
+    "nodeTransform": [
+      0,
+      -320,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_3_3",
+    "nodeType": 1,
+    "nodeTransform": [
+      150,
+      -320,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_4_1",
+    "nodeType": 1,
+    "nodeTransform": [
+      -150,
+      -480,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_4_2",
+    "nodeType": 1,
+    "nodeTransform": [
+      0,
+      -480,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_4_3",
+    "nodeType": 1,
+    "nodeTransform": [
+      150,
+      -480,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_5_1",
+    "nodeType": 1,
+    "nodeTransform": [
+      -150,
+      -640,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_5_2",
+    "nodeType": 1,
+    "nodeTransform": [
+      0,
+      -640,
+      0
+    ]
+  },
+  {
+    "nodeID": "DEFENSE_NODE_5_3",
+    "nodeType": 1,
+    "nodeTransform": [
+      150,
+      -640,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_1_1",
+    "nodeType": 2,
+    "nodeTransform": [
+      -150,
+      0,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_1_2",
+    "nodeType": 2,
+    "nodeTransform": [
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_1_3",
+    "nodeType": 2,
+    "nodeTransform": [
+      150,
+      0,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_2_1",
+    "nodeType": 2,
+    "nodeTransform": [
+      -150,
+      -160,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_2_2",
+    "nodeType": 2,
+    "nodeTransform": [
+      0,
+      -160,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_2_3",
+    "nodeType": 2,
+    "nodeTransform": [
+      150,
+      -160,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_3_1",
+    "nodeType": 2,
+    "nodeTransform": [
+      -150,
+      -320,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_3_2",
+    "nodeType": 2,
+    "nodeTransform": [
+      0,
+      -320,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_3_3",
+    "nodeType": 2,
+    "nodeTransform": [
+      150,
+      -320,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_4_1",
+    "nodeType": 2,
+    "nodeTransform": [
+      -150,
+      -480,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_4_2",
+    "nodeType": 2,
+    "nodeTransform": [
+      0,
+      -480,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_4_3",
+    "nodeType": 2,
+    "nodeTransform": [
+      150,
+      -480,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_5_1",
+    "nodeType": 2,
+    "nodeTransform": [
+      -150,
+      -640,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_5_2",
+    "nodeType": 2,
+    "nodeTransform": [
+      0,
+      -640,
+      0
+    ]
+  },
+  {
+    "nodeID": "UTILITY_NODE_5_3",
+    "nodeType": 2,
+    "nodeTransform": [
+      150,
+      -640,
+      0
+    ]
+  }
+]

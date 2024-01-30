@@ -9,7 +9,7 @@ using TMPro;
 [System.Serializable]
 public class StoreSlot : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private BaseItem item;
+    [SerializeField] private BaseItem sellItem;
     [SerializeField] private Image storeSlotImage;
     [SerializeField] private TextMeshProUGUI storeSlotItemNameText;
     [SerializeField] private TextMeshProUGUI storeSlotItemPriceText;
@@ -18,28 +18,28 @@ public class StoreSlot : MonoBehaviour, IPointerClickHandler
     {
         if (sellItem is IShopableItem shopableItem)
         {
-            item = sellItem;
-            storeSlotImage.sprite = Item.ItemSprite;
-            storeSlotItemNameText.text = Item.ItemName;
+            this.sellItem = sellItem;
+            storeSlotImage.sprite = SellItem.GetItemSprite();
+            storeSlotItemNameText.text = SellItem.GetItemName();
             storeSlotItemPriceText.text = shopableItem.ItemPrice.ToString() + "G";
-            storeSlotImage.color = Functions.SetColor(StoreSlotImage.color, 1f);
+            storeSlotImage.color = new Color32(255, 255, 255, 255);
         }
     }
     public void BuyItem()
     {
-        Managers.DataManager.CurrentCharacterData.InventoryData.BuyItem(this);
+        Managers.DataManager.CurrentCharacterData.InventoryData.BuyItem(sellItem);
     }
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Right && Item != null)
+        if (eventData.button == PointerEventData.InputButton.Right && SellItem != null)
         {
             BuyItem();
         }
     }
 
     #region Property
-    public BaseItem Item { get { return item; } }
+    public BaseItem SellItem { get { return sellItem; } }
     public Image StoreSlotImage { get { return storeSlotImage; } }
     #endregion
 }

@@ -49,10 +49,6 @@ MonoBehaviour:
     m_Address: VFX_Player_Stun
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 57b72c5ed83337f4e818193901d09bbe
-    m_Address: VFX_Weather_Rain_Light
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 5bcc7d7413a76a441a477ab4b081e3ce
     m_Address: VFX_Ground_Slam
     m_ReadOnly: 0
@@ -79,6 +75,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: aa7db132a8cbf7a42b3e5f37cbc41934
     m_Address: VFX_Compete_Start
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e77119ddd13f27b428b88d7227713eda
+    m_Address: WEATHER_RAIN_LIGHT
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

@@ -6,7 +6,7 @@ public class PlayerStateRoll : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInfo;
+    private AnimationClipInfo animationClipInfo;
     private Vector3 moveDirection;
 
     public PlayerStateRoll(PlayerCharacter character)
@@ -19,15 +19,15 @@ public class PlayerStateRoll : IActionState
     public void Enter()
     {
         // 키보드 입력 방향으로 회피
-        Vector3 verticalDirection = new Vector3(character.PlayerCamera.transform.forward.x, 0, character.PlayerCamera.transform.forward.z) * character.GetInput().MoveInput.z;
-        Vector3 horizontalDirection = new Vector3(character.PlayerCamera.transform.right.x, 0, character.PlayerCamera.transform.right.z) * character.GetInput().MoveInput.x;
+        Vector3 verticalDirection = character.PlayerCamera.GetVerticalDirection() * Managers.InputManager.GetCharacterMoveVector().z;
+        Vector3 horizontalDirection = character.PlayerCamera.GetHorizontalDirection() * Managers.InputManager.GetCharacterMoveVector().x;
         moveDirection = (verticalDirection + horizontalDirection);
         moveDirection = moveDirection == Vector3.zero ? character.transform.forward : moveDirection;
 
         character.SetForwardDirection(moveDirection);
 
-        character.HitState = HIT_STATE.Invincible;
-        character.Status.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL);
+        character.HitState = HIT_STATE.INVINCIBLE;
+        character.StatusData.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL);
         character.Animator.Play(animationClipInfo.nameHash);
     }
 
@@ -36,18 +36,11 @@ public class PlayerStateRoll : IActionState
         // -> Idle
         if (character.Animator.IsAnimationFrameUpTo(animationClipInfo, 20))
             character.State.SetState(character.CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
-
-        // Movement
-        if (character.Animator.IsAnimationFrameBetweenTo(animationClipInfo, 0, 16))
-            character.MoveController.SetMovementAndRotation(moveDirection, Constants.PLAYER_ROLL_SPEED);
-        else
-            character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     public void Exit()
     {
-        character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
-        character.HitState = HIT_STATE.Hittable;
+        character.HitState = HIT_STATE.HITTABLE;
     }
 
     #region Property

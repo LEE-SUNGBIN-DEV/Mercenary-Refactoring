@@ -593,7 +593,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_Resonance_Short
+  m_Name: Player_Response_Simple
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -671,7 +671,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_Resonance_Out
+  m_Name: Player_Response_Out
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1041,7 +1041,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_Resonance_In
+  m_Name: Player_Response_In
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -1119,7 +1119,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Player_Resonance_Loop
+  m_Name: Player_Response_Loop
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

@@ -844,7 +844,8 @@ namespace FIMSpace.AnimationTools
 
         string GetClipReportLog(AnimationClip clip)
         {
-            string log = clip.name + "-Report:\n\n";
+            EditorCurveBinding[] bindings = AnimationUtility.GetCurveBindings(clip);
+            string log = clip.name + "-Report ("+ bindings.Length+"):\n\n";
             log += "frameRate: " + clip.frameRate + "\n";
             log += "apparentSpeed: " + clip.apparentSpeed + "\n";
             log += "averageAngularSpeed: " + clip.averageAngularSpeed + "\n";
@@ -858,7 +859,7 @@ namespace FIMSpace.AnimationTools
             log += "genericRoot: " + clip.hasGenericRootTransform + "\n";
             log += "rootCurves: " + clip.hasRootCurves + "\n\n";
 
-            foreach (var binding in AnimationUtility.GetCurveBindings(clip))
+            foreach (var binding in bindings)
             {
                 AnimationCurve curve = AnimationUtility.GetEditorCurve(clip, binding);
                 log += (binding.path + "/" + binding.propertyName + ", Keys: " + curve.keys.Length + " \n");

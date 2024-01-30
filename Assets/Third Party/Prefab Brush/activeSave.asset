@@ -14,13 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabList: []
   prefabData:
-  - prefab: {fileID: 5445247769992346681, guid: 55d6966c4cb9b20498ad31db88e77319, type: 3}
+  - prefab: {fileID: 100008, guid: 54a9cf01843431742a3126013891032d, type: 3}
     selected: 1
-  - prefab: {fileID: 8102329506361459116, guid: 2160a2b745f0c7a4fb0d941ef91d1c40, type: 3}
+  - prefab: {fileID: 100008, guid: 272f6ea372a7343499b5aa612014761f, type: 3}
     selected: 1
-  - prefab: {fileID: 180206519365953948, guid: 1f8d51561bd79104bb38f27ce410c8dc, type: 3}
-    selected: 1
-  - prefab: {fileID: 6418193919158273214, guid: ffa4b8b402079ca42b8109f2838fe738, type: 3}
+  - prefab: {fileID: 100008, guid: f20a15ee7150fd647af421022dde4d44, type: 3}
     selected: 1
   paintType: 0
   brushSize: 1
@@ -51,9 +49,9 @@ MonoBehaviour:
   draggingAction: 0
   rotationAxis: 0
   rotationSensitivity: 10
-  parentingStyle: 0
+  parentingStyle: 1
   parent: {fileID: 0}
-  rotateToMatchSurface: 0
+  rotateToMatchSurface: 1
   rotateSurfaceDirection: 0
   randomizeRotation: 0
   minXRotation: 0

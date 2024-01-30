@@ -12,11 +12,23 @@ public class GizmoSceneIndicator : MonoBehaviour
         gray,
         green,
         red,
-        white
+        white,
+        yellow,
     }
 
-    [SerializeField] private GIZMO_COLOR color; 
-    private void OnDrawGizmos()
+    public enum GIZMO_SHAPE
+    {
+        Cube,
+        Sphere,
+    }
+
+    [SerializeField] private GIZMO_COLOR color;
+    [SerializeField] private GIZMO_SHAPE shape;
+    [SerializeField] private float size = 1f;
+    [SerializeField] private bool isDrawLine = true;
+    [SerializeField] private float lineLength = 5f;
+
+    public void SetColor()
     {
         switch (color)
         {
@@ -38,12 +50,44 @@ public class GizmoSceneIndicator : MonoBehaviour
             case GIZMO_COLOR.white:
                 Gizmos.color = Color.white;
                 break;
+            case GIZMO_COLOR.yellow:
+                Gizmos.color = Color.yellow;
+                break;
 
             default:
-                Gizmos.color = Color.green;
+                Gizmos.color = Color.white;
                 break;
         }
-        Gizmos.DrawCube(transform.position, new Vector3(1, 1, 1));
-        Gizmos.DrawRay(transform.position, new Vector3(0, 5, 0));
+    }
+
+    public void DrawShape()
+    {
+        switch(shape)
+        {
+            case GIZMO_SHAPE.Cube:
+                Gizmos.DrawCube(transform.position, new Vector3(size, size, size));
+                break;
+
+            case GIZMO_SHAPE.Sphere:
+                Gizmos.DrawSphere(transform.position, size);
+                break;
+
+            default:
+                Gizmos.DrawSphere(transform.position, size);
+                break;
+        }
+    }
+
+    public void DrawLine()
+    {
+        if(isDrawLine == true)
+            Gizmos.DrawRay(transform.position, new Vector3(0, lineLength, 0));
+    }
+
+    private void OnDrawGizmos()
+    {
+        SetColor();
+        DrawShape();
+        DrawLine();
     }
 }

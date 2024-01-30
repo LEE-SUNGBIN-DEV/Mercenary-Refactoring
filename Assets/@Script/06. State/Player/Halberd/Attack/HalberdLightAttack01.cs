@@ -8,10 +8,10 @@ public class HalberdLightAttack01 : IActionState
     private int stateWeight;
 
     private PlayerHalberd halberd;
-    private AnimationClipInformation animationClipInfo;
+    private AnimationClipInfo animationClipInfo;
 
-    private bool mouseLeftDown;
-    private bool mouseRightDown;
+    private bool lightAttackButtonDown;
+    private bool heavyAttackButtonDown;
     private Coroutine combatCoroutine;
 
     public HalberdLightAttack01(PlayerCharacter character)
@@ -19,64 +19,58 @@ public class HalberdLightAttack01 : IActionState
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_ATTACK_LIGHT_01;
 
-        halberd = character.WeaponController.GetWeapon<PlayerHalberd>(WEAPON_TYPE.HALBERD);
+        halberd = character.UniqueEquipmentController.GetWeapon<PlayerHalberd>(WEAPON_TYPE.HALBERD);
         animationClipInfo = character.AnimationClipTable["Halberd_Light_Attack_01"];
 
-        mouseLeftDown = false;
-        mouseRightDown = false;
+        lightAttackButtonDown = false;
+        heavyAttackButtonDown = false;
     }
 
     public void Enter()
     {
-        character.Status.ConsumeStamina(Constants.HALBERD_STAMINA_CONSUMPTION_LIGHT_ATTACK_01);
-        character.SetForwardDirection(character.PlayerCamera.GetZeroYForward());
+        character.StatusData.ConsumeStamina(Constants.HALBERD_STAMINA_CONSUMPTION_LIGHT_ATTACK_01);
+        character.SetForwardDirection(character.PlayerCamera.GetVerticalDirection());
         character.Animator.CrossFadeInFixedTime(animationClipInfo.nameHash, 0.2f);
 
-        mouseLeftDown = false;
-        mouseRightDown = false;
+        lightAttackButtonDown = false;
+        heavyAttackButtonDown = false;
         combatCoroutine = halberd.StartCoroutine(CoEnableCombat());
     }
 
     public void Update()
     {
         // Input
-        if (character.GetInput().RollDown && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
+        if (Managers.InputManager.CharacterRollButton.WasPressedThisFrame() && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
             character.State.SetState(ACTION_STATE.PLAYER_ROLL, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (character.GetInput().CounterDown && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
+        if (Managers.InputManager.CharacterCounterAttackButton.WasPressedThisFrame() && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_SKILL_COUNTER))
         {
             character.State.SetState(ACTION_STATE.PLAYER_HALBERD_SKILL_COUNTER, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (!mouseRightDown)
-            mouseRightDown = character.GetInput().RightMouseDown;
+        if (!heavyAttackButtonDown)
+            heavyAttackButtonDown = Managers.InputManager.CharacterHeavyAttackButton.WasPressedThisFrame();
 
-        if (!mouseLeftDown)
-            mouseLeftDown = character.GetInput().LeftMouseDown;
+        if (!lightAttackButtonDown)
+            lightAttackButtonDown = Managers.InputManager.CharacterLightAttackButton.WasPressedThisFrame();
 
         // -> Heavy Attack 1
-        if (mouseRightDown && character.Status.CheckStamina(Constants.HALBERD_STAMINA_CONSUMPTION_HEAVY_ATTACK_01)
+        if (heavyAttackButtonDown && character.StatusData.CheckStamina(Constants.HALBERD_STAMINA_CONSUMPTION_HEAVY_ATTACK_01)
             && character.State.SetStateByAnimationTimeUpTo(animationClipInfo.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_HEAVY_01, 0.5f))
             return;
 
         // -> Light Attack 2
-        if (mouseLeftDown && character.Status.CheckStamina(Constants.HALBERD_STAMINA_CONSUMPTION_LIGHT_ATTACK_02) 
+        if (lightAttackButtonDown && character.StatusData.CheckStamina(Constants.HALBERD_STAMINA_CONSUMPTION_LIGHT_ATTACK_02) 
             && character.State.SetStateByAnimationTimeUpTo(animationClipInfo.nameHash, ACTION_STATE.PLAYER_HALBERD_ATTACK_LIGHT_02, 0.5f))
             return;
 
         // -> Idle
         if (character.State.SetStateByAnimationTimeUpTo(animationClipInfo.nameHash, ACTION_STATE.PLAYER_HALBERD_IDLE, 0.9f))
             return;
-
-        // Movement
-        if (character.Animator.IsAnimationFrameBetweenTo(animationClipInfo, 0, 16))
-            character.MoveController.SetMovementAndRotation(character.transform.forward, 4f * character.Status.AttackSpeed);
-        else
-            character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     public void Exit()
@@ -85,7 +79,6 @@ public class HalberdLightAttack01 : IActionState
             halberd.StopCoroutine(combatCoroutine);
 
         halberd.DisableHalberd();
-        character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     private IEnumerator CoEnableCombat()

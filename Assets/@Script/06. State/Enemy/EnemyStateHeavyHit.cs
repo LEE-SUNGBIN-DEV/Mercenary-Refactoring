@@ -6,24 +6,24 @@ public class EnemyStateHeavyHit : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInfo;
 
     public EnemyStateHeavyHit(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_HIT_HEAVY;
-        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_HEAVY_HIT];
+        animationClipInfo = enemy.AnimationClipTable[Constants.ANIMATION_NAME_HEAVY_HIT];
     }
 
     public void Enter()
     {
-        enemy.SFXPlayer.PlaySFX("Audio_" + enemy.name + "_Heavy_Hit");
-        enemy.Animator.Play(animationClipInformation.nameHash);
+        enemy.TryPlaySFXFromStringArray(enemy.HeavyHitAudioClipNames);
+        enemy.Animator.Play(animationClipInfo.nameHash);
     }
 
     public void Update()
     {
-        if (enemy.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.ENEMY_IDLE, 1.0f))
+        if (enemy.State.SetStateByAnimationTimeUpTo(animationClipInfo.nameHash, ACTION_STATE.ENEMY_IDLE, 1.0f))
         {
             return;
         }

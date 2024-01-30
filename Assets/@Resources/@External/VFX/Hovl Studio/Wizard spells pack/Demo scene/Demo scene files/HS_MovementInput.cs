@@ -174,7 +174,7 @@ public class HS_MovementInput : MonoBehaviour
             if (fireCountdown <= 0f)
             {
                 GameObject projectile = Instantiate(PrefabsCast[8], FirePoint.position, FirePoint.rotation);
-                projectile.GetComponent<TargetProjectile>().UpdateTarget(target, (Vector3)uiOffset);
+                projectile.GetComponent<HS_TargetProjectile>().UpdateTarget(target, (Vector3)uiOffset);
                 Effect = Prefabs[8].GetComponent<ParticleSystem>();
                 Effect.Play();
                 //Get Audiosource from Prefabs if exist
@@ -428,7 +428,7 @@ public class HS_MovementInput : MonoBehaviour
                     }
 
                     yield return new WaitForSeconds(1);
-                    foreach (var component in Prefabs[EffectNumber].GetComponentsInChildren<FrontAttack>())
+                    foreach (var component in Prefabs[EffectNumber].GetComponentsInChildren<HS_FrontAttack>())
                     {
                         component.PrepeareAttack(vecPos);
                     }

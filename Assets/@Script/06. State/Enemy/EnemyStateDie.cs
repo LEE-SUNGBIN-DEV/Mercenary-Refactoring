@@ -6,19 +6,19 @@ public class EnemyStateDie : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInfo;
 
     public EnemyStateDie(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_DIE;
-        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_DIE];
+        animationClipInfo = enemy.AnimationClipTable[Constants.ANIMATION_NAME_DIE];
     }
 
     public void Enter()
     {
-        enemy.PlayDieSound();
-        enemy.Animator.Play(animationClipInformation.nameHash);
+        enemy.TryPlaySFXFromStringArray(enemy.DieAudioClipNames);
+        enemy.Animator.Play(animationClipInfo.nameHash);
     }
 
     public void Update()

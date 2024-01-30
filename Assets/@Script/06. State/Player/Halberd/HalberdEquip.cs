@@ -7,7 +7,7 @@ public class HalberdEquip : IActionState
     private PlayerCharacter character;
     private int stateWeight;
 
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public HalberdEquip(PlayerCharacter character)
     {

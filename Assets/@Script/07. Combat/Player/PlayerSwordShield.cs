@@ -12,15 +12,14 @@ public class PlayerSwordShield : PlayerWeapon
         guardController.OnHitting -= PlayWeaponHittingSFX;
     }
 
-    public override void InitializeWeapon(PlayerCharacter character)
+    public override void Initialize(PlayerCharacter character)
     {
-        base.InitializeWeapon(character);
         weaponType = WEAPON_TYPE.SWORD_SHIELD;
 
-        attackController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_SWORD, true);
+        attackController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.UNIQUE_EQUIPMENT_SWORD_POLAR_NIGHT, true);
         attackController.Initialize(character);
 
-        guardController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.WEAPON_CONTROLLER_NAME_SHIELD, true);
+        guardController = Functions.FindChild<PlayerCombatController>(character.gameObject, Constants.UNIQUE_EQUIPMENT_SHIELD_POLAR_NIGHT, true);
         guardController.Initialize(character);
 
         attackController.OnHitting += PlayWeaponHittingSFX;
@@ -29,67 +28,68 @@ public class PlayerSwordShield : PlayerWeapon
         weaponRenderers = new MeshRenderer[] { attackController.GetComponentInChildren<MeshRenderer>(true), guardController.GetComponentInChildren<MeshRenderer>(true) };
         materialController = new MaterialController();
         materialController.Initialize(weaponRenderers);
+        weaponSFXPlayer = character.SFXPlayer;
 
-        AddWeaponState(character.State);
+        AddWeaponState(character);
         AddCombatTable();
-        AddCommonStateInforamtion();
+        SetDefaultWeaponState();
     }
 
     public override void AddCombatTable()
     {
-        weaponCombatTable = new Dictionary<COMBAT_ACTION_TYPE, CombatControllerInfomation>()
+        weaponCombatTable = new Dictionary<COMBAT_ACTION_TYPE, CombatControllerInfo>()
         {
             // Light Attack
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_01, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_02, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.03f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_03, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.06f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_04, new CombatControllerInfomation(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.09f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_01, new CombatControllerInfo(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_02, new CombatControllerInfo(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.03f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_03, new CombatControllerInfo(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.06f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_LIGHT_04, new CombatControllerInfo(HIT_TYPE.LIGHT, GUARD_TYPE.NONE, 1.09f) },
 
             // Heavy Attack
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_01, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_02, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.8f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_03, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.2f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_01, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_02, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.2f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_01, new CombatControllerInfo(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_02, new CombatControllerInfo(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.8f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_03, new CombatControllerInfo(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.2f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_01, new CombatControllerInfo(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 1.5f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_ATTACK_HEAVY_04_02, new CombatControllerInfo(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2.2f) },
 
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_PARRYING_ATTACK, new CombatControllerInfomation(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_PARRYING_ATTACK, new CombatControllerInfo(HIT_TYPE.HEAVY, GUARD_TYPE.NONE, 2f) },
 
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_IN, new CombatControllerInfomation(HIT_TYPE.NONE, GUARD_TYPE.PARRYABLE, 0f) },
-            {COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_LOOP, new CombatControllerInfomation(HIT_TYPE.NONE, GUARD_TYPE.GUARDABLE, 0f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_IN, new CombatControllerInfo(HIT_TYPE.NONE, GUARD_TYPE.PARRYABLE, 0f) },
+            {COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_LOOP, new CombatControllerInfo(HIT_TYPE.NONE, GUARD_TYPE.GUARDABLE, 0f) },
         };
     }
 
-    public override void AddWeaponState(StateController state)
+    public override void AddWeaponState(PlayerCharacter character)
     {
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_EQUIP, new SwordShieldEquip(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_EQUIP, new SwordShieldEquip(character));
 
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_IDLE, new SwordShieldIdle(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_WALK, new SwordShieldWalk(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_RUN, new SwordShieldRun(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_IDLE, new SwordShieldIdle(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_WALK, new SwordShieldWalk(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_RUN, new SwordShieldRun(character));
 
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_01, new SwordShieldLightAttack01(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_02, new SwordShieldLightAttack02(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_03, new SwordShieldLightAttack03(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_04, new SwordShieldLightAttack04(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_01, new SwordShieldLightAttack01(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_02, new SwordShieldLightAttack02(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_03, new SwordShieldLightAttack03(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_04, new SwordShieldLightAttack04(character));
 
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_HEAVY_01, new SwordShieldHeavyAttack01(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_HEAVY_02, new SwordShieldHeavyAttack02(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_HEAVY_03, new SwordShieldHeavyAttack03(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_HEAVY_04, new SwordShieldHeavyAttack04(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_HEAVY_01, new SwordShieldHeavyAttack01(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_HEAVY_02, new SwordShieldHeavyAttack02(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_HEAVY_03, new SwordShieldHeavyAttack03(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_HEAVY_04, new SwordShieldHeavyAttack04(character));
 
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_IN, new SwordShieldGuardIn(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_LOOP, new SwordShieldGuardLoop(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT, new SwordShieldGuardOut(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_BREAK, new SwordShieldGuardBreak(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_IN, new SwordShieldGuardIn(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_LOOP, new SwordShieldGuardLoop(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT, new SwordShieldGuardOut(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_BREAK, new SwordShieldGuardBreak(character));
 
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_PARRYING, new SwordShieldParrying(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_PARRYING_ATTACK, new SwordShieldParryingAttack(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_PARRYING, new SwordShieldParrying(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_SWORD_SHIELD_PARRYING_ATTACK, new SwordShieldParryingAttack(character));
 
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_COMPETE, new SwordShieldCompete(character));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_COMPETE_SUCCESS, new SwordShieldCompeteSuccess(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_COMPETE, new SwordShieldCompete(character));
+        character.State.StateDictionary.Add(ACTION_STATE.PLAYER_COMPETE_SUCCESS, new SwordShieldCompeteSuccess(character));
     }
 
-    public override void AddCommonStateInforamtion()
+    public override void SetDefaultWeaponState()
     {
         idleState = ACTION_STATE.PLAYER_SWORD_SHIELD_IDLE;
         walkState = ACTION_STATE.PLAYER_SWORD_SHIELD_WALK;
@@ -137,6 +137,6 @@ public class PlayerSwordShield : PlayerWeapon
 
     public override void PlayWeaponHittingSFX()
     {
-        character.SFXPlayer.PlaySFX("Audio_Player_Hitting");
+        weaponSFXPlayer.PlaySFX("Audio_Player_Hitting");
     }
 }

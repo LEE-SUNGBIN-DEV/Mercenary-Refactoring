@@ -21,8 +21,7 @@ public class ChaseObject : MonoBehaviour, IPoolObject
         if (targetTransform == null)
             return;
 
-        Vector3 targetDirection = Functions.GetZeroYDirection(transform.position, targetTransform.position);
-        targetDirection.Normalize();
+        Vector3 targetDirection = Functions.GetXZAxisDirection(transform.position, targetTransform.position);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetDirection), 6f * Time.deltaTime);
         characterController.SimpleMove(targetDirection * chaseSpeed);

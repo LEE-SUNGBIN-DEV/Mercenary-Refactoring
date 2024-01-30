@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerStateDrink : IActionState
 {
-    private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInfo;
 
+    private AnimationClipInfo animationClipInfo;
+    private PlayerCharacter character;
     private Coroutine drinkCoroutine;
 
     public PlayerStateDrink(PlayerCharacter character)
@@ -19,7 +19,7 @@ public class PlayerStateDrink : IActionState
 
     public void Enter()
     {
-        character.ResonanceWater.ShowResonanceWater(true);
+        character.UniqueEquipmentController.ShowResponseWater();
         drinkCoroutine = character.StartCoroutine(CoDrink());
         character.Animator.CrossFadeInFixedTime(animationClipInfo.nameHash, 0.05f, (int)ANIMATOR_LAYER.UPPER);
     }
@@ -36,15 +36,13 @@ public class PlayerStateDrink : IActionState
         if (drinkCoroutine != null)
             character.StopCoroutine(drinkCoroutine);
 
-        character.ResonanceWater.ShowResonanceWater(false);
+        character.UniqueEquipmentController.HideResponseWater();
     }
 
     private IEnumerator CoDrink()
     {
         yield return new WaitUntil(() => character.Animator.IsAnimationFrameUpTo(animationClipInfo, 26, (int)ANIMATOR_LAYER.UPPER) && !character.Animator.IsInTransition((int)ANIMATOR_LAYER.UPPER));
-        character.InventoryData.DrinkResonanceWater();
-        character.Status.RecoverHP(character.InventoryData.ResonanceWaterRecoverAmount, CALCULATE_MODE.Ratio);
-        character.Status.RecoverStamina(character.InventoryData.ResonanceWaterRecoverAmount, CALCULATE_MODE.Ratio);
+        character.InventoryData.ConsumeResponseWater(character.StatusData);
     }
 
     #region Property

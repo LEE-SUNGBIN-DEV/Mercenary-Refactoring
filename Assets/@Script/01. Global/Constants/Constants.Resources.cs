@@ -38,38 +38,71 @@ public static partial class Constants
     public static readonly string Audio_Sword_Swing_2 = "Audio_Sword_Swing_2";
     public static readonly string Audio_Sword_Swing_3 = "Audio_Sword_Swing_3";
 
+    // Object
+    public static readonly string Audio_Response_Object_Enable = "Audio_Response_Object_Enable";
+    public static readonly string Audio_Response_Object_Disable = "Audio_Response_Object_Disable";
+
+    public static readonly string Audio_Treasure_Box_Open = "Audio_Treasure_Box_Open";
+
+    // UI
+    public static readonly string Audio_User_Panel_Open = "Audio_User_Panel_Open";
+
+    public static readonly string Audio_Button_Click_Start = "Audio_Button_Click_Start";
+    public static readonly string Audio_Button_Click_Quit = "Audio_Button_Click_Quit";
+    public static readonly string Audio_Button_Click_Normal = "Audio_Button_Click_Normal";
+
+    public static readonly string Audio_Response_Stone_Get = "Audio_Response_Stone_Get";
+    public static readonly string Audio_Item_Get = "Audio_Item_Get";
+
+    public static readonly string Audio_Item_Hold = "Audio_Item_Hold";
+    public static readonly string Audio_Item_Release = "Audio_Item_Release";
+
+
+    // Combat
+    public static readonly string Audio_Big_Golem_Roar = "Audio_Big_Golem_Roar";
     public static readonly string Audio_Competing = "Audio_Competing";
-    // VFX
     public static readonly string Audio_Ground_Slam = "Audio_Ground_Slam";
     public static readonly string Audio_Ground_Burst = "Audio_Ground_Burst";
 
     #endregion
 
-    // Sprite
-    public static readonly string Sprite_Thumbnail_Sword_Shield = "Sprite_Thumbnail_Sword_Shield";
-    public static readonly string Sprite_Thumbnail_Halberd = "Sprite_Thumbnail_Halberd";
+    #region Sprite
+    public static readonly string SPRITE_THUMBNAIL_SWORD_SHIELD = "SPRITE_THUMBNAIL_SWORD_SHIELD";
+    public static readonly string SPRITE_THUMBNAIL_HALBERD = "SPRITE_THUMBNAIL_HALBERD";
+    public static readonly string SPRITE_THUMBNAIL_RESPONSE_WATER = "SPRITE_THUMBNAIL_RESPONSE_WATER";
+    public static readonly string SPRITE_THUMBNAIL_RESPONSE_WATER_FRAME = "SPRITE_THUMBNAIL_RESPONSE_WATER_FRAME";
+    public static readonly string SPRITE_CURSOR_DEFAULT = "SPRITE_CURSOR_DEFAULT";
+    #endregion
 
     #region Prefab
     // System
-    public static readonly string Prefab_Event_System = "Prefab_Event_System";
-    public static readonly string Prefab_Enemy_Spawner = "Prefab_Enemy_Spawner";
-    public static readonly string Prefab_Chase_Object = "Prefab_Chase_Object";
+    public static readonly string PREFAB_EVENT_SYSTEM = "PREFAB_EVENT_SYSTEM";
 
     // Player
-    public static readonly string Prefab_Player_Camera = "Prefab_Player_Camera";
-    public static readonly string Prefab_Player_Character = "Prefab_Player_Character";
-    public static readonly string Prefab_Camera_For_Render_Resonance_Water = "Prefab_Camera_For_Render_Resonance_Water";
+    public static readonly string PREFAB_PLAYER_CAMERA = "PREFAB_PLAYER_CAMERA";
+    public static readonly string PREFAB_PLAYER_CHARACTER = "PREFAB_PLAYER_CHARACTER";
 
     // UI
-    public static readonly string Prefab_Floating_Damage_Text = "Prefab_Floating_Damage_Text";
+    public static readonly string PREFAB_FLOATING_DAMAGE_TEXT = "PREFAB_FLOATING_DAMAGE_TEXT";
 
-    public static readonly string Prefab_Button_Scene = "Prefab_Button_Scene";
-    public static readonly string Prefab_Button_Region = "Prefab_Button_Region";
+    // - Canvas
+    public static readonly string PREFAB_UI_SCENE_PANEL_CANVAS = "PREFAB_UI_SCENE_PANEL_CANVAS";
+    public static readonly string PREFAB_UI_FIXED_PANEL_CANVAS = "PREFAB_UI_FIXED_PANEL_CANVAS";
+    public static readonly string PREFAB_UI_FOCUS_PANEL_CANVAS = "PREFAB_UI_FOCUS_PANEL_CANVAS";
+    public static readonly string PREFAB_UI_INTERACTION_PANEL_CANVAS = "PREFAB_UI_INTERACTION_PANEL_CANVAS";
+    public static readonly string PREFAB_UI_SYSTEM_PANEL_CANVAS = "PREFAB_UI_SYSTEM_PANEL_CANVAS";
 
-    public static readonly string Prefab_UI_Scene_Common = "Prefab_UI_Scene_Common";
-    public static readonly string Prefab_UI_Scene_Title = "Prefab_UI_Scene_Title";
-    public static readonly string Prefab_UI_Scene_Selection = "Prefab_UI_Scene_Selection";
-    public static readonly string Prefab_UI_Scene_Game = "Prefab_UI_Scene_Game";
+    // - Slots
+    public static readonly string PREFAB_INVENTORY_SLOT = "PREFAB_INVENTORY_SLOT";
+    public static readonly string PREFAB_RUNE_SLOT = "PREFAB_RUNE_SLOT";
+    public static readonly string PREFAB_STATUS_OPTION_SLOT = "PREFAB_STATUS_OPTION_SLOT";
+
+    // - Buttons
+    public static readonly string PREFAB_RESPONSE_POINT_SCENE_BUTTON = "PREFAB_RESPONSE_POINT_SCENE_BUTTON";
+    public static readonly string PREFAB_RESPONSE_POINT_REGION_BUTTON = "PREFAB_RESPONSE_POINT_REGION_BUTTON";
+    public static readonly string PREFAB_DIALOGUE_SELECTION_BUTTON = "PREFAB_DIALOGUE_SELECTION_BUTTON";
+
+    public static readonly string PREFAB_SKILL_NODE = "PREFAB_SKILL_NODE";
     #endregion
 
 }

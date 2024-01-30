@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkeletonKnightVerticalSlash : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack sword;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {

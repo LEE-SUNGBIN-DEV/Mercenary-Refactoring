@@ -10,9 +10,9 @@ public static partial class Constants
     public static readonly float TIME_COMPETE = 5f;
     public static readonly float TIME_COMPETE_COOLDOWN = 60f;
 
-    public static readonly float TIME_NORMAL_MONSTER_DISAPEAR = 3f;
-    public static readonly float TIME_NAMED_MONSTER_DISAPEAR = 5f;
-    public static readonly float TIME_BOSS_MONSTER_DISAPEAR = 10f;
+    public static readonly float TIME_NORMAL_ENEMY_DISAPEAR = 5f;
+    public static readonly float TIME_NAMED_ENEMY_DISAPEAR = 5f;
+    public static readonly float TIME_BOSS_ENEMY_DISAPEAR = 10f;
 
     #region UI
     public static readonly float TIME_CLIENT_NOTICE = 1.6f;

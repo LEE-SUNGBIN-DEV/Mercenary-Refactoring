@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 public class BlackDragon : BaseEnemy, IStaggerable, ICompetable
 {
-    public override void InitializeEnemy(int enemyID)
+    protected override void Awake()
     {
-        base.InitializeEnemy(enemyID);
+        base.Awake();
         state.StateDictionary.Add(ACTION_STATE.ENEMY_STAGGER, new EnemyStateStagger(this));
         state.StateDictionary.Add(ACTION_STATE.ENEMY_COMPETE, new EnemyStateCompete(this));
     }

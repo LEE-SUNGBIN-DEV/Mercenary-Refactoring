@@ -7,23 +7,21 @@ public class EnemyStatePatrol : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInfo;
     private Vector3 destination;
 
     public EnemyStatePatrol(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_PATROL;
-        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_WALK];
+        animationClipInfo = enemy.AnimationClipTable[Constants.ANIMATION_NAME_WALK];
     }
 
     public void Enter()
     {
-        if (RandomPatrolPoint(enemy.SpawnPosition, out destination))
-        {
-            Debug.DrawRay(destination, Vector3.up, Color.blue, 5.0f);
-            enemy.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
-        }
+        GetRandomPatrolPoint(enemy.SpawnPosition, out destination);
+        enemy.Animator.CrossFadeInFixedTime(animationClipInfo.nameHash, 0.1f);
+        Debug.DrawRay(destination, Vector3.up, Color.blue, 5.0f);
     }
 
     public void Update()
@@ -47,10 +45,10 @@ public class EnemyStatePatrol : IActionState
 
     public void Exit()
     {
-        enemy.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
+        enemy.MoveController.SetMove(Vector3.zero, 0f);
     }
 
-    private bool RandomPatrolPoint(Vector3 spawnPosition, out Vector3 resultPosition)
+    private void GetRandomPatrolPoint(Vector3 spawnPosition, out Vector3 resultPosition)
     {
         for (int i = 0; i < 5; ++i)
         {
@@ -58,11 +56,10 @@ public class EnemyStatePatrol : IActionState
             if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 0.5f, NavMesh.AllAreas))
             {
                 resultPosition = hit.position;
-                return true;
+                return;
             }
         }
         resultPosition = spawnPosition;
-        return false;
     }
 
     #region Property

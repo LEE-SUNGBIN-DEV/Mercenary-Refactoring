@@ -5,8 +5,8 @@ using UnityEngine;
 public class StoneGolemRollAttack : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack rollAttack;
-    private AnimationClipInformation attackAnimationInfo;
-    private AnimationClipInformation finishAnimationInfo;
+    private AnimationClipInfo attackAnimationInfo;
+    private AnimationClipInfo finishAnimationInfo;
     private bool isHitPlayer;
 
     public override void Initialize(BaseEnemy enemy)
@@ -40,12 +40,12 @@ public class StoneGolemRollAttack : EnemySkill
             if (isHitPlayer)
                 break;
 
-            enemy.MoveController.SetMovementAndRotation(transform.forward, 10f);
+            enemy.MoveController.SetMove(transform.forward, 10f);
             yield return null;
         }
         rollAttack.OnDisableCollider();
         rollAttack.OnHitPlayer -= HitPlayer;
-        enemy.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
+        enemy.MoveController.SetMove(Vector3.zero, 0f);
 
         enemy.Animator.Play(finishAnimationInfo.nameHash);
 
@@ -66,7 +66,7 @@ public class StoneGolemRollAttack : EnemySkill
     {
         base.DisableSkill();
         rollAttack.OnHitPlayer -= HitPlayer;
-        enemy.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
+        enemy.MoveController.SetMove(Vector3.zero, 0f);
     }
 
     public void HitPlayer()

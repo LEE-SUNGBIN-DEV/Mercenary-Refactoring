@@ -1,0 +1,17 @@
+[
+  {
+    "responseCrystalID": "CRYSTAL_FOG_CANYON_0",
+    "regionName": "바위 절벽",
+    "locatedScene": 3
+  },
+  {
+    "responseCrystalID": "CRYSTAL_FOG_CANYON_1",
+    "regionName": "관문",
+    "locatedScene": 3
+  },
+  {
+    "responseCrystalID": "CRYSTAL_TARANIS_CITADEL_0",
+    "regionName": "광장",
+    "locatedScene": 4
+  }
+]

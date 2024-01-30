@@ -1,0 +1,1322 @@
+[
+  {
+    "skillID": "SKILL_WEAPON_HONING_0",
+    "skillType": 0,
+    "skillName": "무기 재련",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_WEAPON_HONING_1",
+    "preconditionIDs": [],
+    "nodeID": "ATTACK_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_WEAPON_HONING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_HONING_1",
+    "skillType": 0,
+    "skillName": "무기 재련 I",
+    "skillDescription": "무기 공격력이 <color=#C8A050>1%</color> 증가 합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_HONING_1",
+    "nextLevelID": "SKILL_WEAPON_HONING_2",
+    "preconditionIDs": [
+      "SKILL_WEAPON_HONING_0"
+    ],
+    "nodeID": "ATTACK_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_WEAPON_HONING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_HONING_2",
+    "skillType": 0,
+    "skillName": "무기 재련 II",
+    "skillDescription": "무기 공격력이 <color=#C8A050>2%</color> 증가 합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_HONING_2",
+    "nextLevelID": "SKILL_WEAPON_HONING_3",
+    "preconditionIDs": [
+      "SKILL_WEAPON_HONING_1"
+    ],
+    "nodeID": "ATTACK_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_WEAPON_HONING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_HONING_3",
+    "skillType": 0,
+    "skillName": "무기 재련 III",
+    "skillDescription": "무기 공격력이 <color=#C8A050>3%</color> 증가 합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_HONING_3",
+    "nextLevelID": "SKILL_WEAPON_HONING_4",
+    "preconditionIDs": [
+      "SKILL_WEAPON_HONING_2"
+    ],
+    "nodeID": "ATTACK_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_WEAPON_HONING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_HONING_4",
+    "skillType": 0,
+    "skillName": "무기 재련 IV",
+    "skillDescription": "무기 공격력이 <color=#C8A050>4%</color> 증가 합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_HONING_4",
+    "nextLevelID": "SKILL_WEAPON_HONING_5",
+    "preconditionIDs": [
+      "SKILL_WEAPON_HONING_3"
+    ],
+    "nodeID": "ATTACK_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_WEAPON_HONING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_HONING_5",
+    "skillType": 0,
+    "skillName": "무기 재련 V",
+    "skillDescription": "무기 공격력이 <color=#C8A050>5%</color> 증가 합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_HONING_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_WEAPON_HONING_4"
+    ],
+    "nodeID": "ATTACK_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_WEAPON_HONING"
+  },
+  {
+    "skillID": "SKILL_BASIC_ATTACK_MASTERY_0",
+    "skillType": 0,
+    "skillName": "기초 공격 단련",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_BASIC_ATTACK_MASTERY_1",
+    "preconditionIDs": [],
+    "nodeID": "ATTACK_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_BASIC_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_BASIC_ATTACK_MASTERY_1",
+    "skillType": 0,
+    "skillName": "기초 공격 단련 I",
+    "skillDescription": "약공격 대미지가 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_1",
+    "nextLevelID": "SKILL_BASIC_ATTACK_MASTERY_2",
+    "preconditionIDs": [
+      "SKILL_WEAPON_HONING_5"
+    ],
+    "nodeID": "ATTACK_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_BASIC_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_BASIC_ATTACK_MASTERY_2",
+    "skillType": 0,
+    "skillName": "기초 공격 단련 II",
+    "skillDescription": "약공격 대미지가 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_2",
+    "nextLevelID": "SKILL_BASIC_ATTACK_MASTERY_3",
+    "preconditionIDs": [
+      "SKILL_BASIC_ATTACK_MASTERY_1"
+    ],
+    "nodeID": "ATTACK_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_BASIC_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_BASIC_ATTACK_MASTERY_3",
+    "skillType": 0,
+    "skillName": "기초 공격 단련 III",
+    "skillDescription": "약공격 대미지가 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_3",
+    "nextLevelID": "SKILL_BASIC_ATTACK_MASTERY_4",
+    "preconditionIDs": [
+      "SKILL_BASIC_ATTACK_MASTERY_2"
+    ],
+    "nodeID": "ATTACK_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_BASIC_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_BASIC_ATTACK_MASTERY_4",
+    "skillType": 0,
+    "skillName": "기초 공격 단련 IV",
+    "skillDescription": "약공격 대미지가 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_4",
+    "nextLevelID": "SKILL_BASIC_ATTACK_MASTERY_5",
+    "preconditionIDs": [
+      "SKILL_BASIC_ATTACK_MASTERY_3"
+    ],
+    "nodeID": "ATTACK_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_BASIC_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_BASIC_ATTACK_MASTERY_5",
+    "skillType": 0,
+    "skillName": "기초 공격 단련 V",
+    "skillDescription": "약공격 대미지가 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_BASIC_ATTACK_MASTERY_4"
+    ],
+    "nodeID": "ATTACK_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_BASIC_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+    "skillType": 0,
+    "skillName": "심화 공격 단련",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_ADVANCED_ATTACK_MASTERY_1",
+    "preconditionIDs": [],
+    "nodeID": "ATTACK_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_ADVANCED_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_ADVANCED_ATTACK_MASTERY_1",
+    "skillType": 0,
+    "skillName": "심화 공격 단련 I",
+    "skillDescription": "강공격 대미지가 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_1",
+    "nextLevelID": "SKILL_ADVANCED_ATTACK_MASTERY_2",
+    "preconditionIDs": [
+      "SKILL_BASIC_ATTACK_MASTERY_5"
+    ],
+    "nodeID": "ATTACK_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_ADVANCED_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_ADVANCED_ATTACK_MASTERY_2",
+    "skillType": 0,
+    "skillName": "심화 공격 단련 II",
+    "skillDescription": "강공격 대미지가 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_2",
+    "nextLevelID": "SKILL_ADVANCED_ATTACK_MASTERY_3",
+    "preconditionIDs": [
+      "SKILL_ADVANCED_ATTACK_MASTERY_1"
+    ],
+    "nodeID": "ATTACK_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_ADVANCED_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_ADVANCED_ATTACK_MASTERY_3",
+    "skillType": 0,
+    "skillName": "심화 공격 단련 III",
+    "skillDescription": "강공격 대미지가 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_3",
+    "nextLevelID": "SKILL_ADVANCED_ATTACK_MASTERY_4",
+    "preconditionIDs": [
+      "SKILL_ADVANCED_ATTACK_MASTERY_2"
+    ],
+    "nodeID": "ATTACK_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_ADVANCED_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_ADVANCED_ATTACK_MASTERY_4",
+    "skillType": 0,
+    "skillName": "심화 공격 단련 IV",
+    "skillDescription": "강공격 대미지가 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_4",
+    "nextLevelID": "SKILL_ADVANCED_ATTACK_MASTERY_5",
+    "preconditionIDs": [
+      "SKILL_ADVANCED_ATTACK_MASTERY_3"
+    ],
+    "nodeID": "ATTACK_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_ADVANCED_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_ADVANCED_ATTACK_MASTERY_5",
+    "skillType": 0,
+    "skillName": "심화 공격 단련 V",
+    "skillDescription": "강공격 대미지가 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_ADVANCED_ATTACK_MASTERY_4"
+    ],
+    "nodeID": "ATTACK_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_ADVANCED_ATTACK_MASTERY"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_DETECTION_0",
+    "skillType": 0,
+    "skillName": "약점 포착",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_WEAKNESS_DETECTION_1",
+    "preconditionIDs": [],
+    "nodeID": "ATTACK_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_DETECTION"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_DETECTION_1",
+    "skillType": 0,
+    "skillName": "약점 포착 I",
+    "skillDescription": "크리티컬 확률이 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_1",
+    "nextLevelID": "SKILL_WEAKNESS_DETECTION_2",
+    "preconditionIDs": [
+      "SKILL_ADVANCED_ATTACK_MASTERY_5"
+    ],
+    "nodeID": "ATTACK_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_DETECTION"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_DETECTION_2",
+    "skillType": 0,
+    "skillName": "약점 포착 II",
+    "skillDescription": "크리티컬 확률이 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_2",
+    "nextLevelID": "SKILL_WEAKNESS_DETECTION_3",
+    "preconditionIDs": [
+      "SKILL_WEAKNESS_DETECTION_1"
+    ],
+    "nodeID": "ATTACK_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_DETECTION"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_DETECTION_3",
+    "skillType": 0,
+    "skillName": "약점 포착 III",
+    "skillDescription": "크리티컬 확률이 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_3",
+    "nextLevelID": "SKILL_WEAKNESS_DETECTION_4",
+    "preconditionIDs": [
+      "SKILL_WEAKNESS_DETECTION_2"
+    ],
+    "nodeID": "ATTACK_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_DETECTION"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_DETECTION_4",
+    "skillType": 0,
+    "skillName": "약점 포착 IV",
+    "skillDescription": "크리티컬 확률이 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_4",
+    "nextLevelID": "SKILL_WEAKNESS_DETECTION_5",
+    "preconditionIDs": [
+      "SKILL_WEAKNESS_DETECTION_3"
+    ],
+    "nodeID": "ATTACK_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_DETECTION"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_DETECTION_5",
+    "skillType": 0,
+    "skillName": "약점 포착 V",
+    "skillDescription": "크리티컬 확률이 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_WEAKNESS_DETECTION_4"
+    ],
+    "nodeID": "ATTACK_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_DETECTION"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_STRIKE_0",
+    "skillType": 0,
+    "skillName": "약점 타격",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_WEAKNESS_STRIKE_1",
+    "preconditionIDs": [],
+    "nodeID": "ATTACK_NODE_5_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_STRIKE"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_STRIKE_1",
+    "skillType": 0,
+    "skillName": "약점 타격 I",
+    "skillDescription": "크리티컬 대미지가 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_1",
+    "nextLevelID": "SKILL_WEAKNESS_STRIKE_2",
+    "preconditionIDs": [
+      "SKILL_WEAKNESS_DETECTION_5"
+    ],
+    "nodeID": "ATTACK_NODE_5_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_STRIKE"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_STRIKE_2",
+    "skillType": 0,
+    "skillName": "약점 타격 II",
+    "skillDescription": "크리티컬 대미지가 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_2",
+    "nextLevelID": "SKILL_WEAKNESS_STRIKE_3",
+    "preconditionIDs": [
+      "SKILL_WEAKNESS_STRIKE_1"
+    ],
+    "nodeID": "ATTACK_NODE_5_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_STRIKE"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_STRIKE_3",
+    "skillType": 0,
+    "skillName": "약점 타격 III",
+    "skillDescription": "크리티컬 대미지가 <color=#C8A050>6%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_3",
+    "nextLevelID": "SKILL_WEAKNESS_STRIKE_4",
+    "preconditionIDs": [
+      "SKILL_WEAKNESS_STRIKE_2"
+    ],
+    "nodeID": "ATTACK_NODE_5_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_STRIKE"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_STRIKE_4",
+    "skillType": 0,
+    "skillName": "약점 타격 IV",
+    "skillDescription": "크리티컬 대미지가 <color=#C8A050>8%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_4",
+    "nextLevelID": "SKILL_WEAKNESS_STRIKE_5",
+    "preconditionIDs": [
+      "SKILL_WEAKNESS_STRIKE_3"
+    ],
+    "nodeID": "ATTACK_NODE_5_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_STRIKE"
+  },
+  {
+    "skillID": "SKILL_WEAKNESS_STRIKE_5",
+    "skillType": 0,
+    "skillName": "약점 타격 V",
+    "skillDescription": "크리티컬 대미지가 <color=#C8A050>10%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_WEAKNESS_STRIKE_4"
+    ],
+    "nodeID": "ATTACK_NODE_5_1",
+    "spriteID": "SPRITE_SKILL_WEAKNESS_STRIKE"
+  },
+  {
+    "skillID": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+    "skillType": 0,
+    "skillName": "무기 경량화",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_WEAPON_LIGHTWEIGHTING_1",
+    "preconditionIDs": [],
+    "nodeID": "ATTACK_NODE_4_2",
+    "spriteID": "SPRITE_SKILL_WEAPON_LIGHTWEIGHTING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_LIGHTWEIGHTING_1",
+    "skillType": 0,
+    "skillName": "무기 경량화 I",
+    "skillDescription": "공격 속도가 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_1",
+    "nextLevelID": "SKILL_WEAPON_LIGHTWEIGHTING_2",
+    "preconditionIDs": [
+      "SKILL_ADVANCED_ATTACK_MASTERY_5"
+    ],
+    "nodeID": "ATTACK_NODE_4_2",
+    "spriteID": "SPRITE_SKILL_WEAPON_LIGHTWEIGHTING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_LIGHTWEIGHTING_2",
+    "skillType": 0,
+    "skillName": "무기 경량화 II",
+    "skillDescription": "공격 속도가 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_2",
+    "nextLevelID": "SKILL_WEAPON_LIGHTWEIGHTING_3",
+    "preconditionIDs": [
+      "SKILL_WEAPON_LIGHTWEIGHTING_1"
+    ],
+    "nodeID": "ATTACK_NODE_4_2",
+    "spriteID": "SPRITE_SKILL_WEAPON_LIGHTWEIGHTING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_LIGHTWEIGHTING_3",
+    "skillType": 0,
+    "skillName": "무기 경량화 III",
+    "skillDescription": "공격 속도가 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_3",
+    "nextLevelID": "SKILL_WEAPON_LIGHTWEIGHTING_4",
+    "preconditionIDs": [
+      "SKILL_WEAPON_LIGHTWEIGHTING_2"
+    ],
+    "nodeID": "ATTACK_NODE_4_2",
+    "spriteID": "SPRITE_SKILL_WEAPON_LIGHTWEIGHTING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_LIGHTWEIGHTING_4",
+    "skillType": 0,
+    "skillName": "무기 경량화 IV",
+    "skillDescription": "공격 속도가 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_4",
+    "nextLevelID": "SKILL_WEAPON_LIGHTWEIGHTING_5",
+    "preconditionIDs": [
+      "SKILL_WEAPON_LIGHTWEIGHTING_3"
+    ],
+    "nodeID": "ATTACK_NODE_4_2",
+    "spriteID": "SPRITE_SKILL_WEAPON_LIGHTWEIGHTING"
+  },
+  {
+    "skillID": "SKILL_WEAPON_LIGHTWEIGHTING_5",
+    "skillType": 0,
+    "skillName": "무기 경량화 V",
+    "skillDescription": "공격 속도가 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_WEAPON_LIGHTWEIGHTING_4"
+    ],
+    "nodeID": "ATTACK_NODE_4_2",
+    "spriteID": "SPRITE_SKILL_WEAPON_LIGHTWEIGHTING"
+  },
+  {
+    "skillID": "SKILL_FLESH_STRIKE_0",
+    "skillType": 0,
+    "skillName": "살점 타격",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_FLESH_STRIKE_1",
+    "preconditionIDs": [],
+    "nodeID": "ATTACK_NODE_5_2",
+    "spriteID": "SPRITE_SKILL_FLESH_STRIKE"
+  },
+  {
+    "skillID": "SKILL_FLESH_STRIKE_1",
+    "skillType": 0,
+    "skillName": "살점 타격 I",
+    "skillDescription": "고정 대미지가 <color=#C8A050>2</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FLESH_STRIKE_1",
+    "nextLevelID": "SKILL_FLESH_STRIKE_2",
+    "preconditionIDs": [
+      "SKILL_WEAPON_LIGHTWEIGHTING_5"
+    ],
+    "nodeID": "ATTACK_NODE_5_2",
+    "spriteID": "SPRITE_SKILL_FLESH_STRIKE"
+  },
+  {
+    "skillID": "SKILL_FLESH_STRIKE_2",
+    "skillType": 0,
+    "skillName": "살점 타격 II",
+    "skillDescription": "고정 대미지가 <color=#C8A050>4</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FLESH_STRIKE_2",
+    "nextLevelID": "SKILL_FLESH_STRIKE_3",
+    "preconditionIDs": [
+      "SKILL_FLESH_STRIKE_1"
+    ],
+    "nodeID": "ATTACK_NODE_5_2",
+    "spriteID": "SPRITE_SKILL_FLESH_STRIKE"
+  },
+  {
+    "skillID": "SKILL_FLESH_STRIKE_3",
+    "skillType": 0,
+    "skillName": "살점 타격 III",
+    "skillDescription": "고정 대미지가 <color=#C8A050>6</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FLESH_STRIKE_3",
+    "nextLevelID": "SKILL_FLESH_STRIKE_4",
+    "preconditionIDs": [
+      "SKILL_FLESH_STRIKE_2"
+    ],
+    "nodeID": "ATTACK_NODE_5_2",
+    "spriteID": "SPRITE_SKILL_FLESH_STRIKE"
+  },
+  {
+    "skillID": "SKILL_FLESH_STRIKE_4",
+    "skillType": 0,
+    "skillName": "살점 타격 IV",
+    "skillDescription": "고정 대미지가 <color=#C8A050>8</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FLESH_STRIKE_4",
+    "nextLevelID": "SKILL_FLESH_STRIKE_5",
+    "preconditionIDs": [
+      "SKILL_FLESH_STRIKE_3"
+    ],
+    "nodeID": "ATTACK_NODE_5_2",
+    "spriteID": "SPRITE_SKILL_FLESH_STRIKE"
+  },
+  {
+    "skillID": "SKILL_FLESH_STRIKE_5",
+    "skillType": 0,
+    "skillName": "살점 타격 V",
+    "skillDescription": "고정 대미지가 <color=#C8A050>10</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FLESH_STRIKE_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_FLESH_STRIKE_4"
+    ],
+    "nodeID": "ATTACK_NODE_5_2",
+    "spriteID": "SPRITE_SKILL_FLESH_STRIKE"
+  },
+  {
+    "skillID": "SKILL_ARMOR_DESTRUCTION_0",
+    "skillType": 0,
+    "skillName": "갑옷 파괴",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_ARMOR_DESTRUCTION_1",
+    "preconditionIDs": [],
+    "nodeID": "ATTACK_NODE_4_3",
+    "spriteID": "SPRITE_SKILL_ARMOR_DESTRUCTION"
+  },
+  {
+    "skillID": "SKILL_ARMOR_DESTRUCTION_1",
+    "skillType": 0,
+    "skillName": "갑옷 파괴 I",
+    "skillDescription": "방어 관통력이 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_1",
+    "nextLevelID": "SKILL_ARMOR_DESTRUCTION_2",
+    "preconditionIDs": [
+      "SKILL_ADVANCED_ATTACK_MASTERY_5"
+    ],
+    "nodeID": "ATTACK_NODE_4_3",
+    "spriteID": "SPRITE_SKILL_ARMOR_DESTRUCTION"
+  },
+  {
+    "skillID": "SKILL_ARMOR_DESTRUCTION_2",
+    "skillType": 0,
+    "skillName": "갑옷 파괴 II",
+    "skillDescription": "방어 관통력이 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_2",
+    "nextLevelID": "SKILL_ARMOR_DESTRUCTION_3",
+    "preconditionIDs": [
+      "SKILL_ARMOR_DESTRUCTION_1"
+    ],
+    "nodeID": "ATTACK_NODE_4_3",
+    "spriteID": "SPRITE_SKILL_ARMOR_DESTRUCTION"
+  },
+  {
+    "skillID": "SKILL_ARMOR_DESTRUCTION_3",
+    "skillType": 0,
+    "skillName": "갑옷 파괴 III",
+    "skillDescription": "방어 관통력이 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_3",
+    "nextLevelID": "SKILL_ARMOR_DESTRUCTION_4",
+    "preconditionIDs": [
+      "SKILL_ARMOR_DESTRUCTION_2"
+    ],
+    "nodeID": "ATTACK_NODE_4_3",
+    "spriteID": "SPRITE_SKILL_ARMOR_DESTRUCTION"
+  },
+  {
+    "skillID": "SKILL_ARMOR_DESTRUCTION_4",
+    "skillType": 0,
+    "skillName": "갑옷 파괴 IV",
+    "skillDescription": "방어 관통력이 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_4",
+    "nextLevelID": "SKILL_ARMOR_DESTRUCTION_5",
+    "preconditionIDs": [
+      "SKILL_ARMOR_DESTRUCTION_3"
+    ],
+    "nodeID": "ATTACK_NODE_4_3",
+    "spriteID": "SPRITE_SKILL_ARMOR_DESTRUCTION"
+  },
+  {
+    "skillID": "SKILL_ARMOR_DESTRUCTION_5",
+    "skillType": 0,
+    "skillName": "갑옷 파괴 V",
+    "skillDescription": "방어 관통력이 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_ARMOR_DESTRUCTION_4"
+    ],
+    "nodeID": "ATTACK_NODE_4_3",
+    "spriteID": "SPRITE_SKILL_ARMOR_DESTRUCTION"
+  },
+  {
+    "skillID": "SKILL_ARMOR_HONING_0",
+    "skillType": 0,
+    "skillName": "갑옷 재련",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_ARMOR_HONING_1",
+    "preconditionIDs": [],
+    "nodeID": "DEFENSE_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_ARMOR_HONING"
+  },
+  {
+    "skillID": "SKILL_ARMOR_HONING_1",
+    "skillType": 0,
+    "skillName": "갑옷 재련 I",
+    "skillDescription": "갑옷 방어력이 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_HONING_1",
+    "nextLevelID": "SKILL_ARMOR_HONING_2",
+    "preconditionIDs": [
+      "SKILL_ARMOR_HONING_0"
+    ],
+    "nodeID": "DEFENSE_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_ARMOR_HONING"
+  },
+  {
+    "skillID": "SKILL_ARMOR_HONING_2",
+    "skillType": 0,
+    "skillName": "갑옷 재련 II",
+    "skillDescription": "갑옷 방어력이 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_HONING_2",
+    "nextLevelID": "SKILL_ARMOR_HONING_3",
+    "preconditionIDs": [
+      "SKILL_ARMOR_HONING_1"
+    ],
+    "nodeID": "DEFENSE_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_ARMOR_HONING"
+  },
+  {
+    "skillID": "SKILL_ARMOR_HONING_3",
+    "skillType": 0,
+    "skillName": "갑옷 재련 III",
+    "skillDescription": "갑옷 방어력이 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_HONING_3",
+    "nextLevelID": "SKILL_ARMOR_HONING_4",
+    "preconditionIDs": [
+      "SKILL_ARMOR_HONING_2"
+    ],
+    "nodeID": "DEFENSE_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_ARMOR_HONING"
+  },
+  {
+    "skillID": "SKILL_ARMOR_HONING_4",
+    "skillType": 0,
+    "skillName": "갑옷 재련 IV",
+    "skillDescription": "갑옷 방어력이 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_HONING_4",
+    "nextLevelID": "SKILL_ARMOR_HONING_5",
+    "preconditionIDs": [
+      "SKILL_ARMOR_HONING_3"
+    ],
+    "nodeID": "DEFENSE_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_ARMOR_HONING"
+  },
+  {
+    "skillID": "SKILL_ARMOR_HONING_5",
+    "skillType": 0,
+    "skillName": "갑옷 재련 V",
+    "skillDescription": "갑옷 방어력이 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ARMOR_HONING_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_ARMOR_HONING_4"
+    ],
+    "nodeID": "DEFENSE_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_ARMOR_HONING"
+  },
+  {
+    "skillID": "SKILL_ALLOY_ARMOR_0",
+    "skillType": 0,
+    "skillName": "합금 갑옷",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_ALLOY_ARMOR_1",
+    "preconditionIDs": [],
+    "nodeID": "DEFENSE_NODE_1_2",
+    "spriteID": "SPRITE_SKILL_ALLOY_ARMOR"
+  },
+  {
+    "skillID": "SKILL_ALLOY_ARMOR_1",
+    "skillType": 0,
+    "skillName": "합금 갑옷 I",
+    "skillDescription": "방어력이 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_1",
+    "nextLevelID": "SKILL_ALLOY_ARMOR_2",
+    "preconditionIDs": [
+      "SKILL_ARMOR_HONING_5"
+    ],
+    "nodeID": "DEFENSE_NODE_1_2",
+    "spriteID": "SPRITE_SKILL_ALLOY_ARMOR"
+  },
+  {
+    "skillID": "SKILL_ALLOY_ARMOR_2",
+    "skillType": 0,
+    "skillName": "합금 갑옷 II",
+    "skillDescription": "방어력이 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_2",
+    "nextLevelID": "SKILL_ALLOY_ARMOR_3",
+    "preconditionIDs": [
+      "SKILL_ALLOY_ARMOR_1"
+    ],
+    "nodeID": "DEFENSE_NODE_1_2",
+    "spriteID": "SPRITE_SKILL_ALLOY_ARMOR"
+  },
+  {
+    "skillID": "SKILL_ALLOY_ARMOR_3",
+    "skillType": 0,
+    "skillName": "합금 갑옷 III",
+    "skillDescription": "방어력이 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_3",
+    "nextLevelID": "SKILL_ALLOY_ARMOR_4",
+    "preconditionIDs": [
+      "SKILL_ALLOY_ARMOR_2"
+    ],
+    "nodeID": "DEFENSE_NODE_1_2",
+    "spriteID": "SPRITE_SKILL_ALLOY_ARMOR"
+  },
+  {
+    "skillID": "SKILL_ALLOY_ARMOR_4",
+    "skillType": 0,
+    "skillName": "합금 갑옷 IV",
+    "skillDescription": "방어력이 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_4",
+    "nextLevelID": "SKILL_ALLOY_ARMOR_5",
+    "preconditionIDs": [
+      "SKILL_ALLOY_ARMOR_3"
+    ],
+    "nodeID": "DEFENSE_NODE_1_2",
+    "spriteID": "SPRITE_SKILL_ALLOY_ARMOR"
+  },
+  {
+    "skillID": "SKILL_ALLOY_ARMOR_5",
+    "skillType": 0,
+    "skillName": "합금 갑옷 V",
+    "skillDescription": "방어력이 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_ALLOY_ARMOR_4"
+    ],
+    "nodeID": "DEFENSE_NODE_1_2",
+    "spriteID": "SPRITE_SKILL_ALLOY_ARMOR"
+  },
+  {
+    "skillID": "SKILL_FORTIFICATION_0",
+    "skillType": 0,
+    "skillName": "요새화",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_FORTIFICATION_1",
+    "preconditionIDs": [],
+    "nodeID": "DEFENSE_NODE_1_3",
+    "spriteID": "SPRITE_SKILL_FORTIFICATION"
+  },
+  {
+    "skillID": "SKILL_FORTIFICATION_1",
+    "skillType": 0,
+    "skillName": "요새화 I",
+    "skillDescription": "대미지 감소율이 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FORTIFICATION_1",
+    "nextLevelID": "SKILL_FORTIFICATION_2",
+    "preconditionIDs": [
+      "SKILL_ALLOY_ARMOR_5"
+    ],
+    "nodeID": "DEFENSE_NODE_1_3",
+    "spriteID": "SPRITE_SKILL_FORTIFICATION"
+  },
+  {
+    "skillID": "SKILL_FORTIFICATION_2",
+    "skillType": 0,
+    "skillName": "요새화 III",
+    "skillDescription": "대미지 감소율이 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FORTIFICATION_2",
+    "nextLevelID": "SKILL_FORTIFICATION_3",
+    "preconditionIDs": [
+      "SKILL_FORTIFICATION_1"
+    ],
+    "nodeID": "DEFENSE_NODE_1_3",
+    "spriteID": "SPRITE_SKILL_FORTIFICATION"
+  },
+  {
+    "skillID": "SKILL_FORTIFICATION_3",
+    "skillType": 0,
+    "skillName": "요새화 III",
+    "skillDescription": "대미지 감소율이 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FORTIFICATION_3",
+    "nextLevelID": "SKILL_FORTIFICATION_4",
+    "preconditionIDs": [
+      "SKILL_FORTIFICATION_2"
+    ],
+    "nodeID": "DEFENSE_NODE_1_3",
+    "spriteID": "SPRITE_SKILL_FORTIFICATION"
+  },
+  {
+    "skillID": "SKILL_FORTIFICATION_4",
+    "skillType": 0,
+    "skillName": "요새화 IV",
+    "skillDescription": "대미지 감소율이 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FORTIFICATION_4",
+    "nextLevelID": "SKILL_FORTIFICATION_5",
+    "preconditionIDs": [
+      "SKILL_FORTIFICATION_3"
+    ],
+    "nodeID": "DEFENSE_NODE_1_3",
+    "spriteID": "SPRITE_SKILL_FORTIFICATION"
+  },
+  {
+    "skillID": "SKILL_FORTIFICATION_5",
+    "skillType": 0,
+    "skillName": "요새화 V",
+    "skillDescription": "대미지 감소율이 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_FORTIFICATION_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_FORTIFICATION_4"
+    ],
+    "nodeID": "DEFENSE_NODE_1_3",
+    "spriteID": "SPRITE_SKILL_FORTIFICATION"
+  },
+  {
+    "skillID": "SKILL_HEALTH_BOOST_0",
+    "skillType": 0,
+    "skillName": "생명력 강화",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_HEALTH_BOOST_1",
+    "preconditionIDs": [],
+    "nodeID": "UTILITY_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_HEALTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_HEALTH_BOOST_1",
+    "skillType": 0,
+    "skillName": "생명력 강화 I",
+    "skillDescription": "최대 HP가 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_HEALTH_BOOST_1",
+    "nextLevelID": "SKILL_HEALTH_BOOST_2",
+    "preconditionIDs": [
+      "SKILL_HEALTH_BOOST_0"
+    ],
+    "nodeID": "UTILITY_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_HEALTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_HEALTH_BOOST_2",
+    "skillType": 0,
+    "skillName": "생명력 강화 II",
+    "skillDescription": "최대 HP가 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_HEALTH_BOOST_2",
+    "nextLevelID": "SKILL_HEALTH_BOOST_3",
+    "preconditionIDs": [
+      "SKILL_HEALTH_BOOST_1"
+    ],
+    "nodeID": "UTILITY_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_HEALTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_HEALTH_BOOST_3",
+    "skillType": 0,
+    "skillName": "생명력 강화 III",
+    "skillDescription": "최대 HP가 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_HEALTH_BOOST_3",
+    "nextLevelID": "SKILL_HEALTH_BOOST_4",
+    "preconditionIDs": [
+      "SKILL_HEALTH_BOOST_2"
+    ],
+    "nodeID": "UTILITY_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_HEALTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_HEALTH_BOOST_4",
+    "skillType": 0,
+    "skillName": "생명력 강화 IV",
+    "skillDescription": "최대 HP가 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_HEALTH_BOOST_4",
+    "nextLevelID": "SKILL_HEALTH_BOOST_5",
+    "preconditionIDs": [
+      "SKILL_HEALTH_BOOST_3"
+    ],
+    "nodeID": "UTILITY_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_HEALTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_HEALTH_BOOST_5",
+    "skillType": 0,
+    "skillName": "생명력 강화 V",
+    "skillDescription": "최대 HP가 <color=#C8A050>15%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_HEALTH_BOOST_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_HEALTH_BOOST_4"
+    ],
+    "nodeID": "UTILITY_NODE_1_1",
+    "spriteID": "SPRITE_SKILL_HEALTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_STAMINA_BOOST_0",
+    "skillType": 0,
+    "skillName": "지구력 강화",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_STAMINA_BOOST_1",
+    "preconditionIDs": [],
+    "nodeID": "UTILITY_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_STAMINA_BOOST"
+  },
+  {
+    "skillID": "SKILL_STAMINA_BOOST_1",
+    "skillType": 0,
+    "skillName": "지구력 강화 I",
+    "skillDescription": "최대 SP가 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_STAMINA_BOOST_1",
+    "nextLevelID": "SKILL_STAMINA_BOOST_2",
+    "preconditionIDs": [
+      "SKILL_HEALTH_BOOST_5"
+    ],
+    "nodeID": "UTILITY_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_STAMINA_BOOST"
+  },
+  {
+    "skillID": "SKILL_STAMINA_BOOST_2",
+    "skillType": 0,
+    "skillName": "지구력 강화 II",
+    "skillDescription": "최대 SP가 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_STAMINA_BOOST_2",
+    "nextLevelID": "SKILL_STAMINA_BOOST_3",
+    "preconditionIDs": [
+      "SKILL_STAMINA_BOOST_1"
+    ],
+    "nodeID": "UTILITY_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_STAMINA_BOOST"
+  },
+  {
+    "skillID": "SKILL_STAMINA_BOOST_3",
+    "skillType": 0,
+    "skillName": "지구력 강화 III",
+    "skillDescription": "최대 SP가 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_STAMINA_BOOST_3",
+    "nextLevelID": "SKILL_STAMINA_BOOST_4",
+    "preconditionIDs": [
+      "SKILL_STAMINA_BOOST_2"
+    ],
+    "nodeID": "UTILITY_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_STAMINA_BOOST"
+  },
+  {
+    "skillID": "SKILL_STAMINA_BOOST_4",
+    "skillType": 0,
+    "skillName": "지구력 강화 IV",
+    "skillDescription": "최대 SP가 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_STAMINA_BOOST_4",
+    "nextLevelID": "SKILL_STAMINA_BOOST_5",
+    "preconditionIDs": [
+      "SKILL_STAMINA_BOOST_3"
+    ],
+    "nodeID": "UTILITY_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_STAMINA_BOOST"
+  },
+  {
+    "skillID": "SKILL_STAMINA_BOOST_5",
+    "skillType": 0,
+    "skillName": "지구력 강화 V",
+    "skillDescription": "최대 SP가 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_STAMINA_BOOST_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_STAMINA_BOOST_4"
+    ],
+    "nodeID": "UTILITY_NODE_2_1",
+    "spriteID": "SPRITE_SKILL_STAMINA_BOOST"
+  },
+  {
+    "skillID": "SKILL_PHYSICAL_BOOST_0",
+    "skillType": 0,
+    "skillName": "신체 강화",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_PHYSICAL_BOOST_1",
+    "preconditionIDs": [],
+    "nodeID": "UTILITY_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_PHYSICAL_BOOST"
+  },
+  {
+    "skillID": "SKILL_PHYSICAL_BOOST_1",
+    "skillType": 0,
+    "skillName": "신체 강화 I",
+    "skillDescription": "모든 어빌리티가 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_1",
+    "nextLevelID": "SKILL_PHYSICAL_BOOST_2",
+    "preconditionIDs": [
+      "SKILL_STAMINA_BOOST_5"
+    ],
+    "nodeID": "UTILITY_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_PHYSICAL_BOOST"
+  },
+  {
+    "skillID": "SKILL_PHYSICAL_BOOST_2",
+    "skillType": 0,
+    "skillName": "신체 강화 II",
+    "skillDescription": "모든 어빌리티가 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_2",
+    "nextLevelID": "SKILL_PHYSICAL_BOOST_3",
+    "preconditionIDs": [
+      "SKILL_PHYSICAL_BOOST_1"
+    ],
+    "nodeID": "UTILITY_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_PHYSICAL_BOOST"
+  },
+  {
+    "skillID": "SKILL_PHYSICAL_BOOST_3",
+    "skillType": 0,
+    "skillName": "신체 강화 III",
+    "skillDescription": "모든 어빌리티가 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_3",
+    "nextLevelID": "SKILL_PHYSICAL_BOOST_4",
+    "preconditionIDs": [
+      "SKILL_PHYSICAL_BOOST_2"
+    ],
+    "nodeID": "UTILITY_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_PHYSICAL_BOOST"
+  },
+  {
+    "skillID": "SKILL_PHYSICAL_BOOST_4",
+    "skillType": 0,
+    "skillName": "신체 강화 IV",
+    "skillDescription": "모든 어빌리티가 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_4",
+    "nextLevelID": "SKILL_PHYSICAL_BOOST_5",
+    "preconditionIDs": [
+      "SKILL_PHYSICAL_BOOST_3"
+    ],
+    "nodeID": "UTILITY_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_PHYSICAL_BOOST"
+  },
+  {
+    "skillID": "SKILL_PHYSICAL_BOOST_5",
+    "skillType": 0,
+    "skillName": "신체 강화 V",
+    "skillDescription": "모든 어빌리티가 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_PHYSICAL_BOOST_4"
+    ],
+    "nodeID": "UTILITY_NODE_3_1",
+    "spriteID": "SPRITE_SKILL_PHYSICAL_BOOST"
+  },
+  {
+    "skillID": "SKILL_LEG_STRENGTH_BOOST_0",
+    "skillType": 0,
+    "skillName": "각력 강화",
+    "skillDescription": null,
+    "currentLevel": 0,
+    "maxLevel": 5,
+    "fixedOptionID": null,
+    "nextLevelID": "SKILL_LEG_STRENGTH_BOOST_1",
+    "preconditionIDs": [],
+    "nodeID": "UTILITY_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_LEG_STRENGTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_LEG_STRENGTH_BOOST_1",
+    "skillType": 0,
+    "skillName": "각력 강화 I",
+    "skillDescription": "이동속도가 <color=#C8A050>1%</color> 증가합니다.",
+    "currentLevel": 1,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_1",
+    "nextLevelID": "SKILL_LEG_STRENGTH_BOOST_2",
+    "preconditionIDs": [
+      "SKILL_PHYSICAL_BOOST_5"
+    ],
+    "nodeID": "UTILITY_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_LEG_STRENGTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_LEG_STRENGTH_BOOST_2",
+    "skillType": 0,
+    "skillName": "각력 강화 II",
+    "skillDescription": "이동속도가 <color=#C8A050>2%</color> 증가합니다.",
+    "currentLevel": 2,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_2",
+    "nextLevelID": "SKILL_LEG_STRENGTH_BOOST_3",
+    "preconditionIDs": [
+      "SKILL_LEG_STRENGTH_BOOST_1"
+    ],
+    "nodeID": "UTILITY_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_LEG_STRENGTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_LEG_STRENGTH_BOOST_3",
+    "skillType": 0,
+    "skillName": "각력 강화 III",
+    "skillDescription": "이동속도가 <color=#C8A050>3%</color> 증가합니다.",
+    "currentLevel": 3,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_3",
+    "nextLevelID": "SKILL_LEG_STRENGTH_BOOST_4",
+    "preconditionIDs": [
+      "SKILL_LEG_STRENGTH_BOOST_2"
+    ],
+    "nodeID": "UTILITY_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_LEG_STRENGTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_LEG_STRENGTH_BOOST_4",
+    "skillType": 0,
+    "skillName": "각력 강화 IV",
+    "skillDescription": "이동속도가 <color=#C8A050>4%</color> 증가합니다.",
+    "currentLevel": 4,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_4",
+    "nextLevelID": "SKILL_LEG_STRENGTH_BOOST_5",
+    "preconditionIDs": [
+      "SKILL_LEG_STRENGTH_BOOST_3"
+    ],
+    "nodeID": "UTILITY_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_LEG_STRENGTH_BOOST"
+  },
+  {
+    "skillID": "SKILL_LEG_STRENGTH_BOOST_5",
+    "skillType": 0,
+    "skillName": "각력 강화 V",
+    "skillDescription": "이동속도가 <color=#C8A050>5%</color> 증가합니다.",
+    "currentLevel": 5,
+    "maxLevel": 5,
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_5",
+    "nextLevelID": null,
+    "preconditionIDs": [
+      "SKILL_LEG_STRENGTH_BOOST_4"
+    ],
+    "nodeID": "UTILITY_NODE_4_1",
+    "spriteID": "SPRITE_SKILL_LEG_STRENGTH_BOOST"
+  }
+]

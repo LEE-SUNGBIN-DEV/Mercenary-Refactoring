@@ -1,0 +1,74 @@
+[
+  {
+    "textID": "TEXT_ITEM_RANK_COMMON",
+    "textContent": "일반"
+  },
+  {
+    "textID": "TEXT_ITEM_RANK_RARE",
+    "textContent": "레어"
+  },
+  {
+    "textID": "TEXT_ITEM_RANK_EPIC",
+    "textContent": "에픽"
+  },
+  {
+    "textID": "TEXT_ITEM_RANK_REGENDARY",
+    "textContent": "전설"
+  },
+  {
+    "textID": "TEXT_ITEM_RANK_MYTH",
+    "textContent": "신화"
+  },
+  {
+    "textID": "TEXT_ITEM_RANK_UNIQUE",
+    "textContent": "유니크"
+  },
+  {
+    "textID": "TEXT_ITEM_TYPE_NORMAL",
+    "textContent": "일반"
+  },
+  {
+    "textID": "TEXT_ITEM_TYPE_UNIQUE_EQUIPMENT",
+    "textContent": "고유 장비"
+  },
+  {
+    "textID": "TEXT_ITEM_TYPE_RUNE",
+    "textContent": "룬"
+  },
+  {
+    "textID": "TEXT_SKILL_POINT",
+    "textContent": "스킬 포인트"
+  },
+  {
+    "textID": "TEXT_SKILL_TYPE_PASSIVE",
+    "textContent": "패시브"
+  },
+  {
+    "textID": "TEXT_SKILL_TYPE_ACTIVE",
+    "textContent": "액티브"
+  },
+  {
+    "textID": "TEXT_SKILL_CURRENT_LEVEL",
+    "textContent": "현재 레벨"
+  },
+  {
+    "textID": "TEXT_SKILL_NEXT_LEVEL",
+    "textContent": "다음 레벨"
+  },
+  {
+    "textID": "TEXT_CONVERSATION",
+    "textContent": "대화"
+  },
+  {
+    "textID": "TEXT_RESPONSE",
+    "textContent": "감응"
+  },
+  {
+    "textID": "TEXT_OPEN",
+    "textContent": "열기"
+  },
+  {
+    "textID": "TEXT_CLOSE",
+    "textContent": "닫기"
+  }
+]

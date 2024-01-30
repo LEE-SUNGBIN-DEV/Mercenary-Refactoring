@@ -1,0 +1,16 @@
+[
+  {
+    "dialogueID": "NPC_BEREAVE_DEFAULT_0",
+    "speaker": "베레아브",
+    "content": "도움이 필요할 때 찾아오게.",
+    "selections": null,
+    "selectionTargetIDs": null
+  },
+  {
+    "dialogueID": "NPC_FEIGHUS_DEFAULT_0",
+    "speaker": "페이거스",
+    "content": "부수지는 않을테니 안심하라구.",
+    "selections": null,
+    "selectionTargetIDs": null
+  }
+]

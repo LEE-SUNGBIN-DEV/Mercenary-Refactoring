@@ -7,7 +7,7 @@ public class PlayerStateHeavyHitLoop : IActionState
     private PlayerCharacter character;
     private int stateWeight;
 
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
     private float duration;
     private float time;
 

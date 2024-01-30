@@ -6,9 +6,9 @@ public class BlackDragonFlyBreath : EnemySkill
 {
     [SerializeField] private EnemyBreath breath;
 
-    private AnimationClipInformation flyBreathStartAnimationInfo;
-    private AnimationClipInformation flyBreathAnimationInfo;
-    private AnimationClipInformation flyBreathEndAnimationInfo;
+    private AnimationClipInfo flyBreathStartAnimationInfo;
+    private AnimationClipInfo flyBreathAnimationInfo;
+    private AnimationClipInfo flyBreathEndAnimationInfo;
 
     public override void Initialize(BaseEnemy enemy)
     {

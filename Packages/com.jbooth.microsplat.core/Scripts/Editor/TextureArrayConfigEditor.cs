@@ -927,7 +927,7 @@ namespace JBooth.MicroSplat
             }
         }
 
-        static Texture2D ToTexture2D(RenderTexture rt)
+        static Texture2D ToTexture2DAndRelease(RenderTexture rt)
         {
             if (rt == null)
                 return null;
@@ -935,17 +935,9 @@ namespace JBooth.MicroSplat
             RenderTexture.active = rt;
             tex.ReadPixels(new Rect(0, 0, tex.width, tex.height), 0, 0);
             tex.Apply();
-            RenderTexture.ReleaseTemporary(rt);
+            RenderTexture.active = null;
+            rt.Release();
             return tex;
-        }
-
-        static RenderTexture ToRT(Texture2D tex, bool linear)
-        {
-            RenderTextureDescriptor desc = new RenderTextureDescriptor(tex.width, tex.height, RenderTextureFormat.ARGB32, 0, 0);
-            desc.enableRandomWrite = true;
-            desc.sRGB = !linear;
-            RenderTexture rt = RenderTexture.GetTemporary(desc);
-            return rt;
         }
 
         static void CompileConfig(TextureArrayConfig cfg,
@@ -1134,7 +1126,7 @@ namespace JBooth.MicroSplat
                     var e = src[i];
                     // resulting maps
                     RenderTexture diffuseHeightRT = ResizeTexture(e.diffuse == null ? Texture2D.whiteTexture : e.diffuse, diffuseWidth, diffuseHeight, diffuseIsLinear);
-                    
+
                     RenderTexture normalSAORT = null;
                     RenderTexture smoothAORT = null;
                     RenderTexture antiTileRT = null;
@@ -1225,6 +1217,7 @@ namespace JBooth.MicroSplat
                         splatRT = ResizeTexture(e.splat != null ? e.splat : Texture2D.blackTexture, splatWidth, splatHeight, true);
                     }
 
+
                     RenderTexture height = null;
                     if (e.height != null)
                     {
@@ -1234,6 +1227,7 @@ namespace JBooth.MicroSplat
                     {
                         height = RenderMissingTexture(normalSAORT, "Hidden/MicroSplat/HeightFromNormal", diffuseWidth, diffuseHeight);
                     }
+
 
                     RenderTexture traxHeight = null;
                     if (e.traxHeight)
@@ -1253,13 +1247,12 @@ namespace JBooth.MicroSplat
 
                     MergeInChannel(diffuseHeightRT, (int)TextureArrayConfig.TextureChannel.A, height, heightChannel, diffuseIsLinear);
 
-
                     if (cfg.emisMetalArray && !cfg.IsScatter())
                     {
                         emisRT = ResizeTexture(e.emis != null ? e.emis : Texture2D.blackTexture, emisWidth, emisHeight, diffuseIsLinear);
                         RenderTexture metal = ResizeTexture(e.metal != null ? e.metal : Texture2D.blackTexture, emisWidth, emisHeight, true);
                         MergeInChannel(emisRT, 3, metal, e.metal != null ? metalChannel : 0, true, false);
-                        RenderTexture.ReleaseTemporary(metal);
+                        metal.Release();
                     }
 
                     if (e.ao != null)
@@ -1377,18 +1370,20 @@ namespace JBooth.MicroSplat
                         }
                     }
 
+                    
                     int tq = (int)UnityEditor.TextureCompressionQuality.Normal;
-                    Texture2D normalSAOTex = ToTexture2D(normalSAORT);
-                    Texture2D smoothAOTex = ToTexture2D(smoothAORT);
-                    Texture2D antiTileTex = ToTexture2D(antiTileRT);
-                    Texture2D emisTex = ToTexture2D(emisRT);
-                    Texture2D diffuseHeightTex = ToTexture2D(diffuseHeightRT);
-                    Texture2D traxDiffuseHeightTex = ToTexture2D(traxDiffuseHeightRT);
-                    Texture2D traxNormalSAOTex = ToTexture2D(traxNormalSAORT);
-                    Texture2D splatTex = ToTexture2D(splatRT);
-                    Texture2D specularTex = ToTexture2D(specularRT);
+                    Texture2D normalSAOTex = ToTexture2DAndRelease(normalSAORT);
+                    Texture2D smoothAOTex = ToTexture2DAndRelease(smoothAORT);
+                    Texture2D antiTileTex = ToTexture2DAndRelease(antiTileRT);
+                    Texture2D emisTex = ToTexture2DAndRelease(emisRT);
+                    Texture2D diffuseHeightTex = ToTexture2DAndRelease(diffuseHeightRT);
+                    Texture2D traxDiffuseHeightTex = ToTexture2DAndRelease(traxDiffuseHeightRT);
+                    Texture2D traxNormalSAOTex = ToTexture2DAndRelease(traxNormalSAORT);
+                    Texture2D splatTex = ToTexture2DAndRelease(splatRT);
+                    Texture2D specularTex = ToTexture2DAndRelease(specularRT);
 
                     
+
                     if (diffuseHeightTex != null && settings.diffuseSettings.compression != TextureArrayConfig.Compression.Uncompressed)
                     {
                         EditorUtility.CompressTexture(diffuseHeightTex, GetTextureFormat(cfg, settings.diffuseSettings.compression, settings.diffuseSettings.compressionQuality), tq);
@@ -1447,6 +1442,8 @@ namespace JBooth.MicroSplat
                     CopyTex(emisTex, emisArray, i);
                     CopyTex(specularTex, specularArray, i);
 
+                    RenderTexture.active = null;
+
                     if (normalSAOTex != null) GameObject.DestroyImmediate(normalSAOTex);
                     if (smoothAOTex != null) GameObject.DestroyImmediate(smoothAOTex);
                     if (antiTileTex != null) GameObject.DestroyImmediate(antiTileTex);
@@ -1456,16 +1453,6 @@ namespace JBooth.MicroSplat
                     if (traxNormalSAOTex != null) GameObject.DestroyImmediate(traxNormalSAOTex);
                     if (splatTex != null) GameObject.DestroyImmediate(splatTex);
                     if (specularTex != null) GameObject.DestroyImmediate(specularTex);
-
-                    if (normalSAORT != null) RenderTexture.ReleaseTemporary(normalSAORT);
-                    if (smoothAORT != null) RenderTexture.ReleaseTemporary(smoothAORT);
-                    if (antiTileRT != null) RenderTexture.ReleaseTemporary(antiTileRT);
-                    if (emisRT != null) RenderTexture.ReleaseTemporary(emisRT);
-                    if (diffuseHeightRT != null) RenderTexture.ReleaseTemporary(diffuseHeightRT);
-                    if (traxDiffuseHeightRT != null) RenderTexture.ReleaseTemporary(traxDiffuseHeightRT);
-                    if (traxNormalSAORT != null) RenderTexture.ReleaseTemporary(traxNormalSAORT);
-                    if (splatRT != null) RenderTexture.ReleaseTemporary(splatRT);
-                    if (specularRT != null) RenderTexture.ReleaseTemporary(specularRT);
 
                     //Resources.UnloadUnusedAssets();
                     //System.GC.Collect();
@@ -1564,11 +1551,11 @@ namespace JBooth.MicroSplat
                 }
             }
 
-            RenderTexture rt = RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat.ARGB32, linear ? RenderTextureReadWrite.Linear : RenderTextureReadWrite.sRGB);
+            RenderTexture rt = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, linear ? RenderTextureReadWrite.Linear : RenderTextureReadWrite.sRGB);
             GL.sRGBWrite = (QualitySettings.activeColorSpace == ColorSpace.Linear) && !linear;
             Graphics.Blit(source, rt);
             GL.sRGBWrite = false;
-            RenderTexture.active = null;
+            RenderTexture.active = null; 
             // restore compression
 
             if (comp != TextureImporterCompression.Uncompressed)
@@ -1672,7 +1659,9 @@ namespace JBooth.MicroSplat
 
         static RenderTexture RenderMissingTexture(RenderTexture src, string shaderPath, int width, int height, int channel = -1)
         {
-            RenderTexture resRT = RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            // used to use get temporary, but it's not trust worthy as it can corrupt existing
+            // buffers. I think there may be a max count to temporary buffers.
+            RenderTexture resRT = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Shader s = Shader.Find(shaderPath);
             if (s == null)
             {
@@ -1690,7 +1679,8 @@ namespace JBooth.MicroSplat
             GL.sRGBWrite = false;
 
             RenderTexture.active = null;
-            RenderTexture.ReleaseTemporary(src);
+            resRT.Release();
+            DestroyImmediate(resRT);
             GameObject.DestroyImmediate(genMat);
             return resRT;
         }
@@ -1698,7 +1688,7 @@ namespace JBooth.MicroSplat
 
         static RenderTexture RenderMissingTexture(Texture2D src, string shaderPath, int width, int height, int channel = -1)
         {
-            RenderTexture resRT = RenderTexture.GetTemporary(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture resRT = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             resRT.DiscardContents();
             Shader s = Shader.Find(shaderPath);
             if (s == null)
@@ -1834,7 +1824,7 @@ namespace JBooth.MicroSplat
         {
             if (t != null && cfg.sourceTextures.Count == 0 && t.terrainData != null)
             {
-                int maxTexSize = 256;
+                int maxTexSize = 1024;
                 int count = t.terrainData.terrainLayers.Length;
                 for (int i = 0; i < count; ++i)
                 {

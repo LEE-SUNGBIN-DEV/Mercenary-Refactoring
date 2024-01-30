@@ -38,7 +38,7 @@ public class QuestPopupButton : UIBase
     public void SetQuestButton(Quest targetQuest)
     {
         quest = targetQuest;
-        titleText.text = quest.QuestTitle;
+        titleText.text = quest.QuestData.questTitle;
     }
 
     public void OnClickButton()

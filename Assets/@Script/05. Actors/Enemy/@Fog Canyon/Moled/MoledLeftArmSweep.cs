@@ -6,7 +6,7 @@ public class MoledLeftArmSweep : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack leftArmSweepController;
     [SerializeField] private ParticleController leftArmSweepSmokeVFX;
-    private AnimationClipInformation animationInfo;
+    private AnimationClipInfo animationInfo;
 
     public override void Initialize(BaseEnemy enemy)
     {
@@ -29,6 +29,7 @@ public class MoledLeftArmSweep : EnemySkill
 
     public override IEnumerator CoStartSkill()
     {
+        enemy.SFXPlayer.PlaySFX("Audio_Big_Golem_Attack_04");
         enemy.Animator.CrossFadeInFixedTime(animationInfo.nameHash, 0.2f);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationInfo, 72));

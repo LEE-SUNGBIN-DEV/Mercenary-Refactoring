@@ -7,7 +7,7 @@ public class SwordShieldGuardIn : IActionState
     private PlayerCharacter character;
     private int stateWeight;
     private PlayerSwordShield swordShield;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public SwordShieldGuardIn(PlayerCharacter character)
     {
@@ -15,16 +15,16 @@ public class SwordShieldGuardIn : IActionState
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_IN;
         if (character != null)
         {
-            swordShield = character.WeaponController.GetWeapon<PlayerSwordShield>(WEAPON_TYPE.SWORD_SHIELD);
+            swordShield = character.UniqueEquipmentController.GetWeapon<PlayerSwordShield>(WEAPON_TYPE.SWORD_SHIELD);
             animationClipInformation = character.AnimationClipTable["Sword_Shield_Guard_In"];
         }
     }
 
     public void Enter()
     {
-        character.Status.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_IN);
-        character.HitState = HIT_STATE.Parryable;
-        character.SetForwardDirection(character.PlayerCamera.GetZeroYForward());
+        character.StatusData.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_IN);
+        character.HitState = HIT_STATE.PARRYABLE;
+        character.SetForwardDirection(character.PlayerCamera.GetVerticalDirection());
         character.Animator.Play(animationClipInformation.nameHash);
         swordShield.EnableShield(COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_IN);
     }
@@ -32,7 +32,7 @@ public class SwordShieldGuardIn : IActionState
     public void Update()
     {
         // -> Guard Out
-        if (!character.GetInput().RightMouseHold && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT))
+        if (!Managers.InputManager.CharacterGuardButton.IsPressed() && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT))
             return;
 
         // -> Guard Loop
@@ -42,7 +42,7 @@ public class SwordShieldGuardIn : IActionState
 
     public void Exit()
     {
-        character.HitState = HIT_STATE.Hittable;
+        character.HitState = HIT_STATE.HITTABLE;
         swordShield.DisableShield();
     }
 

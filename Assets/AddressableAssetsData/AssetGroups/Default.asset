@@ -18,11 +18,7 @@ MonoBehaviour:
   m_GUID: 3e8f49c1e9d2dfc4a8e90d2d7bf2c891
   m_SerializeEntries:
   - m_GUID: 27f3c87a091257c4ca079aff99a0b85a
-    m_Address: PostProcessing_Mercenary_Default
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: ade1e9a6fe6345548a0249d518e2b7fd
-    m_Address: Render_Texture_Resonance_Water
+    m_Address: POST_PROCESS_PROFILE_DEFAULT
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

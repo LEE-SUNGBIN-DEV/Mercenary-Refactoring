@@ -830,8 +830,9 @@ namespace FIMSpace.AnimationTools
                 int depth = 0;
                 if (t == skelRootBone) return 0;
                 if (t == null) return 0;
+                if (t.parent == null) return 0;
 
-                while (t != null && t.parent != skelRootBone)
+                while (t != null && t != skelRootBone)
                 {
                     t = t.parent;
                     depth += 1;
@@ -863,11 +864,14 @@ namespace FIMSpace.AnimationTools
             var allCh = parent.GetComponentsInChildren<Transform>(true);
             int lowest = 0;
             Transform lowestT = parent;
-
+            
             for (int c = 0; c < allCh.Length; c++)
             {
+                if (allCh[c] == parent) continue;
+
                 Transform ch = allCh[c];
                 int depth = 0;
+
                 while (ch.parent != parent && ch.parent != null)
                 {
                     depth += 1;

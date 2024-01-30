@@ -6,19 +6,19 @@ public class EnemyStateChaseWalk : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInfo;
     private float runDistance;
 
     public EnemyStateChaseWalk(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_CHASE_WALK;
-        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_WALK];
+        animationClipInfo = enemy.AnimationClipTable[Constants.ANIMATION_NAME_WALK];
     }
 
     public void Enter()
     {
-        enemy.Animator.CrossFadeInFixedTime(animationClipInformation.nameHash, 0.2f);
+        enemy.Animator.CrossFadeInFixedTime(animationClipInfo.nameHash, 0.1f);
         runDistance = enemy.Status.ChaseDistance * Constants.ENEMY_RUN_DISTANCE;
     }
 
@@ -60,7 +60,7 @@ public class EnemyStateChaseWalk : IActionState
 
     public void Exit()
     {
-        enemy.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
+        enemy.MoveController.SetMove(Vector3.zero, 0f);
     }
 
     #region Property

@@ -4,23 +4,23 @@ using UnityEngine;
 
 public enum MATERIAL_TYPE
 {
-    Original = 0,
-    Phase = 1,
-    Dissolve = 2,
-    Outline = 3,
+    ORIGINAL = 0,
+    PHASE = 1,
+    DISSOLVE = 2,
+    OUTLINE = 3,
 
     SIZE
 }
 
 public enum HIT_STATE
 {
-    Hittable,
-    Guardable,
-    Parryable,
-    Invincible,
+    HITTABLE,
+    GUARDABLE,
+    PARRYABLE,
+    INVINCIBLE,
 }
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(CapsuleCollider))]
 public abstract class BaseActor : MonoBehaviour
 {
     [Header("Base Actor")]
@@ -28,7 +28,7 @@ public abstract class BaseActor : MonoBehaviour
     protected CapsuleCollider capsuleCollider;
     protected Animator animator;
     protected SkinnedMeshRenderer[] skinnedMeshRenderers;
-    protected Dictionary<string, AnimationClipInformation> animationClipTable;
+    protected Dictionary<string, AnimationClipInfo> animationClipTable;
     protected SFXPlayer sfxPlayer;
 
     [Header("Controllers")]
@@ -36,16 +36,19 @@ public abstract class BaseActor : MonoBehaviour
     [SerializeField] protected MaterialController materialController;
     [SerializeField] protected ObjectPooler objectPooler = new ();
 
-    [Header("Audio Souce Strings")]
+    [Header("Audio Source Strings")]
     protected string[] spawnAudioClipNames;
     protected string[] attackAudioClipNames;
+    protected string[] lightHitAudioClipNames;
+    protected string[] heavyHitAudioClipNames;
     protected string[] dieAudioClipNames;
     protected string[] footstepAudioClipNames;
+    protected string[] staggerAudioClipNames;
 
     [SerializeField] protected HIT_STATE hitState;
     [SerializeField] protected bool isDie;
 
-    protected void InitializeActor()
+    protected virtual void Awake()
     {
         TryGetComponent(out sfxPlayer);
         TryGetComponent(out actorRigidbody);
@@ -53,12 +56,12 @@ public abstract class BaseActor : MonoBehaviour
 
         if (TryGetComponent(out animator))
         {
-            animationClipTable = new Dictionary<string, AnimationClipInformation>();
+            animationClipTable = new Dictionary<string, AnimationClipInfo>();
             for (int i = 0; i < animator.runtimeAnimatorController.animationClips.Length; ++i)
             {
                 animationClipTable.Add(
                     animator.runtimeAnimatorController.animationClips[i].name,
-                    new AnimationClipInformation(
+                    new AnimationClipInfo(
                         animator.runtimeAnimatorController.animationClips[i].name,
                         animator.runtimeAnimatorController.animationClips[i].length,
                         animator.runtimeAnimatorController.animationClips[i].frameRate));
@@ -76,46 +79,23 @@ public abstract class BaseActor : MonoBehaviour
         objectPooler.Initialize(transform);
     }
 
-    public IEnumerator CoWaitForDisapear(float time)
+    public IEnumerator CoWaitForDisapear(float waitTime)
     {
-        float disapearTime = 0f;
-
-        while (disapearTime <= time)
-        {
-            disapearTime += Time.deltaTime;
-            yield return null;
-        }
-
+        yield return new WaitForSeconds(waitTime);
         StartCoroutine(materialController.CoDissolve(0f, 1f, 5f));
     }
 
-    public void PlaySpawnSound()
+    public void TryPlaySFXFromStringArray(string[] sfxArray)
     {
-        if (spawnAudioClipNames.Length > 0)
+        if (sfxArray != null && sfxArray.Length > 0)
         {
-            int randomIndex = Random.Range(0, spawnAudioClipNames.Length);
-            sfxPlayer.PlaySFX(spawnAudioClipNames[randomIndex]);
-        }
-    }
-    public void PlayAttackSound()
-    {
-        if (attackAudioClipNames.Length > 0)
-        {
-            int randomIndex = Random.Range(0, attackAudioClipNames.Length);
-            sfxPlayer.PlaySFX(attackAudioClipNames[randomIndex]);
-        }
-    }
-    public void PlayDieSound()
-    {
-        if (dieAudioClipNames.Length > 0)
-        {
-            int randomIndex = Random.Range(0, dieAudioClipNames.Length);
-            sfxPlayer.PlaySFX(dieAudioClipNames[randomIndex]);
+            int randomIndex = Random.Range(0, sfxArray.Length);
+            sfxPlayer.PlaySFX(sfxArray[randomIndex]);
         }
     }
     public void PlayFootStep()
     {
-        if(footstepAudioClipNames.Length > 0)
+        if(footstepAudioClipNames != null && footstepAudioClipNames.Length > 0)
         {
             int randomIndex = Random.Range(0, footstepAudioClipNames.Length);
             sfxPlayer.PlaySFX(footstepAudioClipNames[randomIndex]);
@@ -128,9 +108,18 @@ public abstract class BaseActor : MonoBehaviour
     public Animator Animator { get { return animator; } }
     public SFXPlayer SFXPlayer { get { return sfxPlayer; } }
     public StateController State { get { return state; } }
-    public Dictionary<string, AnimationClipInformation> AnimationClipTable { get { return animationClipTable; } }
+    public Dictionary<string, AnimationClipInfo> AnimationClipTable { get { return animationClipTable; } }
     public ObjectPooler ObjectPooler { get { return objectPooler; } }
     public HIT_STATE HitState { get { return hitState; } set { hitState = value; } }
     public bool IsDie { get { return isDie; } set { isDie = value; } }
+
+    // Resources
+    public string[] SpawnAudioClipNames { get { return spawnAudioClipNames; } }
+    public string[] AttackAudioClipNames { get { return attackAudioClipNames; } }
+    public string[] LightHitAudioClipNames { get { return lightHitAudioClipNames; } }
+    public string[] HeavyHitAudioClipNames { get { return heavyHitAudioClipNames; } }
+    public string[] DieAudioClipNames { get { return dieAudioClipNames; } }
+    public string[] FootstepAudioClipNames { get { return footstepAudioClipNames; } }
+    public string[] StaggerAudioClipNames { get { return staggerAudioClipNames; } }
     #endregion
 }

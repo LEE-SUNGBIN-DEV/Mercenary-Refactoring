@@ -5,10 +5,9 @@ using UnityEngine.AI;
 
 public class StoneGolem : BaseEnemy, IStunable
 {
-    public override void InitializeEnemy(int enemyID)
+    protected override void Awake()
     {
-        base.InitializeEnemy(enemyID);
-
+        base.Awake();
         state.StateDictionary.Add(ACTION_STATE.COMMON_UPPER_EMPTY, new CommonStateUpperEmpty(this));
 
         state.StateDictionary.Add(ACTION_STATE.ENEMY_SPAWN, new EnemyStateSpawn(this));
@@ -29,11 +28,7 @@ public class StoneGolem : BaseEnemy, IStunable
         // Initialize Audio Sources
         spawnAudioClipNames = new string[]
         {
-            "Audio_Small_Golem_Spawn"
-        };
-        dieAudioClipNames = new string[]
-        {
-            "Audio_Small_Golem_Die"
+            //"Audio_Small_Golem_Spawn"
         };
         attackAudioClipNames = new string[]
         {
@@ -43,8 +38,23 @@ public class StoneGolem : BaseEnemy, IStunable
             "Audio_Small_Golem_Attack_04",
             "Audio_Small_Golem_Attack_05",
         };
-        footstepAudioClipNames =
-        new string[]
+        lightHitAudioClipNames = new string[]
+        {
+            "Audio_Golem_Light_Hit_01",
+            "Audio_Golem_Light_Hit_02",
+        };
+        heavyHitAudioClipNames = new string[]
+        {
+            "Audio_Golem_Heavy_Hit_01",
+            "Audio_Golem_Heavy_Hit_02",
+        };
+
+        dieAudioClipNames = new string[]
+        {
+            "Audio_Small_Golem_Die"
+        };
+
+        footstepAudioClipNames = new string[]
         {
             "Audio_Small_Golem_Footstep_01",
             "Audio_Small_Golem_Footstep_02",

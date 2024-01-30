@@ -6,7 +6,7 @@ public class EnemyStateFall : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation animationClipInfo;
+    private AnimationClipInfo animationClipInfo;
 
     private float fallTime;
 
@@ -27,25 +27,23 @@ public class EnemyStateFall : IActionState
 
     public void Update()
     {
-        switch (enemy.MoveController.GroundState)
+        switch (enemy.MoveController.MoveState)
         {
-            case ACTOR_GROUND_STATE.GROUNDING:
+            case MOVE_STATE.GROUNDING:
+            case MOVE_STATE.FLOATING:
                 enemy.State.SetState(ACTION_STATE.ENEMY_LANDING, STATE_SWITCH_BY.WEIGHT);
                 return;
 
-            case ACTOR_GROUND_STATE.FLOATING:
-                return;
-
-            case ACTOR_GROUND_STATE.SLIDING:
+            case MOVE_STATE.SLIDING:
                 enemy.MoveController.SlideTime += Time.deltaTime;
                 return;
-            case ACTOR_GROUND_STATE.FALLING:
+            case MOVE_STATE.FALLING:
                 enemy.MoveController.FallTime += Time.deltaTime;
                 return;
-        }
 
-        if (fallTime > 2.5f)
-            enemy.Status.CurrentHP = 0f;
+            default:
+                break;
+        }
     }
 
     public void Exit()

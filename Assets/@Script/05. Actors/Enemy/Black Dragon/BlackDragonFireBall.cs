@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlackDragonFireBall : EnemySkill
 {
     [SerializeField] private Transform muzzle;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {

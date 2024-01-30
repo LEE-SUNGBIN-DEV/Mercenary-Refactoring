@@ -15,7 +15,7 @@ public abstract partial class BaseEnemy : BaseActor
         if (targetTransform != null)
         {
             targetDistance = Vector3.Distance(targetTransform.position, transform.position);
-            targetDirection = Functions.GetZeroYDirection(transform.position, targetTransform.position);
+            targetDirection = Functions.GetXZAxisDirection(transform.position, targetTransform.position);
         }
     }
 

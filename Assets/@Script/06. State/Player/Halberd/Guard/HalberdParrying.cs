@@ -7,7 +7,7 @@ public class HalberdParrying : IActionState
     private PlayerCharacter character;
     private int stateWeight;
 
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
     private bool mouseRightDown;
 
     public HalberdParrying(PlayerCharacter character)
@@ -21,18 +21,18 @@ public class HalberdParrying : IActionState
 
     public void Enter()
     {
-        character.Status.RecoverStamina(Constants.PLAYER_STAMINA_PARRYING_RECOVERY_RATIO, CALCULATE_MODE.Ratio);
+        character.StatusData.RecoverStamina(Constants.PLAYER_STAMINA_PARRYING_RECOVERY_RATIO, VALUE_TYPE.PERCENTAGE);
         character.SFXPlayer.PlaySFX(Constants.Audio_Halberd_Parrying);
         character.Animator.Play(animationClipInformation.nameHash);
 
         mouseRightDown = false;
-        character.HitState = HIT_STATE.Invincible;
+        character.HitState = HIT_STATE.INVINCIBLE;
     }
 
     public void Update()
     {
         if (!mouseRightDown)
-            mouseRightDown = character.GetInput().RightMouseDown;
+            mouseRightDown = Managers.InputManager.CharacterParryingAttackButton.WasPressedThisFrame();
 
         // -> Parrying Attack
         if (mouseRightDown && character.State.SetStateByAnimationTimeUpTo(animationClipInformation.nameHash, ACTION_STATE.PLAYER_HALBERD_PARRYING_ATTACK, 0.5f))
@@ -44,7 +44,7 @@ public class HalberdParrying : IActionState
     }
     public void Exit()
     {
-        character.HitState = HIT_STATE.Hittable;
+        character.HitState = HIT_STATE.HITTABLE;
     }
 
     #region Property

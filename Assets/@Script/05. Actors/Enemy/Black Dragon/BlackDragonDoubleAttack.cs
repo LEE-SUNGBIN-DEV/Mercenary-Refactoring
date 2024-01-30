@@ -6,7 +6,7 @@ public class BlackDragonDoubleAttack : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack leftClaw;
     [SerializeField] private EnemyMeleeAttack rightClaw;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {

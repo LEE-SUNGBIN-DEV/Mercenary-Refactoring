@@ -1,0 +1,114 @@
+[
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_0",
+    "maxCount": 3,
+    "hpRecoveryPercentage": 20,
+    "spRecoveryPercentage": 20,
+    "responseCount": 0
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_1",
+    "maxCount": 3,
+    "hpRecoveryPercentage": 21,
+    "spRecoveryPercentage": 21,
+    "responseCount": 1
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_2",
+    "maxCount": 3,
+    "hpRecoveryPercentage": 22,
+    "spRecoveryPercentage": 22,
+    "responseCount": 2
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_3",
+    "maxCount": 4,
+    "hpRecoveryPercentage": 23,
+    "spRecoveryPercentage": 23,
+    "responseCount": 3
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_4",
+    "maxCount": 4,
+    "hpRecoveryPercentage": 24,
+    "spRecoveryPercentage": 24,
+    "responseCount": 4
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_5",
+    "maxCount": 4,
+    "hpRecoveryPercentage": 25,
+    "spRecoveryPercentage": 25,
+    "responseCount": 5
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_6",
+    "maxCount": 5,
+    "hpRecoveryPercentage": 26,
+    "spRecoveryPercentage": 26,
+    "responseCount": 6
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_7",
+    "maxCount": 5,
+    "hpRecoveryPercentage": 27,
+    "spRecoveryPercentage": 27,
+    "responseCount": 7
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_8",
+    "maxCount": 5,
+    "hpRecoveryPercentage": 28,
+    "spRecoveryPercentage": 28,
+    "responseCount": 8
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_9",
+    "maxCount": 6,
+    "hpRecoveryPercentage": 29,
+    "spRecoveryPercentage": 29,
+    "responseCount": 9
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_10",
+    "maxCount": 6,
+    "hpRecoveryPercentage": 30,
+    "spRecoveryPercentage": 30,
+    "responseCount": 10
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_11",
+    "maxCount": 6,
+    "hpRecoveryPercentage": 31,
+    "spRecoveryPercentage": 31,
+    "responseCount": 11
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_12",
+    "maxCount": 7,
+    "hpRecoveryPercentage": 32,
+    "spRecoveryPercentage": 32,
+    "responseCount": 12
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_13",
+    "maxCount": 7,
+    "hpRecoveryPercentage": 33,
+    "spRecoveryPercentage": 33,
+    "responseCount": 13
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_14",
+    "maxCount": 7,
+    "hpRecoveryPercentage": 34,
+    "spRecoveryPercentage": 34,
+    "responseCount": 14
+  },
+  {
+    "responseWaterID": "ITEM_RESPONSE_WATER_15",
+    "maxCount": 8,
+    "hpRecoveryPercentage": 35,
+    "spRecoveryPercentage": 35,
+    "responseCount": 15
+  }
+]

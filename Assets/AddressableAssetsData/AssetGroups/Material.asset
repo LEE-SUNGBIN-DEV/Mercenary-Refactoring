@@ -18,55 +18,59 @@ MonoBehaviour:
   m_GUID: 4c174aa5b6ae51b4dbb49fa79288cf7e
   m_SerializeEntries:
   - m_GUID: e8db6281730985747b9cc923fec5e7a5
-    m_Address: Material_Player_Armor_1_Dissolve
+    m_Address: MATERIAL_PLAYER_ARMOR_1_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 7ce055dd38d88ec458dcd5c9f9cf8914
-    m_Address: Material_Player_Armor_2_Dissolve
+    m_Address: MATERIAL_PLAYER_ARMOR_2_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 45f3a9677d50253458b4ba2d4a403eef
-    m_Address: Material_Player_Armor_3_Dissolve
+    m_Address: MATERIAL_PLAYER_ARMOR_3_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4d6435e90b7220e4da0837faed541276
-    m_Address: Material_Player_Cloth_1_Dissolve
+    m_Address: MATERIAL_PLAYER_CLOTH_1_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 48cd62e7a528c1d41bf2f7de029e995d
-    m_Address: Material_Player_Cloth_2_Dissolve
+    m_Address: MATERIAL_PLAYER_CLOTH_2_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: bd1b4602e5f1c1546be6a35f20ce45c8
-    m_Address: Material_Small_Stone_Golem_Dissolve
+    m_Address: MATERIAL_STONE_GOLEM_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 7130a42ca40fb57439e2a21bac93f8a3
-    m_Address: Material_Player_Sword_Dissolve
+    m_Address: MATERIAL_PLAYER_SWORD_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 6a6e6f368afa9bf478635ab88a2f3a4c
-    m_Address: Material_Player_Shield_Dissolve
+    m_Address: MATERIAL_PLAYER_SHIELD_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: b8fe3b98368ac3d4392898556cc9bbd0
-    m_Address: Material_Player_Halberd_Dissolve
+    m_Address: MATERIAL_PLAYER_HALBERD_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 5a48f9fb50f62e44cb7b2d598fa37b59
-    m_Address: Material_Rock_Golem_A_Dissolve
+    m_Address: MATERIAL_ROCK_GOLEM_A_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 93c1fa03fe4ce3f4380670b481bb5ae3
-    m_Address: Material_Rock_Golem_B_Dissolve
+    m_Address: MATERIAL_ROCK_GOLEM_B_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 5d95c4a1d90e8da4ca4a92c753c54f80
-    m_Address: Material_Moled_A_Dissolve
+    m_Address: MATERIAL_MOLED_A_DISSOLVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 029ed83772ff24641827e3ad74e6cd09
-    m_Address: Material_Moled_B_Dissolve
+    m_Address: MATERIAL_MOLED_B_DISSOLVE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d362c2344f659894a804b84715a15764
+    m_Address: MATERIAL_SCREEN_SHOCK_WAVE
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

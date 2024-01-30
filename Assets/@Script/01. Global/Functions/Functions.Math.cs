@@ -34,12 +34,25 @@ public static partial class Functions
         Vector2 directionVector = endPoint - startPoint;
         return Mathf.Atan2(directionVector.y, directionVector.x) * Mathf.Rad2Deg;
     }
-
-    public static Vector3 GetZeroYDirection(Vector3 sourcePosition, Vector3 targetPosition)
+    public static float GetXZAxisDistance(Vector3 sourcePosition, Vector3 targetPosition)
     {
-        Vector3 zeroYDirection = targetPosition - sourcePosition;
-        zeroYDirection.y = 0;
+        sourcePosition.y = 0;
+        targetPosition.y = 0;
 
-        return zeroYDirection;
+        return Vector3.Distance(sourcePosition, targetPosition);
+    }
+    public static Vector3 GetXZAxisDirection(Vector3 sourcePosition, Vector3 targetPosition)
+    {
+        Vector3 xzAxisDirection = targetPosition - sourcePosition;
+        xzAxisDirection.y = 0;
+
+        return xzAxisDirection.normalized;
+    }
+    public static Vector3 GetXZAxisDirection(Vector3 targetDirection)
+    {
+        Vector3 xzAxisDirection = targetDirection;
+        xzAxisDirection.y = 0;
+
+        return xzAxisDirection.normalized;
     }
 }

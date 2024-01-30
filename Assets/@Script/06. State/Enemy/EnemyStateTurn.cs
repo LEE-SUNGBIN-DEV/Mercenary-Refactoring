@@ -6,8 +6,8 @@ public class EnemyStateTurn : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation rightTurnAnimationClipInfo;
-    private AnimationClipInformation leftTurnAnimationClipInfo;
+    private AnimationClipInfo rightTurnAnimationClipInfo;
+    private AnimationClipInfo leftTurnAnimationClipInfo;
 
     private float progress;
     private Quaternion startRotation;

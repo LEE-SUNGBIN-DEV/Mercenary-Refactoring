@@ -6,7 +6,7 @@ public class MoledGroundSlam : EnemySkill
 {
     [SerializeField] private EnemyCompeteAttack groundSlamController;
     [SerializeField] private ParticleController groundSlamVFX;
-    private AnimationClipInformation animationInfo;
+    private AnimationClipInfo animationInfo;
 
     public override void Initialize(BaseEnemy enemy)
     {
@@ -29,6 +29,7 @@ public class MoledGroundSlam : EnemySkill
 
     public override IEnumerator CoStartSkill()
     {
+        enemy.SFXPlayer.PlaySFX("Audio_Big_Golem_Attack_02");
         enemy.Animator.CrossFadeInFixedTime(animationInfo.nameHash, 0.2f);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationInfo, 65));

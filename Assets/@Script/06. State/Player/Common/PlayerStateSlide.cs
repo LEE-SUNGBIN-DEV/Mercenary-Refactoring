@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerStateSlide : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public PlayerStateSlide(PlayerCharacter character)
     {
@@ -22,27 +23,29 @@ public class PlayerStateSlide : IActionState
 
     public void Update()
     {
-        switch (character.MoveController.GroundState)
+        switch (character.MoveController.MoveState)
         {
-            case ACTOR_GROUND_STATE.GROUNDING:
+            case MOVE_STATE.GROUNDING:
+            case MOVE_STATE.FLOATING:
                 character.State.SetState(ACTION_STATE.PLAYER_LANDING, STATE_SWITCH_BY.WEIGHT);
                 break;
 
-            case ACTOR_GROUND_STATE.FLOATING:
-                break;
-
-            case ACTOR_GROUND_STATE.SLIDING:
+            case MOVE_STATE.SLIDING:
                 character.MoveController.SlideTime += Time.deltaTime;
                 break;
 
-            case ACTOR_GROUND_STATE.FALLING:
+            case MOVE_STATE.FALLING:
                 character.State.SetState(ACTION_STATE.PLAYER_FALL, STATE_SWITCH_BY.WEIGHT);
+                break;
+
+            default:
                 break;
         }
     }
 
     public void Exit()
     {
+        character.MoveController.SetMove(Vector3.zero, 0f);
     }
 
     #region Property

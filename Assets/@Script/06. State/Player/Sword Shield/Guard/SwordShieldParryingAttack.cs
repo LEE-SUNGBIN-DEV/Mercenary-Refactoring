@@ -8,7 +8,7 @@ public class SwordShieldParryingAttack : IActionState
     private int stateWeight;
 
     private PlayerSwordShield swordShield;
-    private AnimationClipInformation animationClipInfo;
+    private AnimationClipInfo animationClipInfo;
 
     private Coroutine combatCoroutine;
 
@@ -17,13 +17,13 @@ public class SwordShieldParryingAttack : IActionState
         this.character = character;
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_PARRYING_ATTACK;
 
-        swordShield = character.WeaponController.GetWeapon<PlayerSwordShield>(WEAPON_TYPE.SWORD_SHIELD);
+        swordShield = character.UniqueEquipmentController.GetWeapon<PlayerSwordShield>(WEAPON_TYPE.SWORD_SHIELD);
         animationClipInfo = character.AnimationClipTable["Sword_Shield_Parrying_Attack"];
     }
 
     public void Enter()
     {
-        character.SetForwardDirection(character.PlayerCamera.GetZeroYForward());
+        character.SetForwardDirection(character.PlayerCamera.GetVerticalDirection());
         character.Animator.CrossFadeInFixedTime(animationClipInfo.nameHash, 0.1f);
 
         combatCoroutine = swordShield.StartCoroutine(CoEnableCombat());
@@ -34,12 +34,6 @@ public class SwordShieldParryingAttack : IActionState
         // -> Idle
         if (character.State.SetStateByAnimationTimeUpTo(animationClipInfo.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_IDLE, 0.7f))
             return;
-
-        // Movement
-        if (character.Animator.IsAnimationFrameBetweenTo(animationClipInfo, 0, 34))
-            character.MoveController.SetMovementAndRotation(character.transform.forward, 5f * character.Status.AttackSpeed);
-        else
-            character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     public void Exit()
@@ -48,7 +42,6 @@ public class SwordShieldParryingAttack : IActionState
             swordShield.StopCoroutine(combatCoroutine);
 
         swordShield.DisableShield();
-        character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
     }
 
     private IEnumerator CoEnableCombat()
