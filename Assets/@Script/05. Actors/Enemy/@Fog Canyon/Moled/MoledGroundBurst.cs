@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class MoledGroundBurst : EnemySkill
 {
-    private AnimationClipInformation animationInfo;
+    private AnimationClipInfo animationInfo;
     private float chaseDuration = 4f;
     private float generateInterval = 1f;
     private float lifeTime = 9.5f;
     private float delayTime = 2f;
     private float attackDuration = 1f;
+
+    private Coroutine groundBurstCoroutine;
 
     public override void Initialize(BaseEnemy enemy)
     {
@@ -26,11 +28,11 @@ public class MoledGroundBurst : EnemySkill
 
     public override IEnumerator CoStartSkill()
     {
+        enemy.SFXPlayer.PlaySFX("Audio_Big_Golem_Attack_01");
         enemy.Animator.CrossFadeInFixedTime(animationInfo.nameHash, 0.2f);
 
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationInfo, 125));
-        StartCoroutine(GroundBurst());
-
+        groundBurstCoroutine = StartCoroutine(GroundBurst());
         yield return new WaitUntil(() => enemy.Animator.IsAnimationFrameUpTo(animationInfo, animationInfo.maxFrame));
         EndSkill();
     }
@@ -49,7 +51,7 @@ public class MoledGroundBurst : EnemySkill
         WaitForSeconds interval = new WaitForSeconds(generateInterval);
         float currentDuration = 0f;
 
-        while (chaseDuration > currentDuration)
+        while (chaseDuration > currentDuration && enemy.TargetTransform != null)
         {
             currentDuration += generateInterval;
 

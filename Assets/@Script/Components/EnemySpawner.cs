@@ -19,10 +19,9 @@ public class EnemySpawner : MonoBehaviour
 
     public BaseEnemy SpawnEnemy()
     {
-        GameObject poolObject = ownerScene.RequestObject(enemyData.enemyPrefabName);
+        GameObject poolObject = ownerScene.RequestObject(enemyData.enemyID);
         if (poolObject != null && poolObject.TryGetComponent(out BaseEnemy enemy))
         {
-            enemy.InitializeEnemy(enemyData.id);
             enemy.Spawn(transform.position);
             return enemy;
         }

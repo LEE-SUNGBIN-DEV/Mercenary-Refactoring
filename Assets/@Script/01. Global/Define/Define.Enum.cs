@@ -1,16 +1,112 @@
 
-#region System
+#region Cursor
 public enum CURSOR_MODE
 {
     LOCK,
     UNLOCK
 }
+#endregion
 
-public enum CALCULATE_MODE
+public enum CHARACTER_INPUT_MODE
 {
-    Absolute,
-    Ratio
+    ALL = 0,
+    CHARACTER = 1,
+    UI = 2,
+    INTERACTION = 3,
+    COMBAT = 4,
+    DIE = 5,
+    EVENT_SCENE = 6
 }
+
+#region Status
+public enum VALUE_TYPE
+{
+    FIXED = 0,
+    PERCENTAGE = 1
+}
+public enum STAT_UNIT_TYPE
+{
+    NORMAL = 0,
+    RATE = 1,
+}
+public enum STAT_TYPE
+{
+    STAT_STRENGTH = 1,
+    STAT_VITALITY = 2,
+    STAT_DEXTERITY = 3,
+    STAT_WILL = 4,
+
+    STAT_MAX_HP = 5,
+    STAT_MAX_SP = 6,
+
+    STAT_ATTACK_POWER = 7,
+    STAT_WEAPON_ATTACK_POWER = 8,
+    STAT_FIXED_DAMAGE = 9,
+    STAT_DEFENSE_PENETRATION_RATE = 10,
+    STAT_CRITICAL_CHANCE_RATE = 11,
+    STAT_CRITICAL_DAMAGE_RATE = 12,
+    STAT_LIGHT_ATTACK_DAMAGE_RATE = 13,
+    STAT_HEAVY_ATTACK_DAMAGE_RATE = 14,
+
+    STAT_DEFENSE_POWER = 15,
+    STAT_ARMOR_DEFENSE_POWER = 16,
+    STAT_DAMAGE_REDUCTION_RATE = 17,
+
+    STAT_ATTACK_SPEED = 18,
+    STAT_MOVE_SPEED = 19,
+
+    STAT_SP_RECOVERY_RATE = 20,
+    STAT_SP_COST_REDUCTION_RATE = 21,
+
+    Length
+}
+#endregion
+
+#region Item
+public enum ITEM_RANK
+{
+    COMMON = 0,// White
+    RARE = 1, // Green,
+    EPIC = 2, // Blue,
+    REGENDARY = 3, // Orange
+    MYTH = 4, // Red
+
+    UNIQUE = 10
+}
+
+public enum ITEM_TYPE
+{
+    NORMAL = 0,
+    UNIQUE_HALBERD = 1,
+    UNIQUE_SWORD_SHIELD = 2,
+    UNIQUE_ARMOR = 3,
+    UNIQUE_RESPONSE_WATER = 4,
+    RUNE = 5,
+}
+
+public enum ITEM_CATEGORY
+{
+    NORMAL = 0,
+    EQUIPMENT = 1,
+    CONSUMABLES = 2,
+    RUNE = 3,
+    QUEST = 4,
+}
+#endregion
+
+#region Skill
+public enum NODE_TYPE
+{
+    PASSIVE_ATTACK = 0,
+    PASSIVE_DEFENSE = 1,
+    PASSIVE_UTILITY = 2
+}
+public enum SKILL_TYPE
+{
+    PASSIVE,
+    ACTIVE
+}
+
 #endregion
 
 #region Combat
@@ -77,7 +173,7 @@ public enum COMBAT_ACTION_TYPE
 
 public enum WEAPON_TYPE
 {
-    None,
+    NONE,
     HALBERD,
     SWORD_SHIELD,
 }
@@ -94,9 +190,10 @@ public enum ACTION_STATE
     PLAYER_DRINK = 1,
     PLAYER_ROLL = 8,
 
-    PLAYER_RESONANCE_IN = 16,
-    PLAYER_RESONANCE_LOOP = 17,
-    PLAYER_RESONANCE_OUT = 18,
+    PLAYER_RESPONSE_IN = 16,
+    PLAYER_RESPONSE_LOOP = 17,
+    PLAYER_RESPONSE_OUT = 18,
+    PLAYER_RESPONSE_SIMPLE = 19,
 
     PLAYER_HIT_LIGHT = 32,
     PLAYER_HIT_HEAVY = 33,
@@ -188,6 +285,7 @@ public enum ACTION_STATE
     ENEMY_COMPETE = 11024,
     ENEMY_COMPETE_SUCCESS = 11025,
 
+
     ENEMY_SPAWN = 12048,
     ENEMY_DIE = 14096,
 }
@@ -230,9 +328,10 @@ public enum ACTION_STATE_WEIGHT
     PLAYER_SKILL_COUNTER = 64,
     PLAYER_ROLL = 65,
 
-    PLAYER_RESONANCE_IN = 128,
-    PLAYER_RESONANCE_LOOP = 129,
-    PLAYER_RESONANCE_OUT = 130,
+    PLAYER_RESPONSE_IN = 128,
+    PLAYER_RESPONSE_LOOP = 129,
+    PLAYER_RESPONSE_OUT = 130,
+    PLAYER_RESPONSE_SIMPLE = 131,
 
     PLAYER_HIT_LIGHT = 512,
     PLAYER_HIT_HEAVY = 513,
@@ -274,13 +373,6 @@ public enum ACTION_STATE_WEIGHT
     ENEMY_DIE = 4096,
 }
 
-public enum ACTOR_GROUND_STATE
-{
-    GROUNDING,
-    FLOATING,
-    SLIDING,
-    FALLING
-}
 #endregion
 
 #region Buff
@@ -344,32 +436,31 @@ public enum SCENE_TYPE
     Test = 1000,
 }
 
-public enum SCENE_LIST
+public enum SCENE_ID
 {
     // Scene Name = Build Index
     Title = 0,
     Selection = 1,
     Loading = 2,
     Fog_Canyon = 3,
-    Forestia,
-    Cave,
-
+    Taranis_Citadel = 4,
+    Cave = 5,
+    Forestia = 6,
     Size,
 
-    // Test
     Test = 1000,
 }
 
 public enum WEATHER_TYPE
 {
-    Sunny,
-    Rain_Light,
-    Rain_Heavy,
-    Snow_Light,
-    Snow_Heavy,
-    Fog,
-    Storm,
+    SUNNY,
+    RAIN_LIGHT,
+    RAIN_HEAVY,
+    SNOW_LIGHT,
+    SNOW_HEAVY,
+    FOG,
+    STORM,
 
-    Fireflies,
+    FIRE_FLIES,
 }
 #endregion

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.TextCore.Text;
 
 public class PlayerCharacter : BaseActor, ICompetable
 {
@@ -11,105 +12,81 @@ public class PlayerCharacter : BaseActor, ICompetable
 
     private PlayerCamera playerCamera;
 
-    [Header("Player Character")]
+    [Header("Character Data")]
     [SerializeField] private CharacterData characterData;
 
-    [Header("Controllers")]
-    private PlayerMoveController moveController;
-    [SerializeField] private PlayerResonanceWater resonanceWater;
-    [SerializeField] private PlayerWeaponController weaponController;
+    [Header("Character Controllers")]
+    [SerializeField] private PlayerMoveController moveController;
     [SerializeField] private PlayerInteractionController interactionController;
-    private StatusEffectController<PlayerCharacter> statusEffectController;
+    [SerializeField] private UniqueEquipmentController uniqueEquipmentController;
+    [SerializeField] private StatusEffectController<PlayerCharacter> statusEffectController;
 
     [Header("Interaction")]
-    [SerializeField] private bool isActiveUIInteraction;
-    [SerializeField] private bool isActiveObjectInteraction;
     [SerializeField] private bool isLockOn = false;
 
-    public void InitializeCharacter(CharacterData characterData)
+    protected override void Awake()
     {
-        base.InitializeActor();
-        this.characterData = characterData;
+        base.Awake();
+        characterData = Managers.DataManager.CurrentCharacterData;
 
-        Managers.UIManager.OnActiveUserPanel += SetUIInteraction;
+        // Move Controller
+        TryGetComponent(out moveController);
 
-        Status.OnChangeStatusData += SetAttackSpeed;
-        Status.OnChangeStatusData += OnDie;
-
-        Status.Respawn();
-        SetAttackSpeed(Status);
-
-        resonanceWater = Functions.FindChild<PlayerResonanceWater>(gameObject, "Prefab_Resonance_Water", true);
-        resonanceWater.Initialize(this);
-
-        if (TryGetComponent(out moveController))
-        {
-            moveController.Initialize(this);
-        }
-
-        // Initialize InteractionController
+        // Interaction Controller
         interactionController = new PlayerInteractionController();
         interactionController.Initialize();
-        interactionController.OnActiveInteraction += SetObjectInteraction;
-        OnPlayerHit += interactionController.InactiveInteraction;
-        OnPlayerDie += interactionController.InactiveInteraction;
 
-        // Initialize Weapon
-        weaponController = new PlayerWeaponController();
-        weaponController.Initialize(this);
+        // Weapon Controller
+        uniqueEquipmentController = new UniqueEquipmentController();
+        uniqueEquipmentController.Initialize(this);
 
-        // Initialize State
+        // Add State
         AddDefaultState();
-        if (TryEquipWeapon(CurrentWeapon.WeaponType))
-            state.SetState(CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
 
-        // Initialize Audio Sources
+        // Add Audio Sources
         footstepAudioClipNames =
             new string[]
             {
-                    "Audio_Player_Footstep_Dirt_01",
-                    "Audio_Player_Footstep_Dirt_02",
-                    "Audio_Player_Footstep_Dirt_03",
-                    "Audio_Player_Footstep_Dirt_04",
-                    "Audio_Player_Footstep_Dirt_05",
+                    "AUDIO_PLAYER_FOOTSTEP_01",
+                    "AUDIO_PLAYER_FOOTSTEP_02",
+                    "AUDIO_PLAYER_FOOTSTEP_03",
+                    "AUDIO_PLAYER_FOOTSTEP_04",
+                    "AUDIO_PLAYER_FOOTSTEP_05",
+                    "AUDIO_PLAYER_FOOTSTEP_06",
             };
 
-        isActiveUIInteraction = false;
-        isActiveObjectInteraction = false;
+        ApplyAttackSpeed(StatusData);
+        uniqueEquipmentController.SwitchWeapon(characterData.InventoryData.CurrentWeaponType);
+        state.SetState(CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
     }
-    
+
+    #region Private
     private void OnEnable()
     {
         Spawn();
+        StatusData.OnChangeStatusData += ApplyAttackSpeed;
+        StatusData.OnChangeStatusData += OnDie;
+        OnPlayerHit += interactionController.ExitInteraction;
+        OnPlayerDie += interactionController.ExitInteraction;
     }
-
-    private void FixedUpdate()
-    {
-        moveController.UpdateGroundState();
-        moveController.UpdatePosition();
-    }
-
-    private void Update()
-    {
-        UpdateCharacterInputs();
-        state?.Update();
-    }
-
     private void OnDisable()
     {
-        if (Managers.NullCheckInstance != null)
-            Managers.UIManager.OnActiveUserPanel -= SetUIInteraction;
-
-        interactionController.OnActiveInteraction -= SetObjectInteraction;
-
-        OnPlayerHit -= interactionController.InactiveInteraction;
-        OnPlayerDie -= interactionController.InactiveInteraction;
-
-        Status.OnChangeStatusData -= SetAttackSpeed;
-        Status.OnChangeStatusData -= OnDie;
+        StatusData.OnChangeStatusData -= ApplyAttackSpeed;
+        StatusData.OnChangeStatusData -= OnDie;
+        OnPlayerHit -= interactionController.ExitInteraction;
+        OnPlayerDie -= interactionController.ExitInteraction;
     }
+    private void Update()
+    {
+        state?.Update();
+    }
+    private void OnAnimatorMove()
+    {
+        actorRigidbody.velocity += animator.velocity;
+    }
+    #endregion
 
-    public void AddDefaultState()
+    private void AddDefaultState()
     {
         // Sub
         state.StateDictionary.Add(ACTION_STATE.COMMON_UPPER_EMPTY, new CommonStateUpperEmpty(this));
@@ -120,9 +97,10 @@ public class PlayerCharacter : BaseActor, ICompetable
         state.StateDictionary.Add(ACTION_STATE.PLAYER_FALL, new PlayerStateFall(this));
         state.StateDictionary.Add(ACTION_STATE.PLAYER_LANDING, new PlayerStateLanding(this));
 
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESONANCE_IN, new PlayerStateResonanceIn(this));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESONANCE_LOOP, new PlayerStateResonanceLoop(this));
-        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESONANCE_OUT, new PlayerStateResonanceOut(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESPONSE_IN, new PlayerStateResponseIn(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESPONSE_LOOP, new PlayerStateResponseLoop(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESPONSE_OUT, new PlayerStateResponseOut(this));
+        state.StateDictionary.Add(ACTION_STATE.PLAYER_RESPONSE_SIMPLE, new PlayerStateResponseSimple(this));
 
         state.StateDictionary.Add(ACTION_STATE.PLAYER_ROLL, new PlayerStateRoll(this));
         state.StateDictionary.Add(ACTION_STATE.PLAYER_HIT_LIGHT, new PlayerStateLightHit(this));
@@ -139,47 +117,24 @@ public class PlayerCharacter : BaseActor, ICompetable
 
     public void Spawn()
     {
-        OnPlayerSpawn?.Invoke(this);
+        if(StatusData.CurrentHP <= 0)
+            StatusData.Respawn();
 
         gameObject.layer = Constants.LAYER_PLAYER;
-        hitState = HIT_STATE.Hittable;
+        hitState = HIT_STATE.HITTABLE;
         IsDie = false;
         state?.SetState(CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
+        OnPlayerSpawn?.Invoke(this);
     }
 
-    public void UpdateCharacterInputs()
-    {
-        if(isActiveUIInteraction || isActiveObjectInteraction)
-            Managers.InputManager.CancelCharacterInputs();
-        else
-            Managers.InputManager.UpdateCharacterInputs();
-    }
-
-    public void SetUIInteraction(bool isInteraction)
-    {
-        isActiveUIInteraction = isInteraction;
-
-        Managers.GameManager.SetCursorMode(isInteraction);
-        if (!isActiveObjectInteraction)
-            playerCamera.ActiveInteractionMode(isInteraction);
-    }
-    public void SetObjectInteraction(bool isInteraction)
-    {
-        isActiveObjectInteraction = isInteraction;
-
-        Managers.UIManager.ActiveInteraction(isInteraction);
-        playerCamera.ActiveInteractionMode(isInteraction);
-        weaponController.HideWeapon(isInteraction);
-    }
-
-    public bool TryEquipWeapon(WEAPON_TYPE targetWeapon)
+    public bool TrySwitchWeapon(WEAPON_TYPE targetWeapon)
     {
         switch (targetWeapon)
         {
             case WEAPON_TYPE.HALBERD:
                 if (state.SetSubState(ACTION_STATE.PLAYER_HALBERD_EQUIP, STATE_SWITCH_BY.WEIGHT))
                 {
-                    weaponController.SwitchWeapon(targetWeapon);
+                    uniqueEquipmentController.SwitchWeapon(targetWeapon);
                     return true;
                 }
                 break;
@@ -187,7 +142,7 @@ public class PlayerCharacter : BaseActor, ICompetable
             case WEAPON_TYPE.SWORD_SHIELD:
                 if (state.SetSubState(ACTION_STATE.PLAYER_SWORD_SHIELD_EQUIP, STATE_SWITCH_BY.WEIGHT))
                 {
-                    weaponController.SwitchWeapon(targetWeapon);
+                    uniqueEquipmentController.SwitchWeapon(targetWeapon);
                     return true;
                 }
                 break;
@@ -198,16 +153,28 @@ public class PlayerCharacter : BaseActor, ICompetable
     public DamageInformation TakeDamage(BaseEnemy attacker, float damageRatio)
     {
         // Basic Damage Process
-        float reducedDefensivePower = Status.DefensePower * (1 - attacker.Status.DefensePenetration);
+        float reducedDefensivePower = StatusData.StatDict[STAT_TYPE.STAT_DEFENSE_POWER].GetFinalValue() * (1 - attacker.Status.DefensePenetration);
         float damage = attacker.Status.AttackPower * (1 - (reducedDefensivePower / (100 + reducedDefensivePower)));
 
         if (damage < 0)
             damage = 0;
 
-        damage += ((attacker.Status.AttackPower * 0.125f - Status.AttackPower * 0.0625f) + 1f);
-        damage *= damageRatio;
+        // Critical Process
+        if (Random.Range(0.0f, 100.0f) < attacker.Status.CriticalChance)
+        {
+            damage *= (1 + attacker.Status.CriticalDamage * 0.01f);
+        }
 
-        Status.ReduceHP(damage);
+        // Damage Random Range
+        damage *= (damageRatio * Random.Range(0.9f, 1.1f));
+
+        // Damage Reduction
+        damage *= (1 - (StatusData.StatDict[STAT_TYPE.STAT_DAMAGE_REDUCTION_RATE].GetFinalValue() * 0.01f));
+
+        // Add Fixed Damage
+        damage += attacker.Status.FixedDamage;
+
+        StatusData.ReduceHP(damage);
 
         return new DamageInformation(damage, false);
     }
@@ -219,10 +186,10 @@ public class PlayerCharacter : BaseActor, ICompetable
         OnPlayerHit?.Invoke(this);
         sfxPlayer.PlaySFX("Audio_Player_Hit");
 
-        if (Status.HitLevel > (int)combatType)
+        if (StatusData.HitLevel > (int)combatType)
             return;
 
-        transform.forward = Functions.GetZeroYDirection(transform.position, attacker.transform.position);
+        transform.forward = Functions.GetXZAxisDirection(transform.position, attacker.transform.position);
         playerCamera.ActiveCorrectionMode(attacker.transform.position);
 
         switch (combatType)
@@ -254,18 +221,18 @@ public class PlayerCharacter : BaseActor, ICompetable
         {
             OnPlayerDie?.Invoke(this);
             IsDie = true;
-            Status.CurrentHP = 0f;
-            Status.CurrentSP = 0f;
-            LocationData.SetLocationMode(LOCATION_MODE.SCENE_RESONANCE_POINT);
+            StatusData.CurrentHP = 0f;
+            StatusData.CurrentSP = 0f;
+            LocationData.SetLocationMode(LOCATION_MODE.SCENE_RESPONSE_POINT);
 
             gameObject.layer = Constants.LAYER_DIE;
-            hitState = HIT_STATE.Invincible;
-            moveController.SetMovementAndRotation(Vector3.zero, 0f);
+            hitState = HIT_STATE.INVINCIBLE;
+            moveController.SetMove(Vector3.zero, 0f);
             state?.SetState(ACTION_STATE.PLAYER_DIE, STATE_SWITCH_BY.WEIGHT);
 
-            Managers.UIManager.CloseActiveUserPanel();
-            Managers.UIManager.OpenPanel(Managers.UIManager.GameSceneUI.DiePanel);
-            StartCoroutine(CoWaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
+            Managers.UIManager.UIFocusPanelCanvas.CloseActivedFocusPanel();
+            Managers.UIManager.UIFixedPanelCanvas.DiePanel.OpenPanel();
+            StartCoroutine(CoWaitForDisapear(Constants.TIME_NORMAL_ENEMY_DISAPEAR));
         }
     }
     public void OnDie(CharacterStatusData characterStatus)
@@ -276,9 +243,9 @@ public class PlayerCharacter : BaseActor, ICompetable
         }
     }
 
-    public void SetAttackSpeed(CharacterStatusData statusData)
+    public void ApplyAttackSpeed(CharacterStatusData statusData)
     {
-        animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_ATTACK_SPEED, statusData.AttackSpeed);
+        animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_ATTACK_SPEED, statusData.FinalAttackSpeed);
     }
 
     public void SetForwardDirection(Vector3 direction)
@@ -291,27 +258,21 @@ public class PlayerCharacter : BaseActor, ICompetable
         transform.forward = direction;
     }
 
-    public InputManager GetInput()
-    {
-        return Managers.InputManager;
-    }
-
     #region Property
     public PlayerCamera PlayerCamera { get { return playerCamera; } set { playerCamera = value; } }
-    public PlayerResonanceWater ResonanceWater { get { return resonanceWater; } }
     public PlayerMoveController MoveController { get { return moveController; } }
-    public PlayerWeaponController WeaponController { get { return weaponController; } }
     public PlayerInteractionController InteractionController { get { return interactionController; } }
+    public UniqueEquipmentController UniqueEquipmentController { get { return uniqueEquipmentController; } }
     public StatusEffectController<PlayerCharacter> StatusEffectController { get { return statusEffectController; } }
 
     public CharacterData CharacterData { get { return characterData; } }
-    public CharacterStatusData Status { get { return characterData?.StatusData; } }
+    public CharacterStatusData StatusData { get { return characterData?.StatusData; } }
     public CharacterInventoryData InventoryData { get { return characterData?.InventoryData; } }
     public CharacterQuestData QuestData { get { return characterData?.QuestData; } }
     public CharacterLocationData LocationData { get { return characterData?.LocationData; } }
     public CharacterSkillData SkillData { get { return characterData?.SkillData; } }
     public CharacterSceneData SceneData { get { return characterData?.SceneData; } }
 
-    public PlayerWeapon CurrentWeapon { get { return weaponController.CurrentWeapon; } }
+    public PlayerWeapon CurrentWeapon { get { return uniqueEquipmentController.CurrentWeapon; } }
     #endregion
 }

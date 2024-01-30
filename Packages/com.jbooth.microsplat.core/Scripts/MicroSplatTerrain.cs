@@ -159,7 +159,19 @@ namespace JBooth.MicroSplat
          return td;
       }
 
-      public void Sync()
+#if UNITY_EDITOR
+        static string ReplaceLastOccurrence(string source, string find, string replace)
+        {
+            int place = source.LastIndexOf(find);
+
+            if (place == -1)
+                return source;
+
+            return source.Remove(place, find.Length).Insert(place, replace);
+        }
+#endif
+
+        public void Sync()
       {
          if (templateMaterial == null)
             return;
@@ -177,7 +189,7 @@ namespace JBooth.MicroSplat
          if (shader != null)
          {
             var path = UnityEditor.AssetDatabase.GetAssetPath(shader);
-            path = path.Replace(".shader", "_Base.shader");
+            path = ReplaceLastOccurrence(path, ".shader", "_Base.shader");
             Shader baseShader = UnityEditor.AssetDatabase.LoadAssetAtPath<Shader>(path);
             if (baseMapShader != baseShader && baseShader != null)
             {
@@ -314,7 +326,8 @@ namespace JBooth.MicroSplat
       {
          if (Application.isPlaying || inRestorePrototypes)
              return;
-         
+
+         inRestorePrototypes = true;
          if (templateMaterial != null)
          {
             Texture2DArray diffuseArray = templateMaterial.GetTexture("_Diffuse") as Texture2DArray;
@@ -356,6 +369,7 @@ namespace JBooth.MicroSplat
                         }
                      }
                   }
+
                   if (needsRefresh)
                   {
                      Vector4 v4 = templateMaterial.GetVector("_UVScale");
@@ -393,13 +407,13 @@ namespace JBooth.MicroSplat
                               sp.tileSize = MicroSplatRuntimeUtil.UVScaleToUnityUVScale(uvScales * ptScale, terrain);
                            }
 
-                           if (cfg.sourceTextures[i].normal != null)
-                           {
-                              sp.normalMapTexture = cfg.sourceTextures[i].normal;
-                           }
-
+                           cfg.sourceTextures[i].terrainLayer = sp;
                            protos[i] = sp;
-                           UnityEditor.AssetDatabase.CreateAsset(sp, path);
+                           UnityEditor.EditorApplication.delayCall += () =>
+                           {
+                              UnityEditor.AssetDatabase.CreateAsset(sp, path);
+                           };
+
                         }
                         else
                         {

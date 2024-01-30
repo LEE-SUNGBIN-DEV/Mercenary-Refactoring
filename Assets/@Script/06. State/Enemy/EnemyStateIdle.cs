@@ -6,7 +6,7 @@ public class EnemyStateIdle : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation animationClipInfo;
+    private AnimationClipInfo animationClipInfo;
     private float idleTime;
     private float patrolInterval;
 
@@ -21,7 +21,7 @@ public class EnemyStateIdle : IActionState
     {
         idleTime = 0f;
         patrolInterval = Random.Range(Constants.TIME_ENEMY_MIN_PATROL, Constants.TIME_ENEMY_MAX_PATROL);
-        enemy.Animator.CrossFadeInFixedTime(animationClipInfo.nameHash, 0.2f);
+        enemy.Animator.CrossFadeInFixedTime(animationClipInfo.nameHash, 0.1f);
     }
 
     public void Update()
@@ -44,7 +44,7 @@ public class EnemyStateIdle : IActionState
 
     public void Exit()
     {
-        enemy.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
+        enemy.MoveController.SetMove(Vector3.zero, 0f);
     }
 
     #region Property

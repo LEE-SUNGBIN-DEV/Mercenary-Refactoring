@@ -58,6 +58,14 @@ float _FadeOutWind;
     sampler2D _DispTex;
 #endif
 
+	float2 _RootSnow;
+
+	half4           _Lux_WaterFloodlevel; // x: cracks / y: puddles / z: wetness darkening / w: wetness smoothness /
+	half            _Lux_SnowAmount;
+	fixed3          _Lux_SnowColor;
+	fixed4          _Lux_SnowSpecColor;
+	half3 _Lux_RainfallRainSnowIntensity;
+
 // As we do not include the UnityBuiltin3xTreeLibrary we have to also declare the following params:
 fixed4 _HueVariation; //_Color;
 fixed3 _TranslucencyColor;
@@ -183,6 +191,10 @@ struct Input {
 		#endif
 	#endif
 
+	#if defined(_NORMALMAP)
+			float3 origNormal;
+	#endif
+
 	#if defined(GEOM_TYPE_BRANCH) || defined(GEOM_TYPE_BRANCH_DETAIL) || defined(GEOM_TYPE_FROND)
 		float2 ctiuv2_DetailAlbedoMap;
 	#endif
@@ -210,7 +222,12 @@ struct Input {
 		float2 my_uv2;
 		float3 my_uv3;
 	#endif
-
+#if defined(IS_SURFACESHADER)
+		//float localHeight;
+		float3 worldPos;
+	float3 worldNormal;
+	INTERNAL_DATA
+#endif
 };
 
 half3 CTI_UnpackScaleNormal(half4 packednormal, half bumpScale)
@@ -465,12 +482,11 @@ branchAxis = normalize(branchAxis);
 	#endif
 
 //	Preserve Length
-//	This is not a good idea, so we skip it!
-//	#if defined(LOD_FADE_PERCENTAGE) && defined (LEAFTUMBLING)
-//		pos.xyz = lerp(normalize(pos.xyz) * origLength, pos.xyz, lodfade * (unity_LODFade.x) )  ;
-//	#else
+	#if defined(LOD_FADE_PERCENTAGE) && defined (LEAFTUMBLING)
+		pos.xyz = lerp(normalize(pos.xyz) * origLength, pos.xyz, lodfade * (unity_LODFade.x) )  ;
+	#else
 		pos.xyz = normalize(pos.xyz) * origLength;
-//	#endif
+	#endif
 	v.vertex.xyz = pos.xyz;
 
 //	Store Variation
@@ -496,6 +512,10 @@ branchAxis = normalize(branchAxis);
 		#if !defined(IS_LODTREE)
 			ExpandBillboard (UNITY_MATRIX_IT_MV, v.vertex, v.normal, v.tangent);
 			v.vertex.xyz *= _TreeInstanceScale.xyz;
+		#endif
+
+		#if defined(_NORMALMAP)
+			OUT.origNormal = v.normal;
 		#endif
 		
 		//	Decode UV3
@@ -564,6 +584,11 @@ branchAxis = normalize(branchAxis);
 	void CTI_TreeVertBark (inout appdata_ctitree v, out Input OUT)
 	{
 		UNITY_INITIALIZE_OUTPUT(Input, OUT);
+		//snow
+		//OUT.localHeight = v.vertex.y;
+		#if defined(IS_LODTREE)
+			half rootSnow = saturate((_RootSnow.x - max(0.0h, v.vertex.y)) / _RootSnow.y);
+		#endif
 #endif
 
 #if !defined(DEPTH_NORMAL)
@@ -591,6 +616,12 @@ branchAxis = normalize(branchAxis);
 	#endif
 	v.normal = normalize(v.normal);
 	v.tangent.xyz = normalize(v.tangent.xyz);
+
+
+#if defined(IS_LODTREE) && defined (IS_SURFACESHADER)
+	v.color.g = rootSnow;
+#endif
+
 
 	#if UNITY_VERSION < 2017
 		#if !defined(DEPTH_NORMAL) && !defined(CTIBARKTESS)

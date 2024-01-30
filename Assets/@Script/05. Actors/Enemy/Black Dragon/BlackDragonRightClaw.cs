@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlackDragonRightClaw : EnemySkill
 {
     [SerializeField] private EnemyCompeteAttack rightClaw;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {

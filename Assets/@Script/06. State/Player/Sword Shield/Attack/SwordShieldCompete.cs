@@ -16,7 +16,7 @@ public class SwordShieldCompete : IActionState
     public void Enter()
     {
         // Set Compete State
-        character.HitState = HIT_STATE.Invincible;
+        character.HitState = HIT_STATE.INVINCIBLE;
         character.Animator.SetTrigger(Constants.ANIMATOR_PARAMETERS_TRIGGER_COMPETE);
         character.Animator.SetFloat(Constants.ANIMATOR_PARAMETERS_FLOAT_COMPETE, Managers.SpecialCombatManager.CompetePower);
     }
@@ -28,7 +28,7 @@ public class SwordShieldCompete : IActionState
 
     public void Exit()
     {
-        character.HitState = HIT_STATE.Hittable;
+        character.HitState = HIT_STATE.HITTABLE;
     }
 
     #region Property

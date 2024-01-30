@@ -5,7 +5,7 @@ using UnityEngine;
 public class RockGolemLegAttack : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack legAttack;
-    private AnimationClipInformation animationInfo;
+    private AnimationClipInfo animationInfo;
 
     public override void Initialize(BaseEnemy enemy)
     {

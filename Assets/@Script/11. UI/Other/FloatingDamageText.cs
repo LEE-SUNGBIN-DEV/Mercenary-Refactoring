@@ -30,7 +30,7 @@ public class FloatingDamageText : MonoBehaviour, IPoolObject
 
     public void SetDamageText(bool isCritical, float damage, Vector3 worldPosition)
     {
-        transform.position = Managers.GameManager.PlayerCamera.TargetCamera.WorldToScreenPoint(worldPosition);
+        transform.position = Managers.GameManager.ActivedCamera.TargetCamera.WorldToScreenPoint(worldPosition);
 
         if (isCritical == true)
             textColor = Color.red;
@@ -57,7 +57,7 @@ public class FloatingDamageText : MonoBehaviour, IPoolObject
         if (autoReturnCoroutine != null)
             StartCoroutine(autoReturnCoroutine);
 
-        transform.SetParent(Managers.UIManager.CommonSceneUI.transform);
+        transform.SetParent(Managers.UIManager.UIFixedPanelCanvas.transform);
         textColor.a = 1f;
     }
 

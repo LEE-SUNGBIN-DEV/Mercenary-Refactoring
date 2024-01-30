@@ -6,7 +6,7 @@ public class PlayerStateStandUp : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public PlayerStateStandUp(PlayerCharacter character)
     {

@@ -13,9 +13,9 @@ public class EnemyStateStagger : IActionState, IDurationState
     private BaseEnemy enemy;
     private int stateWeight;
 
-    private AnimationClipInformation staggerInClipInfo;
-    private AnimationClipInformation staggerLoopClipInfo;
-    private AnimationClipInformation staggerOutClipInfo;
+    private AnimationClipInfo staggerInClipInfo;
+    private AnimationClipInfo staggerLoopClipInfo;
+    private AnimationClipInfo staggerOutClipInfo;
 
     private STAGGER_MODE staggerMode;
     private float duration;
@@ -34,7 +34,7 @@ public class EnemyStateStagger : IActionState, IDurationState
 
     public void Enter()
     {
-        enemy.SFXPlayer.PlaySFX("Audio_" + enemy.name + "_Stagger");
+        enemy.TryPlaySFXFromStringArray(enemy.StaggerAudioClipNames);
         enemy.Animator.Play(staggerInClipInfo.nameHash);
         staggerMode = STAGGER_MODE.IN;
     }

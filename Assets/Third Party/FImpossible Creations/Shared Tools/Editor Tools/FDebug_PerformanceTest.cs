@@ -15,14 +15,30 @@ namespace FIMSpace
 #if UNITY_EDITOR
         Stopwatch watch = null;
         GameObject parent;
+
         long lastTicks = 0;
         long lastMS = 0;
+
+        long dispTicks = 0;
+        double dispMS = 0;
+
+        public long LastMinTicks { get; private set; }
+        public long LastMaxTicks { get; private set; }
 #endif
 
         public FDebug_PerformanceTest()
         {
 #if UNITY_EDITOR
             _foldout = false;
+            ResetMinMax();
+#endif
+        }
+
+        public void ResetMinMax()
+        {
+#if UNITY_EDITOR
+            LastMinTicks = long.MaxValue;
+            LastMaxTicks = long.MinValue;
 #endif
         }
 
@@ -68,6 +84,10 @@ namespace FIMSpace
             lastTicks = watch.ElapsedTicks;
             lastMS = watch.ElapsedMilliseconds;
             AddCurrentToAverage();
+
+            long avr = AverageTicks;
+            if (avr < LastMinTicks) LastMinTicks = avr;
+            if (avr > LastMaxTicks) LastMaxTicks = avr;
 #endif
         }
 
@@ -137,7 +157,7 @@ namespace FIMSpace
             GUI.color = preC;
         }
 
-        public void Editor_Display(string prefix = "", bool onlyPlaymode = true, bool drawAverages = true, float buttonYOffset = -20f, float buttonXOffset = 4f)
+        public void Editor_Display(string prefix = "", bool onlyPlaymode = true, bool drawAverages = true, float buttonYOffset = -20f, float buttonXOffset = 4f, float displayRate = 10f)
         {
             if (onlyPlaymode) if (!Application.isPlaying) return;
 
@@ -147,23 +167,51 @@ namespace FIMSpace
                 return;
             }
 
-            Editor_DisplayAlways(prefix, false, drawAverages);
+            Editor_DisplayAlways(prefix, false, drawAverages, displayRate);
         }
 
-        public void Editor_DisplayAlways(string prefix = "", bool onlyPlaymode = true, bool drawAverages = true)
+        float lastDisplayTime = -100f;
+        public bool Editor_DisplayAlways(string prefix = "", bool onlyPlaymode = true, bool drawAverages = true, float displayRate = 10f)
         {
-            if (onlyPlaymode) if (!Application.isPlaying) return;
+            if (onlyPlaymode) if (!Application.isPlaying) return false;
+
+            #region Display Rate Implementation
+
+            float dispTime = Application.isPlaying ? Time.unscaledTime : (float)EditorApplication.timeSinceStartup;
+
+            bool updateDisp = false;
+            if (displayRate < 0.1f) updateDisp = true;
+            if (dispTime - lastDisplayTime > 1f / displayRate)
+            {
+                updateDisp = true;
+                lastDisplayTime = dispTime;
+            }
+
+            if (updateDisp)
+            {
+                if (!drawAverages)
+                {
+                    dispTicks = lastTicks;
+                    dispMS = TicksToMs(lastTicks);
+                }
+                else
+                {
+                    dispTicks = AverageTicks;
+                    dispMS = AverageMS;
+                }
+            }
+
+            #endregion
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
-            if (!drawAverages)
-                EditorGUILayout.LabelField(prefix + "Elapsed Ticks: " + lastTicks + "  " + TicksToMs(lastTicks) + "ms");
-            else
-                EditorGUILayout.LabelField(prefix + "(average) Elapsed Ticks: " + AverageTicks + "  " + AverageMS + "ms");
+            EditorGUILayout.LabelField(prefix + "Elapsed Ticks: " + dispTicks + "  " + dispMS + "ms");
 
             EditorGUILayout.EndVertical();
             var rect = GUILayoutUtility.GetLastRect();
             if (GUI.Button(rect, GUIContent.none, EditorStyles.label)) { _foldout = false; }
+
+            return updateDisp;
         }
 
 #endif

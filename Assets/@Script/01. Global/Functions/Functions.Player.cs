@@ -18,4 +18,17 @@ public static partial class Functions
         SetCharacterPosition(character, position);
         camera.transform.position = position;
     }
+
+    public static void DropItem(CharacterData characterData, DropTableData dropData, int dropCount = 1)
+    {
+        if (characterData != null && dropData != null)
+        {
+            for (int i = 0; i < dropCount; ++i)
+            {
+                characterData.StatusData.RewardExperience(dropData.dropExperience);
+                characterData.InventoryData.RewardResponseStone(dropData.dropResonanceStone);
+                characterData.InventoryData.RewardItem(dropData.DropItem());
+            }
+        }
+    }
 }

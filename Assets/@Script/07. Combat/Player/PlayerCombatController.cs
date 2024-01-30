@@ -60,7 +60,7 @@ public class PlayerCombatController : BaseCombatController
 
     public virtual void ExecuteDefenseProcess(EnemyCombatController enemyCombatController, Vector3 hitPoint)
     {
-        character.transform.forward = Functions.GetZeroYDirection(character.transform.position, enemyCombatController.Enemy.transform.position);
+        character.transform.forward = Functions.GetXZAxisDirection(character.transform.position, enemyCombatController.Enemy.transform.position);
         character.PlayerCamera.ActiveCorrectionMode(enemyCombatController.Enemy.transform.position);
 
         switch (guardType)

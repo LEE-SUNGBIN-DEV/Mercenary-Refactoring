@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 61768891e8ed90d439535d36d8116e3a
   m_SerializeEntries:
   - m_GUID: 367cadfad55f5fe438223d43529190e1
-    m_Address: Prefab_Event_System
+    m_Address: PREFAB_EVENT_SYSTEM
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 8ec115abe8b38b244a44ba7bc2bcfd02
@@ -38,23 +38,19 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 362eff1ba01b3694aa4864c65a324729
-    m_Address: Prefab_Slot_Inventory
+    m_Address: PREFAB_INVENTORY_SLOT
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 2e2a1f7174799dc48b893ed5f38c8b5c
-    m_Address: Prefab_UI_Scene_Title
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 2d292693424edca44b3d17bb171fd25f
-    m_Address: Prefab_UI_Scene_Selection
+    m_Address: PREFAB_UI_SCENE_PANEL_CANVAS
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 3c952761f73d9904192b7ecc06467dc4
-    m_Address: Prefab_UI_Scene_Game
+    m_Address: PREFAB_UI_FOCUS_PANEL_CANVAS
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 63f6477ce7af2674b9a57f3856107b96
-    m_Address: Prefab_UI_Scene_Common
+    m_Address: PREFAB_UI_FIXED_PANEL_CANVAS
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: d300eccd0b6f7a84c86875dc2684fd4a
@@ -66,15 +62,43 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: aeef0bb8d6bc97b44ae79a86446e7e1d
-    m_Address: Prefab_Floating_Damage_Text
+    m_Address: PREFAB_FLOATING_DAMAGE_TEXT
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 1f06024d536bd4d49b575bc000184789
-    m_Address: Prefab_Button_Scene
+    m_Address: PREFAB_RESPONSE_POINT_SCENE_BUTTON
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 66d3cde4f9e009645b51bce9827b1e15
-    m_Address: Prefab_Button_Region
+    m_Address: PREFAB_RESPONSE_POINT_REGION_BUTTON
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f887ee2b29cfd2940853d622c67b34e4
+    m_Address: PREFAB_UI_SYSTEM_PANEL_CANVAS
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 28623c41d6516ed4fa52c9e909091446
+    m_Address: PREFAB_STATUS_OPTION_SLOT
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bbdb5e06204fcf8468cc70d447e752d9
+    m_Address: PREFAB_SKILL_NODE
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f5e5ed146779a0749988630f789aea2a
+    m_Address: PREFAB_UI_INTERACTION_PANEL_CANVAS
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b7833074ee626984d9b0660777bd3299
+    m_Address: PREFAB_RUNE_SLOT
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7c8309fa7b952fa49b6f29d0bbe6401b
+    m_Address: PREFAB_DIALOGUE_SELECTION_BUTTON
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9049fa93116e279489241337f66f53cb
+    m_Address: PREFAB_NPC_QUEST_BUTTON
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

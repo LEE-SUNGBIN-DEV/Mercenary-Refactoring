@@ -6,7 +6,7 @@ public class SwordShieldCompeteSuccess : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInfo;
+    private AnimationClipInfo animationClipInfo;
 
     public SwordShieldCompeteSuccess(PlayerCharacter character)
     {
@@ -17,8 +17,8 @@ public class SwordShieldCompeteSuccess : IActionState
 
     public void Enter()
     {
-        character.HitState = HIT_STATE.Invincible;
-        character.Status.RecoverStamina(100, CALCULATE_MODE.Ratio);
+        character.HitState = HIT_STATE.INVINCIBLE;
+        character.StatusData.RecoverStamina(100, VALUE_TYPE.PERCENTAGE);
         character.Animator.Play(animationClipInfo.nameHash);
     }
 
@@ -31,7 +31,7 @@ public class SwordShieldCompeteSuccess : IActionState
 
     public void Exit()
     {
-        character.HitState = HIT_STATE.Hittable;
+        character.HitState = HIT_STATE.HITTABLE;
     }
 
     #region Property

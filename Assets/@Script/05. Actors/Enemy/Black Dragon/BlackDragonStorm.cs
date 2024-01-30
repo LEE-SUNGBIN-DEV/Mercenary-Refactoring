@@ -6,9 +6,9 @@ public class BlackDragonStorm : EnemySkill
 {
     [SerializeField] private int amount;
     [SerializeField] private float interval;
-    private AnimationClipInformation stormStartAnimationInfo;
-    private AnimationClipInformation stormAnimationInfo;
-    private AnimationClipInformation stormEndAnimationInfo;
+    private AnimationClipInfo stormStartAnimationInfo;
+    private AnimationClipInfo stormAnimationInfo;
+    private AnimationClipInfo stormEndAnimationInfo;
 
     public override void Initialize(BaseEnemy owner)
     {

@@ -40,7 +40,7 @@ public abstract class BaseCombatController : MonoBehaviour
         this.crowdControlDuration = crowdControlDuration;
     }
 
-    public void SetCombatInformation(CombatControllerInfomation combatInformation)
+    public void SetCombatInformation(CombatControllerInfo combatInformation)
     {
         this.hitType = combatInformation.hitType;
         this.guardType = combatInformation.guardType;

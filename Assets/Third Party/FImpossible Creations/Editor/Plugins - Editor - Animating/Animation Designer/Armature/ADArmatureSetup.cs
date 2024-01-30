@@ -69,7 +69,6 @@ namespace FIMSpace.AnimationTools
                 {
                     AddBone(allTr[i], anim);
                 }
-
             }
 
             SetCorrectBonesOrder();
@@ -88,13 +87,15 @@ namespace FIMSpace.AnimationTools
         }
 
 
-        void AddBone(Transform t, Transform anim)
+        ADBoneReference AddBone(Transform t, Transform anim)
         {
-            if (gatheredBones.Contains(t)) return; // Already in list!
+            if (gatheredBones.Contains(t)) return null; // Already in list!
 
             ADBoneReference aRef = new ADBoneReference(t, gatheredBones.Count, anim);
             BonesSetup.Add(aRef);
             gatheredBones.Add(t);
+
+            return aRef;
         }
 
         internal Bounds CalculateBounds()
@@ -194,6 +195,18 @@ namespace FIMSpace.AnimationTools
                     }
         }
 
+
+        ADBoneReference GetBoneSetupOf(Transform tempTransform)
+        {
+            for (int i = 0; i < BonesSetup.Count; i++)
+            {
+                if (BonesSetup[i].TempTransform == tempTransform) return BonesSetup[i];
+            }
+
+            return null;
+        }
+
+
         internal Transform GetBoneWithName(string name)
         {
             for (int i = 0; i < BonesSetup.Count; i++)
@@ -227,6 +240,87 @@ namespace FIMSpace.AnimationTools
 
 
         #endregion
+
+
+        internal void VerifyArmatureWithAnimationClip(AnimationClip clip, bool dialogs, UnityEngine.Object toDirty)
+        {
+            if (clip == null) return;
+
+            if (clip.isHumanMotion)
+            {
+                if (dialogs) EditorUtility.DisplayDialog("Cant verify", "Cant verify generic rig with humanoid animation", "Ok");
+            }
+            else if (LatestAnimator != null)
+            {
+                EditorCurveBinding[] bindings = AnimationUtility.GetCurveBindings(clip);
+                List<Transform> bindBones = new List<Transform>();
+
+                int positionT = 0;
+                int rotationT = 0;
+                int scaleT = 0;
+                int preBones = BonesSetup.Count;
+
+                for (int i = 0; i < bindings.Length; i++)
+                {
+                    var bind = bindings[i];
+                    UnityEngine.Object animated = AnimationUtility.GetAnimatedObject(LatestAnimator.gameObject, bind);
+                    Transform animT = animated as Transform;
+
+                    bool isPosition = bind.propertyName.Contains("Position");
+                    bool isRotation = false; if (!isPosition) isRotation = bind.propertyName.Contains("Rotation");
+                    bool isScale = false; if (!isPosition && !isRotation) isScale = bind.propertyName.Contains("Scale");
+
+                    if (animT)
+                    {
+                        var boneSetup = GetBoneSetupOf(animT);
+                        if (boneSetup != null)
+                        {
+                            if (isPosition) if (boneSetup.BakePosition == false) { positionT += 1; boneSetup.BakePosition = true; }
+                            if (isRotation) if (boneSetup.BakeBone == false) { rotationT += 1; boneSetup.BakeBone = true; }
+                            if (isScale) if (boneSetup.BakeScale == false) { scaleT += 1; boneSetup.BakeScale = true; }
+                        }
+
+                        if (!bindBones.Contains(animT))
+                        {
+                            bindBones.Add(animT);
+                            if (boneSetup == null) // Add new armature reference bone
+                            {
+                                var newBoneS = AddBone(animT, LatestAnimator);
+                                if (newBoneS != null)
+                                {
+                                    newBoneS.BakePosition = isPosition;
+                                    newBoneS.BakeScale = isScale;
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                if (dialogs)
+                {
+                    int newBones = BonesSetup.Count - preBones;
+
+                    string report = "Clip Verify Report:\n\n";
+
+                    if (newBones > 0) report += "New Armature Bones = " + newBones + "\n";
+                    if (positionT > 0) report += "Position Bake Switch For = " + positionT + "\n";
+                    if (rotationT > 0) report += "Rotation Bake Switch For = " + rotationT + "\n";
+                    if (scaleT > 0) report += "Scale Bake Switch For = " + scaleT + "\n";
+
+                    EditorUtility.DisplayDialog("Verify Clip Report", report, "Ok");
+                }
+
+                if (toDirty) EditorUtility.SetDirty(toDirty);
+                //    AnimationUtility.GetAnimatedObject
+                //AnimationUtility.
+                //if (armatureVerifyWith.)
+            }
+            else
+            {
+                if (dialogs) EditorUtility.DisplayDialog("Cant verify", "Cant verify because no Animator was found!", "Ok");
+            }
+        }
 
 
         #region Controlling Bake Process

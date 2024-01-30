@@ -49,7 +49,7 @@ public static class ExtensionMethod
             && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime >= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame)
             && !animator.IsInTransition(targetLayer));
     }
-    public static bool IsAnimationFrameUpTo(this Animator animator, AnimationClipInformation animationInfo, int targetFrame, int targetLayer = 0)
+    public static bool IsAnimationFrameUpTo(this Animator animator, AnimationClipInfo animationInfo, int targetFrame, int targetLayer = 0)
     {
         return IsAnimationFrameUpTo(animator, animationInfo.nameHash, animationInfo.maxFrame, targetFrame, targetLayer);
     }
@@ -59,7 +59,7 @@ public static class ExtensionMethod
             && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, targetFrame)
             && !animator.IsInTransition(targetLayer));
     }
-    public static bool IsAnimationFrameDownTo(this Animator animator, AnimationClipInformation animationInfo, int targetFrame, int targetLayer = 0)
+    public static bool IsAnimationFrameDownTo(this Animator animator, AnimationClipInfo animationInfo, int targetFrame, int targetLayer = 0)
     {
         return IsAnimationFrameDownTo(animator, animationInfo.nameHash, animationInfo.maxFrame, targetFrame, targetLayer);
     }
@@ -70,7 +70,7 @@ public static class ExtensionMethod
             && animator.GetCurrentAnimatorStateInfo(targetLayer).normalizedTime <= Functions.GetAnimationNormalizedTimeByFrame(maxFrame, endFrame)
             && !animator.IsInTransition(targetLayer));
     }
-    public static bool IsAnimationFrameBetweenTo(this Animator animator, AnimationClipInformation animationInfo, int startFrame, int endFrame, int targetLayer = 0)
+    public static bool IsAnimationFrameBetweenTo(this Animator animator, AnimationClipInfo animationInfo, int startFrame, int endFrame, int targetLayer = 0)
     {
         return IsAnimationFrameBetweenTo(animator, animationInfo.nameHash, animationInfo.maxFrame, startFrame, endFrame, targetLayer);
     }
@@ -96,6 +96,15 @@ public static class ExtensionMethod
     }
     #endregion
 
+    public static bool IsNullOrEmpty(this Array targetArray)
+    {
+        return (targetArray == null || targetArray.Length == 0);
+    }
+    public static bool IsNullOrEmpty(this string targetString)
+    {
+        return (targetString == null || targetString == "") ? true : false;
+    }
+
     public static string GetEnumName<T>(this T targetEnum) where T : System.Enum
     {
         string enumName = System.Enum.GetName(typeof(T), targetEnum);
@@ -105,7 +114,7 @@ public static class ExtensionMethod
 
     public static bool IsBetween(this float value, float min, float max)
     {
-        if (value > min && value < max)
+        if (value >= min && value <= max)
         {
             return true;
         }

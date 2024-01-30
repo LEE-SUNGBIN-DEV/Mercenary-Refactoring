@@ -114,7 +114,7 @@ public class StateController
     #endregion
 
     #region Sub State Functions
-    public void SwitchSubState(ACTION_STATE targetState, float duration = 0f)
+    private void SwitchSubState(ACTION_STATE targetState, float duration = 0f)
     {
         subState?.Exit();
         subState = stateDictionary[targetState];

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class BaseCamera : MonoBehaviour
 {
@@ -83,12 +85,13 @@ public class BaseCamera : MonoBehaviour
         targetCamera.transform.position = originalPosition;
     }
 
-    public Vector3 GetZeroYForward()
+    public Vector3 GetVerticalDirection()
     {
-        Vector3 forward = transform.forward;
-        forward.y = 0f;
-
-        return forward;
+        return new Vector3(transform.forward.x, 0, transform.forward.z);
+    }
+    public Vector3 GetHorizontalDirection()
+    {
+        return new Vector3(transform.right.x, 0, transform.right.z);
     }
 
     #region Property

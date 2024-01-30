@@ -1,75 +1,72 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 [System.Serializable]
-public class InventorySlot : BaseSlot
+public class InventorySlot : BaseItemSlot, ITooltipItemSlot, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private BaseItem item;
+    [SerializeField] private ItemTooltipPanel tooltipPanel;
 
-    public void Initialize(int i)
-    {
-        base.Initialize();
-        slotIndex = i;
-    }
+    public ItemTooltipPanel TooltipPanel { get { return tooltipPanel; } set { tooltipPanel = value; } }
 
-    public void LoadSlot(ItemData itemData)
+    public override void UpdateSlot(CharacterInventoryData inventoryData)
     {
-        ClearSlot();
-        if (itemData != null && Managers.DataManager.ItemTable.ContainsKey(itemData.itemID))
+        base.UpdateSlot(inventoryData);
+        BaseItem item = inventoryData.InventoryItems[slotIndex];
+        if (item != null)
         {
-            item = Managers.DataManager.ItemTable[itemData.itemID];
-            itemCount = itemData.itemCount;
+            itemImage.sprite = item.GetItemSprite();
+            itemImage.color = new Color32(255, 255, 255, 255);
 
-            if (item != null)
+            HideGradeText();
+            HideAmountText();
+
+            if (item is IStackableItem stackableItem)
             {
-                itemImage.sprite = item.ItemSprite;
-                itemImage.color = Functions.SetColor(Color.white, 1f);
-                if (item is CountItem)
-                {
-                    itemCount = itemData.itemCount;
-                    EnableCountText(true);
-                }
-                else if (item is EquipmentItem)
-                {
-                    itemGrade = itemData.grade;
-                    EnableGradeText(true);
-                }
-                else
-                {
-                    EnableGradeText(false);
-                    EnableCountText(false);
-                }
+                itemCount = stackableItem.ItemCount;
+                ShowAmountText();
             }
         }
     }
-    public void DestroyItem() { }
-    public override void EndDrag()
+
+    #region Mouse Event
+    public override void SlotEndDrag()
     {
-        if (EndSlot == null)
-            DestroyItem();
+        if (ToSlot is InventorySlot toInventorySlot)
+            inventoryData?.InventoryToInventory(this, toInventorySlot);
 
-        else if (EndSlot is InventorySlot endInventorySlot)
-            InventoryData.SwapOrCombineSlotItem(this, endInventorySlot);
+        else if (ToSlot is QuickSlot toQuickSlot)
+            inventoryData?.FromInventoryToQuickSlot(this, toQuickSlot);
 
-        else if (EndSlot is QuickSlot endQuickSlot)
-            InventoryData.RegisterQuickSlot(endQuickSlot.SlotIndex, this.Item.ItemID);
-
-        /*
-        else if (EndSlot is RuneSlot && Item is RuneItem)
-            InventoryData.AddItemDataByIndex(EquipmentSlotData.EquipWeaponData(InventoryData.InventoryItems[this.slotIndex]), this.slotIndex);
-        */
-    }
-    public override void ClearSlot()
-    {
-        base.ClearSlot();
-        item = null;
+        else if (ToSlot is RuneSlot toRuneSlot)
+            inventoryData?.FromInventoryToRuneSlot(this, toRuneSlot);
     }
 
-    public override void SlotRightClick(PointerEventData eventData)
+    public override void OnSlotRightClicked(PointerEventData eventData)
     {
     }
 
-    public BaseItem Item { get { return item; } }
+    public void ShowTooltip()
+    {
+        tooltipPanel.ShowTooltip(inventoryData.InventoryItems[slotIndex], inventoryData);
+    }
+    public void HideTooltip()
+    {
+        tooltipPanel.HideTooltip();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        ShowHighlight();
+        ShowTooltip();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        HideHighlight();
+        HideTooltip();
+    }
+    #endregion
 }

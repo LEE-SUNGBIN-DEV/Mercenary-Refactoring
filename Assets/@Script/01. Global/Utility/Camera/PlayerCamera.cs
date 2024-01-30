@@ -2,10 +2,9 @@ using UnityEngine;
 
 public enum CAMERA_MODE
 {
-    PLAYER,
+    FOLLOW_PLAYER,
     LOCK_ON,
-    CORRECTION,
-    INTERACTION,
+    LOOK_ATTACKER,
     FiXED,
 }
 
@@ -19,7 +18,8 @@ public class PlayerCamera : BaseCamera
     [SerializeField] private float minDistance;           // 최소 거리
     [SerializeField] private float maxDistance;           // 최대 거리
 
-    private CAMERA_MODE mode;
+    [SerializeField] private float collideRadius;
+    [SerializeField] private CAMERA_MODE mode;
 
     // Player 
     private float mouseRotateX;         // 마우스 이동에 따른 X축 회전
@@ -28,31 +28,22 @@ public class PlayerCamera : BaseCamera
     // Lock On
     private Transform lockOnTarget;
 
-    // Correction 
-    private Vector3 correctionDirection;
-    private Quaternion correctionRotation;
+    // Look Attacker 
+    private Vector3 attackerDirection;
+    private Quaternion attackerRotation;
 
     // Common
     private Vector3 cameraDirection;
     private float cameraDistance;
 
-    public void ReleaseTarget(PlayerCharacter character)
+    #region Private
+    private void OnEnable()
     {
-        targetTransform = null;
+        Managers.GameManager.ActivedCamera = this;
     }
-
-    public void Initialize(PlayerCharacter character)
+    private void OnDisable()
     {
-        base.Initialize();
-        Managers.GameManager.PlayerCamera = this;
-        mode = CAMERA_MODE.PLAYER;
-
-        // Player
-        character.OnPlayerDie += ReleaseTarget;
-        targetTransform = Functions.FindChild<Transform>(character.gameObject, "Camera_Target", true);
-
-        // Lock On
-        lockOnTarget = null;
+        
     }
 
     private void Start()
@@ -68,24 +59,22 @@ public class PlayerCamera : BaseCamera
     {
         switch (mode)
         {
-            case CAMERA_MODE.PLAYER:
+            case CAMERA_MODE.FOLLOW_PLAYER:
                 if (targetTransform == null)
                     return;
 
-                mouseRotateX += -(Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime); // 카메라 X축 회전은 마우스 Y 좌표에 의해 결정됨
+                Vector2 mouseVector = Managers.InputManager.GetCharacterMouseVector();
+                mouseRotateX += -(mouseVector.y * sensitivity * Time.deltaTime); // 카메라 X축 회전은 마우스 Y 좌표에 의해 결정됨
                 mouseRotateX = Mathf.Clamp(mouseRotateX, -clampAngle, clampAngle);
 
-                mouseRotateY += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;    // 카메라 Y축 회전은 마우스 X 좌표에 의해 결정됨
+                mouseRotateY += mouseVector.x * sensitivity * Time.deltaTime;    // 카메라 Y축 회전은 마우스 X 좌표에 의해 결정됨
 
                 Quaternion finalRotate = Quaternion.Euler(mouseRotateX, mouseRotateY, 0);
                 transform.rotation = finalRotate;
                 break;
 
-            case CAMERA_MODE.CORRECTION:
-                transform.rotation = Quaternion.Slerp(transform.rotation, correctionRotation, Time.deltaTime * 6f);
-                break;
-
-            case CAMERA_MODE.INTERACTION:
+            case CAMERA_MODE.LOOK_ATTACKER:
+                transform.rotation = Quaternion.Slerp(transform.rotation, attackerRotation, Time.deltaTime * 7f);
                 break;
 
             case CAMERA_MODE.FiXED:
@@ -97,16 +86,16 @@ public class PlayerCamera : BaseCamera
     {
         switch (mode)
         {
-            case CAMERA_MODE.PLAYER:
+            case CAMERA_MODE.FOLLOW_PLAYER:
                 SetLastPosition();
                 break;
 
-            case CAMERA_MODE.CORRECTION:
+            case CAMERA_MODE.LOOK_ATTACKER:
                 SetLastPosition();
 
-                if (Vector3.Angle(transform.forward, correctionDirection) < 1f)
+                if (Vector3.Angle(transform.forward, attackerDirection) < 1f)
                 {
-                    mode = CAMERA_MODE.PLAYER;
+                    mode = CAMERA_MODE.FOLLOW_PLAYER;
                     mouseRotateX = transform.rotation.eulerAngles.x;
                     mouseRotateY = transform.rotation.eulerAngles.y;
 
@@ -115,13 +104,34 @@ public class PlayerCamera : BaseCamera
                 }
                 break;
 
-            case CAMERA_MODE.INTERACTION:
-                SetLastPosition();
-                break;
-
             case CAMERA_MODE.FiXED:
                 break;
         }
+    }
+    #endregion
+
+    public void Initialize(PlayerCharacter character)
+    {
+        base.Initialize();
+        collideRadius = targetCamera.nearClipPlane + Constants.CONTACT_OFFSET;
+        mode = CAMERA_MODE.FOLLOW_PLAYER;
+
+        // Player
+        character.OnPlayerDie -= ReleaseTarget;
+        character.OnPlayerDie += ReleaseTarget;
+        targetTransform = Functions.FindChild<Transform>(character.gameObject, "Camera_Target", true);
+
+        AddCustomPostProcess();
+        // Lock On
+        lockOnTarget = null;
+    }
+    public void AddCustomPostProcess()
+    {
+        Functions.GetOrAddComponent<ScreenShockWave>(targetCamera.gameObject).Initialize();
+    }
+    public void ReleaseTarget(PlayerCharacter character)
+    {
+        targetTransform = null;
     }
 
     public void SetLastPosition()
@@ -132,15 +142,14 @@ public class PlayerCamera : BaseCamera
         // Last Object Position (Move To Target)
         transform.position = Vector3.MoveTowards(transform.position, targetTransform.position, cameraSpeed * Time.deltaTime);
 
-        Vector3 rayDirection = targetCamera.transform.TransformDirection(cameraDirection);
+        Vector3 castingDirection = targetCamera.transform.TransformDirection(cameraDirection);
 #if UNITY_EDITOR
-        Debug.DrawRay(targetTransform.position, rayDirection * maxDistance, Color.red);
+        Debug.DrawRay(targetTransform.position, castingDirection * maxDistance, Color.red);
 #endif
-        // Shoot Ray from Camera to Target
-        if (Physics.Raycast(targetTransform.position, rayDirection, out RaycastHit hitObject, maxDistance, 1 << Constants.LAYER_TERRAIN))
+        // Sphere Cast from Target to Camera
+        if (Physics.SphereCast(targetTransform.position, collideRadius, castingDirection, out RaycastHit terrainHit, maxDistance, 1 << Constants.LAYER_TERRAIN))
         {
-            cameraDistance = Mathf.Clamp(hitObject.distance, minDistance, maxDistance);
-            cameraDistance -= 0.1f;
+            cameraDistance = Mathf.Clamp(terrainHit.distance, minDistance, maxDistance);
         }
         else
             cameraDistance = maxDistance;
@@ -154,29 +163,15 @@ public class PlayerCamera : BaseCamera
         if (targetTransform == null)
             return;
 
-        mode = CAMERA_MODE.CORRECTION;
-        correctionDirection = targetPosition - targetTransform.position;
-        correctionDirection.y = 0f;
-        correctionDirection.Normalize();
+        mode = CAMERA_MODE.LOOK_ATTACKER;
+        attackerDirection = targetPosition - targetTransform.position;
+        attackerDirection.y = 0f;
+        attackerDirection.Normalize();
 
-        correctionRotation = Quaternion.LookRotation(correctionDirection);
-        Vector3 eulerRotation = correctionRotation.eulerAngles;
+        attackerRotation = Quaternion.LookRotation(attackerDirection);
+        Vector3 eulerRotation = attackerRotation.eulerAngles;
         eulerRotation.z = 0f;
-        correctionRotation = Quaternion.Euler(eulerRotation);
-    }
-
-    public void ActiveInteractionMode(bool isInteracting)
-    {
-        switch(isInteracting)
-        {
-            case true:
-                mode = CAMERA_MODE.INTERACTION;
-                break;
-
-            case false:
-                mode = CAMERA_MODE.PLAYER;
-                break;
-        }
+        attackerRotation = Quaternion.Euler(eulerRotation);
     }
 
     public void ActiveFixedMode(bool isFixed)
@@ -188,7 +183,7 @@ public class PlayerCamera : BaseCamera
                 break;
 
             case false:
-                mode = CAMERA_MODE.PLAYER;
+                mode = CAMERA_MODE.FOLLOW_PLAYER;
                 break;
         }
     }

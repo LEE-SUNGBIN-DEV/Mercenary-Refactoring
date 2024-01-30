@@ -17,40 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: d3cd9aa5deee0c94eb91c1af3762a7f3
   m_SerializeEntries:
-  - m_GUID: 9545b6637c9a6f742989bba2b2d26413
-    m_Address: Audio_Potion_Consume
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 3a323626b82a8eb498d986a762f0a006
-    m_Address: Audio_Get_Money
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: f7def984d97a75f46b93c2e5ac39fd6a
-    m_Address: Audio_Quest_Complete
+    m_Address: AUDIO_QUEST_COMPLETE
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 83c0385ef2e64634fbbbaf9608a81eab
-    m_Address: Audio_Quest_Accept
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: d818b4f463b590745a0e3945fb291052
-    m_Address: Audio_Popup_Open
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: ae9c5f83c5595b44784d4eb2d2a94817
-    m_Address: Audio_Popup_Close
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 3a1a17f1b2b3ec048953d2e54078f592
-    m_Address: Audio_Equipment_Mount
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: 2006e478f8e3993499aa416ef82b5d1e
-    m_Address: Audio_Equipment_Dismount
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: ab87598e43a4f8245968e6c6f98ea458
-    m_Address: Audio_Button_Click
+    m_Address: AUDIO_QUEST_ACCEPT
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 206785b8b093d944b8cfee4105855b42
@@ -58,7 +30,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 5cbfbc2c06a80e249ab3d2a4cd3f855f
-    m_Address: Audio_Weather_Rain_Light
+    m_Address: AUDIO_WEATHER_RAIN_LIGHT
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 4cab33f920167fa47960ed5945dcb318
@@ -73,11 +45,11 @@ MonoBehaviour:
     m_Address: Audio_Halberd_Sting_01
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 1347e8265a412fc40a07e3b887f3b5d9
-    m_Address: Audio_Halberd_Swing_02
+  - m_GUID: ec0c4f17c3fb37942a8b97c460c2e54f
+    m_Address: Audio_Halberd_Swing_03
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 8a2eb1555f66715468f99e8b7cf804b3
+  - m_GUID: 9c2897a8a152b984aa176be14460d12c
     m_Address: Audio_Halberd_Swing_01
     m_ReadOnly: 0
     m_SerializedLabels: []
@@ -105,12 +77,12 @@ MonoBehaviour:
     m_Address: Audio_Ground_Slam
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: c9eb4d779ed1254468a612d039333881
-    m_Address: Audio_Halberd_Swing_03
+  - m_GUID: fe95091629c4afd46853fae731136962
+    m_Address: Audio_Halberd_Swing_04
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: b85a4100d9f392449a033454ab4da4fd
-    m_Address: Audio_Halberd_Swing_04
+  - m_GUID: 744a917e142e7b242a8548a6d008ca65
+    m_Address: Audio_Halberd_Swing_02
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 8b23f5618f73b2544911e27bbb980148
@@ -149,24 +121,24 @@ MonoBehaviour:
     m_Address: Audio_Ground_Burst
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 354a8a80b57d5c345940240802e41b5e
-    m_Address: Audio_Player_Footstep_Dirt_01
+  - m_GUID: 688bc9708ae66264a9b4292f89549ef4
+    m_Address: AUDIO_PLAYER_FOOTSTEP_01
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 4fab4425fcd7d874cafa3dac1323d5e8
-    m_Address: Audio_Player_Footstep_Dirt_02
+  - m_GUID: 96d956859117346409aa2c056c1757b3
+    m_Address: AUDIO_PLAYER_FOOTSTEP_05
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 0bb86f1dfd2dd78428308d8bbf19e3d3
-    m_Address: Audio_Player_Footstep_Dirt_03
+  - m_GUID: 7f48c349d0fe5a14c8bc9d0df9df0d7c
+    m_Address: AUDIO_PLAYER_FOOTSTEP_04
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 127920beb16678347ab2d2c66f12b96e
-    m_Address: Audio_Player_Footstep_Dirt_04
+  - m_GUID: 85aa00f721bc5a44b8548102dce123d6
+    m_Address: AUDIO_PLAYER_FOOTSTEP_06
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: cfdf670bf6e22ae4eab02e16553ab747
-    m_Address: Audio_Player_Footstep_Dirt_05
+  - m_GUID: 9ac0e4d6adf129a40941bf579b697d6a
+    m_Address: AUDIO_PLAYER_FOOTSTEP_03
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 016198c86c2d88d4688e6b5fba4b621a
@@ -194,7 +166,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 7f76c51e00a1a574f91a40eeaaedcee7
-    m_Address: Audio_Big_Golem_Spawn
+    m_Address: Audio_Big_Golem_Roar
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: c4bbf2d3d205f854d933010da436b00a
@@ -239,6 +211,86 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: 55d387298fbeeb94984715ef7065a4b4
     m_Address: Audio_Big_Golem_Attack_05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 1408289b9f053c74aad12df10fc2ebd9
+    m_Address: Audio_Big_Golem_Stagger
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 20df1a43b5966a14e85ee8e050710b6b
+    m_Address: Audio_Button_Click_Start
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a6fb8a64b2ca36f4d9d42d7226cf2eed
+    m_Address: Audio_User_Panel_Open
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 98764adc4554c654f94d611f87740a48
+    m_Address: Audio_Item_Hold
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 746789b69ed93ee4b883566653a1d0c1
+    m_Address: Audio_Item_Release
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: bf28616e0b2545143981923f6c381db8
+    m_Address: Audio_Response_Object_Enable
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 40263197b136a90498b9d02d8e486ea3
+    m_Address: Audio_Response_Object_Disable
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f41f1cd414b1b0e4097e51e96f45842b
+    m_Address: Audio_Button_Click_Quit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fa545afec236a1349a143a2fcc8a8703
+    m_Address: Audio_Button_Click_Normal
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7ef01be92a1bfc347af49d3c4c17e7a9
+    m_Address: Audio_Response_Stone_Get
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d385508f12e23db46a15aeee2f6fc7f0
+    m_Address: Audio_Item_Get
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7b9526aca8ffe77438b416a15bfbeca1
+    m_Address: Audio_Treasure_Box_Open
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 7c40d784ec43569479506106d7aea132
+    m_Address: Audio_Golem_Heavy_Hit_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fdddd0349ef462c46bb54b8582e5738c
+    m_Address: Audio_Golem_Heavy_Hit_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3d57adac9f990224fb08005de780a6f6
+    m_Address: Audio_Golem_Light_Hit_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fa0e363370f65c24e9b7e53ea8292fd3
+    m_Address: Audio_Golem_Light_Hit_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d18596de0d274d349a32e9bdd5fcd759
+    m_Address: Audio_Small_Golem_Die
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 920dfcc1f3bbf6b4c9a0bc1a840aa333
+    m_Address: AUDIO_PLAYER_FOOTSTEP_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: dc54f9d3ff7bcff4f9596c62292a0c43
+    m_Address: Audio_Halberd_Swing_05
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9a9285b804580d24cb4fa8d3cb704e1f
+    m_Address: Audio_Halberd_Swing_06
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

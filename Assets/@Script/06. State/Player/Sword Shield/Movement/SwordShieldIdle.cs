@@ -7,7 +7,7 @@ public class SwordShieldIdle : IActionState
     private PlayerCharacter character;
     private int stateWeight;
 
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
     private Vector3 moveInput;
 
     public SwordShieldIdle(PlayerCharacter character)
@@ -27,45 +27,45 @@ public class SwordShieldIdle : IActionState
 
     public void Update()
     {
-        if (character.GetInput().SwapDown && character.TryEquipWeapon(WEAPON_TYPE.HALBERD))
+        if (Managers.InputManager.CharacterSwitchWeaponButton.WasPressedThisFrame() && character.TrySwitchWeapon(WEAPON_TYPE.HALBERD))
         {
             character.State.SetState(character.CurrentWeapon.IdleState, STATE_SWITCH_BY.FORCED);
             return;
         }
 
-        if (character.GetInput().ResonanceWaterDown && character.InventoryData.TryDrinkResonanceWater())
+        if (Managers.InputManager.CharacterDrinkButton.WasPressedThisFrame() && character.InventoryData.TryConsumeResponseWater())
         {
             character.State.SetSubState(ACTION_STATE.PLAYER_DRINK, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (character.GetInput().RollDown && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
+        if (Managers.InputManager.CharacterRollButton.WasPressedThisFrame() && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_ROLL))
         {
             character.State.SetState(ACTION_STATE.PLAYER_ROLL, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (character.GetInput().LeftMouseDown && character.Status.CheckStamina(Constants.SWORD_SHIELD_STAMINA_CONSUMPTION_LIGHT_ATTACK_01))
+        if (Managers.InputManager.CharacterLightAttackButton.WasPressedThisFrame() && character.StatusData.CheckStamina(Constants.SWORD_SHIELD_STAMINA_CONSUMPTION_LIGHT_ATTACK_01))
         {
             character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_ATTACK_LIGHT_01, STATE_SWITCH_BY.WEIGHT);
             return;
         }
 
-        if (character.GetInput().RightMouseDown || character.GetInput().RightMouseHold)
+        if (Managers.InputManager.CharacterGuardButton.WasPressedThisFrame() || Managers.InputManager.CharacterGuardButton.IsPressed())
         {
-            if (character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_IN))
+            if (character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_IN))
             {
                 character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_IN, STATE_SWITCH_BY.WEIGHT);
                 return;
             }
         }
 
-        moveInput = character.GetInput().MoveInput;
+        moveInput = Managers.InputManager.GetCharacterMoveVector();
 
         if (moveInput.sqrMagnitude > 0)
         {
             // -> Run
-            if (character.GetInput().RunHold && character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_RUN))
+            if (Managers.InputManager.CharacterRunButton.IsPressed() && character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_RUN))
                 character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_RUN, STATE_SWITCH_BY.WEIGHT);
 
             // -> Walk
@@ -73,12 +73,12 @@ public class SwordShieldIdle : IActionState
                 character.State.SetState(ACTION_STATE.PLAYER_SWORD_SHIELD_WALK, STATE_SWITCH_BY.WEIGHT);
         }
 
-        character.Status.RecoverStaminaPerSec(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY_RATIO, CALCULATE_MODE.Ratio);
+        character.StatusData.RecoverStaminaPerSec(Constants.PLAYER_STAMINA_IDLE_AUTO_RECOVERY_RATIO, VALUE_TYPE.PERCENTAGE);
     }
 
     public void Exit()
     {
-        character.MoveController.SetMovementAndRotation(Vector3.zero, 0f);
+        character.MoveController.SetMove(Vector3.zero, 0f);
     }
 
     #region Property

@@ -6,7 +6,7 @@ public class PlayerStateLanding : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public PlayerStateLanding(PlayerCharacter character)
     {
@@ -17,8 +17,9 @@ public class PlayerStateLanding : IActionState
 
     public void Enter()
     {
+        character.MoveController.SetMove(Vector3.zero, 0f);
         character.Animator.Play(animationClipInformation.nameHash);
-        character.Status.ReduceHP(character.MoveController.GetFallDamage(), CALCULATE_MODE.Ratio);
+        character.StatusData.ReduceHP(character.MoveController.GetFallDamageRate(), VALUE_TYPE.PERCENTAGE);
     }
 
     public void Update()
@@ -30,6 +31,7 @@ public class PlayerStateLanding : IActionState
 
     public void Exit()
     {
+        character.MoveController.SetMove(Vector3.zero, 0f);
     }
 
     #region Property

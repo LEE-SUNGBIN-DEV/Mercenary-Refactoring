@@ -612,13 +612,36 @@ namespace FIMSpace.AnimationTools
                                 string clipPath = System.IO.Path.GetFileNameWithoutExtension(AssetDatabase.GetAssetPath(clip)).ToLower();
 
                                 string nme = clip.name;
+                                string nmeToLower = nme.ToLower();
                                 string foldName = "";
+
+                                string category = "";
+                                if (nmeToLower.Contains("idle")) category = "Idle";
+                                else if (nmeToLower.Contains("walk")) category = "Walk";
+                                else if (nmeToLower.Contains("run")) category = "Run";
+                                else if (nmeToLower.Contains("jog")) category = "Jog";
+                                else if (nmeToLower.Contains("sprint")) category = "Sprint";
+                                else if (nmeToLower.Contains("attack")) category = "Attack";
+                                else if (nmeToLower.Contains("hit")) category = "Hit";
+                                else if (nmeToLower.Contains("damage")) category = "Damage";
+                                else if (nmeToLower.Contains("jump")) category = "Jump";
+                                else if (nmeToLower.Contains("skill")) category = "Skill";
+                                else if (nmeToLower.Contains("punch")) category = "Punch";
+                                else if (nmeToLower.Contains("dash")) category = "Dash";
 
                                 if (mainAsset != null)
                                     if (mainAsset.name.Length > 6)
                                         nme += "  (" + mainAsset.name + ")";
 
-                                if (clip.name.Length > 4) foldName = clip.name.Substring(0, Mathf.Min(clip.name.Length, 6)).ToLower();
+                                if (category == "")
+                                {
+                                    foldName = "Others/" + clip.name;
+                                    //if (clip.name.Length > 4) foldName = "Others/" + clip.name.Substring(0, Mathf.Min(clip.name.Length, 6)).ToLower();
+                                }
+                                else
+                                {
+                                    foldName = category;
+                                }
 
                                 //if (mainAsset != null) nme += " (" + mainAsset.name + ")";
 
@@ -1524,8 +1547,26 @@ namespace FIMSpace.AnimationTools
 
                     EditorGUILayout.EndHorizontal();
 
+
                     if (Ar != null)
+                    {
+                        if (!Ar.Humanoid)
+                        {
+                            GUILayout.Space(6);
+
+                            AnimationClip armatureVerifyWith = null;
+                            EditorGUIUtility.labelWidth = 310;
+                            armatureVerifyWith = (AnimationClip)EditorGUILayout.ObjectField(new GUIContent("Verify Armature Using Animation Clip Of The Model: ", "You can verify model-baking bindings, using one of the animation clips for this model."), armatureVerifyWith, typeof(AnimationClip), true);
+                            EditorGUIUtility.labelWidth = 0;
+
+                            if (armatureVerifyWith != null)
+                            {
+                                Ar.VerifyArmatureWithAnimationClip(armatureVerifyWith, true, S);
+                            }
+                        }
+
                         if (Ar.Humanoid) Ar.UseRootBoneForAvatar = EditorGUILayout.Toggle(new GUIContent("Use Root Bone For Avatar: ", "Some humanoid rigs may require using other root bone than animator transform for correct export.\n(Using 'Skeleton Root' field)"), Ar.UseRootBoneForAvatar);
+                    }
 
                     GUILayout.Space(8);
 

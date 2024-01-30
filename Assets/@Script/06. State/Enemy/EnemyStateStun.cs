@@ -6,19 +6,19 @@ public class EnemyStateStun : IActionState, IDurationState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInfo;
     private float duration;
 
     public EnemyStateStun(BaseEnemy enemy)
     {
         this.enemy = enemy;
         stateWeight = (int)ACTION_STATE_WEIGHT.ENEMY_STUN;
-        animationClipInformation = enemy.AnimationClipTable[Constants.ANIMATION_NAME_STUN];
+        animationClipInfo = enemy.AnimationClipTable[Constants.ANIMATION_NAME_STUN];
     }
 
     public void Enter()
     {
-        enemy.Animator.Play(animationClipInformation.nameHash);
+        enemy.Animator.Play(animationClipInfo.nameHash);
     }
 
     public void Update()

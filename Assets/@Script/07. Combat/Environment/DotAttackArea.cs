@@ -22,9 +22,9 @@ public class DotAttackArea : MonoBehaviour, IPoolObject
     {
         if (target.TryGetComponent(out PlayerCharacter character))
         {
-            if(character.HitState != HIT_STATE.Invincible)
+            if(character.HitState != HIT_STATE.INVINCIBLE)
             {
-                character.Status.ReduceHP(damageRatio, CALCULATE_MODE.Ratio);
+                character.StatusData.ReduceHP(damageRatio, VALUE_TYPE.PERCENTAGE);
             }
         }
     }

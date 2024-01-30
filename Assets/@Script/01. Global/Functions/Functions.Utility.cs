@@ -1,15 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static partial class Functions
 {
-    public static Color SetColor(Color color, float alpha = 1f)
+    public static void RebuildLayout(LayoutGroup[] layoutGroups)
     {
-        Color resultColor = color;
-        resultColor.a = alpha;
+        if (layoutGroups.IsNullOrEmpty())
+            return;
 
-        return resultColor;
+        for (int i = 0; i < layoutGroups.Length; i++)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(layoutGroups[i].transform as RectTransform);
+        }
+    }
+
+    public static string GetStatusValueString(float floatNumber)
+    {
+        if (floatNumber % 1 == 0)
+            return floatNumber.ToString("F0"); // 소수점 이하 없이 정수만 표시
+        else
+            return floatNumber.ToString("F1"); // 소수점 첫째 자리까지만 표시
     }
 
     public static float GetAnimationFrameSecondWithSpeed(int startFrame, int endFrame, float frameRate, float playSpeed)

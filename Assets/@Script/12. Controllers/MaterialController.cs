@@ -32,7 +32,7 @@ public class MaterialController
             Material[] targetMaterials = new Material[defaultMaterials[i].Length];
             for (int j = 0; j < targetMaterials.Length; ++j)
             {
-                Material resultMaterial = Managers.ResourceManager.LoadResourceSync<Material>(defaultMaterials[i][j].name + "_" + targetMaterial.GetEnumName());
+                Material resultMaterial = Managers.ResourceManager.LoadResourceSync<Material>($"{defaultMaterials[i][j].name}_{targetMaterial.GetEnumName()}");
                 targetMaterials[j] = resultMaterial;
             }
             renderers[i].materials = targetMaterials;
@@ -61,10 +61,10 @@ public class MaterialController
         float elapsedTime = 0f;
         float dissolveAmount = startAmount;
 
-        ChangeMaterials(MATERIAL_TYPE.Dissolve);
+        ChangeMaterials(MATERIAL_TYPE.DISSOLVE);
 
         propertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_AMOUNT, 0f);
-        propertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_GLOW_SIZE, 0.1f);
+        propertyBlock.SetFloat(Constants.SHADER_PROPERTY_HASH_DISSOLVE_GLOW_SIZE, 0.05f);
         SetPropertyBlock();
 
         while (elapsedTime <= duration)

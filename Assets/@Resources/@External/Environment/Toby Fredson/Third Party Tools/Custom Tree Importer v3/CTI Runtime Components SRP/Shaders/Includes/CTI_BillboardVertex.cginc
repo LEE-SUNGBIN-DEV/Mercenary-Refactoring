@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'defined IS_SURFACESHADER' with 'defined (IS_SURFACESHADER)'
+
 float _TreeScale;
 float _TreeWidth;
 float _TreeHeightLimit;
@@ -30,6 +32,10 @@ struct Input {
 	float2 uv_MainTex;
 	fixed4 color;
 	UNITY_DITHER_CROSSFADE_COORDS
+#if defined (IS_SURFACESHADER)
+		float3 worldNormal;
+		INTERNAL_DATA
+#endif
 };
 
 float SmoothCurve(float4 x) {

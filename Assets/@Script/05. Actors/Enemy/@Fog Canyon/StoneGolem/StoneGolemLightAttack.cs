@@ -5,7 +5,7 @@ using UnityEngine;
 public class StoneGolemLightAttack : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack lightAttack;
-    private AnimationClipInformation animationInfo;
+    private AnimationClipInfo animationInfo;
 
     public override void Initialize(BaseEnemy enemy)
     {

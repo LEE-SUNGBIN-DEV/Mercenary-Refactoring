@@ -1,26 +1,10 @@
+using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SkillPrecondition
-{
-    private int skillID;
-    private int conditionLevel;
-
-    public SkillPrecondition(int skillID, int conditionLevel)
-    {
-        this.skillID = skillID;
-        this.conditionLevel = conditionLevel;
-    }
-
-    public bool IsComplete(CharacterSkillData skillData)
-    {
-        return skillData.GetSkillLevel(skillID) >= conditionLevel;
-    }
-}
-
-public abstract class BaseSkillNode : UIBase, IPointerEnterHandler, IPointerExitHandler
+public class BaseSkillNode : UIBase, ITooltipSkillNode, IPointerEnterHandler, IPointerExitHandler
 {
     public enum TEXT
     {
@@ -32,34 +16,45 @@ public abstract class BaseSkillNode : UIBase, IPointerEnterHandler, IPointerExit
     }
     public enum BUTTON
     {
-        Skill_Level_Plus_Button
+        Skill_Level_Up_Button
     }
 
-    protected CharacterData characterData;
-
+    [Header("UI Elements")]
     protected RectTransform rectTransform;
-    protected SkillTooltipPanel tooltipPanel;
-    protected SkillPrecondition skillPrecondition;
-
-    [Header("Skill Information")]
-    [SerializeField] protected int skillID;
-    [SerializeField] protected string skillName;
-    [SerializeField] protected int maxSkillLevel;
-    [SerializeField] protected int currentSkillLevel;
-    [SerializeField] protected string skillDescription;
-
     protected TextMeshProUGUI skillLevelText;
-
     protected Image skillImage;
-    protected Button skillLevelPlusButton;
+    protected Button skillLevelUpButton;
+    protected SkillTooltipPanel tooltipPanel;
 
-    public abstract void ApplySkillAbility();
-    public abstract void ReleaseSkillAbility();
-    public abstract string GetSkillDescription();
+    [Header("Data")]
+    protected NodeData nodeData;
 
-    public virtual void Initialize(CharacterData characterData, SkillTooltipPanel tooltipPanel)
+    #region Private
+    private void ClickSkillLevelUpButton()
     {
-        this.characterData = characterData;
+        Managers.DataManager.CurrentCharacterData.SkillData.LevelUpByNodeID(nodeData.nodeID);
+    }
+    private bool IsCompletePreconditions(CharacterSkillData characterSkillData, SkillData skillData)
+    {
+        if (skillData.nextLevelID != null)
+        {
+            SkillData nextSkillData = Managers.DataManager.SkillTable[skillData.nextLevelID];
+            for (int i = 0; i < nextSkillData.preconditionIDs.Length; i++)
+            {
+                if (characterSkillData.IsLock(nextSkillData.preconditionIDs[i]))
+                {
+                    skillImage.color = new Color32(64, 64, 64, 255);
+                    return false;
+                }
+            }
+        }
+        skillImage.color = new Color(255, 255, 255, 255);
+        return true;
+    }
+    #endregion
+
+    public void Initialize(NodeData nodeData, SkillTooltipPanel tooltipPanel)
+    {
         this.tooltipPanel = tooltipPanel;
 
         TryGetComponent(out rectTransform);
@@ -69,85 +64,59 @@ public abstract class BaseSkillNode : UIBase, IPointerEnterHandler, IPointerExit
         BindButton(typeof(BUTTON));
 
         skillLevelText = GetText((int)TEXT.Skill_Level_Text);
-
         skillImage = GetImage((int)IMAGE.Skill_Image);
 
-        skillLevelPlusButton = GetButton((int)BUTTON.Skill_Level_Plus_Button);
-        skillLevelPlusButton.onClick.AddListener(LevelUpSkill);
+        skillLevelUpButton = GetButton((int)BUTTON.Skill_Level_Up_Button);
+        skillLevelUpButton.onClick.AddListener(ClickSkillLevelUpButton);
 
-        characterData.SkillData.OnChangeSkillData += UpdateSkillNode;
+        this.nodeData = nodeData;
+        rectTransform.localPosition = nodeData.GetNodeTransform();
     }
 
-    private void OnDestroy()
+    public void UpdateNodeBySkillData(CharacterSkillData characterSkillData)
     {
-        if(characterData != null)
-            characterData.SkillData.OnChangeSkillData -= UpdateSkillNode;
-    }
-
-    public void LevelUpSkill()
-    {
-        if (characterData.StatusData.SkillPoint > 0)
+        SkillData skillData = characterSkillData.GetSkillDataFromNodeID(nodeData.nodeID);
+        if (skillData != null)
         {
-            characterData.StatusData.SkillPoint--;
-            characterData.SkillData.LevelUpSkill(skillID);
+            // Image
+            skillImage.sprite = skillData.GetSprite();
+
+            // Text
+            if (skillData.IsMaxLevel())
+                skillLevelText.text = $"<color=#C8A050>{skillData.currentLevel} / {skillData.maxLevel}</color>";
+            else
+                skillLevelText.text = $"{skillData.currentLevel} / {skillData.maxLevel}";
+
+            // Button
+            if (!IsCompletePreconditions(characterSkillData, skillData) || characterSkillData.SkillPoint == 0 || skillData.IsMaxLevel())
+                skillLevelUpButton.gameObject.SetActive(false);
+            else
+                skillLevelUpButton.gameObject.SetActive(true);
+
+            gameObject.SetActive(true);
         }
-    }
-
-    public virtual void UpdateSkillNode(CharacterSkillData skillData)
-    {
-        ReleaseSkillAbility();
-        currentSkillLevel = skillData.GetSkillLevel(skillID);
-        ApplySkillAbility();
-
-        if (skillPrecondition == null || skillPrecondition.IsComplete(skillData))
-            ActiveNode();
         else
-            InActiveNode();
-
-        if (IsMaster())
-            skillLevelText.text = $"<color=#C8A050>{currentSkillLevel}/{maxSkillLevel}</color>";
-        else
-            skillLevelText.text = $"{currentSkillLevel}/{maxSkillLevel}";
-
-        GetSkillDescription();
+            gameObject.SetActive(false);
     }
 
-    public bool IsMaster()
-    {
-        if (currentSkillLevel == maxSkillLevel)
-            return true;
-
-        return false;
-    }
-
-    public void ActiveNode()
-    {
-        skillImage.color = Functions.SetColor(Color.white, 1f);
-
-        if (characterData.StatusData.SkillPoint == 0 || IsMaster())
-            skillLevelPlusButton.gameObject.SetActive(false);
-        else
-            skillLevelPlusButton.gameObject.SetActive(true);
-    }
-
-    public void InActiveNode()
-    {
-        skillImage.color = Functions.SetColor(new Color(64, 64, 64, 1f));
-        skillLevelPlusButton.gameObject.SetActive(false);
-    }
-
+    // Interface Functions
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tooltipPanel.ShowTooltip(this);
+        ShowTooltip();
     }
-
     public void OnPointerExit(PointerEventData eventData)
+    {
+        HideTooltip();
+    }
+    public void ShowTooltip()
+    {
+        tooltipPanel.ShowTooltip(Managers.DataManager.CurrentCharacterData.SkillData.GetSkillDataFromNodeID(nodeData.nodeID), rectTransform);
+    }
+    public void HideTooltip()
     {
         tooltipPanel.HideTooltip();
     }
 
-    public RectTransform RectTransform { get { return rectTransform; } }
-    public string SkillName { get { return skillName; } }
-    public string SkillDescription { get { return skillDescription; } }
     public TextMeshProUGUI SkillLevelText { get { return skillLevelText; } }
+    public SkillTooltipPanel TooltipPanel { get { return tooltipPanel; } set { tooltipPanel = value; } }
 }

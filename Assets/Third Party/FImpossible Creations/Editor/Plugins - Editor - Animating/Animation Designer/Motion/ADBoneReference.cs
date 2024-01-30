@@ -30,6 +30,11 @@ namespace FIMSpace.AnimationTools
         public string HumToGenericBoneBakePathName;
         public bool HumanoidBoneDefined = false;
         public bool BakePosition = false;
+
+        /// <summary> Not Supported Yet</summary>
+        [Tooltip("Not Supported Yet")]
+        public bool BakeScale = false;
+
         internal string tlx, tly, tlz;
         internal string rlx, rly, rlz, rlw;
         //Quaternion? latestSetRot = null;

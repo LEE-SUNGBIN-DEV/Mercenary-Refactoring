@@ -6,7 +6,7 @@ public class EnemyStateLanding : IActionState
 {
     private BaseEnemy enemy;
     private int stateWeight;
-    private AnimationClipInformation animationClipInfo;
+    private AnimationClipInfo animationClipInfo;
 
     public EnemyStateLanding(BaseEnemy enemy)
     {
@@ -18,7 +18,7 @@ public class EnemyStateLanding : IActionState
     public void Enter()
     {
         enemy.Animator.Play(animationClipInfo.nameHash);
-        enemy.Status.CurrentHP -= enemy.Status.MaxHP * enemy.MoveController.GetFallDamage();
+        enemy.Status.CurrentHP -= enemy.Status.MaxHP * enemy.MoveController.GetFallDamageRate();
     }
 
     public void Update()

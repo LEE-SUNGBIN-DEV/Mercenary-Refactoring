@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlackDragonLandBreath : EnemySkill
 {
     [SerializeField] private EnemyBreath breath;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public override void Initialize(BaseEnemy enemy)
     {

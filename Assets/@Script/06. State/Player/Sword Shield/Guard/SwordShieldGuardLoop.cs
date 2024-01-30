@@ -8,7 +8,7 @@ public class SwordShieldGuardLoop : IActionState
     private int stateWeight;
 
     private PlayerSwordShield swordShield;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public SwordShieldGuardLoop(PlayerCharacter character)
     {
@@ -16,31 +16,31 @@ public class SwordShieldGuardLoop : IActionState
         stateWeight = (int)ACTION_STATE_WEIGHT.PLAYER_GUARD_LOOP;
         if (character != null)
         {
-            swordShield = character.WeaponController.GetWeapon<PlayerSwordShield>(WEAPON_TYPE.SWORD_SHIELD);
+            swordShield = character.UniqueEquipmentController.GetWeapon<PlayerSwordShield>(WEAPON_TYPE.SWORD_SHIELD);
             animationClipInformation = character.AnimationClipTable["Sword_Shield_Guard_Loop"];
         }
     }
 
     public void Enter()
     {
-        character.HitState = HIT_STATE.Guardable;
+        character.HitState = HIT_STATE.GUARDABLE;
         character.Animator.Play(animationClipInformation.nameHash);
         swordShield.EnableShield(COMBAT_ACTION_TYPE.SWORD_SHIELD_GUARD_LOOP);
     }
 
     public void Update()
     {
-        character.Status.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_LOOP * Time.deltaTime);
+        character.StatusData.ConsumeStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_LOOP * Time.deltaTime);
 
         // -> Guard Out
-        if ((!character.GetInput().RightMouseHold || !character.Status.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_LOOP))
+        if ((!Managers.InputManager.CharacterGuardButton.IsPressed() || !character.StatusData.CheckStamina(Constants.PLAYER_STAMINA_CONSUMPTION_GUARD_LOOP))
             && character.State.SetStateNotInTransition(animationClipInformation.nameHash, ACTION_STATE.PLAYER_SWORD_SHIELD_GUARD_OUT))
             return;
     }
 
     public void Exit()
     {
-        character.HitState = HIT_STATE.Hittable;
+        character.HitState = HIT_STATE.HITTABLE;
         swordShield.DisableShield();
     }
 

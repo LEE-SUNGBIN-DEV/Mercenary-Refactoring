@@ -1,10 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 
 public static partial class Functions
 {
+    public static int GetVariableCount<T>(T type) where T : System.Type
+    {
+        FieldInfo[] fieldInfos = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+        return fieldInfos.Length;
+    }
+
     public static T GetOrAddComponent<T>(GameObject gameObject) where T : Component
     {
         T targetComponent = gameObject.GetComponent<T>();

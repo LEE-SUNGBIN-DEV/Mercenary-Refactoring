@@ -6,7 +6,7 @@ public class PlayerStateLightHit : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public PlayerStateLightHit(PlayerCharacter character)
     {

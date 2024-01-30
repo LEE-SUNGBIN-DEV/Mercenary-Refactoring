@@ -6,7 +6,7 @@ public class SwordShieldGuardOut : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public SwordShieldGuardOut(PlayerCharacter character)
     {
@@ -17,7 +17,7 @@ public class SwordShieldGuardOut : IActionState
 
     public void Enter()
     {
-        character.HitState = HIT_STATE.Hittable;
+        character.HitState = HIT_STATE.HITTABLE;
         character.Animator.Play(animationClipInformation.nameHash);
     }
 

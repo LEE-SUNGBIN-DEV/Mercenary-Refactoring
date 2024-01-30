@@ -6,30 +6,34 @@ using UnityEngine.Playables;
 
 public class BossRoom : MonoBehaviour
 {
+    private PlayerCharacter roomPlayerCharacter;
+
     [Header("Boss Room")]
-    protected GameScene gameScene;
-    protected TriggerObject triggerObject;
-    [SerializeField] protected EnemySpawner bossSpawner;
-    [SerializeField] protected RoomGate[] bossRoomGates;
-    [SerializeField] protected BaseEnemy currentBoss;
-    [SerializeField] protected PlayableDirector playerableDirector;
+    private Transform respawnTransform;
+    private TriggerObject triggerObject;
+    [SerializeField] private EnemySpawner bossSpawner;
+    [SerializeField] private RoomGate[] bossRoomGates;
+    [SerializeField] private BaseEnemy currentBoss;
+    [SerializeField] private PlayableDirector playerableDirector;
 
     public void Initialize(GameScene gameScene)
     {
-        this.gameScene = gameScene;
+        roomPlayerCharacter = gameScene.ScenePlayerCharacter;
 
+        respawnTransform = Functions.FindChild<Transform>(gameObject, "Respawn_Point", true);
         triggerObject = GetComponentInChildren<TriggerObject>(true);
         triggerObject.Initialize();
         triggerObject.OnColliderEnter += StartEventScene;
 
         bossSpawner = GetComponentInChildren<EnemySpawner>(true);
-        if (int.TryParse(bossSpawner.name.Replace("Prefab_Enemy_Spawner_", ""), out int spawnerID))
+        if (Managers.DataManager.EnemySpawnerTable.TryGetValue(bossSpawner.name, out EnemySpawnerData enemySpawnData))
         {
-            EnemySpawnerData enemySpawnData = Managers.DataManager.EnemySpawnerTable[spawnerID];
             bossSpawner.Initialize(gameScene, enemySpawnData);
         }
         else
+        {
             Debug.LogAssertion("ID Parse Error: " + bossSpawner.name);
+        }
 
         bossRoomGates = GetComponentsInChildren<RoomGate>(true);
         for (int i = 0; i < bossRoomGates.Length; ++i)
@@ -46,6 +50,8 @@ public class BossRoom : MonoBehaviour
         if(other.TryGetComponent(out PlayerCharacter playerCharacter))
         {
             triggerObject.OnColliderEnter -= StartEventScene;
+            roomPlayerCharacter = playerCharacter;
+            roomPlayerCharacter.CharacterData.LocationData.SetLastBossRoom(gameObject.name);
             StartBossBattle();
 
             if(playerableDirector != null)
@@ -56,25 +62,39 @@ public class BossRoom : MonoBehaviour
     public void StartBossBattle()
     {
         currentBoss = bossSpawner.SpawnEnemy();
-        currentBoss.OnEnemyDie += ClearBossBattle;
-        gameScene.GameSceneUI.EnemyPanel.SetTargetEnemy(currentBoss);
+        currentBoss.OnEnemyDie -= ClearBoss;
+        currentBoss.OnEnemyDie += ClearBoss;
 
         for (int i = 0; i < bossRoomGates.Length; ++i)
         {
             bossRoomGates[i].CloseGate();
         }
 
-        Managers.UIManager.OpenPanel(gameScene.GameSceneUI.EnemyPanel);
+        Managers.UIManager.UIFixedPanelCanvas.EnemyPanel.OpenPanel(currentBoss);
     }
 
-    public void ClearBossBattle(BaseEnemy enemy)
+    public void ClearBoss(BaseEnemy enemy)
     {
+        currentBoss.OnEnemyDie -= ClearBoss;
         for (int i = 0; i < bossRoomGates.Length; ++i)
         {
             bossRoomGates[i].OpenGate();
         }
 
-        gameScene.GameSceneUI.CenterNoticePanel.RequestNotice("관문 돌파");
-        currentBoss.OnEnemyDie -= ClearBossBattle;
+        if (!roomPlayerCharacter.CharacterData.SceneData.IsClearedBoss(currentBoss.Status.EnemyID))
+        {
+            roomPlayerCharacter.CharacterData.SceneData.ModifyBossClearInformation(currentBoss.Status.EnemyID, true);
+            StartCoroutine(CoClearBoss());
+        }
     }
+
+    public IEnumerator CoClearBoss()
+    {
+        yield return new WaitForSeconds(5f);
+        Managers.UIManager.UIFixedPanelCanvas.CenterNoticePanel.OpenPanel("관문 돌파");
+    }
+
+    #region Property
+    public Transform RespawnTransform { get { return respawnTransform; } }
+    #endregion
 }

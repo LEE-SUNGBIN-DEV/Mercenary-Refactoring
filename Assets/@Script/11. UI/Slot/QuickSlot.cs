@@ -1,80 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 [System.Serializable]
-public class QuickSlot : BaseSlot
+public class QuickSlot : BaseItemSlot
 {
-    [SerializeField] private IUsableItem item;
-
-    public void Initialize(int i)
+    public void ConnectData(CharacterInventoryData inventoryData)
     {
-        base.Initialize();
-        slotIndex = i;
-    }
-
-    public void LoadSlot(CharacterInventoryData inventoryData)
-    {
-        ClearSlot();
-        if (inventoryData.QuickSlotItemIDs[slotIndex] != Constants.NULL_INT)
+        if (!string.IsNullOrEmpty(inventoryData.QuickSlotItemIDs[slotIndex]))
         {
-            BaseItem quickSlotItem = Managers.DataManager.ItemTable[inventoryData.QuickSlotItemIDs[slotIndex]];
-            item = quickSlotItem as IUsableItem;
-            if (item != null)
+            BaseItem quickSlotItem = inventoryData.FindInventoryItem<BaseItem>(inventoryData.QuickSlotItemIDs[slotIndex]);
+            if (quickSlotItem != null)
             {
-                itemImage.sprite = quickSlotItem.ItemSprite;
-                itemImage.color = Functions.SetColor(Color.white, 1f);
+                itemImage.sprite = quickSlotItem.GetItemSprite();
+                itemImage.color = new Color32(255, 255, 255, 255);
 
-                if (quickSlotItem is CountItem)
+                if (quickSlotItem is IStackableItem)
                 {
                     itemCount = 0;
                     for (int i = 0; i < inventoryData.InventoryItems.Length; ++i)
                     {
-                        if (inventoryData.InventoryItems[i] != null && inventoryData.QuickSlotItemIDs[slotIndex] == inventoryData.InventoryItems[i].itemID)
+                        if (inventoryData.InventoryItems[i] != null
+                            && inventoryData.QuickSlotItemIDs[slotIndex] == inventoryData.InventoryItems[i].GetItemID()
+                            && inventoryData.InventoryItems[i] is IStackableItem inventoryStackableItem)
                         {
-                            itemCount += inventoryData.InventoryItems[i].itemCount;
+                            itemCount += inventoryStackableItem.ItemCount;
                         }
                     }
-                    if (itemCount > 0)
-                        itemImage.color = Color.white;
-                    else
-                        itemImage.color = Color.gray;
-
-                    EnableCountText(true);
+                    ShowAmountText();
                 }
                 else
-                {
-                    itemImage.color = Color.white;
-                    EnableCountText(false);
-                }
+                    HideAmountText();
+            }
+            else
+            {
+                ItemData itemData = Managers.DataManager.ItemTable[inventoryData.QuickSlotItemIDs[slotIndex]];
+                itemImage.sprite = itemData.GetItemSprite();
+                itemImage.color = new Color32(255, 255, 255, 255);
+
+                itemImage.color = Color.gray;
+                HideAmountText();
             }
         }
     }
 
-    public void UseItem(CharacterInventoryData inventoryData)
-    {
-        inventoryData.UseQuickSlotItem(slotIndex);
-    }
-
-    public void ReleaseQuickSlot()
-    {
-        Managers.DataManager.CurrentCharacterData.InventoryData.ReleaseQuickSlot(slotIndex);
-    }
-
     #region Mouse Event Function
-    public override void EndDrag()
+    public override void SlotEndDrag()
     {
-        if (EndSlot is QuickSlot)
-            InventoryData.SwapQuickSlot(this.slotIndex, EndSlot.SlotIndex);
-        else
-            InventoryData.ReleaseQuickSlot(this.slotIndex);
+        if (ToSlot == null)
+            inventoryData?.ReleaseQuickSlot(this);
+
+        else if (ToSlot is QuickSlot toQuickSlot)
+            inventoryData?.FromQuickSlotToQuickSlot(this, toQuickSlot);
     }
-    public override void SlotRightClick(PointerEventData eventData)
+    public override void OnSlotRightClicked(PointerEventData eventData)
     {
-        ReleaseQuickSlot();
+        inventoryData?.ReleaseQuickSlot(this);
     }
     #endregion
-
-    public IUsableItem Item { get { return item; } }
 }

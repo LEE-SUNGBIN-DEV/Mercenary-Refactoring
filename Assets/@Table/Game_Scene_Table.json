@@ -1,20 +1,26 @@
 [
   {
-    "scene": 3,
+    "sceneID": 3,
     "sceneType": 4,
-    "sceneName": "Fog Canyon",
+    "sceneName": "안개 협곡",
     "weatherType": 1
   },
   {
-    "scene": 4,
+    "sceneID": 4,
     "sceneType": 4,
-    "sceneName": "Forestia",
+    "sceneName": "타라니스 성채",
+    "weatherType": 1
+  },
+  {
+    "sceneID": 5,
+    "sceneType": 4,
+    "sceneName": "유적 동굴",
     "weatherType": 0
   },
   {
-    "scene": 5,
+    "sceneID": 6,
     "sceneType": 4,
-    "sceneName": "Cave",
+    "sceneName": "포레스티아",
     "weatherType": 0
   }
 ]

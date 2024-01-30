@@ -1,0 +1,73 @@
+[
+  {
+    "dropID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "dropExperience": 10,
+    "dropResonanceStone": 10,
+    "dropItemProbability": 0.5,
+    "dropItemIDs": [
+      "ITEM_RUNE_OLD",
+      "ITEM_RUNE_SHINING",
+      "ITEM_RUNE_REFINED"
+    ],
+    "dropItemWeights": [
+      90,
+      7,
+      3
+    ]
+  },
+  {
+    "dropID": "ENEMY_FOG_CANYON_ROCK_GOLEM",
+    "dropExperience": 20,
+    "dropResonanceStone": 20,
+    "dropItemProbability": 0.75,
+    "dropItemIDs": [
+      "ITEM_RUNE_OLD",
+      "ITEM_RUNE_SHINING",
+      "ITEM_RUNE_REFINED",
+      "ITEM_RUNE_RESONANT"
+    ],
+    "dropItemWeights": [
+      80,
+      10,
+      9,
+      1
+    ]
+  },
+  {
+    "dropID": "ENEMY_FOG_CANYON_MOLED",
+    "dropExperience": 50,
+    "dropResonanceStone": 50,
+    "dropItemProbability": 1,
+    "dropItemIDs": [
+      "ITEM_RUNE_OLD",
+      "ITEM_RUNE_SHINING",
+      "ITEM_RUNE_REFINED",
+      "ITEM_RUNE_RESONANT\nITEM_RUNE_ESSENCE_OF_GOD"
+    ],
+    "dropItemWeights": [
+      40,
+      40,
+      10,
+      9,
+      1
+    ]
+  },
+  {
+    "dropID": "FOG_CANYON_TREASURE_BOX",
+    "dropExperience": 0,
+    "dropResonanceStone": 0,
+    "dropItemProbability": 1,
+    "dropItemIDs": [
+      "ITEM_RUNE_OLD",
+      "ITEM_RUNE_SHINING",
+      "ITEM_RUNE_REFINED",
+      "ITEM_RUNE_RESONANT"
+    ],
+    "dropItemWeights": [
+      90,
+      6,
+      3,
+      1
+    ]
+  }
+]

@@ -25,18 +25,18 @@ public abstract class EnemyCombatController : BaseCombatController
 
             switch (character.HitState)
             {
-                case HIT_STATE.Invincible:
+                case HIT_STATE.INVINCIBLE:
                     break;
 
-                case HIT_STATE.Hittable:
+                case HIT_STATE.HITTABLE:
                     character.TakeHit(enemy, damageRatio, hitType, crowdControlDuration);
                     break;
 
-                case HIT_STATE.Guardable:
+                case HIT_STATE.GUARDABLE:
                     character.CurrentWeapon.GuardController.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
                     break;
 
-                case HIT_STATE.Parryable:
+                case HIT_STATE.PARRYABLE:
                     character.CurrentWeapon.GuardController.ExecuteDefenseProcess(this, other.ClosestPoint(other.transform.position));
                     break;
             }

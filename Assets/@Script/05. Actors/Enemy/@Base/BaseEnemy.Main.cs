@@ -18,16 +18,17 @@ public abstract partial class BaseEnemy : BaseActor
     [Header("Controllers")]
     [SerializeField] protected StatusEffectController<BaseEnemy> statusEffectControler;
 
-    public virtual void InitializeEnemy(int enemyID)
+    #region Private
+    protected override void Awake()
     {
-        base.InitializeActor();
+        base.Awake();
 
-        status = new EnemyStatus(Managers.DataManager.EnemyTable[enemyID]);
+        gameObject.name = gameObject.name.Replace("(Clone)", "").Trim();
+        status = new EnemyStatus(Managers.DataManager.EnemyTable[gameObject.name]);
         status.OnChangeEnemyData -= OnDie;
         status.OnChangeEnemyData += OnDie;
         status.StopDistance = Constants.ENEMY_MAX_STOP_DISTANCE;
 
-        AddPreventPushObject();
         InitializeMovement();
         InitializeSkill();
 
@@ -42,38 +43,13 @@ public abstract partial class BaseEnemy : BaseActor
         state.SetState(ACTION_STATE.ENEMY_IDLE, STATE_SWITCH_BY.FORCED);
     }
 
-    private void FixedUpdate()
-    {
-        moveController.UpdateGroundState();
-        moveController.UpdatePosition();
-    }
-
     public virtual void Update()
     {
         UpdateMoveInterval();
         UpdateTarget();
         state.Update();
     }
-
-    public void AddPreventPushObject()
-    {
-        GameObject preventPushObject = new GameObject("Prevent Push Object");
-        preventPushObject.transform.SetParent(transform);
-        preventPushObject.layer = Constants.LAYER_PREVENT_PUSH;
-
-        CapsuleCollider preventPushCollider = preventPushObject.AddComponent<CapsuleCollider>();
-        preventPushCollider.height = capsuleCollider.height;
-        preventPushCollider.radius = capsuleCollider.radius;
-        preventPushCollider.center = capsuleCollider.center;
-
-        Rigidbody preventPushRigidbody = preventPushObject.AddComponent<Rigidbody>();
-        preventPushRigidbody.isKinematic = true;
-        preventPushRigidbody.useGravity = false;
-        preventPushRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
-        preventPushRigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
-
-        Physics.IgnoreCollision(capsuleCollider, preventPushCollider);
-    }
+    #endregion
 
     #region Override Functions
     public virtual void Spawn(Vector3 spawnPosition)
@@ -82,7 +58,7 @@ public abstract partial class BaseEnemy : BaseActor
         this.spawnPosition = spawnPosition;
         transform.position = spawnPosition;
 
-        hitState = HIT_STATE.Hittable;
+        hitState = HIT_STATE.HITTABLE;
         IsDie = false;
         status.CurrentHP = status.MaxHP;
         gameObject.layer = Constants.LAYER_ENEMY;
@@ -107,16 +83,33 @@ public abstract partial class BaseEnemy : BaseActor
         if (!isDie)
         {
             for (int i = 0; i < hitBoxes.Length; ++i)
-                hitBoxes[i].gameObject.layer = Constants.LAYER_DIE;
+                hitBoxes[i].gameObject.layer = Constants.LAYER_NONE;
 
+            if(targetTransform != null && targetTransform.TryGetComponent(out PlayerCharacter targetCharacter))
+            {
+                status.DropReward(targetCharacter.CharacterData);
+            }
             targetTransform = null;
             gameObject.layer = Constants.LAYER_DIE;
-            hitState = HIT_STATE.Invincible;
+            hitState = HIT_STATE.INVINCIBLE;
             IsDie = true;
             state?.SetState(ACTION_STATE.ENEMY_DIE, STATE_SWITCH_BY.WEIGHT);
-            StartCoroutine(CoWaitForDisapear(Constants.TIME_NORMAL_MONSTER_DISAPEAR));
+            float disapearTime = Constants.TIME_NORMAL_ENEMY_DISAPEAR;
+            switch (status.EnemyType)
+            {
+                case ENEMY_TYPE.Normal:
+                    disapearTime = Constants.TIME_NORMAL_ENEMY_DISAPEAR;
+                    break;
+                case ENEMY_TYPE.Elite:
+                    disapearTime = Constants.TIME_NAMED_ENEMY_DISAPEAR;
+                    break;
+                case ENEMY_TYPE.Boss:
+                    disapearTime = Constants.TIME_BOSS_ENEMY_DISAPEAR;
+                    break;
+            }
 
-            Debug.Log("On Die");
+            StartCoroutine(CoWaitForDisapear(disapearTime));
+
             OnEnemyDie?.Invoke(this);
         }
     }
@@ -130,29 +123,35 @@ public abstract partial class BaseEnemy : BaseActor
     public DamageInformation TakeDamage(PlayerCharacter attacker, float damageRatio)
     {
         // Basic Damage Process
-        float reducedDefensivePower = status.DefensePower * (1 - attacker.Status.DefensePenetration);
-        float damage = attacker.Status.AttackPower * (1 - (reducedDefensivePower / (100 + reducedDefensivePower)));
+        float reducedDefensivePower = status.DefensePower * (1 - attacker.StatusData.StatDict[STAT_TYPE.STAT_DEFENSE_PENETRATION_RATE].GetFinalValue());
+        float damage = attacker.StatusData.StatDict[STAT_TYPE.STAT_ATTACK_POWER].GetFinalValue() * (1 - (reducedDefensivePower / (100 + reducedDefensivePower)));
+
+        if (damage < 0)
+            damage = 0;
 
         // Critical Process
         bool isCritical;
-        if (Random.Range(0.0f, 100.0f) <= attacker.Status.CriticalChance)
+        if (Random.Range(0.0f, 100.0f) < attacker.StatusData.StatDict[STAT_TYPE.STAT_CRITICAL_CHANCE_RATE].GetFinalValue())
         {
             isCritical = true;
-            damage *= (1 + attacker.Status.CriticalDamage * 0.01f);
+            damage *= (1 + attacker.StatusData.StatDict[STAT_TYPE.STAT_CRITICAL_DAMAGE_RATE].GetFinalValue() * 0.01f);
         }
         else
             isCritical = false;
 
-        // Damage Range Process
-        damage *= damageRatio * Random.Range(0.9f, 1.1f);
+        // Damage Random Range
+        damage *= (damageRatio * Random.Range(0.9f, 1.1f));
+
+        // Damage Reduction
+        damage *= (1 - (status.DamageReduction * 0.01f));
 
         // Add Fixed Damage
-        damage += attacker.Status.FixedDamage;
+        damage += attacker.StatusData.StatDict[STAT_TYPE.STAT_FIXED_DAMAGE].GetFinalValue();
 
         status.CurrentHP -= damage;
 
         if (isDie)
-            Managers.GameEventManager.EventQueue.Enqueue(new GameEventMessage(GAME_EVENT_TYPE.OnPlayerKillEnemy, this));
+            Managers.GameManager.SendEventMessage(new GameEventMessage(GAME_EVENT_TYPE.PLAYER_KILL_ENEMY, this));
 
         return new DamageInformation(damage, isCritical);
     }
@@ -162,14 +161,14 @@ public abstract partial class BaseEnemy : BaseActor
         if (targetTransform == null)
             targetTransform = attacker.transform;
 
-        if (hitState == HIT_STATE.Invincible)
+        if (hitState == HIT_STATE.INVINCIBLE)
             return;
 
         OnEnemyHit?.Invoke(this);
 
         DamageInformation damageInforamtion = TakeDamage(attacker, damageRatio);
 
-        if (Managers.SceneManagerCS.CurrentScene.RequestObject(Constants.Prefab_Floating_Damage_Text).TryGetComponent(out FloatingDamageText floatingDamageText))
+        if (Managers.SceneManagerEX.CurrentScene.RequestObject(Constants.PREFAB_FLOATING_DAMAGE_TEXT).TryGetComponent(out FloatingDamageText floatingDamageText))
             floatingDamageText.SetDamageText(damageInforamtion.isCritical, damageInforamtion.damage, hitPoint);
 
         switch (combatType)

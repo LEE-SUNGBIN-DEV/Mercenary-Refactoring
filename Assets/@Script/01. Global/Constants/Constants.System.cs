@@ -12,13 +12,5 @@ public static partial class Constants
 
     public const int MAX_CHARACTER_SLOT_NUMBER = 3;
 
-    public static readonly Vector3[] SELECTION_CHARACTER_POINT
-        = new Vector3[MAX_CHARACTER_SLOT_NUMBER]
-        {
-            new Vector3(34.552f, 0.9f, 8),
-            new Vector3(29.552f, 0.9f, 8),
-            new Vector3(24.552f, 0.9f, 8)
-        };
-
-    public static readonly int NULL_INT = -1;
+    public static readonly int NULL_INDEX = -1;
 }

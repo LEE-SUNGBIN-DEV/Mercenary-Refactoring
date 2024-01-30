@@ -6,7 +6,7 @@ public class PlayerStateDie : IActionState
 {
     private PlayerCharacter character;
     private int stateWeight;
-    private AnimationClipInformation animationClipInformation;
+    private AnimationClipInfo animationClipInformation;
 
     public PlayerStateDie(PlayerCharacter character)
     {

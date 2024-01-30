@@ -1,0 +1,44 @@
+[
+  {
+    "responseTraceID": "TRACE_FOG_CANYON_0",
+    "locatedScene": 3,
+    "title": "전투 사념 1",
+    "content": "<color=#C8A050>[마우스 좌클릭]</color>을 통해 최대 4단계의 약공격을 할 수 있다. 약공격 도중 <color=#C8A050>[마우스 우클릭]</color>시 각각의 약공격 단계에 해당하는 강공격이 가능하다."
+  },
+  {
+    "responseTraceID": "TRACE_FOG_CANYON_1",
+    "locatedScene": 3,
+    "title": "전투 사념 2",
+    "content": "<color=#C8A050>[스페이스 바]</color>를 통하여 적의 공격을 회피하거나 <color=#C8A050>[마우스 우클릭]</color>을 통해 적의 공격을 방어할 수 있다. 적의 공격을 정확한 타이밍에 방어시 패링 상태가 발동된다."
+  },
+  {
+    "responseTraceID": "TRACE_FOG_CANYON_2",
+    "locatedScene": 3,
+    "title": "전투 사념 3",
+    "content": "<color=#C8A050>[V] 버튼</color>을 통하여 감응수를 마실 수 있다. 감응수는 체력과 스태미나를 일부 회복시킨다."
+  },
+  {
+    "responseTraceID": "TRACE_FOG_CANYON_3",
+    "locatedScene": 3,
+    "title": "전투 사념 4",
+    "content": "패링 상태에서 <color=#C8A050>[마우스 우클릭]</color>을 추가 입력시 패링 공격이 가능하다."
+  },
+  {
+    "responseTraceID": "TRACE_FOG_CANYON_4",
+    "locatedScene": 3,
+    "title": "전투 사념 5",
+    "content": "<color=#C8A050>[탭] 버튼</color>을 통해 무기를 교체할 수 있다. 무기에 따라 일부 능력치가 변경된다."
+  },
+  {
+    "responseTraceID": "TRACE_FOG_CANYON_5",
+    "locatedScene": 3,
+    "title": "전투 사념 6",
+    "content": "감응 크리스탈과 상호작용시 체력과 스태미나가 회복된다. 또한 감응수가 채워지고 정화된다. 감응 크리스탈을 통해서 감응했던 다른 지점으로 이동할 수 있다."
+  },
+  {
+    "responseTraceID": "TRACE_FOG_CANYON_6",
+    "locatedScene": 3,
+    "title": "전투 사념 7",
+    "content": "관문 수호자의 <color=#C8A050>특정 패턴</color>을 <color=#C8A050>방패</color>를 든 상태에서 패링에 성공할 경우 <color=#C8A050>힘겨루기 상태</color>에 돌입한다. <color=#C8A050>미늘창</color>을 든 상태에서는 <color=#C8A050>[R] 버튼</color>을 입력하여 <color=#C8A050>카운터</color>를 시도할 수 있다."
+  }
+]

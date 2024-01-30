@@ -7,6 +7,13 @@ public class SFXPlayer : MonoBehaviour
     [SerializeField] private int audioPlayerAmount;
     [SerializeField] private List<AudioSource> sfxPlayerList;
 
+    [Header("Audio Sources Option")]
+    private float volume;
+    private float minDistance;
+    private float maxDistance;
+    private float spatialBlend;
+    private bool isOnAwake;
+
     private void Awake()
     {
         sfxPlayerList = new List<AudioSource>();
@@ -17,8 +24,19 @@ public class SFXPlayer : MonoBehaviour
         for (int i = 0; i < audioPlayerAmount; ++i)
         {
             AudioSource audioSource = gameObject.AddComponent<AudioSource>();
-            SetAudioSource(audioSource);
+            SetOptions(4f, 25f, 1f, false);
             sfxPlayerList.Add(audioSource);
+        }
+    }
+    private void ApplyOptions()
+    {
+        for (int i = 0; i < sfxPlayerList.Count; ++i)
+        {
+            sfxPlayerList[i].playOnAwake = isOnAwake;
+            sfxPlayerList[i].volume = volume;
+            sfxPlayerList[i].spatialBlend = spatialBlend;
+            sfxPlayerList[i].minDistance = minDistance;
+            sfxPlayerList[i].maxDistance = maxDistance;
         }
     }
 
@@ -36,13 +54,12 @@ public class SFXPlayer : MonoBehaviour
         }
 
         AudioSource newAudioSource = gameObject.AddComponent<AudioSource>();
-
-        SetAudioSource(newAudioSource);
+        sfxPlayerList.Add(newAudioSource);
+        ApplyOptions();
         newAudioSource.clip = targetClip;
         newAudioSource.Play();
-
-        sfxPlayerList.Add(newAudioSource);
     }
+
     public void PlaySFX(string sfxName)
     {
         if (string.IsNullOrEmpty(sfxName))
@@ -52,13 +69,14 @@ public class SFXPlayer : MonoBehaviour
         PlaySFX(targetClip);
     }
 
-    public void SetAudioSource(AudioSource audioSource)
+    public void SetOptions(float  minDistance, float maxDistance, float spatialBlend = 1f, bool isOnAwake = false)
     {
-        audioSource.playOnAwake = false;
-        audioSource.volume = Managers.AudioManager.SFXVolume;
-        audioSource.spatialBlend = 1f;
-        audioSource.minDistance = 4f;
-        audioSource.maxDistance = 50f;
+        volume = Managers.AudioManager.SFXVolume;
+        this.minDistance = minDistance;
+        this.maxDistance = maxDistance;
+        this.spatialBlend = spatialBlend;
+        this.isOnAwake = isOnAwake;
+        ApplyOptions();
     }
 
     public List<AudioSource> SFXPlayerList { get { return sfxPlayerList; } }

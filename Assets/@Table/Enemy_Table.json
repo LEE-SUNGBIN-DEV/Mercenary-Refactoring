@@ -1,7 +1,6 @@
 [
   {
-    "id": 0,
-    "enemyPrefabName": "Enemy_Stone_Golem",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
     "enemyName": "돌 골렘",
     "enemyType": 0,
     "maxHP": 100,
@@ -16,12 +15,10 @@
     "damageReduction": 0,
     "detectionDistance": 10,
     "chaseDistance": 40,
-    "expReward": 10,
-    "stoneReward": 10
+    "dropID": "ENEMY_FOG_CANYON_STONE_GOLEM"
   },
   {
-    "id": 1,
-    "enemyPrefabName": "Enemy_Rock_Golem",
+    "enemyID": "ENEMY_FOG_CANYON_ROCK_GOLEM",
     "enemyName": "바위 골렘",
     "enemyType": 1,
     "maxHP": 300,
@@ -36,12 +33,10 @@
     "damageReduction": 0,
     "detectionDistance": 15,
     "chaseDistance": 40,
-    "expReward": 25,
-    "stoneReward": 50
+    "dropID": "ENEMY_FOG_CANYON_ROCK_GOLEM"
   },
   {
-    "id": 2,
-    "enemyPrefabName": "Enemy_Moled",
+    "enemyID": "ENEMY_FOG_CANYON_MOLED",
     "enemyName": "안개 협곡의 수호자, 몰드",
     "enemyType": 2,
     "maxHP": 1000,
@@ -56,7 +51,6 @@
     "damageReduction": 0,
     "detectionDistance": 50,
     "chaseDistance": 100,
-    "expReward": 50,
-    "stoneReward": 100
+    "dropID": "ENEMY_FOG_CANYON_MOLED"
   }
 ]

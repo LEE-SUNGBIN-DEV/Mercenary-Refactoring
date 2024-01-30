@@ -1,7 +1,7 @@
 __________________________________________________________________________________________
 
 Package "Animation Designer"
-Version 1.2.2.2
+Version 1.2.2.4
 
 Made by FImpossible Creations - Filip Moeglich
 https://www.FilipMoeglich.pl
@@ -66,6 +66,13 @@ MAIN FEATURES:
 • Supporting Root Motion Animations
 
 __________________________________________________________________________________________
+
+Version 1.2.2.4
+- Project animation clips gather button now will categorize collected animation clips into better categories
+
+Version 1.2.2.3
+- Added animation clip verification feature for baking-process armature
+may be done automatically in the future update, right now it's under setup top foldout "Verify Armature Using Animation Clip Of The Model".
 
 Version 1.2.2.2
 - Animation Clip Internal Crop fixes

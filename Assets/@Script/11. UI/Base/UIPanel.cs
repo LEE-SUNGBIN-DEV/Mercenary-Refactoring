@@ -5,28 +5,12 @@ using UnityEngine.Events;
 
 public class UIPanel : UIBase
 {
-    private CanvasGroup canvasGroup;
-    private Coroutine currentFadeCoroutine;
+    [SerializeField] private CanvasGroup canvasGroup;
+    private Coroutine fadeCoroutine;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         canvasGroup = Functions.GetOrAddComponent<CanvasGroup>(gameObject);
-    }
-
-    public void FadeIn(float duration = Constants.TIME_UI_PANEL_DEFAULT_FADE, UnityAction callback = null)
-    {
-        if (currentFadeCoroutine != null)
-            StopCoroutine(currentFadeCoroutine);
-
-        currentFadeCoroutine = StartCoroutine(CoFade(0f, 1f, duration, callback));
-    }
-
-    public void FadeOut(float duration = Constants.TIME_UI_PANEL_DEFAULT_FADE, UnityAction callback = null)
-    {
-        if (currentFadeCoroutine != null)
-            StopCoroutine(currentFadeCoroutine);
-
-        currentFadeCoroutine = StartCoroutine(CoFade(1f, 0f, duration, callback));
     }
 
     private IEnumerator CoFade(float startAlpha, float targetAlpha, float duration = Constants.TIME_UI_PANEL_DEFAULT_FADE, UnityAction callback = null)
@@ -43,8 +27,25 @@ public class UIPanel : UIBase
         }
 
         canvasGroup.alpha = targetAlpha;
-        currentFadeCoroutine = null;
+        fadeCoroutine = null;
 
         callback?.Invoke();
+    }
+
+    protected void FadeInPanel(float duration = Constants.TIME_UI_PANEL_DEFAULT_FADE, UnityAction callback = null)
+    {
+        gameObject.SetActive(true);
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(CoFade(0f, 1f, duration, callback));
+    }
+    protected void FadeOutPanel(float duration = Constants.TIME_UI_PANEL_DEFAULT_FADE, UnityAction callback = null)
+    {
+        gameObject.SetActive(true);
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(CoFade(1f, 0f, duration, callback));
     }
 }

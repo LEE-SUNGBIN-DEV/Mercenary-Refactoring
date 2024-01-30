@@ -32,7 +32,6 @@ public abstract partial class BaseEnemy : BaseActor
             repathInterval = 0.4f;
             repathDuration = 0f;
             avoidanceRadius = capsuleCollider.radius * transform.lossyScale.x * 5f;
-            moveController.Initialize(this);
         }
     }
 
@@ -72,7 +71,7 @@ public abstract partial class BaseEnemy : BaseActor
             Collider[] nearbyAgentColliders = Physics.OverlapSphere(transform.position, avoidanceRadius, 1 << Constants.LAYER_ENEMY);
             for (int i = 0; i < nearbyAgentColliders.Length; ++i)
             {
-                if (nearbyAgentColliders[i] != this.capsuleCollider)
+                if (nearbyAgentColliders[i] != capsuleCollider)
                 {
                     float lossyRadius = capsuleCollider.radius * transform.lossyScale.x;
                     float agentDistance = lossyRadius
@@ -91,7 +90,7 @@ public abstract partial class BaseEnemy : BaseActor
 #endif
         }
         isRepathable = false;
-        moveController.SetMovementAndRotation(moveDirection, status.MoveSpeed * speedRatio);
+        moveController.SetMove(moveDirection, status.MoveSpeed * speedRatio);
     }
 
     #region Property

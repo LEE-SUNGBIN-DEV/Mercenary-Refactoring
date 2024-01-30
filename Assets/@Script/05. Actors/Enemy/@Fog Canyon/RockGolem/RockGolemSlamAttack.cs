@@ -5,7 +5,7 @@ using UnityEngine;
 public class RockGolemSlamAttack : EnemySkill
 {
     [SerializeField] private EnemyMeleeAttack slamAttack;
-    private AnimationClipInformation animationInfo;
+    private AnimationClipInfo animationInfo;
 
     public override void Initialize(BaseEnemy enemy)
     {

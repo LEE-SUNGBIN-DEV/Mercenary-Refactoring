@@ -11,7 +11,7 @@ public class UIPopup : UIBase, IPointerDownHandler
     private Coroutine currentFadeCoroutine;
     private float fadeDuration;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         canvasGroup = Functions.GetOrAddComponent<CanvasGroup>(gameObject);
         fadeDuration = 1f;

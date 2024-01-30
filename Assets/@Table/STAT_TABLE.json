@@ -1,0 +1,191 @@
+[
+  {
+    "statID": "STAT_STRENGTH",
+    "statName": "힘",
+    "statType": 1,
+    "defaultValue": 10,
+    "minValue": 0,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_VITALITY",
+    "statName": "활력",
+    "statType": 2,
+    "defaultValue": 10,
+    "minValue": 0,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_DEXTERITY",
+    "statName": "민첩",
+    "statType": 3,
+    "defaultValue": 10,
+    "minValue": 0,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_WILL",
+    "statName": "의지",
+    "statType": 4,
+    "defaultValue": 10,
+    "minValue": 0,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_MAX_HP",
+    "statName": "최대 HP",
+    "statType": 5,
+    "defaultValue": 60,
+    "minValue": 1,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_MAX_SP",
+    "statName": "최대 SP",
+    "statType": 6,
+    "defaultValue": 60,
+    "minValue": 1,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_ATTACK_POWER",
+    "statName": "공격력",
+    "statType": 7,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_WEAPON_ATTACK_POWER",
+    "statName": "무기 공격력",
+    "statType": 8,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_FIXED_DAMAGE",
+    "statName": "고정 대미지",
+    "statType": 9,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_DEFENSE_PENETRATION_RATE",
+    "statName": "방어 관통률",
+    "statType": 10,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 50,
+    "statUnitType": 1
+  },
+  {
+    "statID": "STAT_CRITICAL_CHANCE_RATE",
+    "statName": "크리티컬 확률",
+    "statType": 11,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 50,
+    "statUnitType": 1
+  },
+  {
+    "statID": "STAT_CRITICAL_DAMAGE_RATE",
+    "statName": "크리티컬 대미지",
+    "statType": 12,
+    "defaultValue": 100,
+    "minValue": 10,
+    "maxValue": 1000,
+    "statUnitType": 1
+  },
+  {
+    "statID": "STAT_LIGHT_ATTACK_DAMAGE_RATE",
+    "statName": "약공격 대미지 증가율",
+    "statType": 13,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 100,
+    "statUnitType": 1
+  },
+  {
+    "statID": "STAT_HEAVY_ATTACK_DAMAGE_RATE",
+    "statName": "강공격 대미지 증가율",
+    "statType": 14,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 100,
+    "statUnitType": 1
+  },
+  {
+    "statID": "STAT_DEFENSE_POWER",
+    "statName": "방어력",
+    "statType": 15,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_ARMOR_DEFENSE_POWER",
+    "statName": "갑옷 방어력",
+    "statType": 16,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 10000,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_DAMAGE_REDUCTION_RATE",
+    "statName": "대미지 감소율",
+    "statType": 17,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 50,
+    "statUnitType": 1
+  },
+  {
+    "statID": "STAT_ATTACK_SPEED",
+    "statName": "공격 속도",
+    "statType": 18,
+    "defaultValue": 1,
+    "minValue": 0.1,
+    "maxValue": 1.5,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_MOVE_SPEED",
+    "statName": "이동 속도",
+    "statType": 19,
+    "defaultValue": 4,
+    "minValue": 0.1,
+    "maxValue": 6,
+    "statUnitType": 0
+  },
+  {
+    "statID": "STAT_SP_RECOVERY_RATE",
+    "statName": "SP 회복 증가율",
+    "statType": 20,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 100,
+    "statUnitType": 1
+  },
+  {
+    "statID": "STAT_SP_COST_REDUCTION_RATE",
+    "statName": "SP 소모 감소율",
+    "statType": 21,
+    "defaultValue": 0,
+    "minValue": 0,
+    "maxValue": 50,
+    "statUnitType": 1
+  }
+]
