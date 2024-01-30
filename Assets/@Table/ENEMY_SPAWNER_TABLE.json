@@ -1,0 +1,107 @@
+[
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_0",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_1",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_2",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_3",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_4",
+    "enemyID": "ENEMY_FOG_CANYON_ROCK_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_5",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_6",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_7",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_8",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_9",
+    "enemyID": "ENEMY_FOG_CANYON_ROCK_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_10",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_11",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_12",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_13",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_14",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_15",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_16",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_17",
+    "enemyID": "ENEMY_FOG_CANYON_ROCK_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_18",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_19",
+    "enemyID": "ENEMY_FOG_CANYON_STONE_GOLEM",
+    "locatedScene": 3
+  },
+  {
+    "spawnerID": "SPAWNER_FOG_CANYON_20",
+    "enemyID": "ENEMY_FOG_CANYON_MOLED",
+    "locatedScene": 3
+  }
+]

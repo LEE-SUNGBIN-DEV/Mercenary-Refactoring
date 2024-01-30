@@ -1,0 +1,14 @@
+[
+  {
+    "treasureBoxID": "TREASURE_BOX_FOG_CANYON_0",
+    "locatedScene": 3,
+    "dropCount": 8,
+    "dropTableID": "FOG_CANYON_TREASURE_BOX"
+  },
+  {
+    "treasureBoxID": "TREASURE_BOX_FOG_CANYON_1",
+    "locatedScene": 3,
+    "dropCount": 8,
+    "dropTableID": "FOG_CANYON_TREASURE_BOX"
+  }
+]

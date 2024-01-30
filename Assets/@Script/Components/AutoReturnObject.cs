@@ -1,19 +1,55 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoReturnObject : MonoBehaviour
+public class AutoReturnObject : MonoBehaviour, IPoolObject
 {
-    [SerializeField] private string key;
-    [SerializeField] private float returnTime;
+    [Header("Auto Return")]
+    [SerializeField] protected bool isAutoReturnEnable;
+    [SerializeField] protected float duration;
 
-    private void OnEnable()
+    protected Coroutine autoReturnCoroutine;
+
+    public bool TryStartAutoReturn()
     {
-        StartCoroutine(AutoReturn(key, returnTime));
+        if(isAutoReturnEnable)
+        {
+            if (autoReturnCoroutine != null)
+                StopCoroutine(autoReturnCoroutine);
+
+            autoReturnCoroutine = StartCoroutine(CoAutoReturn());
+        }
+
+        return isAutoReturnEnable;
     }
 
-    public IEnumerator AutoReturn(string key, float returnTime)
+    public IEnumerator CoAutoReturn()
     {
-        yield return new WaitForSeconds(returnTime);
-        Managers.ObjectPoolManager.ReturnObject(key, gameObject);
+        yield return new WaitForSeconds(duration);
+        ReturnOrDestoryObject();
     }
+
+    #region IPoolObject Interface Fucntion
+    public virtual void ActionAfterRequest(ObjectPooler owner)
+    {
+        ObjectPooler = owner;
+        TryStartAutoReturn();
+    }
+
+    public virtual void ActionBeforeReturn()
+    {
+        if (autoReturnCoroutine != null)
+            StopCoroutine(autoReturnCoroutine);
+    }
+
+    public virtual void ReturnOrDestoryObject()
+    {
+        if (ObjectPooler == null)
+            Destroy(gameObject);
+
+        ObjectPooler.ReturnObject(name, gameObject);
+    }
+
+    public ObjectPooler ObjectPooler { get; set; }
+    #endregion
 }

@@ -1,0 +1,38 @@
+[
+  {
+    "responseGateID": "GATE_FOG_CANYON_0",
+    "locatedScene": 3,
+    "destinationGateID": "GATE_TARANIS_CITADEL_0",
+    "conditionBossIDs": [
+      "FOG_CANYON_MOLED"
+    ]
+  },
+  {
+    "responseGateID": "GATE_TARANIS_CITADEL_0",
+    "locatedScene": 4,
+    "destinationGateID": "GATE_FOG_CANYON_0",
+    "conditionBossIDs": [
+      "FOG_CANYON_MOLED"
+    ]
+  },
+  {
+    "responseGateID": "GATE_TARANIS_CITADEL_1",
+    "locatedScene": 4,
+    "destinationGateID": null,
+    "conditionBossIDs": [
+      "FOG_CANYON_MOLED"
+    ]
+  },
+  {
+    "responseGateID": "GATE_CAVE_0",
+    "locatedScene": 5,
+    "destinationGateID": null,
+    "conditionBossIDs": []
+  },
+  {
+    "responseGateID": "GATE_FORESTIA_0",
+    "locatedScene": 6,
+    "destinationGateID": null,
+    "conditionBossIDs": []
+  }
+]

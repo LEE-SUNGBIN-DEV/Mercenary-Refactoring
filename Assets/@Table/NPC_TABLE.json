@@ -1,0 +1,14 @@
+[
+  {
+    "npcID": "NPC_BEREAVE",
+    "npcName": "베레아브",
+    "npcType": 0,
+    "isTalkable": true
+  },
+  {
+    "npcID": "NPC_FEIGHUS",
+    "npcName": "페이거스",
+    "npcType": 1,
+    "isTalkable": true
+  }
+]

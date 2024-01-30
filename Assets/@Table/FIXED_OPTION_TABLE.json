@@ -1,0 +1,1359 @@
+[
+  {
+    "fixedOptionID": "ITEM_ARMOR_0",
+    "statIDs": [
+      "STAT_MAX_HP",
+      "STAT_MAX_SP",
+      "STAT_ARMOR_DEFENSE_POWER",
+      "STAT_DAMAGE_REDUCTION_RATE",
+      "STAT_SP_RECOVERY_RATE",
+      "STAT_SP_COST_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "values": [
+      10,
+      5,
+      5,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_ARMOR_1",
+    "statIDs": [
+      "STAT_MAX_HP",
+      "STAT_MAX_SP",
+      "STAT_ARMOR_DEFENSE_POWER",
+      "STAT_DAMAGE_REDUCTION_RATE",
+      "STAT_SP_RECOVERY_RATE",
+      "STAT_SP_COST_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "values": [
+      14,
+      7,
+      7,
+      1,
+      2,
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_ARMOR_2",
+    "statIDs": [
+      "STAT_MAX_HP",
+      "STAT_MAX_SP",
+      "STAT_ARMOR_DEFENSE_POWER",
+      "STAT_DAMAGE_REDUCTION_RATE",
+      "STAT_SP_RECOVERY_RATE",
+      "STAT_SP_COST_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "values": [
+      20,
+      10,
+      9,
+      2,
+      4,
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_ARMOR_3",
+    "statIDs": [
+      "STAT_MAX_HP",
+      "STAT_MAX_SP",
+      "STAT_ARMOR_DEFENSE_POWER",
+      "STAT_DAMAGE_REDUCTION_RATE",
+      "STAT_SP_RECOVERY_RATE",
+      "STAT_SP_COST_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "values": [
+      28,
+      14,
+      6,
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_ARMOR_4",
+    "statIDs": [
+      "STAT_MAX_HP",
+      "STAT_MAX_SP",
+      "STAT_ARMOR_DEFENSE_POWER",
+      "STAT_DAMAGE_REDUCTION_RATE",
+      "STAT_SP_RECOVERY_RATE",
+      "STAT_SP_COST_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "values": [
+      39,
+      20,
+      16,
+      4,
+      8,
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_ARMOR_5",
+    "statIDs": [
+      "STAT_MAX_HP",
+      "STAT_MAX_SP",
+      "STAT_ARMOR_DEFENSE_POWER",
+      "STAT_DAMAGE_REDUCTION_RATE",
+      "STAT_SP_RECOVERY_RATE",
+      "STAT_SP_COST_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "values": [
+      55,
+      28,
+      21,
+      5,
+      10,
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_HALBERD_0",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      10,
+      2,
+      0,
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_HALBERD_1",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      14,
+      6,
+      1,
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_HALBERD_2",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      20,
+      9,
+      2,
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_HALBERD_3",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      28,
+      14,
+      3,
+      6
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_HALBERD_4",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      39,
+      21,
+      4,
+      8
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_HALBERD_5",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      55,
+      32,
+      5,
+      10
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_SWORD_SHIELD_0",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      8,
+      1,
+      1,
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_SWORD_SHIELD_1",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      11,
+      4,
+      2,
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_SWORD_SHIELD_2",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      15,
+      6,
+      4,
+      6
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_SWORD_SHIELD_3",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      21,
+      9,
+      6,
+      8
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_SWORD_SHIELD_4",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      29,
+      14,
+      8,
+      11
+    ]
+  },
+  {
+    "fixedOptionID": "ITEM_SWORD_SHIELD_5",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER",
+      "STAT_FIXED_DAMAGE",
+      "STAT_ATTACK_SPEED",
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0,
+      0,
+      1,
+      0
+    ],
+    "values": [
+      41,
+      21,
+      21,
+      15
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_HONING_1",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_HONING_2",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_HONING_3",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_HONING_4",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_HONING_5",
+    "statIDs": [
+      "STAT_WEAPON_ATTACK_POWER"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_1",
+    "statIDs": [
+      "STAT_LIGHT_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_2",
+    "statIDs": [
+      "STAT_LIGHT_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_3",
+    "statIDs": [
+      "STAT_LIGHT_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_4",
+    "statIDs": [
+      "STAT_LIGHT_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_BASIC_ATTACK_MASTERY_5",
+    "statIDs": [
+      "STAT_LIGHT_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_1",
+    "statIDs": [
+      "STAT_HEAVY_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_2",
+    "statIDs": [
+      "STAT_HEAVY_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_3",
+    "statIDs": [
+      "STAT_HEAVY_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_4",
+    "statIDs": [
+      "STAT_HEAVY_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ADVANCED_ATTACK_MASTERY_5",
+    "statIDs": [
+      "STAT_HEAVY_ATTACK_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_1",
+    "statIDs": [
+      "STAT_CRITICAL_CHANCE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_2",
+    "statIDs": [
+      "STAT_CRITICAL_CHANCE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_3",
+    "statIDs": [
+      "STAT_CRITICAL_CHANCE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_4",
+    "statIDs": [
+      "STAT_CRITICAL_CHANCE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_DETECTION_5",
+    "statIDs": [
+      "STAT_CRITICAL_CHANCE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_1",
+    "statIDs": [
+      "STAT_CRITICAL_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_2",
+    "statIDs": [
+      "STAT_CRITICAL_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_3",
+    "statIDs": [
+      "STAT_CRITICAL_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      6
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_4",
+    "statIDs": [
+      "STAT_CRITICAL_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      8
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAKNESS_STRIKE_5",
+    "statIDs": [
+      "STAT_CRITICAL_DAMAGE_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      10
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_1",
+    "statIDs": [
+      "STAT_ATTACK_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_2",
+    "statIDs": [
+      "STAT_ATTACK_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_3",
+    "statIDs": [
+      "STAT_ATTACK_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_4",
+    "statIDs": [
+      "STAT_ATTACK_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_WEAPON_LIGHTWEIGHTING_5",
+    "statIDs": [
+      "STAT_ATTACK_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FLESH_STRIKE_1",
+    "statIDs": [
+      "STAT_FIXED_DAMAGE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FLESH_STRIKE_2",
+    "statIDs": [
+      "STAT_FIXED_DAMAGE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FLESH_STRIKE_3",
+    "statIDs": [
+      "STAT_FIXED_DAMAGE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      6
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FLESH_STRIKE_4",
+    "statIDs": [
+      "STAT_FIXED_DAMAGE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      8
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FLESH_STRIKE_5",
+    "statIDs": [
+      "STAT_FIXED_DAMAGE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      10
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_1",
+    "statIDs": [
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_2",
+    "statIDs": [
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_3",
+    "statIDs": [
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_4",
+    "statIDs": [
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_DESTRUCTION_5",
+    "statIDs": [
+      "STAT_DEFENSE_PENETRATION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_HONING_1",
+    "statIDs": [
+      "STAT_ARMOR_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_HONING_2",
+    "statIDs": [
+      "STAT_ARMOR_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_HONING_3",
+    "statIDs": [
+      "STAT_ARMOR_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_HONING_4",
+    "statIDs": [
+      "STAT_ARMOR_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ARMOR_HONING_5",
+    "statIDs": [
+      "STAT_ARMOR_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_1",
+    "statIDs": [
+      "STAT_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_2",
+    "statIDs": [
+      "STAT_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_3",
+    "statIDs": [
+      "STAT_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_4",
+    "statIDs": [
+      "STAT_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_ALLOY_ARMOR_5",
+    "statIDs": [
+      "STAT_DEFENSE_POWER"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FORTIFICATION_1",
+    "statIDs": [
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FORTIFICATION_2",
+    "statIDs": [
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FORTIFICATION_3",
+    "statIDs": [
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FORTIFICATION_4",
+    "statIDs": [
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_FORTIFICATION_5",
+    "statIDs": [
+      "STAT_DAMAGE_REDUCTION_RATE"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_HEALTH_BOOST_1",
+    "statIDs": [
+      "STAT_MAX_HP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_HEALTH_BOOST_2",
+    "statIDs": [
+      "STAT_MAX_HP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_HEALTH_BOOST_3",
+    "statIDs": [
+      "STAT_MAX_HP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_HEALTH_BOOST_4",
+    "statIDs": [
+      "STAT_MAX_HP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_HEALTH_BOOST_5",
+    "statIDs": [
+      "STAT_MAX_HP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_STAMINA_BOOST_1",
+    "statIDs": [
+      "STAT_MAX_SP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_STAMINA_BOOST_2",
+    "statIDs": [
+      "STAT_MAX_SP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_STAMINA_BOOST_3",
+    "statIDs": [
+      "STAT_MAX_SP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_STAMINA_BOOST_4",
+    "statIDs": [
+      "STAT_MAX_SP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_STAMINA_BOOST_5",
+    "statIDs": [
+      "STAT_MAX_SP"
+    ],
+    "valueTypes": [
+      0
+    ],
+    "values": [
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_1",
+    "statIDs": [
+      "STAT_STRENGTH",
+      "STAT_VITALITY",
+      "STAT_DEXTERITY",
+      "STAT_WILL"
+    ],
+    "valueTypes": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "values": [
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_2",
+    "statIDs": [
+      "STAT_STRENGTH",
+      "STAT_VITALITY",
+      "STAT_DEXTERITY",
+      "STAT_WILL"
+    ],
+    "valueTypes": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "values": [
+      2,
+      2,
+      2,
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_3",
+    "statIDs": [
+      "STAT_STRENGTH",
+      "STAT_VITALITY",
+      "STAT_DEXTERITY",
+      "STAT_WILL"
+    ],
+    "valueTypes": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "values": [
+      3,
+      3,
+      3,
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_4",
+    "statIDs": [
+      "STAT_STRENGTH",
+      "STAT_VITALITY",
+      "STAT_DEXTERITY",
+      "STAT_WILL"
+    ],
+    "valueTypes": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "values": [
+      4,
+      4,
+      4,
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_PHYSICAL_BOOST_5",
+    "statIDs": [
+      "STAT_STRENGTH",
+      "STAT_VITALITY",
+      "STAT_DEXTERITY",
+      "STAT_WILL"
+    ],
+    "valueTypes": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "values": [
+      5,
+      5,
+      5,
+      5
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_1",
+    "statIDs": [
+      "STAT_MOVE_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      1
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_2",
+    "statIDs": [
+      "STAT_MOVE_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      2
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_3",
+    "statIDs": [
+      "STAT_MOVE_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      3
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_4",
+    "statIDs": [
+      "STAT_MOVE_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      4
+    ]
+  },
+  {
+    "fixedOptionID": "SKILL_LEG_STRENGTH_BOOST_5",
+    "statIDs": [
+      "STAT_MOVE_SPEED"
+    ],
+    "valueTypes": [
+      1
+    ],
+    "values": [
+      5
+    ]
+  }
+]
