@@ -1,1 +1,0 @@
-﻿If you want to use this pack's custom tree shaders with older versions of Unity than 2020, you have to delete the "CTI Runtime Components SRP" folder and install the "CTI_2017-2018-2019_RuntimeComponents" pack with the old run time components instead.

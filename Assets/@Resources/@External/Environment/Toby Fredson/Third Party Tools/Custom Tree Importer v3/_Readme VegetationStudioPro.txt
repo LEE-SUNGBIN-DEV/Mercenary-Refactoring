@@ -1,1 +1,0 @@
-﻿In case you use Vegetation Studio Pro you should import the "VSPro_CTIShaderController" package: It contains a new shader controller and a fixed version of the "RenderNormalsAtlasCTI" shader.
