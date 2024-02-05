@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class DialoguePanel : UIPanel, IInteractionPanel
+public class DialoguePanel : UIPanel, IFocusPanel, IDialogueablePanel
 {
     public enum TEXT
     {
@@ -13,11 +13,14 @@ public class DialoguePanel : UIPanel, IInteractionPanel
         Dialogue_Contents_Text
     }
 
-    public event UnityAction<IInteractionPanel> OnOpenPanel;
-    public event UnityAction<IInteractionPanel> OnClosePanel;
+    public event UnityAction<IFocusPanel> OnOpenFocusPanel;
+    public event UnityAction<IFocusPanel> OnCloseFocusPanel;
 
     [SerializeField] private TextMeshProUGUI dialogueNameText;
     [SerializeField] private TextMeshProUGUI dialogueContentText;
+
+    [SerializeField] private string dialogueID;
+
 
     protected override void Awake()
     {
@@ -39,6 +42,12 @@ public class DialoguePanel : UIPanel, IInteractionPanel
     {
     }
 
+    public void SetDialogue(DialogueData dialogueData)
+    {
+        dialogueID = dialogueData.dialogueID;
+        dialogueNameText.text = dialogueData.speaker;
+        dialogueContentText.text = dialogueData.content;
+    }
     public void OpenPanel(string dialogueID)
     {
         OpenPanel(Managers.DataManager.DialogueTable[dialogueID]);
@@ -48,13 +57,15 @@ public class DialoguePanel : UIPanel, IInteractionPanel
         dialogueNameText.text = dialogueData.speaker;
         dialogueContentText.text = dialogueData.content;
 
-        OnOpenPanel?.Invoke(this);
+        OnOpenFocusPanel?.Invoke(this);
+        Managers.InputManager.PushInputMode(CHARACTER_INPUT_MODE.INTERACTION);
         if (gameObject.activeSelf == false)
             gameObject.SetActive(true);
     }
     public void ClosePanel()
     {
-        OnClosePanel?.Invoke(this);
+        OnCloseFocusPanel?.Invoke(this);
+        Managers.InputManager.PopInputMode();
         gameObject.SetActive(false);
     }
     public void SetQuestList()

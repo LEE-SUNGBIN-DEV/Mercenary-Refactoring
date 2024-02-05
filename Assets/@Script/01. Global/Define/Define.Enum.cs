@@ -2,8 +2,8 @@
 #region Cursor
 public enum CURSOR_MODE
 {
-    LOCK,
-    UNLOCK
+    INVISIBLE,
+    VISIBLE
 }
 #endregion
 

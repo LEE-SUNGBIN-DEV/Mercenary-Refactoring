@@ -11,8 +11,8 @@ public class SelectionScene : BaseScene
         sceneType = SCENE_TYPE.Selection;
         scene = SCENE_ID.Selection;
 
-        Managers.UIManager.SetCursorMode(CURSOR_MODE.UNLOCK);
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.UI);
+        Managers.UIManager.SetCursorMode(CURSOR_MODE.VISIBLE);
+        Managers.InputManager.InitializeInputMode(CHARACTER_INPUT_MODE.UI);
         Managers.UIManager.UIScenePanelCanvas.OpenScenePanel(Managers.UIManager.UIScenePanelCanvas.SelectionScenePanel);
     }
 

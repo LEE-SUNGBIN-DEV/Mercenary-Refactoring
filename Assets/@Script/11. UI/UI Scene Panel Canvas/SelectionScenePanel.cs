@@ -22,14 +22,14 @@ public class SelectionScenePanel : UIScenePanel
     public enum BUTTON
     {
         // !! Slot button must come before the any other button. (For Initializing)
-        Slot_Button_01,
-        Slot_Button_02,
-        Slot_Button_03,
+        UI_CHARACTER_SLOT_BUTTON_01,
+        UI_CHARACTER_SLOT_BUTTON_02,
+        UI_CHARACTER_SLOT_BUTTON_03,
 
         // Buttons
-        Prefab_Start_Button,
-        Prefab_Quit_Button,
-        Prefab_Option_Button,
+        UI_START_BUTTON,
+        UI_QUIT_BUTTON,
+        UI_OPTION_BUTTON,
         Character_Remove_Button
     }
     public enum TEXT
@@ -58,10 +58,10 @@ public class SelectionScenePanel : UIScenePanel
         BindButton(typeof(BUTTON));
         BindText(typeof(TEXT));
 
-        startButton = GetButton((int)BUTTON.Prefab_Start_Button);
+        startButton = GetButton((int)BUTTON.UI_START_BUTTON);
         characterRemoveButton = GetButton((int)BUTTON.Character_Remove_Button);
-        quitButton = GetButton((int)BUTTON.Prefab_Quit_Button);
-        optionButton = GetButton((int)BUTTON.Prefab_Option_Button);
+        quitButton = GetButton((int)BUTTON.UI_QUIT_BUTTON);
+        optionButton = GetButton((int)BUTTON.UI_OPTION_BUTTON);
 
         startButton.onClick.AddListener( () => { OnClickStartGameButton(selectedCharacterSlot.slotIndex); });
         characterRemoveButton.onClick.AddListener( () => { OnClickRemoveCharacter(selectedCharacterSlot.slotIndex); });
@@ -135,7 +135,7 @@ public class SelectionScenePanel : UIScenePanel
     private void OnClickOptionButton()
     {
         Managers.AudioManager.PlaySFX(Constants.Audio_Button_Click_Normal);
-        Managers.UIManager.UIFocusPanelCanvas.SwitchFocusPanel(Managers.UIManager.UIFocusPanelCanvas.OptionPanel);
+        Managers.UIManager.UIInteractionPanelCanvas.OptionPanel.TogglePanel();
     }
     #endregion
 

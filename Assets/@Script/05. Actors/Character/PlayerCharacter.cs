@@ -230,7 +230,7 @@ public class PlayerCharacter : BaseActor, ICompetable
             moveController.SetMove(Vector3.zero, 0f);
             state?.SetState(ACTION_STATE.PLAYER_DIE, STATE_SWITCH_BY.WEIGHT);
 
-            Managers.UIManager.UIFocusPanelCanvas.CloseActivedFocusPanel();
+            Managers.UIManager.UIInteractionPanelCanvas.CloseCurrentFocusPanel();
             Managers.UIManager.UIFixedPanelCanvas.DiePanel.OpenPanel();
             StartCoroutine(CoWaitForDisapear(Constants.TIME_NORMAL_ENEMY_DISAPEAR));
         }

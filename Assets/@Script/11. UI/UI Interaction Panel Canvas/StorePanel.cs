@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class StorePanel : UIPanel, IInteractionPanel
+public class StorePanel : UIPanel
 {
-    public event UnityAction<IInteractionPanel> OnOpenPanel;
-    public event UnityAction<IInteractionPanel> OnClosePanel;
-
     [SerializeField] private List<BaseItem> sellList;
     [SerializeField] private StoreSlot[] storeSlots;
 
@@ -29,11 +26,9 @@ public class StorePanel : UIPanel, IInteractionPanel
 
     public void OpenPanel()
     {
-        OnOpenPanel?.Invoke(this);
     }
 
     public void ClosePanel()
     {
-        OnClosePanel?.Invoke(this);
     }
 }

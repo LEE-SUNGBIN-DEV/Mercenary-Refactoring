@@ -160,8 +160,8 @@ public class GameScene : BaseScene
         RegistObject(Constants.PREFAB_FLOATING_DAMAGE_TEXT, 16);
         Managers.UIManager.UIFixedPanelCanvas.SceneNamePanel.OpenPanel(sceneName);
         Managers.UIManager.UIFixedPanelCanvas.CharacterPanel.OpenPanel();
-        Managers.UIManager.SetCursorMode(CURSOR_MODE.LOCK);
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.ALL);
+        Managers.UIManager.SetCursorMode(CURSOR_MODE.INVISIBLE);
+        Managers.InputManager.InitializeInputMode(CHARACTER_INPUT_MODE.ALL);
     }
 
     public void Start()

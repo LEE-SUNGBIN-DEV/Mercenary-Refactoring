@@ -10,9 +10,9 @@ public class TitleScene : BaseScene
         sceneType = SCENE_TYPE.Title;
         scene = SCENE_ID.Title;
 
-        Managers.UIManager.SetCursorMode(CURSOR_MODE.UNLOCK);
+        Managers.UIManager.SetCursorMode(CURSOR_MODE.VISIBLE);
         Managers.UIManager.UIScenePanelCanvas.OpenScenePanel(Managers.UIManager.UIScenePanelCanvas.TitleScenePanel);
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.UI);
+        Managers.InputManager.InitializeInputMode(CHARACTER_INPUT_MODE.UI);
     }
 
     public override void ExitScene()

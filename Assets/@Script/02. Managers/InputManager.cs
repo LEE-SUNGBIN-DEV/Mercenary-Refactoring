@@ -10,8 +10,9 @@ public class InputManager
     public event UnityAction<CHARACTER_INPUT_MODE> OnChangeInputMode;
 
     private PlayerInputs playerInputs;
+    private Stack<CHARACTER_INPUT_MODE> inputStack;
     [SerializeField] private CHARACTER_INPUT_MODE currentInputState;
-
+    
     public void Initialize()
     {
         playerInputs = new PlayerInputs();
@@ -19,10 +20,11 @@ public class InputManager
         playerInputs.UI.Enable();
         playerInputs.Interaction.Enable();
 
+        inputStack = new Stack<CHARACTER_INPUT_MODE>();
         SwitchInputMode(CHARACTER_INPUT_MODE.ALL);
     }
 
-    public void SwitchInputMode(CHARACTER_INPUT_MODE inputState)
+    private void SwitchInputMode(CHARACTER_INPUT_MODE inputState)
     {
         currentInputState = inputState;
         switch (currentInputState)
@@ -63,8 +65,23 @@ public class InputManager
                 playerInputs.Interaction.Disable();
                 break;
         }
-
+#if UNITY_EDITOR
         Debug.Log($"Input Mode: {currentInputState.GetEnumName()}");
+#endif
+    }
+    public void InitializeInputMode(CHARACTER_INPUT_MODE inputState)
+    {
+        inputStack.Clear();
+        SwitchInputMode(inputState);
+    }
+    public void PushInputMode(CHARACTER_INPUT_MODE inputState)
+    {
+        inputStack.Push(currentInputState);
+        SwitchInputMode(inputState);
+    }
+    public void PopInputMode()
+    {
+        SwitchInputMode(inputStack.Pop());
     }
 
     #region Character Inputs

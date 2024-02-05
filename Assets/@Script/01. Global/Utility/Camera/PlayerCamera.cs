@@ -18,7 +18,6 @@ public class PlayerCamera : BaseCamera
     [SerializeField] private float minDistance;           // 최소 거리
     [SerializeField] private float maxDistance;           // 최대 거리
 
-    [SerializeField] private float collideRadius;
     [SerializeField] private CAMERA_MODE mode;
 
     // Player 
@@ -113,7 +112,7 @@ public class PlayerCamera : BaseCamera
     public void Initialize(PlayerCharacter character)
     {
         base.Initialize();
-        collideRadius = targetCamera.nearClipPlane + Constants.CONTACT_OFFSET;
+        minDistance = targetCamera.nearClipPlane * 2 + Constants.CONTACT_OFFSET;
         mode = CAMERA_MODE.FOLLOW_PLAYER;
 
         // Player
@@ -147,7 +146,7 @@ public class PlayerCamera : BaseCamera
         Debug.DrawRay(targetTransform.position, castingDirection * maxDistance, Color.red);
 #endif
         // Sphere Cast from Target to Camera
-        if (Physics.SphereCast(targetTransform.position, collideRadius, castingDirection, out RaycastHit terrainHit, maxDistance, 1 << Constants.LAYER_TERRAIN))
+        if (Physics.SphereCast(targetTransform.position, minDistance, castingDirection, out RaycastHit terrainHit, maxDistance, 1 << Constants.LAYER_TERRAIN))
         {
             cameraDistance = Mathf.Clamp(terrainHit.distance, minDistance, maxDistance);
         }

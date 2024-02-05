@@ -88,7 +88,7 @@ public class TreasureBox : MonoBehaviour, IInteractableObject
         if (character.SceneData.IsGetTreasureBox(treasureBoxData.treasureBoxID))
             return;
 
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.INTERACTION);
+        Managers.InputManager.PushInputMode(CHARACTER_INPUT_MODE.INTERACTION);
         Managers.AudioManager.PlaySFX(Constants.Audio_Treasure_Box_Open);
         animator.Play("Treasure_Box_Open");
         DropItem(character.CharacterData);
@@ -100,7 +100,7 @@ public class TreasureBox : MonoBehaviour, IInteractableObject
     }
     public void ExitInteraction(PlayerCharacter character)
     {
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.ALL);
+        Managers.InputManager.PopInputMode();
     }
 
     public void DropItem(CharacterData characterData)
