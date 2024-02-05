@@ -10,9 +10,9 @@ public class TitleScenePanel : UIScenePanel
     }
     enum BUTTON
     {
-        Prefab_Start_Button,
-        Prefab_Quit_Button,
-        Prefab_Option_Button
+        UI_START_BUTTON,
+        UI_QUIT_BUTTON,
+        UI_OPTION_BUTTON
     }
 
     private Button startButton;
@@ -27,13 +27,13 @@ public class TitleScenePanel : UIScenePanel
         BindText(typeof(TEXT));
         BindButton(typeof(BUTTON));
 
-        startButton = GetButton((int)BUTTON.Prefab_Start_Button);
+        startButton = GetButton((int)BUTTON.UI_START_BUTTON);
         startButton.onClick.AddListener(OnClickStartGameButton);
 
-        quitButton = GetButton((int)BUTTON.Prefab_Quit_Button);
+        quitButton = GetButton((int)BUTTON.UI_QUIT_BUTTON);
         quitButton.onClick.AddListener(OnClickQuitButton);
 
-        optionButton = GetButton((int)BUTTON.Prefab_Option_Button);
+        optionButton = GetButton((int)BUTTON.UI_OPTION_BUTTON);
         optionButton.onClick.AddListener(OnClickOptionButton);
     }
     #endregion
@@ -55,7 +55,7 @@ public class TitleScenePanel : UIScenePanel
     public void OnClickOptionButton()
     {
         Managers.AudioManager.PlaySFX(Constants.Audio_Button_Click_Normal);
-        Managers.UIManager.UIFocusPanelCanvas.SwitchFocusPanel(Managers.UIManager.UIFocusPanelCanvas.OptionPanel);
+        Managers.UIManager.UIInteractionPanelCanvas.OptionPanel.TogglePanel();
     }
 
     /// <summary> Please Use Function in Scene Panel Canvas </summary>

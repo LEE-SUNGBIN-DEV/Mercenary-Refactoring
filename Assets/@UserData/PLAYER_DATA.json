@@ -1,0 +1,2196 @@
+{
+  "CharacterDatas": [
+    null,
+    {
+      "InventoryData": {
+        "inventorySlotSaveDatas": [
+          {
+            "itemID": "ITEM_RUNE_OLD",
+            "itemCount": 1,
+            "randomStatIDs": [
+              "STAT_LIGHT_ATTACK_DAMAGE_RATE"
+            ],
+            "randomStatValueTypes": [
+              0
+            ],
+            "randomStatValues": [
+              1.7
+            ]
+          },
+          {
+            "itemID": "ITEM_RUNE_OLD",
+            "itemCount": 1,
+            "randomStatIDs": [
+              "STAT_WILL"
+            ],
+            "randomStatValueTypes": [
+              0
+            ],
+            "randomStatValues": [
+              1.4
+            ]
+          },
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "runeSlotSaveDatas": [
+          {
+            "itemID": "ITEM_RUNE_OLD",
+            "itemCount": 1,
+            "randomStatIDs": [
+              "STAT_VITALITY"
+            ],
+            "randomStatValueTypes": [
+              1
+            ],
+            "randomStatValues": [
+              1.1
+            ]
+          },
+          {
+            "itemID": "ITEM_RUNE_SHINING",
+            "itemCount": 1,
+            "randomStatIDs": [
+              "STAT_STRENGTH",
+              "STAT_DEXTERITY"
+            ],
+            "randomStatValueTypes": [
+              1,
+              1
+            ],
+            "randomStatValues": [
+              2.9,
+              1.8
+            ]
+          },
+          {
+            "itemID": "ITEM_RUNE_OLD",
+            "itemCount": 1,
+            "randomStatIDs": [
+              "STAT_DEXTERITY"
+            ],
+            "randomStatValueTypes": [
+              0
+            ],
+            "randomStatValues": [
+              1.9
+            ]
+          }
+        ],
+        "halberdSlotSaveData": {
+          "itemID": "ITEM_HALBERD_0",
+          "itemCount": 1,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        "swordShieldSlotSaveData": {
+          "itemID": "ITEM_SWORD_SHIELD_0",
+          "itemCount": 1,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        "armorSlotSaveData": {
+          "itemID": "ITEM_ARMOR_0",
+          "itemCount": 1,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        "responseWaterSlotSaveData": {
+          "itemID": "ITEM_RESPONSE_WATER_2",
+          "itemCount": 1,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        "quickSlotItemIDs": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "responseStone": 690,
+        "responseWaterRemainingCount": 3,
+        "currentWeaponType": 2,
+        "ResponseStone": 690,
+        "ResponseWaterRemainingCount": 3,
+        "CurrentWeaponType": 2
+      },
+      "SkillData": {
+        "skillPoint": 9,
+        "unlockedSkillHashSet": [
+          "SKILL_WEAPON_HONING_0",
+          "SKILL_BASIC_ATTACK_MASTERY_0",
+          "SKILL_ADVANCED_ATTACK_MASTERY_0",
+          "SKILL_WEAKNESS_DETECTION_0",
+          "SKILL_WEAKNESS_STRIKE_0",
+          "SKILL_WEAPON_LIGHTWEIGHTING_0",
+          "SKILL_FLESH_STRIKE_0",
+          "SKILL_ARMOR_DESTRUCTION_0",
+          "SKILL_ARMOR_HONING_0",
+          "SKILL_ALLOY_ARMOR_0",
+          "SKILL_FORTIFICATION_0",
+          "SKILL_HEALTH_BOOST_0",
+          "SKILL_STAMINA_BOOST_0",
+          "SKILL_PHYSICAL_BOOST_0",
+          "SKILL_LEG_STRENGTH_BOOST_0",
+          "SKILL_HEALTH_BOOST_1",
+          "SKILL_HEALTH_BOOST_2",
+          "SKILL_HEALTH_BOOST_3",
+          "SKILL_HEALTH_BOOST_4",
+          "SKILL_HEALTH_BOOST_5",
+          "SKILL_STAMINA_BOOST_1"
+        ],
+        "nodeSkillDict": {
+          "ATTACK_NODE_1_1": "SKILL_WEAPON_HONING_0",
+          "ATTACK_NODE_2_1": "SKILL_BASIC_ATTACK_MASTERY_0",
+          "ATTACK_NODE_3_1": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+          "ATTACK_NODE_4_1": "SKILL_WEAKNESS_DETECTION_0",
+          "ATTACK_NODE_5_1": "SKILL_WEAKNESS_STRIKE_0",
+          "ATTACK_NODE_4_2": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+          "ATTACK_NODE_5_2": "SKILL_FLESH_STRIKE_0",
+          "ATTACK_NODE_4_3": "SKILL_ARMOR_DESTRUCTION_0",
+          "DEFENSE_NODE_1_1": "SKILL_ARMOR_HONING_0",
+          "DEFENSE_NODE_1_2": "SKILL_ALLOY_ARMOR_0",
+          "DEFENSE_NODE_1_3": "SKILL_FORTIFICATION_0",
+          "UTILITY_NODE_1_1": "SKILL_HEALTH_BOOST_5",
+          "UTILITY_NODE_2_1": "SKILL_STAMINA_BOOST_1",
+          "UTILITY_NODE_3_1": "SKILL_PHYSICAL_BOOST_0",
+          "UTILITY_NODE_4_1": "SKILL_LEG_STRENGTH_BOOST_0"
+        },
+        "SkillPoint": 9,
+        "UnlockedSkillHashSet": [
+          "SKILL_WEAPON_HONING_0",
+          "SKILL_BASIC_ATTACK_MASTERY_0",
+          "SKILL_ADVANCED_ATTACK_MASTERY_0",
+          "SKILL_WEAKNESS_DETECTION_0",
+          "SKILL_WEAKNESS_STRIKE_0",
+          "SKILL_WEAPON_LIGHTWEIGHTING_0",
+          "SKILL_FLESH_STRIKE_0",
+          "SKILL_ARMOR_DESTRUCTION_0",
+          "SKILL_ARMOR_HONING_0",
+          "SKILL_ALLOY_ARMOR_0",
+          "SKILL_FORTIFICATION_0",
+          "SKILL_HEALTH_BOOST_0",
+          "SKILL_STAMINA_BOOST_0",
+          "SKILL_PHYSICAL_BOOST_0",
+          "SKILL_LEG_STRENGTH_BOOST_0",
+          "SKILL_HEALTH_BOOST_1",
+          "SKILL_HEALTH_BOOST_2",
+          "SKILL_HEALTH_BOOST_3",
+          "SKILL_HEALTH_BOOST_4",
+          "SKILL_HEALTH_BOOST_5",
+          "SKILL_STAMINA_BOOST_1"
+        ],
+        "NodeSkillDict": {
+          "ATTACK_NODE_1_1": "SKILL_WEAPON_HONING_0",
+          "ATTACK_NODE_2_1": "SKILL_BASIC_ATTACK_MASTERY_0",
+          "ATTACK_NODE_3_1": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+          "ATTACK_NODE_4_1": "SKILL_WEAKNESS_DETECTION_0",
+          "ATTACK_NODE_5_1": "SKILL_WEAKNESS_STRIKE_0",
+          "ATTACK_NODE_4_2": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+          "ATTACK_NODE_5_2": "SKILL_FLESH_STRIKE_0",
+          "ATTACK_NODE_4_3": "SKILL_ARMOR_DESTRUCTION_0",
+          "DEFENSE_NODE_1_1": "SKILL_ARMOR_HONING_0",
+          "DEFENSE_NODE_1_2": "SKILL_ALLOY_ARMOR_0",
+          "DEFENSE_NODE_1_3": "SKILL_FORTIFICATION_0",
+          "UTILITY_NODE_1_1": "SKILL_HEALTH_BOOST_5",
+          "UTILITY_NODE_2_1": "SKILL_STAMINA_BOOST_1",
+          "UTILITY_NODE_3_1": "SKILL_PHYSICAL_BOOST_0",
+          "UTILITY_NODE_4_1": "SKILL_LEG_STRENGTH_BOOST_0"
+        },
+        "PassiveSkillDict": {
+          "SKILL_WEAPON_HONING_0": {
+            "SkillData": {
+              "skillID": "SKILL_WEAPON_HONING_0",
+              "skillType": 0,
+              "skillName": "무기 재련",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_WEAPON_HONING_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_1_1",
+              "spriteID": "SPRITE_SKILL_WEAPON_HONING"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_BASIC_ATTACK_MASTERY_0": {
+            "SkillData": {
+              "skillID": "SKILL_BASIC_ATTACK_MASTERY_0",
+              "skillType": 0,
+              "skillName": "기초 공격 단련",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_BASIC_ATTACK_MASTERY_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_2_1",
+              "spriteID": "SPRITE_SKILL_BASIC_ATTACK_MASTERY"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_ADVANCED_ATTACK_MASTERY_0": {
+            "SkillData": {
+              "skillID": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+              "skillType": 0,
+              "skillName": "심화 공격 단련",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_ADVANCED_ATTACK_MASTERY_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_3_1",
+              "spriteID": "SPRITE_SKILL_ADVANCED_ATTACK_MASTERY"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_WEAKNESS_DETECTION_0": {
+            "SkillData": {
+              "skillID": "SKILL_WEAKNESS_DETECTION_0",
+              "skillType": 0,
+              "skillName": "약점 포착",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_WEAKNESS_DETECTION_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_4_1",
+              "spriteID": "SPRITE_SKILL_WEAKNESS_DETECTION"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_WEAKNESS_STRIKE_0": {
+            "SkillData": {
+              "skillID": "SKILL_WEAKNESS_STRIKE_0",
+              "skillType": 0,
+              "skillName": "약점 타격",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_WEAKNESS_STRIKE_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_5_1",
+              "spriteID": "SPRITE_SKILL_WEAKNESS_STRIKE"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_WEAPON_LIGHTWEIGHTING_0": {
+            "SkillData": {
+              "skillID": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+              "skillType": 0,
+              "skillName": "무기 경량화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_WEAPON_LIGHTWEIGHTING_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_4_2",
+              "spriteID": "SPRITE_SKILL_WEAPON_LIGHTWEIGHTING"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_FLESH_STRIKE_0": {
+            "SkillData": {
+              "skillID": "SKILL_FLESH_STRIKE_0",
+              "skillType": 0,
+              "skillName": "살점 타격",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_FLESH_STRIKE_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_5_2",
+              "spriteID": "SPRITE_SKILL_FLESH_STRIKE"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_ARMOR_DESTRUCTION_0": {
+            "SkillData": {
+              "skillID": "SKILL_ARMOR_DESTRUCTION_0",
+              "skillType": 0,
+              "skillName": "갑옷 파괴",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_ARMOR_DESTRUCTION_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_4_3",
+              "spriteID": "SPRITE_SKILL_ARMOR_DESTRUCTION"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_ARMOR_HONING_0": {
+            "SkillData": {
+              "skillID": "SKILL_ARMOR_HONING_0",
+              "skillType": 0,
+              "skillName": "갑옷 재련",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_ARMOR_HONING_1",
+              "preconditionIDs": [],
+              "nodeID": "DEFENSE_NODE_1_1",
+              "spriteID": "SPRITE_SKILL_ARMOR_HONING"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_ALLOY_ARMOR_0": {
+            "SkillData": {
+              "skillID": "SKILL_ALLOY_ARMOR_0",
+              "skillType": 0,
+              "skillName": "합금 갑옷",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_ALLOY_ARMOR_1",
+              "preconditionIDs": [],
+              "nodeID": "DEFENSE_NODE_1_2",
+              "spriteID": "SPRITE_SKILL_ALLOY_ARMOR"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_FORTIFICATION_0": {
+            "SkillData": {
+              "skillID": "SKILL_FORTIFICATION_0",
+              "skillType": 0,
+              "skillName": "요새화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_FORTIFICATION_1",
+              "preconditionIDs": [],
+              "nodeID": "DEFENSE_NODE_1_3",
+              "spriteID": "SPRITE_SKILL_FORTIFICATION"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_HEALTH_BOOST_5": {
+            "SkillData": {
+              "skillID": "SKILL_HEALTH_BOOST_5",
+              "skillType": 0,
+              "skillName": "생명력 강화 V",
+              "skillDescription": "최대 HP가 <color=#C8A050>15%</color> 증가합니다.",
+              "currentLevel": 5,
+              "maxLevel": 5,
+              "fixedOptionID": "SKILL_HEALTH_BOOST_5",
+              "nextLevelID": null,
+              "preconditionIDs": [
+                "SKILL_HEALTH_BOOST_4"
+              ],
+              "nodeID": "UTILITY_NODE_1_1",
+              "spriteID": "SPRITE_SKILL_HEALTH_BOOST"
+            },
+            "FixedStatusOptions": [
+              {
+                "statData": {
+                  "statID": "STAT_MAX_HP",
+                  "statName": "최대 HP",
+                  "statType": 5,
+                  "defaultValue": 60.0,
+                  "minValue": 1.0,
+                  "maxValue": 10000.0,
+                  "statUnitType": 0
+                },
+                "valueType": 0,
+                "value": 5.0,
+                "StatOptionID": "STAT_MAX_HP",
+                "StatOptionName": "최대 HP",
+                "StatOptionType": 5
+              }
+            ]
+          },
+          "SKILL_STAMINA_BOOST_1": {
+            "SkillData": {
+              "skillID": "SKILL_STAMINA_BOOST_1",
+              "skillType": 0,
+              "skillName": "지구력 강화 I",
+              "skillDescription": "최대 SP가 <color=#C8A050>1%</color> 증가합니다.",
+              "currentLevel": 1,
+              "maxLevel": 5,
+              "fixedOptionID": "SKILL_STAMINA_BOOST_1",
+              "nextLevelID": "SKILL_STAMINA_BOOST_2",
+              "preconditionIDs": [
+                "SKILL_HEALTH_BOOST_5"
+              ],
+              "nodeID": "UTILITY_NODE_2_1",
+              "spriteID": "SPRITE_SKILL_STAMINA_BOOST"
+            },
+            "FixedStatusOptions": [
+              {
+                "statData": {
+                  "statID": "STAT_MAX_SP",
+                  "statName": "최대 SP",
+                  "statType": 6,
+                  "defaultValue": 60.0,
+                  "minValue": 1.0,
+                  "maxValue": 10000.0,
+                  "statUnitType": 0
+                },
+                "valueType": 0,
+                "value": 1.0,
+                "StatOptionID": "STAT_MAX_SP",
+                "StatOptionName": "최대 SP",
+                "StatOptionType": 6
+              }
+            ]
+          },
+          "SKILL_PHYSICAL_BOOST_0": {
+            "SkillData": {
+              "skillID": "SKILL_PHYSICAL_BOOST_0",
+              "skillType": 0,
+              "skillName": "신체 강화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_PHYSICAL_BOOST_1",
+              "preconditionIDs": [],
+              "nodeID": "UTILITY_NODE_3_1",
+              "spriteID": "SPRITE_SKILL_PHYSICAL_BOOST"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_LEG_STRENGTH_BOOST_0": {
+            "SkillData": {
+              "skillID": "SKILL_LEG_STRENGTH_BOOST_0",
+              "skillType": 0,
+              "skillName": "각력 강화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_LEG_STRENGTH_BOOST_1",
+              "preconditionIDs": [],
+              "nodeID": "UTILITY_NODE_4_1",
+              "spriteID": "SPRITE_SKILL_LEG_STRENGTH_BOOST"
+            },
+            "FixedStatusOptions": null
+          }
+        }
+      },
+      "StatusData": {
+        "level": 6,
+        "abilityPoint": 5,
+        "strengthSaveData": 25.0,
+        "dexteritySaveData": 10.0,
+        "vitalitySaveData": 15.0,
+        "willSaveData": 10.0,
+        "currentExp": 42.0,
+        "currentHP": 48.9702377,
+        "currentSP": 102.396
+      },
+      "LocationData": {
+        "lastScene": 3,
+        "locationMode": 4,
+        "lastResponseCrystalID": "CRYSTAL_FOG_CANYON_1",
+        "lastResponseGateID": "GATE_FOG_CANYON_0",
+        "lastBossRoomID": "Boss_Room_Moled",
+        "lastLocationX": 0.0,
+        "lastLocationY": 0.0,
+        "lastLocationZ": 0.0,
+        "lockedPointHashSet": [
+          "CRYSTAL_FOG_CANYON_0"
+        ],
+        "unlockedPointHashSet": [
+          "CRYSTAL_FOG_CANYON_1",
+          "CRYSTAL_TARANIS_CITADEL_0"
+        ],
+        "LastScene": 3,
+        "LockedPointHashSet": [
+          "CRYSTAL_FOG_CANYON_0"
+        ],
+        "UnlockedPointHashSet": [
+          "CRYSTAL_FOG_CANYON_1",
+          "CRYSTAL_TARANIS_CITADEL_0"
+        ]
+      },
+      "SceneData": {
+        "BossClearDictionary": {
+          "FOG_CANYON_MOLED": false,
+          "ENEMY_FOG_CANYON_MOLED": true
+        },
+        "ResonanceGateDictionary": {},
+        "TreasureBoxGetDictionary": {
+          "TREASURE_BOX_FOG_CANYON_0": false,
+          "TREASURE_BOX_FOG_CANYON_1": false
+        }
+      },
+      "QuestData": {
+        "questSaveDict": {}
+      }
+    },
+    {
+      "InventoryData": {
+        "inventorySlotSaveDatas": [
+          {
+            "itemID": "ITEM_RUNE_SHINING",
+            "itemCount": 1,
+            "randomStatIDs": [
+              "STAT_DEXTERITY",
+              "STAT_DEXTERITY"
+            ],
+            "randomStatValueTypes": [
+              0,
+              1
+            ],
+            "randomStatValues": [
+              1.1,
+              2.6
+            ]
+          },
+          {
+            "itemID": "ITEM_RUNE_REFINED",
+            "itemCount": 1,
+            "randomStatIDs": [
+              "STAT_DEFENSE_POWER",
+              "STAT_LIGHT_ATTACK_DAMAGE_RATE",
+              "STAT_STRENGTH"
+            ],
+            "randomStatValueTypes": [
+              0,
+              0,
+              0
+            ],
+            "randomStatValues": [
+              1.7,
+              1.4,
+              3.5
+            ]
+          },
+          {
+            "itemID": "ITEM_RUNE_SHINING",
+            "itemCount": 1,
+            "randomStatIDs": [
+              "STAT_ATTACK_POWER",
+              "STAT_MAX_HP"
+            ],
+            "randomStatValueTypes": [
+              0,
+              1
+            ],
+            "randomStatValues": [
+              1.9,
+              2.4
+            ]
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          }
+        ],
+        "runeSlotSaveDatas": [
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          },
+          {
+            "itemID": null,
+            "itemCount": 0,
+            "randomStatIDs": null,
+            "randomStatValueTypes": null,
+            "randomStatValues": null
+          }
+        ],
+        "halberdSlotSaveData": {
+          "itemID": "ITEM_HALBERD_0",
+          "itemCount": 1,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        "swordShieldSlotSaveData": {
+          "itemID": "ITEM_SWORD_SHIELD_0",
+          "itemCount": 1,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        "armorSlotSaveData": {
+          "itemID": "ITEM_ARMOR_0",
+          "itemCount": 1,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        "responseWaterSlotSaveData": {
+          "itemID": "ITEM_RESPONSE_WATER_1",
+          "itemCount": 1,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        "quickSlotItemIDs": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "responseStone": 650,
+        "responseWaterRemainingCount": 3,
+        "currentWeaponType": 2,
+        "ResponseStone": 650,
+        "ResponseWaterRemainingCount": 3,
+        "CurrentWeaponType": 2
+      },
+      "SkillData": {
+        "skillPoint": 12,
+        "unlockedSkillHashSet": [
+          "SKILL_WEAPON_HONING_0",
+          "SKILL_BASIC_ATTACK_MASTERY_0",
+          "SKILL_ADVANCED_ATTACK_MASTERY_0",
+          "SKILL_WEAKNESS_DETECTION_0",
+          "SKILL_WEAKNESS_STRIKE_0",
+          "SKILL_WEAPON_LIGHTWEIGHTING_0",
+          "SKILL_FLESH_STRIKE_0",
+          "SKILL_ARMOR_DESTRUCTION_0",
+          "SKILL_ARMOR_HONING_0",
+          "SKILL_ALLOY_ARMOR_0",
+          "SKILL_FORTIFICATION_0",
+          "SKILL_HEALTH_BOOST_0",
+          "SKILL_STAMINA_BOOST_0",
+          "SKILL_PHYSICAL_BOOST_0",
+          "SKILL_LEG_STRENGTH_BOOST_0"
+        ],
+        "nodeSkillDict": {
+          "ATTACK_NODE_1_1": "SKILL_WEAPON_HONING_0",
+          "ATTACK_NODE_2_1": "SKILL_BASIC_ATTACK_MASTERY_0",
+          "ATTACK_NODE_3_1": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+          "ATTACK_NODE_4_1": "SKILL_WEAKNESS_DETECTION_0",
+          "ATTACK_NODE_5_1": "SKILL_WEAKNESS_STRIKE_0",
+          "ATTACK_NODE_4_2": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+          "ATTACK_NODE_5_2": "SKILL_FLESH_STRIKE_0",
+          "ATTACK_NODE_4_3": "SKILL_ARMOR_DESTRUCTION_0",
+          "DEFENSE_NODE_1_1": "SKILL_ARMOR_HONING_0",
+          "DEFENSE_NODE_1_2": "SKILL_ALLOY_ARMOR_0",
+          "DEFENSE_NODE_1_3": "SKILL_FORTIFICATION_0",
+          "UTILITY_NODE_1_1": "SKILL_HEALTH_BOOST_0",
+          "UTILITY_NODE_2_1": "SKILL_STAMINA_BOOST_0",
+          "UTILITY_NODE_3_1": "SKILL_PHYSICAL_BOOST_0",
+          "UTILITY_NODE_4_1": "SKILL_LEG_STRENGTH_BOOST_0"
+        },
+        "SkillPoint": 12,
+        "UnlockedSkillHashSet": [
+          "SKILL_WEAPON_HONING_0",
+          "SKILL_BASIC_ATTACK_MASTERY_0",
+          "SKILL_ADVANCED_ATTACK_MASTERY_0",
+          "SKILL_WEAKNESS_DETECTION_0",
+          "SKILL_WEAKNESS_STRIKE_0",
+          "SKILL_WEAPON_LIGHTWEIGHTING_0",
+          "SKILL_FLESH_STRIKE_0",
+          "SKILL_ARMOR_DESTRUCTION_0",
+          "SKILL_ARMOR_HONING_0",
+          "SKILL_ALLOY_ARMOR_0",
+          "SKILL_FORTIFICATION_0",
+          "SKILL_HEALTH_BOOST_0",
+          "SKILL_STAMINA_BOOST_0",
+          "SKILL_PHYSICAL_BOOST_0",
+          "SKILL_LEG_STRENGTH_BOOST_0"
+        ],
+        "NodeSkillDict": {
+          "ATTACK_NODE_1_1": "SKILL_WEAPON_HONING_0",
+          "ATTACK_NODE_2_1": "SKILL_BASIC_ATTACK_MASTERY_0",
+          "ATTACK_NODE_3_1": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+          "ATTACK_NODE_4_1": "SKILL_WEAKNESS_DETECTION_0",
+          "ATTACK_NODE_5_1": "SKILL_WEAKNESS_STRIKE_0",
+          "ATTACK_NODE_4_2": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+          "ATTACK_NODE_5_2": "SKILL_FLESH_STRIKE_0",
+          "ATTACK_NODE_4_3": "SKILL_ARMOR_DESTRUCTION_0",
+          "DEFENSE_NODE_1_1": "SKILL_ARMOR_HONING_0",
+          "DEFENSE_NODE_1_2": "SKILL_ALLOY_ARMOR_0",
+          "DEFENSE_NODE_1_3": "SKILL_FORTIFICATION_0",
+          "UTILITY_NODE_1_1": "SKILL_HEALTH_BOOST_0",
+          "UTILITY_NODE_2_1": "SKILL_STAMINA_BOOST_0",
+          "UTILITY_NODE_3_1": "SKILL_PHYSICAL_BOOST_0",
+          "UTILITY_NODE_4_1": "SKILL_LEG_STRENGTH_BOOST_0"
+        },
+        "PassiveSkillDict": {
+          "SKILL_WEAPON_HONING_0": {
+            "SkillData": {
+              "skillID": "SKILL_WEAPON_HONING_0",
+              "skillType": 0,
+              "skillName": "무기 재련",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_WEAPON_HONING_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_1_1",
+              "spriteID": "SPRITE_SKILL_WEAPON_HONING"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_BASIC_ATTACK_MASTERY_0": {
+            "SkillData": {
+              "skillID": "SKILL_BASIC_ATTACK_MASTERY_0",
+              "skillType": 0,
+              "skillName": "기초 공격 단련",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_BASIC_ATTACK_MASTERY_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_2_1",
+              "spriteID": "SPRITE_SKILL_BASIC_ATTACK_MASTERY"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_ADVANCED_ATTACK_MASTERY_0": {
+            "SkillData": {
+              "skillID": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+              "skillType": 0,
+              "skillName": "심화 공격 단련",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_ADVANCED_ATTACK_MASTERY_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_3_1",
+              "spriteID": "SPRITE_SKILL_ADVANCED_ATTACK_MASTERY"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_WEAKNESS_DETECTION_0": {
+            "SkillData": {
+              "skillID": "SKILL_WEAKNESS_DETECTION_0",
+              "skillType": 0,
+              "skillName": "약점 포착",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_WEAKNESS_DETECTION_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_4_1",
+              "spriteID": "SPRITE_SKILL_WEAKNESS_DETECTION"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_WEAKNESS_STRIKE_0": {
+            "SkillData": {
+              "skillID": "SKILL_WEAKNESS_STRIKE_0",
+              "skillType": 0,
+              "skillName": "약점 타격",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_WEAKNESS_STRIKE_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_5_1",
+              "spriteID": "SPRITE_SKILL_WEAKNESS_STRIKE"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_WEAPON_LIGHTWEIGHTING_0": {
+            "SkillData": {
+              "skillID": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+              "skillType": 0,
+              "skillName": "무기 경량화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_WEAPON_LIGHTWEIGHTING_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_4_2",
+              "spriteID": "SPRITE_SKILL_WEAPON_LIGHTWEIGHTING"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_FLESH_STRIKE_0": {
+            "SkillData": {
+              "skillID": "SKILL_FLESH_STRIKE_0",
+              "skillType": 0,
+              "skillName": "살점 타격",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_FLESH_STRIKE_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_5_2",
+              "spriteID": "SPRITE_SKILL_FLESH_STRIKE"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_ARMOR_DESTRUCTION_0": {
+            "SkillData": {
+              "skillID": "SKILL_ARMOR_DESTRUCTION_0",
+              "skillType": 0,
+              "skillName": "갑옷 파괴",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_ARMOR_DESTRUCTION_1",
+              "preconditionIDs": [],
+              "nodeID": "ATTACK_NODE_4_3",
+              "spriteID": "SPRITE_SKILL_ARMOR_DESTRUCTION"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_ARMOR_HONING_0": {
+            "SkillData": {
+              "skillID": "SKILL_ARMOR_HONING_0",
+              "skillType": 0,
+              "skillName": "갑옷 재련",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_ARMOR_HONING_1",
+              "preconditionIDs": [],
+              "nodeID": "DEFENSE_NODE_1_1",
+              "spriteID": "SPRITE_SKILL_ARMOR_HONING"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_ALLOY_ARMOR_0": {
+            "SkillData": {
+              "skillID": "SKILL_ALLOY_ARMOR_0",
+              "skillType": 0,
+              "skillName": "합금 갑옷",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_ALLOY_ARMOR_1",
+              "preconditionIDs": [],
+              "nodeID": "DEFENSE_NODE_1_2",
+              "spriteID": "SPRITE_SKILL_ALLOY_ARMOR"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_FORTIFICATION_0": {
+            "SkillData": {
+              "skillID": "SKILL_FORTIFICATION_0",
+              "skillType": 0,
+              "skillName": "요새화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_FORTIFICATION_1",
+              "preconditionIDs": [],
+              "nodeID": "DEFENSE_NODE_1_3",
+              "spriteID": "SPRITE_SKILL_FORTIFICATION"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_HEALTH_BOOST_0": {
+            "SkillData": {
+              "skillID": "SKILL_HEALTH_BOOST_0",
+              "skillType": 0,
+              "skillName": "생명력 강화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_HEALTH_BOOST_1",
+              "preconditionIDs": [],
+              "nodeID": "UTILITY_NODE_1_1",
+              "spriteID": "SPRITE_SKILL_HEALTH_BOOST"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_STAMINA_BOOST_0": {
+            "SkillData": {
+              "skillID": "SKILL_STAMINA_BOOST_0",
+              "skillType": 0,
+              "skillName": "지구력 강화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_STAMINA_BOOST_1",
+              "preconditionIDs": [],
+              "nodeID": "UTILITY_NODE_2_1",
+              "spriteID": "SPRITE_SKILL_STAMINA_BOOST"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_PHYSICAL_BOOST_0": {
+            "SkillData": {
+              "skillID": "SKILL_PHYSICAL_BOOST_0",
+              "skillType": 0,
+              "skillName": "신체 강화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_PHYSICAL_BOOST_1",
+              "preconditionIDs": [],
+              "nodeID": "UTILITY_NODE_3_1",
+              "spriteID": "SPRITE_SKILL_PHYSICAL_BOOST"
+            },
+            "FixedStatusOptions": null
+          },
+          "SKILL_LEG_STRENGTH_BOOST_0": {
+            "SkillData": {
+              "skillID": "SKILL_LEG_STRENGTH_BOOST_0",
+              "skillType": 0,
+              "skillName": "각력 강화",
+              "skillDescription": null,
+              "currentLevel": 0,
+              "maxLevel": 5,
+              "fixedOptionID": null,
+              "nextLevelID": "SKILL_LEG_STRENGTH_BOOST_1",
+              "preconditionIDs": [],
+              "nodeID": "UTILITY_NODE_4_1",
+              "spriteID": "SPRITE_SKILL_LEG_STRENGTH_BOOST"
+            },
+            "FixedStatusOptions": null
+          }
+        }
+      },
+      "StatusData": {
+        "level": 5,
+        "abilityPoint": 0,
+        "strengthSaveData": 25.0,
+        "dexteritySaveData": 10.0,
+        "vitalitySaveData": 15.0,
+        "willSaveData": 10.0,
+        "currentExp": 68.0,
+        "currentHP": 133.0,
+        "currentSP": 101.0
+      },
+      "LocationData": {
+        "lastScene": 4,
+        "locationMode": 2,
+        "lastResponseCrystalID": "CRYSTAL_TARANIS_CITADEL_0",
+        "lastResponseGateID": "GATE_TARANIS_CITADEL_0",
+        "lastBossRoomID": "Boss_Room_Moled",
+        "lastLocationX": 0.0,
+        "lastLocationY": 0.0,
+        "lastLocationZ": 0.0,
+        "lockedPointHashSet": [
+          "CRYSTAL_FOG_CANYON_0",
+          "CRYSTAL_FOG_CANYON_1"
+        ],
+        "unlockedPointHashSet": [
+          "CRYSTAL_TARANIS_CITADEL_0"
+        ],
+        "LastScene": 4,
+        "LockedPointHashSet": [
+          "CRYSTAL_FOG_CANYON_0",
+          "CRYSTAL_FOG_CANYON_1"
+        ],
+        "UnlockedPointHashSet": [
+          "CRYSTAL_TARANIS_CITADEL_0"
+        ]
+      },
+      "SceneData": {
+        "BossClearDictionary": {
+          "FOG_CANYON_MOLED": false,
+          "ENEMY_FOG_CANYON_MOLED": true
+        },
+        "ResonanceGateDictionary": {},
+        "TreasureBoxGetDictionary": {
+          "TREASURE_BOX_FOG_CANYON_0": false,
+          "TREASURE_BOX_FOG_CANYON_1": false
+        }
+      },
+      "QuestData": {
+        "questSaveDict": {}
+      }
+    }
+  ],
+  "CurrentCharacterData": {
+    "InventoryData": {
+      "inventorySlotSaveDatas": [
+        {
+          "itemID": "ITEM_RUNE_SHINING",
+          "itemCount": 1,
+          "randomStatIDs": [
+            "STAT_DEXTERITY",
+            "STAT_DEXTERITY"
+          ],
+          "randomStatValueTypes": [
+            0,
+            1
+          ],
+          "randomStatValues": [
+            1.1,
+            2.6
+          ]
+        },
+        {
+          "itemID": "ITEM_RUNE_REFINED",
+          "itemCount": 1,
+          "randomStatIDs": [
+            "STAT_DEFENSE_POWER",
+            "STAT_LIGHT_ATTACK_DAMAGE_RATE",
+            "STAT_STRENGTH"
+          ],
+          "randomStatValueTypes": [
+            0,
+            0,
+            0
+          ],
+          "randomStatValues": [
+            1.7,
+            1.4,
+            3.5
+          ]
+        },
+        {
+          "itemID": "ITEM_RUNE_SHINING",
+          "itemCount": 1,
+          "randomStatIDs": [
+            "STAT_ATTACK_POWER",
+            "STAT_MAX_HP"
+          ],
+          "randomStatValueTypes": [
+            0,
+            1
+          ],
+          "randomStatValues": [
+            1.9,
+            2.4
+          ]
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        }
+      ],
+      "runeSlotSaveDatas": [
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        },
+        {
+          "itemID": null,
+          "itemCount": 0,
+          "randomStatIDs": null,
+          "randomStatValueTypes": null,
+          "randomStatValues": null
+        }
+      ],
+      "halberdSlotSaveData": {
+        "itemID": "ITEM_HALBERD_0",
+        "itemCount": 1,
+        "randomStatIDs": null,
+        "randomStatValueTypes": null,
+        "randomStatValues": null
+      },
+      "swordShieldSlotSaveData": {
+        "itemID": "ITEM_SWORD_SHIELD_0",
+        "itemCount": 1,
+        "randomStatIDs": null,
+        "randomStatValueTypes": null,
+        "randomStatValues": null
+      },
+      "armorSlotSaveData": {
+        "itemID": "ITEM_ARMOR_0",
+        "itemCount": 1,
+        "randomStatIDs": null,
+        "randomStatValueTypes": null,
+        "randomStatValues": null
+      },
+      "responseWaterSlotSaveData": {
+        "itemID": "ITEM_RESPONSE_WATER_1",
+        "itemCount": 1,
+        "randomStatIDs": null,
+        "randomStatValueTypes": null,
+        "randomStatValues": null
+      },
+      "quickSlotItemIDs": [
+        null,
+        null,
+        null,
+        null
+      ],
+      "responseStone": 650,
+      "responseWaterRemainingCount": 3,
+      "currentWeaponType": 2,
+      "ResponseStone": 650,
+      "ResponseWaterRemainingCount": 3,
+      "CurrentWeaponType": 2
+    },
+    "SkillData": {
+      "skillPoint": 12,
+      "unlockedSkillHashSet": [
+        "SKILL_WEAPON_HONING_0",
+        "SKILL_BASIC_ATTACK_MASTERY_0",
+        "SKILL_ADVANCED_ATTACK_MASTERY_0",
+        "SKILL_WEAKNESS_DETECTION_0",
+        "SKILL_WEAKNESS_STRIKE_0",
+        "SKILL_WEAPON_LIGHTWEIGHTING_0",
+        "SKILL_FLESH_STRIKE_0",
+        "SKILL_ARMOR_DESTRUCTION_0",
+        "SKILL_ARMOR_HONING_0",
+        "SKILL_ALLOY_ARMOR_0",
+        "SKILL_FORTIFICATION_0",
+        "SKILL_HEALTH_BOOST_0",
+        "SKILL_STAMINA_BOOST_0",
+        "SKILL_PHYSICAL_BOOST_0",
+        "SKILL_LEG_STRENGTH_BOOST_0"
+      ],
+      "nodeSkillDict": {
+        "ATTACK_NODE_1_1": "SKILL_WEAPON_HONING_0",
+        "ATTACK_NODE_2_1": "SKILL_BASIC_ATTACK_MASTERY_0",
+        "ATTACK_NODE_3_1": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+        "ATTACK_NODE_4_1": "SKILL_WEAKNESS_DETECTION_0",
+        "ATTACK_NODE_5_1": "SKILL_WEAKNESS_STRIKE_0",
+        "ATTACK_NODE_4_2": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+        "ATTACK_NODE_5_2": "SKILL_FLESH_STRIKE_0",
+        "ATTACK_NODE_4_3": "SKILL_ARMOR_DESTRUCTION_0",
+        "DEFENSE_NODE_1_1": "SKILL_ARMOR_HONING_0",
+        "DEFENSE_NODE_1_2": "SKILL_ALLOY_ARMOR_0",
+        "DEFENSE_NODE_1_3": "SKILL_FORTIFICATION_0",
+        "UTILITY_NODE_1_1": "SKILL_HEALTH_BOOST_0",
+        "UTILITY_NODE_2_1": "SKILL_STAMINA_BOOST_0",
+        "UTILITY_NODE_3_1": "SKILL_PHYSICAL_BOOST_0",
+        "UTILITY_NODE_4_1": "SKILL_LEG_STRENGTH_BOOST_0"
+      },
+      "SkillPoint": 12,
+      "UnlockedSkillHashSet": [
+        "SKILL_WEAPON_HONING_0",
+        "SKILL_BASIC_ATTACK_MASTERY_0",
+        "SKILL_ADVANCED_ATTACK_MASTERY_0",
+        "SKILL_WEAKNESS_DETECTION_0",
+        "SKILL_WEAKNESS_STRIKE_0",
+        "SKILL_WEAPON_LIGHTWEIGHTING_0",
+        "SKILL_FLESH_STRIKE_0",
+        "SKILL_ARMOR_DESTRUCTION_0",
+        "SKILL_ARMOR_HONING_0",
+        "SKILL_ALLOY_ARMOR_0",
+        "SKILL_FORTIFICATION_0",
+        "SKILL_HEALTH_BOOST_0",
+        "SKILL_STAMINA_BOOST_0",
+        "SKILL_PHYSICAL_BOOST_0",
+        "SKILL_LEG_STRENGTH_BOOST_0"
+      ],
+      "NodeSkillDict": {
+        "ATTACK_NODE_1_1": "SKILL_WEAPON_HONING_0",
+        "ATTACK_NODE_2_1": "SKILL_BASIC_ATTACK_MASTERY_0",
+        "ATTACK_NODE_3_1": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+        "ATTACK_NODE_4_1": "SKILL_WEAKNESS_DETECTION_0",
+        "ATTACK_NODE_5_1": "SKILL_WEAKNESS_STRIKE_0",
+        "ATTACK_NODE_4_2": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+        "ATTACK_NODE_5_2": "SKILL_FLESH_STRIKE_0",
+        "ATTACK_NODE_4_3": "SKILL_ARMOR_DESTRUCTION_0",
+        "DEFENSE_NODE_1_1": "SKILL_ARMOR_HONING_0",
+        "DEFENSE_NODE_1_2": "SKILL_ALLOY_ARMOR_0",
+        "DEFENSE_NODE_1_3": "SKILL_FORTIFICATION_0",
+        "UTILITY_NODE_1_1": "SKILL_HEALTH_BOOST_0",
+        "UTILITY_NODE_2_1": "SKILL_STAMINA_BOOST_0",
+        "UTILITY_NODE_3_1": "SKILL_PHYSICAL_BOOST_0",
+        "UTILITY_NODE_4_1": "SKILL_LEG_STRENGTH_BOOST_0"
+      },
+      "PassiveSkillDict": {
+        "SKILL_WEAPON_HONING_0": {
+          "SkillData": {
+            "skillID": "SKILL_WEAPON_HONING_0",
+            "skillType": 0,
+            "skillName": "무기 재련",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_WEAPON_HONING_1",
+            "preconditionIDs": [],
+            "nodeID": "ATTACK_NODE_1_1",
+            "spriteID": "SPRITE_SKILL_WEAPON_HONING"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_BASIC_ATTACK_MASTERY_0": {
+          "SkillData": {
+            "skillID": "SKILL_BASIC_ATTACK_MASTERY_0",
+            "skillType": 0,
+            "skillName": "기초 공격 단련",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_BASIC_ATTACK_MASTERY_1",
+            "preconditionIDs": [],
+            "nodeID": "ATTACK_NODE_2_1",
+            "spriteID": "SPRITE_SKILL_BASIC_ATTACK_MASTERY"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_ADVANCED_ATTACK_MASTERY_0": {
+          "SkillData": {
+            "skillID": "SKILL_ADVANCED_ATTACK_MASTERY_0",
+            "skillType": 0,
+            "skillName": "심화 공격 단련",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_ADVANCED_ATTACK_MASTERY_1",
+            "preconditionIDs": [],
+            "nodeID": "ATTACK_NODE_3_1",
+            "spriteID": "SPRITE_SKILL_ADVANCED_ATTACK_MASTERY"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_WEAKNESS_DETECTION_0": {
+          "SkillData": {
+            "skillID": "SKILL_WEAKNESS_DETECTION_0",
+            "skillType": 0,
+            "skillName": "약점 포착",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_WEAKNESS_DETECTION_1",
+            "preconditionIDs": [],
+            "nodeID": "ATTACK_NODE_4_1",
+            "spriteID": "SPRITE_SKILL_WEAKNESS_DETECTION"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_WEAKNESS_STRIKE_0": {
+          "SkillData": {
+            "skillID": "SKILL_WEAKNESS_STRIKE_0",
+            "skillType": 0,
+            "skillName": "약점 타격",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_WEAKNESS_STRIKE_1",
+            "preconditionIDs": [],
+            "nodeID": "ATTACK_NODE_5_1",
+            "spriteID": "SPRITE_SKILL_WEAKNESS_STRIKE"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_WEAPON_LIGHTWEIGHTING_0": {
+          "SkillData": {
+            "skillID": "SKILL_WEAPON_LIGHTWEIGHTING_0",
+            "skillType": 0,
+            "skillName": "무기 경량화",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_WEAPON_LIGHTWEIGHTING_1",
+            "preconditionIDs": [],
+            "nodeID": "ATTACK_NODE_4_2",
+            "spriteID": "SPRITE_SKILL_WEAPON_LIGHTWEIGHTING"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_FLESH_STRIKE_0": {
+          "SkillData": {
+            "skillID": "SKILL_FLESH_STRIKE_0",
+            "skillType": 0,
+            "skillName": "살점 타격",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_FLESH_STRIKE_1",
+            "preconditionIDs": [],
+            "nodeID": "ATTACK_NODE_5_2",
+            "spriteID": "SPRITE_SKILL_FLESH_STRIKE"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_ARMOR_DESTRUCTION_0": {
+          "SkillData": {
+            "skillID": "SKILL_ARMOR_DESTRUCTION_0",
+            "skillType": 0,
+            "skillName": "갑옷 파괴",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_ARMOR_DESTRUCTION_1",
+            "preconditionIDs": [],
+            "nodeID": "ATTACK_NODE_4_3",
+            "spriteID": "SPRITE_SKILL_ARMOR_DESTRUCTION"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_ARMOR_HONING_0": {
+          "SkillData": {
+            "skillID": "SKILL_ARMOR_HONING_0",
+            "skillType": 0,
+            "skillName": "갑옷 재련",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_ARMOR_HONING_1",
+            "preconditionIDs": [],
+            "nodeID": "DEFENSE_NODE_1_1",
+            "spriteID": "SPRITE_SKILL_ARMOR_HONING"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_ALLOY_ARMOR_0": {
+          "SkillData": {
+            "skillID": "SKILL_ALLOY_ARMOR_0",
+            "skillType": 0,
+            "skillName": "합금 갑옷",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_ALLOY_ARMOR_1",
+            "preconditionIDs": [],
+            "nodeID": "DEFENSE_NODE_1_2",
+            "spriteID": "SPRITE_SKILL_ALLOY_ARMOR"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_FORTIFICATION_0": {
+          "SkillData": {
+            "skillID": "SKILL_FORTIFICATION_0",
+            "skillType": 0,
+            "skillName": "요새화",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_FORTIFICATION_1",
+            "preconditionIDs": [],
+            "nodeID": "DEFENSE_NODE_1_3",
+            "spriteID": "SPRITE_SKILL_FORTIFICATION"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_HEALTH_BOOST_0": {
+          "SkillData": {
+            "skillID": "SKILL_HEALTH_BOOST_0",
+            "skillType": 0,
+            "skillName": "생명력 강화",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_HEALTH_BOOST_1",
+            "preconditionIDs": [],
+            "nodeID": "UTILITY_NODE_1_1",
+            "spriteID": "SPRITE_SKILL_HEALTH_BOOST"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_STAMINA_BOOST_0": {
+          "SkillData": {
+            "skillID": "SKILL_STAMINA_BOOST_0",
+            "skillType": 0,
+            "skillName": "지구력 강화",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_STAMINA_BOOST_1",
+            "preconditionIDs": [],
+            "nodeID": "UTILITY_NODE_2_1",
+            "spriteID": "SPRITE_SKILL_STAMINA_BOOST"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_PHYSICAL_BOOST_0": {
+          "SkillData": {
+            "skillID": "SKILL_PHYSICAL_BOOST_0",
+            "skillType": 0,
+            "skillName": "신체 강화",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_PHYSICAL_BOOST_1",
+            "preconditionIDs": [],
+            "nodeID": "UTILITY_NODE_3_1",
+            "spriteID": "SPRITE_SKILL_PHYSICAL_BOOST"
+          },
+          "FixedStatusOptions": null
+        },
+        "SKILL_LEG_STRENGTH_BOOST_0": {
+          "SkillData": {
+            "skillID": "SKILL_LEG_STRENGTH_BOOST_0",
+            "skillType": 0,
+            "skillName": "각력 강화",
+            "skillDescription": null,
+            "currentLevel": 0,
+            "maxLevel": 5,
+            "fixedOptionID": null,
+            "nextLevelID": "SKILL_LEG_STRENGTH_BOOST_1",
+            "preconditionIDs": [],
+            "nodeID": "UTILITY_NODE_4_1",
+            "spriteID": "SPRITE_SKILL_LEG_STRENGTH_BOOST"
+          },
+          "FixedStatusOptions": null
+        }
+      }
+    },
+    "StatusData": {
+      "level": 5,
+      "abilityPoint": 0,
+      "strengthSaveData": 25.0,
+      "dexteritySaveData": 10.0,
+      "vitalitySaveData": 15.0,
+      "willSaveData": 10.0,
+      "currentExp": 68.0,
+      "currentHP": 133.0,
+      "currentSP": 101.0
+    },
+    "LocationData": {
+      "lastScene": 4,
+      "locationMode": 2,
+      "lastResponseCrystalID": "CRYSTAL_TARANIS_CITADEL_0",
+      "lastResponseGateID": "GATE_TARANIS_CITADEL_0",
+      "lastBossRoomID": "Boss_Room_Moled",
+      "lastLocationX": 0.0,
+      "lastLocationY": 0.0,
+      "lastLocationZ": 0.0,
+      "lockedPointHashSet": [
+        "CRYSTAL_FOG_CANYON_0",
+        "CRYSTAL_FOG_CANYON_1"
+      ],
+      "unlockedPointHashSet": [
+        "CRYSTAL_TARANIS_CITADEL_0"
+      ],
+      "LastScene": 4,
+      "LockedPointHashSet": [
+        "CRYSTAL_FOG_CANYON_0",
+        "CRYSTAL_FOG_CANYON_1"
+      ],
+      "UnlockedPointHashSet": [
+        "CRYSTAL_TARANIS_CITADEL_0"
+      ]
+    },
+    "SceneData": {
+      "BossClearDictionary": {
+        "FOG_CANYON_MOLED": false,
+        "ENEMY_FOG_CANYON_MOLED": true
+      },
+      "ResonanceGateDictionary": {},
+      "TreasureBoxGetDictionary": {
+        "TREASURE_BOX_FOG_CANYON_0": false,
+        "TREASURE_BOX_FOG_CANYON_1": false
+      }
+    },
+    "QuestData": {
+      "questSaveDict": {}
+    }
+  },
+  "OptionData": {
+    "bgmVolume": 0.5,
+    "sfxVolume": 0.5,
+    "ambientVolume": 0.5,
+    "isFullScreen": true,
+    "screenWidth": 1920,
+    "screenHeight": 1080,
+    "screenRefreshRate": 60,
+    "mouseSensitivity": 10.0,
+    "BgmVolume": 0.5,
+    "SfxVolume": 0.5,
+    "AmbientVolume": 0.5,
+    "IsFullScreen": true,
+    "ScreenWidth": 1920,
+    "ScreenHeight": 1080,
+    "ScreenRefreshRate": 60
+  }
+}

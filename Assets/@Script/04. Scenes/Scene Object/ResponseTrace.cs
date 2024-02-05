@@ -63,7 +63,7 @@ public class ResponseTrace : MonoBehaviour, IInteractableObject
     public void EnterInteraction(PlayerCharacter character)
     {
         Managers.UIManager.UIInteractionPanelCanvas.ResponseTracePanel.OpenPanel(responseTraceData.title, responseTraceData.content);
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.INTERACTION);
+        Managers.InputManager.PushInputMode(CHARACTER_INPUT_MODE.INTERACTION);
     }
     public void UpdateInteraction(PlayerCharacter character)
     {
@@ -75,7 +75,7 @@ public class ResponseTrace : MonoBehaviour, IInteractableObject
     public void ExitInteraction(PlayerCharacter character)
     {
         Managers.UIManager.UIInteractionPanelCanvas.ResponseTracePanel.ClosePanel();
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.ALL);
+        Managers.InputManager.PopInputMode();
     }
 
 

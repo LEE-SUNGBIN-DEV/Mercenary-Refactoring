@@ -108,7 +108,7 @@ public class ResponseCrystal : MonoBehaviour, IInteractableObject, IWarpObject
         character.State.SetState(ACTION_STATE.PLAYER_RESPONSE_IN, STATE_SWITCH_BY.FORCED);
         character.InventoryData.RefillResponseWater();
         Managers.AudioManager.PlaySFX(Constants.Audio_Response_Object_Enable);
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.INTERACTION);
+        Managers.InputManager.PushInputMode(CHARACTER_INPUT_MODE.INTERACTION);
 
         if (glowParticle != null)
             glowParticle.Play();
@@ -128,7 +128,7 @@ public class ResponseCrystal : MonoBehaviour, IInteractableObject, IWarpObject
         interactionCoroutine = StartCoroutine(CoStopInteraction());
         character.State.SetState(ACTION_STATE.PLAYER_RESPONSE_OUT, STATE_SWITCH_BY.FORCED);
         Managers.AudioManager.PlaySFX(Constants.Audio_Response_Object_Disable);
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.ALL);
+        Managers.InputManager.PopInputMode();
 
         if (glowParticle != null)
             glowParticle.Stop();

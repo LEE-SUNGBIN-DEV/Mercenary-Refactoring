@@ -4,27 +4,45 @@ using UnityEngine;
 
 public class UIInteractionPanelCanvas : UIBaseCanvas
 {
-    private IInteractionPanel[] interactionPanels;
-    private IInteractionPanel activedInteractionPanel;
+    private IFocusPanel[] focusPanels;
+    [SerializeField] private IFocusPanel currentFocusPanel;
+
+    private InventoryPanel inventoryPanel;
+    private StatusPanel statusPanel;
+    private SkillNodePanel skillNodePanel;
+    private QuestPanel questPanel;
+    private OptionPanel optionPanel;
 
     private ResponseTracePanel responseTracePanel;
     private ResponsePointPanel responsePointPanel;
     private NPCPanel npcPanel;
+    private DialogueSelectionPanel dialogueSelectionPanel;
     private StorePanel storePanel;
 
     protected override void Awake()
     {
         base.Awake();
-        canvas.sortingOrder = 3;
+        canvas.sortingOrder = 2;
 
-        interactionPanels = GetComponentsInChildren<IInteractionPanel>(true);
-        for(int i=0; i<interactionPanels.Length; i++)
+        focusPanels = GetComponentsInChildren<IFocusPanel>(true);
+        for (int i = 0; i < focusPanels.Length; i++)
         {
-            interactionPanels[i].OnOpenPanel -= SwitchPanel;
-            interactionPanels[i].OnOpenPanel += SwitchPanel;
-            interactionPanels[i].OnClosePanel -= CloseActivePanel;
-            interactionPanels[i].OnClosePanel += CloseActivePanel;
+            focusPanels[i].OnOpenFocusPanel -= OnOpenFocusPanel;
+            focusPanels[i].OnOpenFocusPanel += OnOpenFocusPanel;
+            focusPanels[i].OnCloseFocusPanel -= OnCloseFocusPanel;
+            focusPanels[i].OnCloseFocusPanel += OnCloseFocusPanel;
         }
+
+        inventoryPanel = GetComponentInChildren<InventoryPanel>(true);
+        inventoryPanel.Initialize();
+        statusPanel = GetComponentInChildren<StatusPanel>(true);
+        statusPanel.Initialize();
+        skillNodePanel = GetComponentInChildren<SkillNodePanel>(true);
+        skillNodePanel.Initialize();
+        questPanel = GetComponentInChildren<QuestPanel>(true);
+        questPanel.Initialize();
+        optionPanel = GetComponentInChildren<OptionPanel>(true);
+        optionPanel.Initialize();
 
         responseTracePanel = GetComponentInChildren<ResponseTracePanel>(true);
         responseTracePanel.Initialize();
@@ -32,28 +50,53 @@ public class UIInteractionPanelCanvas : UIBaseCanvas
         responsePointPanel.Initialize();
         npcPanel = GetComponentInChildren<NPCPanel>(true);
         npcPanel.Initialize();
+        dialogueSelectionPanel = GetComponentInChildren<DialogueSelectionPanel>(true);
+        dialogueSelectionPanel.Initialize();
+
         storePanel = GetComponentInChildren<StorePanel>(true);
     }
 
-    private void SwitchPanel(IInteractionPanel interactionPanel)
+    private void OnOpenFocusPanel(IFocusPanel focusPanel)
     {
-        if (activedInteractionPanel != null && activedInteractionPanel != interactionPanel)
+        if (currentFocusPanel == null)
         {
-            activedInteractionPanel?.ClosePanel();
-            activedInteractionPanel = null;
-            activedInteractionPanel = interactionPanel;
+            currentFocusPanel = focusPanel;
+            return;
+        }
+        if (currentFocusPanel != null && currentFocusPanel != focusPanel)
+        {
+            currentFocusPanel?.ClosePanel();
+            currentFocusPanel = null;
+            currentFocusPanel = focusPanel;
         }
     }
-    private void CloseActivePanel(IInteractionPanel interactionPanel)
+    private void OnCloseFocusPanel(IFocusPanel focusPanel)
     {
-        if (activedInteractionPanel != null && activedInteractionPanel == interactionPanel)
+        if (currentFocusPanel == focusPanel)
         {
-            activedInteractionPanel = null;
+            currentFocusPanel = null;
         }
     }
+    public void CloseCurrentFocusPanel()
+    {
+        if (currentFocusPanel != null)
+        {
+            currentFocusPanel?.ClosePanel();
+            currentFocusPanel = null;
+        }
+    }
+
+    #region Property
+    public StatusPanel StatusPanel { get { return statusPanel; } }
+    public SkillNodePanel SkillNodePanel { get { return skillNodePanel; } }
+    public InventoryPanel InventoryPanel { get { return inventoryPanel; } }
+    public QuestPanel QuestPanel { get { return questPanel; } }
+    public OptionPanel OptionPanel { get { return optionPanel; } }
 
     public ResponseTracePanel ResponseTracePanel { get { return responseTracePanel; } }
     public ResponsePointPanel ResponsePointPanel { get { return responsePointPanel; } }
     public NPCPanel NPCPanel { get { return npcPanel; } }
+    public DialogueSelectionPanel DialogueSelectionPanel { get { return dialogueSelectionPanel; } }
     public StorePanel StorePanel { get { return storePanel; } }
+    #endregion
 }

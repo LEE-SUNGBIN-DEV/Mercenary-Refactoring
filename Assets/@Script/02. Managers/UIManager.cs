@@ -7,7 +7,6 @@ public class UIManager : MonoBehaviour
 {
     private UIScenePanelCanvas uiScenePanelCanvas;
     private UIFixedPanelCanvas uiFixedPanelCanvas;
-    private UIFocusPanelCanvas uiFocusPanelCanvas;
     private UIInteractionPanelCanvas uiInteractionPanelCanvas;
     private UISystemPanelCanvas uiSystemPanelCanvas;
 
@@ -18,7 +17,7 @@ public class UIManager : MonoBehaviour
     {
         // Set Cursor
         Managers.ResourceManager.LoadResourceAsync<Texture2D>(Constants.SPRITE_CURSOR_DEFAULT, SetCursorTexture);
-        SetCursorMode(CURSOR_MODE.UNLOCK);
+        SetCursorMode(CURSOR_MODE.VISIBLE);
 
         // Set Resolution
         Screen.SetResolution(
@@ -43,19 +42,19 @@ public class UIManager : MonoBehaviour
             ToggleCursorMode();
 
         if (Managers.InputManager.UIEscButton.WasPressedThisFrame())
-            UIFocusPanelCanvas.CloseActivedFocusPanel();
+            UIInteractionPanelCanvas.CloseCurrentFocusPanel();
 
         if (Managers.InputManager.UIOptionPanelButton.WasPressedThisFrame())
-            UIFocusPanelCanvas.SwitchFocusPanel(uiFocusPanelCanvas.OptionPanel);
+            UIInteractionPanelCanvas.OptionPanel.TogglePanel();
 
         if (Managers.InputManager.UIInventoryPanelButton.WasPressedThisFrame())
-            UIFocusPanelCanvas.SwitchFocusPanel(UIFocusPanelCanvas.InventoryPanel);
+            UIInteractionPanelCanvas.InventoryPanel.TogglePanel();
 
         if (Managers.InputManager.UIStatusPanelButton.WasPressedThisFrame())
-            UIFocusPanelCanvas.SwitchFocusPanel(UIFocusPanelCanvas.StatusPanel);
+            UIInteractionPanelCanvas.StatusPanel.TogglePanel();
 
         if (Managers.InputManager.UISkillPanelButton.WasPressedThisFrame())
-            UIFocusPanelCanvas.SwitchFocusPanel(UIFocusPanelCanvas.SkillNodePanel);
+            UIInteractionPanelCanvas.SkillNodePanel.TogglePanel();
     }
 
     #region Cursor Function
@@ -68,16 +67,16 @@ public class UIManager : MonoBehaviour
     {
         switch (cursorMode)
         {
-            case CURSOR_MODE.LOCK:
+            case CURSOR_MODE.INVISIBLE:
                 {
-                    this.cursorMode = CURSOR_MODE.LOCK;
+                    this.cursorMode = CURSOR_MODE.INVISIBLE;
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                     break;
                 }
-            case CURSOR_MODE.UNLOCK:
+            case CURSOR_MODE.VISIBLE:
                 {
-                    this.cursorMode = CURSOR_MODE.UNLOCK;
+                    this.cursorMode = CURSOR_MODE.VISIBLE;
                     Cursor.lockState = CursorLockMode.None;
                     Cursor.visible = true;
                     break;
@@ -87,14 +86,14 @@ public class UIManager : MonoBehaviour
 
     public void ToggleCursorMode()
     {
-        if (cursorMode == CURSOR_MODE.LOCK)
+        if (cursorMode == CURSOR_MODE.INVISIBLE)
         {
-            SetCursorMode(CURSOR_MODE.UNLOCK);
+            SetCursorMode(CURSOR_MODE.VISIBLE);
         }
 
         else
         {
-            SetCursorMode(CURSOR_MODE.LOCK);
+            SetCursorMode(CURSOR_MODE.INVISIBLE);
         }
     }
     #endregion
@@ -132,23 +131,6 @@ public class UIManager : MonoBehaviour
                 }
             }
             return uiFixedPanelCanvas;
-        }
-    }
-    public UIFocusPanelCanvas UIFocusPanelCanvas
-    {
-        get
-        {
-            if (uiFocusPanelCanvas == null)
-            {
-                if (Managers.ResourceManager.InstantiatePrefabSync(Constants.PREFAB_UI_FOCUS_PANEL_CANVAS).TryGetComponent(out uiFocusPanelCanvas))
-                {
-                    if (uiFocusPanelCanvas.gameObject.activeSelf == false)
-                    {
-                        uiFocusPanelCanvas.gameObject.SetActive(true);
-                    }
-                }
-            }
-            return uiFocusPanelCanvas;
         }
     }
     public UIInteractionPanelCanvas UIInteractionPanelCanvas

@@ -80,7 +80,7 @@ public class DataManager
         LoadTableFromJson(out dropTable, $"{Application.dataPath}/@Table/DROP_TABLE.json");
         LoadTableFromJson(out enemyTable, $"{Application.dataPath}/@Table/ENEMY_TABLE.json");
 
-        LoadTableFromJson(out dialogueTable, $"{Application.dataPath}/@Table/Dialogue_Table.json");
+        LoadTableFromJson(out dialogueTable, $"{Application.dataPath}/@Table/DIALOGUE_TABLE.json");
         LoadTableFromJson(out taskTable, $"{Application.dataPath}/@Table/Task_Table.json");
         LoadTableFromJson(out questTable, $"{Application.dataPath}/Table/Quest_Table.json");
 

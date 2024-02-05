@@ -77,7 +77,7 @@ public abstract class BaseMoveController : MonoBehaviour
         contactRadius = capsuleRadius - Constants.CONTACT_OFFSET;
 
         // Stepping
-        stepLimitHeight = capsuleRadius * 2f;
+        stepLimitHeight = capsuleRadius * 1.5f;
         stepAngle = 0f;
         stepHeight = 0f;
         stepPoint = Vector3.zero;

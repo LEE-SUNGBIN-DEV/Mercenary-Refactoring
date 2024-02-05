@@ -23,16 +23,14 @@ public interface ICharacterData
 #region UI
 public interface IFocusPanel
 {
-    public void OpenFocusPanel();
-    public void CloseFocusPanel();
-}
-
-public interface IInteractionPanel
-{
-    public event UnityAction<IInteractionPanel> OnOpenPanel;
-    public event UnityAction<IInteractionPanel> OnClosePanel;
+    public event UnityAction<IFocusPanel> OnOpenFocusPanel;
+    public event UnityAction<IFocusPanel> OnCloseFocusPanel;
 
     public void ClosePanel();
+}
+public interface IDialogueablePanel
+{
+    public void SetDialogue(DialogueData dialogueData);
 }
 #endregion
 

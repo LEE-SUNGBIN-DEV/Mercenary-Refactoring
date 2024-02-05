@@ -1,9 +1,6 @@
-using JetBrains.Annotations;
 using Newtonsoft.Json;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public interface ITableData<Key>
 {
@@ -583,7 +580,6 @@ public class DropTableData : ITableData<string>
 public class DialogueData : ITableData<string>
 {
     public string dialogueID;
-    public int index;
     public string speaker;
     public string content;
     public string[] selections;

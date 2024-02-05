@@ -8,6 +8,7 @@ public enum NPC_TYPE
     NOMRAL,
     BLACK_SMITH
 }
+
 public class NPC : BaseActor, IInteractableObject
 {
     public event UnityAction<NPC> OnFinishTalk;
@@ -15,12 +16,7 @@ public class NPC : BaseActor, IInteractableObject
     [Header("NPC")]
     [SerializeField] protected NPCData npcData;
     [SerializeField] protected List<Quest> questList;
-    [SerializeField] protected Quest selectQuest;
-
-    [Header("Current States")]
-    [SerializeField] protected string dialogueID;
     [SerializeField] protected bool isTalking;
-    [SerializeField] protected int currentDialogueIndex;
     protected NPCMoveController moveController;
 
     [Header("IInteractable")]
@@ -34,10 +30,7 @@ public class NPC : BaseActor, IInteractableObject
     public virtual void Initialize(NPCData npcData)
     {
         this.npcData = npcData;
-        dialogueID = null;
         isTalking = false;
-        currentDialogueIndex = 0;
-        selectQuest = null;
     }
 
     #region Unity Functions
@@ -98,13 +91,21 @@ public class NPC : BaseActor, IInteractableObject
     // Interaction Functions
     public void EnterInteraction(PlayerCharacter character)
     {
-        EnterTalk();
+        if (GetDefaultDialogueData() != null)
+        {
+            Managers.UIManager.UIInteractionPanelCanvas.NPCPanel.OpenPanel(this);
+            isTalking = true;
+        }
+        else
+        {
+            character.InteractionController.ExitInteraction(this, character);
+        }
     }
     public void UpdateInteraction(PlayerCharacter character)
     {
-        if (Managers.InputManager.InteractionUpdateButton.WasPressedThisFrame())
+        if (Managers.InputManager.InteractionUpdateButton.WasPressedThisFrame() && !Managers.UIManager.UIInteractionPanelCanvas.DialogueSelectionPanel.IsSelecting())
         {
-            UpdateTalk(character);
+            Managers.UIManager.UIInteractionPanelCanvas.NPCPanel.UpdateDialogue(character);
         }
 
         if (Managers.InputManager.InteractionExitButton.WasPressedThisFrame())
@@ -114,64 +115,19 @@ public class NPC : BaseActor, IInteractableObject
     }
     public void ExitInteraction(PlayerCharacter character)
     {
-        ExitTalk();
+        Managers.UIManager.UIInteractionPanelCanvas.DialogueSelectionPanel.ClosePanel();
+        Managers.UIManager.UIInteractionPanelCanvas.NPCPanel.ClosePanel();
+        isTalking = false;
     }
     #endregion
 
-    public string GetDialogueID()
+    public DialogueData GetDefaultDialogueData()
     {
-        if (dialogueID == null)
+        if (Managers.DataManager.DialogueTable.TryGetValue($"{npcData.npcID}_DEFAULT_0", out DialogueData defaultDialogueData))
         {
-            if (selectQuest == null)
-                dialogueID = $"{npcData.npcID}_DEFAULT";
-            else
-                dialogueID = $"{selectQuest.QuestData.questID}";
+            return defaultDialogueData;
         }
-
-        dialogueID += $"_{currentDialogueIndex}";
-
-        return dialogueID;
-    }
-    public void EnterTalk()
-    {
-        currentDialogueIndex = 0;
-        if (Managers.DataManager.DialogueTable.TryGetValue(GetDialogueID(), out DialogueData dialogueData))
-        {
-            Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.INTERACTION);
-            Managers.UIManager.UIInteractionPanelCanvas.NPCPanel.OpenPanel(dialogueData);
-            isTalking = true;
-        }
-    }
-    public void UpdateTalk(PlayerCharacter character)
-    {
-        // Progress Talk
-        if (Managers.DataManager.DialogueTable.TryGetValue(GetDialogueID(), out DialogueData dialogueData))
-        {
-            // Selection Check
-
-
-            // Dialogue Check
-            ++currentDialogueIndex;
-            Managers.UIManager.UIInteractionPanelCanvas.NPCPanel.OpenPanel(dialogueData);
-        }
-
-        // Finish or Exit Talk
-        else
-        {
-            // Quest
-            if(selectQuest != null)
-            {
-            }
-
-            OnFinishTalk?.Invoke(this);
-            character.InteractionController.ExitInteraction(character);
-        }
-    }
-    public void ExitTalk()
-    {
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.ALL);
-        isTalking = false;
-        currentDialogueIndex = 0;
+        return null;
     }
     public void UpdateQuestList()
     {
@@ -193,12 +149,9 @@ public class NPC : BaseActor, IInteractableObject
     #region Property
     public NPCData NPCData { get { return npcData; } }
     public List<Quest> QuestList { get {  return questList; } }
-    public Quest SelectQuest { get { return selectQuest; } }
+    public bool IsTalking { get { return isTalking; } }
 
     public PlayerCharacter TargetCharacter { get { return targetCharacter; } }
     public float Distance { get { return distance; } }
-
-    public bool IsTalking { get { return isTalking; } }
-    public int CurrentDialogueIndex { get { return currentDialogueIndex; } }
     #endregion
 }

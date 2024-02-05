@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-using UnityEditor.U2D.Animation;
-using Cysharp.Threading.Tasks.Triggers;
 
 [System.Serializable]
 public abstract class BaseItemSlot : UIBase, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler

@@ -30,8 +30,8 @@ public class LoadingScene : BaseScene
         loadingText = Functions.FindChild<TextMeshProUGUI>(gameObject, "Loading_Text", true);
         loadingBar = Functions.FindChild<Slider>(gameObject, "Loading_Bar", true);
 
-        Managers.UIManager.SetCursorMode(CURSOR_MODE.LOCK);
-        Managers.InputManager.SwitchInputMode(CHARACTER_INPUT_MODE.UI);
+        Managers.UIManager.SetCursorMode(CURSOR_MODE.INVISIBLE);
+        Managers.InputManager.InitializeInputMode(CHARACTER_INPUT_MODE.UI);
     }
 
     private IEnumerator LoadSceneProgress()

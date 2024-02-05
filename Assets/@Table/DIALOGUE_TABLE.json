@@ -3,14 +3,41 @@
     "dialogueID": "NPC_BEREAVE_DEFAULT_0",
     "speaker": "베레아브",
     "content": "도움이 필요할 때 찾아오게.",
-    "selections": null,
-    "selectionTargetIDs": null
+    "selections": [],
+    "selectionTargetIDs": []
   },
   {
     "dialogueID": "NPC_FEIGHUS_DEFAULT_0",
     "speaker": "페이거스",
+    "content": "강화를 하러 왔나?",
+    "selections": [],
+    "selectionTargetIDs": []
+  },
+  {
+    "dialogueID": "NPC_FEIGHUS_DEFAULT_1",
+    "speaker": "페이거스",
     "content": "부수지는 않을테니 안심하라구.",
-    "selections": null,
-    "selectionTargetIDs": null
+    "selections": [
+      "진짜겠지?",
+      "정말이겠지?"
+    ],
+    "selectionTargetIDs": [
+      "NPC_FEIGHUS_DEFAULT_SEL0_0",
+      "NPC_FEIGHUS_DEFAULT_SEL1_0"
+    ]
+  },
+  {
+    "dialogueID": "NPC_FEIGHUS_DEFAULT_SEL0_0",
+    "speaker": "페이거스",
+    "content": "아마도?",
+    "selections": [],
+    "selectionTargetIDs": []
+  },
+  {
+    "dialogueID": "NPC_FEIGHUS_DEFAULT_SEL1_0",
+    "speaker": "페이거스",
+    "content": "그럴걸?",
+    "selections": [],
+    "selectionTargetIDs": []
   }
 ]

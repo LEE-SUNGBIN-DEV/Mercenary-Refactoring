@@ -6,7 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Events;
 
-public class ResponsePointPanel : UIPanel, IInteractionPanel
+public class ResponsePointPanel : UIPanel, IFocusPanel
 {
     public enum IMAGE
     {
@@ -18,8 +18,10 @@ public class ResponsePointPanel : UIPanel, IInteractionPanel
         Move_Button
     }
 
-    public event UnityAction<IInteractionPanel> OnOpenPanel;
-    public event UnityAction<IInteractionPanel> OnClosePanel;
+    public event UnityAction<IFocusPanel> OnOpenFocusPanel;
+    public event UnityAction<IFocusPanel> OnCloseFocusPanel;
+
+    private bool isOpen;
 
     [SerializeField] private RectTransform sceneButtonRoot;
     [SerializeField] private RectTransform regionButtonRoot;
@@ -105,6 +107,7 @@ public class ResponsePointPanel : UIPanel, IInteractionPanel
 
     public void Initialize()
     {
+        isOpen = false;
         BindImage(typeof(IMAGE));
         BindButton(typeof(BUTTON));
 
@@ -127,12 +130,24 @@ public class ResponsePointPanel : UIPanel, IInteractionPanel
 
     public void OpenPanel()
     {
-        OnOpenPanel?.Invoke(this);
+        if (isOpen)
+            return;
+
+        isOpen = true;
+        OnOpenFocusPanel?.Invoke(this);
+        Managers.InputManager.PushInputMode(CHARACTER_INPUT_MODE.INTERACTION);
+        Managers.UIManager.SetCursorMode(CURSOR_MODE.VISIBLE);
         FadeInPanel(Constants.TIME_UI_PANEL_DEFAULT_FADE);
     }
     public void ClosePanel()
     {
-        OnClosePanel?.Invoke(this);
+        if (!isOpen)
+            return;
+
+        isOpen = false;
+        OnCloseFocusPanel?.Invoke(this);
+        Managers.InputManager.PopInputMode();
+        Managers.UIManager.SetCursorMode(CURSOR_MODE.INVISIBLE);
         FadeOutPanel(Constants.TIME_UI_PANEL_DEFAULT_FADE, () => gameObject.SetActive(false));
     }
     
